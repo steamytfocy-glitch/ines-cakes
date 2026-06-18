@@ -161,24 +161,9 @@
                     </svg>
                 </div>
                 <h3 class="size-card__title" data-i18n="cakes.custom">Custom Size</h3>
-                <p class="size-card__serves" data-i18n="cakes.serves12">Serves 12+ people</p>
+                <p class="size-card__serves" data-i18n="cakes.serves12">Any size & weight you need</p>
                 <p class="size-card__price" data-i18n="cakes.priceAgreed">Price on request</p>
             </div>
-        </div>
-
-        <div class="cakes__flavours">
-            <h3 class="cakes__flavours-title" data-i18n="cakes.flavoursTitle">Popular Flavours</h3>
-            <div class="flavour-tags">
-                <span class="flavour-tag" data-i18n="cakes.fl1">Vanilla</span>
-                <span class="flavour-tag" data-i18n="cakes.fl2">Chocolate</span>
-                <span class="flavour-tag" data-i18n="cakes.fl3">Red Velvet</span>
-                <span class="flavour-tag" data-i18n="cakes.fl4">Carrot Cake</span>
-                <span class="flavour-tag" data-i18n="cakes.fl5">Honey Cake</span>
-                <span class="flavour-tag" data-i18n="cakes.fl6">Cheesecake</span>
-                <span class="flavour-tag" data-i18n="cakes.fl7">Napoleon</span>
-                <span class="flavour-tag" data-i18n="cakes.fl8">Bento Cake</span>
-            </div>
-            <p class="cakes__note" data-i18n="cakes.note">Cream options: white or milk chocolate ganache. Complex fillings and custom designs — discussed individually.</p>
         </div>
 
         <div class="cakes__cta">
@@ -263,7 +248,7 @@
                 </div>
                 <div class="form-group">
                     <label for="phone" data-i18n="order.phone">Phone Number</label>
-                    <input type="tel" id="phone" name="phone" required pattern="[0-9+\s\-()]+" inputmode="numeric" placeholder="+353 87 491 7435">
+                    <input type="tel" id="phone" name="phone" required pattern="[0-9+\s\-()]+" inputmode="numeric">
                 </div>
             </div>
             <div class="form-row">
@@ -296,6 +281,16 @@
                 <div class="form-group">
                     <label for="flavour" data-i18n="order.flavour">Preferred Flavour</label>
                     <input type="text" id="flavour" name="flavour" data-i18n-placeholder="order.flavourPh" placeholder="e.g. Vanilla, Chocolate...">
+                </div>
+            </div>
+            <div class="form-row" id="customSizeRow" style="display:none;">
+                <div class="form-group">
+                    <label for="customDiameter" data-i18n="order.diameter">Diameter (cm)</label>
+                    <input type="number" id="customDiameter" name="customDiameter" min="10" max="50" placeholder="e.g. 20">
+                </div>
+                <div class="form-group">
+                    <label for="customWeight" data-i18n="order.weight">Weight (kg)</label>
+                    <input type="number" id="customWeight" name="customWeight" min="0.5" max="15" step="0.5" placeholder="e.g. 2">
                 </div>
             </div>
             <div class="form-group form-group--full">

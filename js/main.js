@@ -14,7 +14,7 @@ const translations = {
         "hero.gallery": "View Our Work",
 
         "about.title": "About Us",
-        "about.p1": "Welcome to I.N.E.S. — a home bakery in the heart of Donegal, Ireland. Every cake we create is made with passion, using only natural and high-quality ingredients.",
+        "about.p1": "Welcome to I.N.E.S. Every cake we create is made with passion, using only natural and high-quality ingredients.",
         "about.p2": "We believe that a cake is more than just a dessert — it's the centrepiece of your celebration. Whether it's a birthday, wedding, anniversary, or just a sweet Friday treat, we'll make it special.",
         "about.p3": "All cakes are baked fresh to order. We offer a wide range of flavours and designs — from classic elegance to bold custom creations based on your ideas.",
         "about.f1.title": "Natural Ingredients",
@@ -31,7 +31,7 @@ const translations = {
         "cakes.serves8": "Serves 8 people",
         "cakes.from35": "from €35",
         "cakes.custom": "Custom Size",
-        "cakes.serves12": "Serves 12+ people",
+        "cakes.serves12": "Any size & weight you need",
         "cakes.priceAgreed": "Price on request",
         "cakes.flavoursTitle": "Popular Flavours",
         "cakes.fl1": "Vanilla",
@@ -75,6 +75,8 @@ const translations = {
         "order.sizeMini": "Mini — 5\" (13 cm)",
         "order.sizeMaxi": "Maxi — 6\" (15 cm)",
         "order.sizeCustom": "Custom size",
+        "order.diameter": "Diameter (cm)",
+        "order.weight": "Weight (kg)",
         "order.flavour": "Preferred Flavour",
         "order.flavourPh": "e.g. Vanilla, Chocolate...",
         "order.message": "Your Wishes / Description",
@@ -112,7 +114,7 @@ const translations = {
         "hero.gallery": "Наші роботи",
 
         "about.title": "Про нас",
-        "about.p1": "Ласкаво просимо до I.N.E.S. — домашня кондитерська в серці Донеголу, Ірландія. Кожен торт ми створюємо з любов'ю, використовуючи тільки натуральні та якісні інгредієнти.",
+        "about.p1": "Ласкаво просимо до I.N.E.S. Кожен торт ми створюємо з любов'ю, використовуючи тільки натуральні та якісні інгредієнти.",
         "about.p2": "Ми віримо, що торт — це більше ніж десерт — це окраса вашого свята. День народження, весілля, річниця чи просто солодка п'ятниця — ми зробимо це особливим.",
         "about.p3": "Усі торти випікаються свіжими на замовлення. Ми пропонуємо широкий вибір смаків та дизайнів — від класичної елегантності до сміливих авторських створень за вашою ідеєю.",
         "about.f1.title": "Натуральні інгредієнти",
@@ -129,7 +131,7 @@ const translations = {
         "cakes.serves8": "На 8 осіб",
         "cakes.from35": "від €35",
         "cakes.custom": "Індивідуальний розмір",
-        "cakes.serves12": "На 12+ осіб",
+        "cakes.serves12": "Будь-який розмір та вага",
         "cakes.priceAgreed": "Ціна за домовленістю",
         "cakes.flavoursTitle": "Популярні смаки",
         "cakes.fl1": "Ваніль",
@@ -173,6 +175,8 @@ const translations = {
         "order.sizeMini": "Міні — 5\" (13 см)",
         "order.sizeMaxi": "Максі — 6\" (15 см)",
         "order.sizeCustom": "Індивідуальний розмір",
+        "order.diameter": "Діаметр (см)",
+        "order.weight": "Вага (кг)",
         "order.flavour": "Бажаний смак",
         "order.flavourPh": "напр. Ваніль, Шоколад...",
         "order.message": "Ваші побажання / Опис",
@@ -210,7 +214,7 @@ const translations = {
         "hero.gallery": "Наши работы",
 
         "about.title": "О нас",
-        "about.p1": "Добро пожаловать в I.N.E.S. — домашняя кондитерская в сердце Донегола, Ирландия. Каждый торт мы создаём с любовью, используя только натуральные и качественные ингредиенты.",
+        "about.p1": "Добро пожаловать в I.N.E.S. Каждый торт мы создаём с любовью, используя только натуральные и качественные ингредиенты.",
         "about.p2": "Мы верим, что торт — это больше чем десерт — это украшение вашего праздника. День рождения, свадьба, годовщина или просто сладкая пятница — мы сделаем это особенным.",
         "about.p3": "Все торты выпекаются свежими на заказ. Мы предлагаем широкий выбор вкусов и дизайнов — от классической элегантности до смелых авторских творений по вашей идее.",
         "about.f1.title": "Натуральные ингредиенты",
@@ -227,7 +231,7 @@ const translations = {
         "cakes.serves8": "На 8 человек",
         "cakes.from35": "от €35",
         "cakes.custom": "Индивидуальный размер",
-        "cakes.serves12": "На 12+ человек",
+        "cakes.serves12": "Любой размер и вес",
         "cakes.priceAgreed": "Цена по договорённости",
         "cakes.flavoursTitle": "Популярные вкусы",
         "cakes.fl1": "Ваниль",
@@ -271,6 +275,8 @@ const translations = {
         "order.sizeMini": "Мини — 5\" (13 см)",
         "order.sizeMaxi": "Макси — 6\" (15 см)",
         "order.sizeCustom": "Индивидуальный размер",
+        "order.diameter": "Диаметр (см)",
+        "order.weight": "Вес (кг)",
         "order.flavour": "Желаемый вкус",
         "order.flavourPh": "напр. Ваниль, Шоколад...",
         "order.message": "Ваши пожелания / Описание",
@@ -491,6 +497,14 @@ function updateHiddenDate() {
 daySelect.addEventListener('change', updateHiddenDate);
 monthSelect.addEventListener('change', updateHiddenDate);
 populateDatePicker();
+
+// ===== CUSTOM SIZE TOGGLE =====
+var cakeSizeSelect = document.getElementById('cakeSize');
+var customSizeRow = document.getElementById('customSizeRow');
+
+cakeSizeSelect.addEventListener('change', function() {
+    customSizeRow.style.display = this.value === 'custom' ? 'grid' : 'none';
+});
 
 // ===== ORDER FORM =====
 var orderForm = document.getElementById('orderForm');
