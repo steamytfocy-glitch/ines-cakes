@@ -44,7 +44,8 @@ var loginError = document.getElementById('loginError');
 var sidebarUser = document.getElementById('sidebarUser');
 
 function checkAuth() {
-    var session = getData('session', null);
+    var session = null;
+    try { session = JSON.parse(localStorage.getItem('ines-session')); } catch(e) {}
     if (session) {
         loginScreen.style.display = 'none';
         adminPanel.style.display = 'flex';
@@ -67,7 +68,7 @@ loginForm.addEventListener('submit', function(e) {
     }
 
     if (found) {
-        setData('session', { login: user, time: Date.now() });
+        localStorage.setItem('ines-session', JSON.stringify({ login: user, time: Date.now() }));
         loginError.textContent = '';
         checkAuth();
     } else {
