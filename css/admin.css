@@ -843,6 +843,94 @@ body {
     padding: 4px;
 }
 
+/* ===== ANIMATIONS ===== */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(-16px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.92); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.tab-content.active {
+    animation: fadeIn 0.35s ease;
+}
+
+.order-card {
+    animation: slideIn 0.3s ease both;
+}
+
+.order-card:nth-child(2) { animation-delay: 0.05s; }
+.order-card:nth-child(3) { animation-delay: 0.1s; }
+.order-card:nth-child(4) { animation-delay: 0.15s; }
+.order-card:nth-child(5) { animation-delay: 0.2s; }
+
+.gallery-admin-item {
+    animation: scaleIn 0.3s ease both;
+}
+
+.gallery-admin-item:nth-child(2) { animation-delay: 0.04s; }
+.gallery-admin-item:nth-child(3) { animation-delay: 0.08s; }
+.gallery-admin-item:nth-child(4) { animation-delay: 0.12s; }
+.gallery-admin-item:nth-child(5) { animation-delay: 0.16s; }
+.gallery-admin-item:nth-child(6) { animation-delay: 0.2s; }
+
+.gallery-cat-section {
+    animation: fadeIn 0.4s ease both;
+}
+
+.gallery-cat-section:nth-child(2) { animation-delay: 0.1s; }
+.gallery-cat-section:nth-child(3) { animation-delay: 0.2s; }
+.gallery-cat-section:nth-child(4) { animation-delay: 0.3s; }
+
+.review-admin-card {
+    animation: slideIn 0.3s ease both;
+}
+
+.review-admin-card:nth-child(2) { animation-delay: 0.05s; }
+.review-admin-card:nth-child(3) { animation-delay: 0.1s; }
+
+.content-section {
+    animation: fadeIn 0.35s ease both;
+}
+
+.content-section:nth-child(2) { animation-delay: 0.1s; }
+.content-section:nth-child(3) { animation-delay: 0.2s; }
+
+.modal__card {
+    animation: scaleIn 0.25s ease;
+}
+
+.stat-badge {
+    animation: scaleIn 0.3s ease both;
+}
+
+.stat-badge:nth-child(2) { animation-delay: 0.08s; }
+.stat-badge:nth-child(3) { animation-delay: 0.16s; }
+
+.sidebar__link {
+    transition: all 0.2s ease;
+}
+
+.sidebar__link:active {
+    transform: scale(0.96);
+}
+
+.btn-admin {
+    transition: all 0.2s ease;
+}
+
+.btn-admin:active {
+    transform: scale(0.95);
+}
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
     .sidebar {

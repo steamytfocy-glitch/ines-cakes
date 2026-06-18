@@ -93,19 +93,27 @@ var tabTitles = {
     content: 'Content'
 };
 
+function switchTab(tab) {
+    tabButtons.forEach(function(b) { b.classList.remove('active'); });
+    tabContents.forEach(function(t) { t.classList.remove('active'); });
+    var btn = document.querySelector('[data-tab="' + tab + '"]');
+    if (btn) btn.classList.add('active');
+    var content = document.getElementById('tab-' + tab);
+    if (content) content.classList.add('active');
+    topbarTitle.textContent = tabTitles[tab] || tab;
+    localStorage.setItem('ines-admin-tab', tab);
+}
+
 tabButtons.forEach(function(btn) {
     btn.addEventListener('click', function() {
-        var tab = this.dataset.tab;
-        tabButtons.forEach(function(b) { b.classList.remove('active'); });
-        tabContents.forEach(function(t) { t.classList.remove('active'); });
-        this.classList.add('active');
-        document.getElementById('tab-' + tab).classList.add('active');
-        topbarTitle.textContent = tabTitles[tab] || tab;
-
+        switchTab(this.dataset.tab);
         var sidebar = document.querySelector('.sidebar');
         sidebar.classList.remove('open');
     });
 });
+
+var savedTab = localStorage.getItem('ines-admin-tab');
+if (savedTab) switchTab(savedTab);
 
 // Mobile sidebar toggle
 var adminBurger = document.getElementById('adminBurger');
