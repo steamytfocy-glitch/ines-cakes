@@ -465,11 +465,38 @@ orderForm.addEventListener('submit', function(e) {
     data.status = 'new';
     data.submitted = new Date().toLocaleString();
 
-    fbGetOnce('orders', function(orders) {
-        if (!orders) orders = [];
-        orders.push(data);
-        fbSet('orders', orders);
-    });
+    var photoFile = document.getElementById('photo').files[0];
+
+    function saveOrder(orderData) {
+        fbGetOnce('orders', function(orders) {
+            if (!orders) orders = [];
+            orders.push(orderData);
+            fbSet('orders', orders);
+        });
+    }
+
+    if (photoFile) {
+        var reader = new FileReader();
+        reader.onload = function(ev) {
+            var img = new Image();
+            img.onload = function() {
+                var canvas = document.createElement('canvas');
+                var w = img.width, h = img.height;
+                if (w > 600 || h > 600) {
+                    if (w > h) { h = Math.round(h * 600 / w); w = 600; }
+                    else { w = Math.round(w * 600 / h); h = 600; }
+                }
+                canvas.width = w; canvas.height = h;
+                canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+                data.photo = canvas.toDataURL('image/jpeg', 0.6);
+                saveOrder(data);
+            };
+            img.src = ev.target.result;
+        };
+        reader.readAsDataURL(photoFile);
+    } else {
+        saveOrder(data);
+    }
 
     orderForm.style.display = 'none';
     orderSuccess.style.display = 'block';

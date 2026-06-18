@@ -154,6 +154,7 @@ function loadOrders() {
                 (o.flavour ? '<div class="order-card__detail"><strong>Flavour:</strong> ' + escapeHtml(o.flavour) + '</div>' : '') +
             '</div>' +
             (o.message ? '<div class="order-card__message">' + escapeHtml(o.message) + '</div>' : '') +
+            (o.photo ? '<div class="order-card__photo"><img src="' + o.photo + '" alt="Reference" style="max-width:200px;border-radius:8px;margin-bottom:12px;"></div>' : '') +
             '<div class="order-card__actions">' +
                 '<select class="status-select" data-order-id="' + i + '">' +
                     '<option value="new"' + (o.status === 'new' ? ' selected' : '') + '>New</option>' +
