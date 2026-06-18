@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I.N.E.S. — Impeccable Naturals Exquisite Sweets</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- Header -->
+<header class="header" id="header">
+    <div class="container header__inner">
+        <a href="#" class="logo">
+            <svg class="logo__icon" viewBox="0 0 60 60" width="42" height="42">
+                <path d="M30 8c-3 0-5.5 2-6 5h12c-.5-3-3-5-6-5z" fill="#C8963E"/>
+                <rect x="20" y="13" width="20" height="3" rx="1.5" fill="#C8963E"/>
+                <path d="M18 16c0 0-2 4-2 10s2 12 4 14h20c2-2 4-8 4-14s-2-10-2-10H18z" fill="#C8963E" opacity="0.85"/>
+                <path d="M22 40h16v4c0 2-3 4-8 4s-8-2-8-4v-4z" fill="#C8963E"/>
+                <ellipse cx="30" cy="16" rx="10" ry="2" fill="#E8C47A" opacity="0.5"/>
+                <path d="M28 5c0-2 1-3 2-3s2 1 2 3" stroke="#C8963E" stroke-width="1.5" fill="none"/>
+            </svg>
+            <div class="logo__text">
+                <span class="logo__name">I.N.E.S.</span>
+                <span class="logo__tagline">IMPECCABLE NATURALS<br>EXQUISITE SWEETS</span>
+            </div>
+        </a>
+
+        <nav class="nav" id="nav">
+            <a href="#about" class="nav__link" data-i18n="nav.about">About Us</a>
+            <a href="#cakes" class="nav__link" data-i18n="nav.cakes">Cakes to Order</a>
+            <a href="#cakeshed" class="nav__link" data-i18n="nav.cakeshed">Cake Shed</a>
+            <a href="#gallery" class="nav__link" data-i18n="nav.gallery">Gallery</a>
+            <a href="#reviews" class="nav__link" data-i18n="nav.reviews">Reviews</a>
+            <a href="#order" class="nav__link nav__link--cta" data-i18n="nav.order">Order Now</a>
+        </nav>
+
+        <div class="header__right">
+            <div class="lang-switcher">
+                <button class="lang-btn active" data-lang="en">EN</button>
+                <button class="lang-btn" data-lang="ua">UA</button>
+                <button class="lang-btn" data-lang="ru">RU</button>
+            </div>
+            <button class="burger" id="burger" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+</header>
+
+<!-- Hero -->
+<section class="hero" id="hero">
+    <div class="hero__curve"></div>
+    <div class="container hero__inner">
+        <div class="hero__content">
+            <h1 class="hero__title" data-i18n="hero.title">Homemade Cakes<br>with Love & Taste</h1>
+            <p class="hero__subtitle" data-i18n="hero.subtitle">Custom cakes for every occasion — made from natural ingredients in Donegal, Ireland</p>
+            <div class="hero__buttons">
+                <a href="#order" class="btn btn--primary" data-i18n="hero.cta">Order a Cake</a>
+                <a href="#gallery" class="btn btn--outline" data-i18n="hero.gallery">View Our Work</a>
+            </div>
+        </div>
+        <div class="hero__image">
+            <div class="hero__image-placeholder">
+                <svg viewBox="0 0 300 300" width="300" height="300">
+                    <circle cx="150" cy="150" r="140" fill="#FDF6EC" stroke="#C8963E" stroke-width="2"/>
+                    <path d="M100 200 Q110 140 150 130 Q190 140 200 200 Z" fill="#C8963E" opacity="0.3"/>
+                    <path d="M110 200 Q115 155 150 145 Q185 155 190 200 Z" fill="#C8963E" opacity="0.5"/>
+                    <ellipse cx="150" cy="200" rx="55" ry="8" fill="#C8963E" opacity="0.2"/>
+                    <path d="M120 200h60v15c0 8-13 15-30 15s-30-7-30-15v-15z" fill="#C8963E" opacity="0.4"/>
+                    <circle cx="130" cy="170" r="5" fill="#E8C47A"/>
+                    <circle cx="150" cy="160" r="5" fill="#E8C47A"/>
+                    <circle cx="170" cy="170" r="5" fill="#E8C47A"/>
+                    <text x="150" y="270" text-anchor="middle" fill="#C8963E" font-size="14" font-family="Montserrat">Your photo here</text>
+                </svg>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About -->
+<section class="about section" id="about">
+    <div class="container">
+        <h2 class="section__title" data-i18n="about.title">About Us</h2>
+        <div class="about__grid">
+            <div class="about__text">
+                <p data-i18n="about.p1">Welcome to I.N.E.S. — a home bakery in the heart of Donegal, Ireland. Every cake we create is made with passion, using only natural and high-quality ingredients.</p>
+                <p data-i18n="about.p2">We believe that a cake is more than just a dessert — it's the centrepiece of your celebration. Whether it's a birthday, wedding, anniversary, or just a sweet Friday treat, we'll make it special.</p>
+                <p data-i18n="about.p3">All cakes are baked fresh to order. We offer a wide range of flavours and designs — from classic elegance to bold custom creations based on your ideas.</p>
+            </div>
+            <div class="about__features">
+                <div class="feature">
+                    <div class="feature__icon">
+                        <svg viewBox="0 0 48 48" width="48" height="48"><circle cx="24" cy="24" r="22" fill="none" stroke="#C8963E" stroke-width="2"/><path d="M16 24l6 6 12-12" stroke="#C8963E" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>
+                    </div>
+                    <h3 class="feature__title" data-i18n="about.f1.title">Natural Ingredients</h3>
+                    <p class="feature__text" data-i18n="about.f1.text">Only the finest natural products — no artificial colours or preservatives</p>
+                </div>
+                <div class="feature">
+                    <div class="feature__icon">
+                        <svg viewBox="0 0 48 48" width="48" height="48"><circle cx="24" cy="24" r="22" fill="none" stroke="#C8963E" stroke-width="2"/><path d="M24 12v12l8 5" stroke="#C8963E" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>
+                    </div>
+                    <h3 class="feature__title" data-i18n="about.f2.title">Freshly Baked</h3>
+                    <p class="feature__text" data-i18n="about.f2.text">Every cake is made fresh — we bake to order, never in advance</p>
+                </div>
+                <div class="feature">
+                    <div class="feature__icon">
+                        <svg viewBox="0 0 48 48" width="48" height="48"><circle cx="24" cy="24" r="22" fill="none" stroke="#C8963E" stroke-width="2"/><path d="M15 28c0-5 4-9 9-9s9 4 9 9" stroke="#C8963E" stroke-width="2.5" fill="none" stroke-linecap="round"/><circle cx="24" cy="22" r="4" stroke="#C8963E" stroke-width="2" fill="none"/></svg>
+                    </div>
+                    <h3 class="feature__title" data-i18n="about.f3.title">Your Design</h3>
+                    <p class="feature__text" data-i18n="about.f3.text">Send us your idea or photo — we'll bring it to life in cake form</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Cakes to Order -->
+<section class="cakes section section--alt" id="cakes">
+    <div class="container">
+        <h2 class="section__title" data-i18n="cakes.title">Cakes to Order</h2>
+        <p class="section__subtitle" data-i18n="cakes.subtitle">Choose your size, flavour and design — we'll create the perfect cake for your occasion</p>
+
+        <div class="cakes__sizes">
+            <div class="size-card">
+                <div class="size-card__icon">
+                    <svg viewBox="0 0 80 80" width="80" height="80">
+                        <ellipse cx="40" cy="55" rx="25" ry="5" fill="#C8963E" opacity="0.2"/>
+                        <rect x="25" y="35" width="30" height="20" rx="3" fill="#C8963E" opacity="0.4"/>
+                        <ellipse cx="40" cy="35" rx="15" ry="4" fill="#E8C47A"/>
+                        <text x="40" y="50" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">5"</text>
+                    </svg>
+                </div>
+                <h3 class="size-card__title">Mini — 5" (13 cm)</h3>
+                <p class="size-card__serves" data-i18n="cakes.serves6">Serves 6 people</p>
+                <p class="size-card__price" data-i18n="cakes.from30">from €30</p>
+            </div>
+            <div class="size-card">
+                <div class="size-card__icon">
+                    <svg viewBox="0 0 80 80" width="80" height="80">
+                        <ellipse cx="40" cy="55" rx="28" ry="5" fill="#C8963E" opacity="0.2"/>
+                        <rect x="22" y="30" width="36" height="25" rx="3" fill="#C8963E" opacity="0.4"/>
+                        <ellipse cx="40" cy="30" rx="18" ry="5" fill="#E8C47A"/>
+                        <text x="40" y="48" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">6"</text>
+                    </svg>
+                </div>
+                <h3 class="size-card__title">Maxi — 6" (15 cm)</h3>
+                <p class="size-card__serves" data-i18n="cakes.serves8">Serves 8 people</p>
+                <p class="size-card__price" data-i18n="cakes.from35">from €35</p>
+            </div>
+            <div class="size-card">
+                <div class="size-card__icon">
+                    <svg viewBox="0 0 80 80" width="80" height="80">
+                        <ellipse cx="40" cy="58" rx="32" ry="5" fill="#C8963E" opacity="0.2"/>
+                        <rect x="15" y="22" width="50" height="36" rx="3" fill="#C8963E" opacity="0.4"/>
+                        <ellipse cx="40" cy="22" rx="25" ry="6" fill="#E8C47A"/>
+                        <text x="40" y="46" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">8"+</text>
+                    </svg>
+                </div>
+                <h3 class="size-card__title" data-i18n="cakes.custom">Custom Size</h3>
+                <p class="size-card__serves" data-i18n="cakes.serves12">Serves 12+ people</p>
+                <p class="size-card__price" data-i18n="cakes.priceAgreed">Price on request</p>
+            </div>
+        </div>
+
+        <div class="cakes__flavours">
+            <h3 class="cakes__flavours-title" data-i18n="cakes.flavoursTitle">Popular Flavours</h3>
+            <div class="flavour-tags">
+                <span class="flavour-tag" data-i18n="cakes.fl1">Vanilla</span>
+                <span class="flavour-tag" data-i18n="cakes.fl2">Chocolate</span>
+                <span class="flavour-tag" data-i18n="cakes.fl3">Red Velvet</span>
+                <span class="flavour-tag" data-i18n="cakes.fl4">Carrot Cake</span>
+                <span class="flavour-tag" data-i18n="cakes.fl5">Honey Cake</span>
+                <span class="flavour-tag" data-i18n="cakes.fl6">Cheesecake</span>
+                <span class="flavour-tag" data-i18n="cakes.fl7">Napoleon</span>
+                <span class="flavour-tag" data-i18n="cakes.fl8">Bento Cake</span>
+            </div>
+            <p class="cakes__note" data-i18n="cakes.note">Cream options: white or milk chocolate ganache. Complex fillings and custom designs — discussed individually.</p>
+        </div>
+
+        <div class="cakes__cta">
+            <a href="#order" class="btn btn--primary" data-i18n="cakes.cta">Order Your Cake</a>
+        </div>
+    </div>
+</section>
+
+<!-- Cake Shed -->
+<section class="cakeshed section" id="cakeshed">
+    <div class="container">
+        <h2 class="section__title" data-i18n="shed.title">Cake Shed</h2>
+        <div class="cakeshed__inner">
+            <div class="cakeshed__info">
+                <p class="cakeshed__desc" data-i18n="shed.desc">Visit our cosy cake shed right next to our home! Fresh cakes and treats available for walk-in purchase — no pre-order needed.</p>
+                <div class="cakeshed__schedule">
+                    <div class="schedule-day">
+                        <span class="schedule-day__name" data-i18n="shed.fri">Friday</span>
+                        <span class="schedule-day__time">9:00 — 21:00</span>
+                    </div>
+                    <div class="schedule-day">
+                        <span class="schedule-day__name" data-i18n="shed.sat">Saturday</span>
+                        <span class="schedule-day__time">9:00 — 21:00</span>
+                    </div>
+                    <div class="schedule-day">
+                        <span class="schedule-day__name" data-i18n="shed.sun">Sunday</span>
+                        <span class="schedule-day__time">9:00 — 21:00</span>
+                    </div>
+                </div>
+                <div class="cakeshed__address">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#C8963E" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+                    <span>Mullaghdaff Scotch, Kincasslagh, Co. Donegal, F94 C2D7</span>
+                </div>
+            </div>
+            <div class="cakeshed__visual">
+                <div class="cakeshed__placeholder">
+                    <svg viewBox="0 0 260 200" width="260" height="200">
+                        <rect x="30" y="80" width="200" height="100" rx="8" fill="#C8963E" opacity="0.15"/>
+                        <polygon points="130,30 30,80 230,80" fill="#C8963E" opacity="0.25"/>
+                        <rect x="100" y="120" width="60" height="60" rx="4" fill="#C8963E" opacity="0.2"/>
+                        <text x="130" y="110" text-anchor="middle" fill="#C8963E" font-size="12">Cake Shed</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Gallery -->
+<section class="gallery section section--alt" id="gallery">
+    <div class="container">
+        <h2 class="section__title" data-i18n="gallery.title">Our Work</h2>
+        <p class="section__subtitle" data-i18n="gallery.subtitle">A selection of our recent cakes — each one unique and made with care</p>
+        <div class="gallery__categories" id="galleryCategories"></div>
+        <div class="gallery__more-wrap" id="galleryMoreWrap" style="display:none;">
+            <a href="gallery.html" class="btn btn--outline" data-i18n="gallery.viewAll">View All Categories</a>
+        </div>
+    </div>
+</section>
+
+<!-- Reviews -->
+<section class="reviews section" id="reviews">
+    <div class="container">
+        <h2 class="section__title" data-i18n="reviews.title">Customer Reviews</h2>
+        <div class="reviews__grid" id="latestReviews"></div>
+        <div class="reviews__more-wrap">
+            <a href="reviews.html" class="btn btn--outline" data-i18n="reviews.viewAll">View All Reviews</a>
+        </div>
+    </div>
+</section>
+
+<!-- Order Form -->
+<section class="order section section--alt" id="order">
+    <div class="container">
+        <h2 class="section__title" data-i18n="order.title">Place an Order</h2>
+        <p class="section__subtitle" data-i18n="order.subtitle">Fill in the form below and we'll get back to you to discuss the details</p>
+        <form class="order__form" id="orderForm">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="name" data-i18n="order.name">Your Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone" data-i18n="order.phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="email" data-i18n="order.email">Email</label>
+                    <input type="email" id="email" name="email">
+                </div>
+                <div class="form-group">
+                    <label for="date" data-i18n="order.date">Date Needed</label>
+                    <input type="date" id="date" name="date" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="cakeSize" data-i18n="order.size">Cake Size</label>
+                    <select id="cakeSize" name="cakeSize">
+                        <option value="mini" data-i18n="order.sizeMini">Mini — 5" (13 cm)</option>
+                        <option value="maxi" data-i18n="order.sizeMaxi">Maxi — 6" (15 cm)</option>
+                        <option value="custom" data-i18n="order.sizeCustom">Custom size</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="flavour" data-i18n="order.flavour">Preferred Flavour</label>
+                    <input type="text" id="flavour" name="flavour" data-i18n-placeholder="order.flavourPh" placeholder="e.g. Vanilla, Chocolate...">
+                </div>
+            </div>
+            <div class="form-group form-group--full">
+                <label data-i18n="order.allergies">Allergies</label>
+                <div class="allergy-chips" id="allergyChips">
+                    <button type="button" class="allergy-chip" data-allergy="gluten" data-i18n="order.al.gluten">Gluten</button>
+                    <button type="button" class="allergy-chip" data-allergy="nuts" data-i18n="order.al.nuts">Nuts</button>
+                    <button type="button" class="allergy-chip" data-allergy="dairy" data-i18n="order.al.dairy">Dairy</button>
+                    <button type="button" class="allergy-chip" data-allergy="eggs" data-i18n="order.al.eggs">Eggs</button>
+                    <button type="button" class="allergy-chip" data-allergy="soy" data-i18n="order.al.soy">Soy</button>
+                    <button type="button" class="allergy-chip allergy-chip--other" id="allergyOtherToggle" data-i18n="order.al.other">Other</button>
+                </div>
+                <input type="text" id="allergyOtherInput" class="allergy-other-input" name="allergyOther" style="display:none;" data-i18n-placeholder="order.al.otherPh" placeholder="Specify your allergy...">
+                <input type="hidden" id="allergyHidden" name="allergies">
+            </div>
+            <div class="form-group form-group--full">
+                <label for="message" data-i18n="order.message">Your Wishes / Description</label>
+                <textarea id="message" name="message" rows="4" data-i18n-placeholder="order.messagePh" placeholder="Describe your ideal cake — theme, colours, text, number of tiers..."></textarea>
+            </div>
+            <div class="form-group form-group--full">
+                <label for="photo" data-i18n="order.photo">Attach Reference Photo</label>
+                <input type="file" id="photo" name="photo" accept="image/*">
+            </div>
+            <button type="submit" class="btn btn--primary btn--full" data-i18n="order.submit">Send Order</button>
+        </form>
+        <div class="order__success" id="orderSuccess" style="display:none;">
+            <svg viewBox="0 0 64 64" width="64" height="64"><circle cx="32" cy="32" r="30" fill="#C8963E" opacity="0.15"/><path d="M20 32l8 8 16-16" stroke="#C8963E" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+            <h3 data-i18n="order.successTitle">Thank you!</h3>
+            <p data-i18n="order.successText">Your order has been received. We'll contact you soon to discuss the details.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer" id="contact">
+    <div class="container footer__inner">
+        <div class="footer__brand">
+            <div class="logo logo--footer">
+                <svg class="logo__icon" viewBox="0 0 60 60" width="36" height="36">
+                    <path d="M30 8c-3 0-5.5 2-6 5h12c-.5-3-3-5-6-5z" fill="#E8C47A"/>
+                    <rect x="20" y="13" width="20" height="3" rx="1.5" fill="#E8C47A"/>
+                    <path d="M18 16c0 0-2 4-2 10s2 12 4 14h20c2-2 4-8 4-14s-2-10-2-10H18z" fill="#E8C47A" opacity="0.85"/>
+                    <path d="M22 40h16v4c0 2-3 4-8 4s-8-2-8-4v-4z" fill="#E8C47A"/>
+                </svg>
+                <div class="logo__text">
+                    <span class="logo__name" style="color:#fff">I.N.E.S.</span>
+                </div>
+            </div>
+            <p class="footer__tagline">Impeccable Naturals Exquisite Sweets</p>
+        </div>
+        <div class="footer__contacts">
+            <h4 data-i18n="footer.contacts">Contacts</h4>
+            <a href="tel:+353874917435" class="footer__link">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+                087 491 7435
+            </a>
+            <a href="#" class="footer__link">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+                Mullaghdaff Scotch, Kincasslagh,<br>Co. Donegal, F94 C2D7
+            </a>
+        </div>
+        <div class="footer__hours">
+            <h4 data-i18n="footer.shedHours">Cake Shed Hours</h4>
+            <p data-i18n="footer.schedule">Friday — Sunday</p>
+            <p class="footer__pickup" data-i18n="footer.pickup">Collection & delivery by arrangement</p>
+        </div>
+    </div>
+    <div class="footer__bottom">
+        <div class="container">
+            <p>&copy; 2026 I.N.E.S. — Impeccable Naturals Exquisite Sweets</p>
+        </div>
+    </div>
+</footer>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+<script src="js/firebase-init.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
