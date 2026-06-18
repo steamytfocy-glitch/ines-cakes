@@ -116,7 +116,8 @@ adminBurger.addEventListener('click', function() {
 
 // ===== ORDERS =====
 function loadOrders() {
-    var orders = getData('orders', []);
+    var orders = getData('orders', null);
+    if (!orders) orders = [];
     var list = document.getElementById('ordersList');
     var stats = document.getElementById('orderStats');
 
@@ -190,7 +191,8 @@ function loadOrders() {
 var pendingUploadCategory = '';
 
 function loadGallery() {
-    var gallery = getData('gallery-cat', {});
+    var gallery = getData('gallery-cat', null);
+    if (!gallery) gallery = {};
     var container = document.getElementById('galleryAdmin');
 
     var hasAny = false;
@@ -297,27 +299,26 @@ document.getElementById('galleryUpload').addEventListener('change', function(e) 
     if (!files.length || !pendingUploadCategory) return;
 
     var catId = pendingUploadCategory;
-    var gallery = getData('gallery-cat', {});
-    if (!gallery[catId]) gallery[catId] = [];
     var loaded = 0;
     var total = files.length;
 
-    for (var i = 0; i < files.length; i++) {
-        (function(file) {
-            compressImage(file, 800, 0.7, function(dataUrl) {
-                gallery[catId].push(dataUrl);
-                loaded++;
-                if (loaded === total) {
-                    try {
+    fbGetOnce('gallery-cat', function(gallery) {
+        if (!gallery) gallery = {};
+        if (!gallery[catId]) gallery[catId] = [];
+
+        for (var i = 0; i < files.length; i++) {
+            (function(file) {
+                compressImage(file, 800, 0.7, function(dataUrl) {
+                    gallery[catId].push(dataUrl);
+                    loaded++;
+                    if (loaded === total) {
                         setData('gallery-cat', gallery);
                         loadGallery();
-                    } catch(err) {
-                        alert('Storage full! Try uploading fewer or smaller photos.');
                     }
-                }
-            });
-        })(files[i]);
-    }
+                });
+            })(files[i]);
+        }
+    });
     e.target.value = '';
     pendingUploadCategory = '';
 });
@@ -438,7 +439,8 @@ document.getElementById('sortDone').addEventListener('click', function() {
 
 // ===== REVIEWS =====
 function loadReviews() {
-    var reviews = getData('reviews', []);
+    var reviews = getData('reviews', null);
+    if (!reviews) reviews = [];
     var container = document.getElementById('reviewsAdmin');
 
     if (reviews.length === 0) {
@@ -533,7 +535,8 @@ document.getElementById('reviewForm').addEventListener('submit', function(e) {
 
 // ===== CONTENT =====
 function loadContent() {
-    var content = getData('content', {});
+    var content = getData('content', null);
+    if (!content) return;
     var fields = document.querySelectorAll('[data-key]');
     fields.forEach(function(field) {
         var key = field.dataset.key;
