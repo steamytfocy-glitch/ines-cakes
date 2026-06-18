@@ -296,32 +296,35 @@ document.querySelector('#categoryModal .modal__overlay').addEventListener('click
 });
 
 document.getElementById('galleryUpload').addEventListener('change', function(e) {
-    var files = e.target.files;
-    if (!files.length || !pendingUploadCategory) return;
+    var fileList = e.target.files;
+    if (!fileList.length || !pendingUploadCategory) return;
+
+    var savedFiles = [];
+    for (var f = 0; f < fileList.length; f++) savedFiles.push(fileList[f]);
 
     var catId = pendingUploadCategory;
+    var total = savedFiles.length;
     var loaded = 0;
-    var total = files.length;
+
+    e.target.value = '';
+    pendingUploadCategory = '';
 
     fbGetOnce('gallery-cat', function(gallery) {
         if (!gallery) gallery = {};
         if (!gallery[catId]) gallery[catId] = [];
 
-        for (var i = 0; i < files.length; i++) {
+        for (var i = 0; i < savedFiles.length; i++) {
             (function(file) {
                 compressImage(file, 800, 0.7, function(dataUrl) {
                     gallery[catId].push(dataUrl);
                     loaded++;
                     if (loaded === total) {
                         setData('gallery-cat', gallery);
-                        loadGallery();
                     }
                 });
-            })(files[i]);
+            })(savedFiles[i]);
         }
     });
-    e.target.value = '';
-    pendingUploadCategory = '';
 });
 
 // ===== SORT BY CATEGORY =====
