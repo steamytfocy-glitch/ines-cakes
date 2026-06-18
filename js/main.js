@@ -349,6 +349,7 @@ function setLanguage(lang, animate) {
         }, 300);
     } else {
         applyTranslations(lang);
+        if (typeof populateDatePicker === 'function') populateDatePicker();
     }
 }
 
@@ -446,6 +447,50 @@ function updateAllergyHidden() {
     }
     document.getElementById('allergyHidden').value = all.join(', ');
 }
+
+// ===== PHONE VALIDATION =====
+var phoneInput = document.getElementById('phone');
+phoneInput.addEventListener('input', function() {
+    this.value = this.value.replace(/[^0-9+\s\-()]/g, '');
+});
+
+// ===== DATE PICKER =====
+var daySelect = document.getElementById('dateDay');
+var monthSelect = document.getElementById('dateMonth');
+var dateHidden = document.getElementById('date');
+
+var monthNames = {
+    en: ['January','February','March','April','May','June','July','August','September','October','November','December'],
+    ua: ['Січень','Лютий','Березень','Квітень','Травень','Червень','Липень','Серпень','Вересень','Жовтень','Листопад','Грудень'],
+    ru: ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь']
+};
+
+function populateDatePicker() {
+    var lang = currentLang || 'en';
+    var names = monthNames[lang] || monthNames.en;
+
+    daySelect.innerHTML = '<option value="">' + (lang === 'ua' ? 'День' : lang === 'ru' ? 'День' : 'Day') + '</option>';
+    for (var d = 1; d <= 31; d++) {
+        daySelect.innerHTML += '<option value="' + d + '">' + d + '</option>';
+    }
+
+    monthSelect.innerHTML = '<option value="">' + (lang === 'ua' ? 'Місяць' : lang === 'ru' ? 'Месяц' : 'Month') + '</option>';
+    for (var m = 0; m < 12; m++) {
+        monthSelect.innerHTML += '<option value="' + (m + 1) + '">' + names[m] + '</option>';
+    }
+}
+
+function updateHiddenDate() {
+    var d = daySelect.value;
+    var m = monthSelect.value;
+    if (d && m) {
+        dateHidden.value = m + '/' + d;
+    }
+}
+
+daySelect.addEventListener('change', updateHiddenDate);
+monthSelect.addEventListener('change', updateHiddenDate);
+populateDatePicker();
 
 // ===== ORDER FORM =====
 var orderForm = document.getElementById('orderForm');
