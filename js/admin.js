@@ -299,6 +299,65 @@ function addCategory(callback) {
     });
 }
 
+function renderManageCats() {
+    var list = document.getElementById('catsManageList');
+    var html = '';
+    for (var i = 0; i < CATEGORIES.length; i++) {
+        var c = CATEGORIES[i];
+        html += '<div class="cat-manage-row" data-cat-id="' + c.id + '">' +
+            '<input type="text" class="cat-manage-input" value="' + escapeHtml(c.en) + '" data-cat-id="' + c.id + '">' +
+            '<button class="btn-delete cat-manage-del" data-cat-id="' + c.id + '">Delete</button>' +
+        '</div>';
+    }
+    list.innerHTML = html;
+
+    list.querySelectorAll('.cat-manage-del').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var catId = this.dataset.catId;
+            if (!confirm('Delete this category? Its photos will move to "Other".')) return;
+            // move photos to other
+            fbGetOnce('gallery-cat', function(gallery) {
+                if (!gallery) gallery = {};
+                if (gallery[catId] && gallery[catId].length) {
+                    if (!gallery['other']) gallery['other'] = [];
+                    gallery['other'] = gallery['other'].concat(gallery[catId]);
+                }
+                delete gallery[catId];
+                setData('gallery-cat', gallery);
+            });
+            var cats = CATEGORIES.filter(function(c) { return c.id !== catId; });
+            setData('categories', cats);
+        });
+    });
+
+    list.querySelectorAll('.cat-manage-input').forEach(function(input) {
+        input.addEventListener('change', function() {
+            var catId = this.dataset.catId;
+            var newName = this.value.trim();
+            if (!newName) return;
+            var cats = CATEGORIES.map(function(c) {
+                if (c.id === catId) return { id: c.id, en: newName, ua: newName, ru: newName };
+                return c;
+            });
+            setData('categories', cats);
+        });
+    });
+}
+
+document.getElementById('manageCatsBtn').addEventListener('click', function() {
+    renderManageCats();
+    document.getElementById('manageCatsModal').style.display = 'flex';
+});
+document.getElementById('manageCatsClose').addEventListener('click', function() {
+    document.getElementById('manageCatsModal').style.display = 'none';
+});
+document.querySelector('#manageCatsModal .modal__overlay').addEventListener('click', function() {
+    document.getElementById('manageCatsModal').style.display = 'none';
+});
+document.getElementById('manageAddCatBtn').addEventListener('click', function() {
+    addCategory();
+});
+
 function showCategoryModal() {
     var picker = document.getElementById('categoryPick');
     var html = '';
@@ -377,13 +436,56 @@ var sortPanel = document.getElementById('sortPanel');
 var sortGrid = document.getElementById('sortGrid');
 var galleryAdminContainer = document.getElementById('galleryAdmin');
 
+var sortSelection = {};
+
+function catLabelById(catId) {
+    for (var c = 0; c < CATEGORIES.length; c++) {
+        if (CATEGORIES[c].id === catId) return CATEGORIES[c].en;
+    }
+    return '';
+}
+
+function updateSortCount() {
+    var n = Object.keys(sortSelection).length;
+    document.getElementById('sortCount').textContent = n + ' selected';
+    document.getElementById('sortAssign').style.display = n > 0 ? 'flex' : 'none';
+}
+
+function renderSortAssign() {
+    var bar = document.getElementById('sortAssign');
+    var html = '<span class="sort-assign__label">Assign to:</span>';
+    for (var i = 0; i < CATEGORIES.length; i++) {
+        html += '<button class="sort-assign__btn" data-assign="' + CATEGORIES[i].id + '">' + escapeHtml(CATEGORIES[i].en) + '</button>';
+    }
+    bar.innerHTML = html;
+    bar.querySelectorAll('[data-assign]').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var catId = this.dataset.assign;
+            Object.keys(sortSelection).forEach(function(idx) {
+                window._sortPhotos[idx].cat = catId;
+                var item = sortGrid.querySelector('[data-sort-idx="' + idx + '"]');
+                if (item) {
+                    item.classList.add('sorted');
+                    item.classList.remove('selected');
+                    var oldBadge = item.querySelector('.sort-item__badge');
+                    if (oldBadge) oldBadge.remove();
+                    var badge = document.createElement('div');
+                    badge.className = 'sort-item__badge';
+                    badge.textContent = catLabelById(catId);
+                    item.appendChild(badge);
+                }
+            });
+            sortSelection = {};
+            updateSortCount();
+        });
+    });
+}
+
 document.getElementById('sortPhotosBtn').addEventListener('click', function() {
-    var oldPhotos = getData('gallery', []);
-    var catGallery = getData('gallery-cat', {});
+    var catGallery = getData('gallery-cat', {}) || {};
+    var oldPhotos = getData('gallery', []) || [];
 
-    // Collect ALL photos (old flat + already categorized)
     var allPhotos = [];
-
     for (var i = 0; i < oldPhotos.length; i++) {
         allPhotos.push({ src: oldPhotos[i], cat: null });
     }
@@ -399,67 +501,56 @@ document.getElementById('sortPhotosBtn').addEventListener('click', function() {
         return;
     }
 
+    sortSelection = {};
     sortPanel.style.display = 'block';
     galleryAdminContainer.style.display = 'none';
-    document.querySelector('.tab-header').style.display = 'none';
+    document.querySelector('#tab-gallery .tab-header').style.display = 'none';
 
     var html = '';
     for (var k = 0; k < allPhotos.length; k++) {
         var p = allPhotos[k];
-        var catLabel = '';
-        if (p.cat) {
-            for (var c = 0; c < CATEGORIES.length; c++) {
-                if (CATEGORIES[c].id === p.cat) { catLabel = CATEGORIES[c].en; break; }
-            }
-        }
+        var catLabel = p.cat ? catLabelById(p.cat) : '';
         html += '<div class="sort-item' + (p.cat ? ' sorted' : '') + '" data-sort-idx="' + k + '">' +
             '<img src="' + p.src + '" alt="photo">' +
+            '<div class="sort-item__check">✓</div>' +
             (catLabel ? '<div class="sort-item__badge">' + escapeHtml(catLabel) + '</div>' : '') +
         '</div>';
     }
     sortGrid.innerHTML = html;
-
     window._sortPhotos = allPhotos;
+
+    renderSortAssign();
+    updateSortCount();
 
     sortGrid.querySelectorAll('.sort-item').forEach(function(item) {
         item.addEventListener('click', function() {
-            var idx = parseInt(this.dataset.sortIdx);
-            showSortCategoryPicker(idx);
+            var idx = this.dataset.sortIdx;
+            if (sortSelection[idx]) {
+                delete sortSelection[idx];
+                this.classList.remove('selected');
+            } else {
+                sortSelection[idx] = true;
+                this.classList.add('selected');
+            }
+            updateSortCount();
         });
     });
 });
 
-function showSortCategoryPicker(photoIdx) {
-    var picker = document.getElementById('categoryPick');
-    var html = '';
-    for (var i = 0; i < CATEGORIES.length; i++) {
-        html += '<button class="category-pick-btn" data-cat-id="' + CATEGORIES[i].id + '">' + CATEGORIES[i].en + '</button>';
-    }
-    picker.innerHTML = html;
-    document.getElementById('categoryModal').style.display = 'flex';
-
-    picker.querySelectorAll('.category-pick-btn').forEach(function(btn) {
-        btn.addEventListener('click', function() {
-            var catId = this.dataset.catId;
-            window._sortPhotos[photoIdx].cat = catId;
-            document.getElementById('categoryModal').style.display = 'none';
-
-            // Update UI
-            var item = sortGrid.querySelector('[data-sort-idx="' + photoIdx + '"]');
-            item.classList.add('sorted');
-            var catLabel = '';
-            for (var c = 0; c < CATEGORIES.length; c++) {
-                if (CATEGORIES[c].id === catId) { catLabel = CATEGORIES[c].en; break; }
-            }
-            var oldBadge = item.querySelector('.sort-item__badge');
-            if (oldBadge) oldBadge.remove();
-            var badge = document.createElement('div');
-            badge.className = 'sort-item__badge';
-            badge.textContent = catLabel;
-            item.appendChild(badge);
-        });
+document.getElementById('sortSelectAll').addEventListener('click', function() {
+    var items = sortGrid.querySelectorAll('.sort-item');
+    var allSelected = Object.keys(sortSelection).length === items.length;
+    sortSelection = {};
+    items.forEach(function(item) {
+        if (allSelected) {
+            item.classList.remove('selected');
+        } else {
+            sortSelection[item.dataset.sortIdx] = true;
+            item.classList.add('selected');
+        }
     });
-}
+    updateSortCount();
+});
 
 document.getElementById('sortDone').addEventListener('click', function() {
     var photos = window._sortPhotos || [];
@@ -831,6 +922,8 @@ function loadAllData() {
         }
         if (val && val.length) CATEGORIES = val;
         loadGallery();
+        var mcm = document.getElementById('manageCatsModal');
+        if (mcm && mcm.style.display === 'flex') renderManageCats();
     });
     listenData('orders', function() { loadOrders(); });
     listenData('gallery-cat', function() { loadGallery(); });
