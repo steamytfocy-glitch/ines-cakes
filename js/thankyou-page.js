@@ -3,19 +3,28 @@ var translations = {
         "ty.title": "Thank you!",
         "ty.text": "Your order has been received. We'll contact you soon to discuss all the details.",
         "ty.or": "Or contact us directly:",
-        "ty.home": "Back to Home"
+        "ty.home": "Back to Home",
+        "ty.codeLabel": "Your order number",
+        "ty.codeHint": "Save this number. Use it to check your order status at any time.",
+        "ty.track": "Track my order"
     },
     ua: {
         "ty.title": "Дякуємо!",
         "ty.text": "Ваше замовлення отримано. Ми зв'яжемося з вами найближчим часом для обговорення деталей.",
         "ty.or": "Або зв'яжіться з нами напряму:",
-        "ty.home": "На головну"
+        "ty.home": "На головну",
+        "ty.codeLabel": "Номер вашого замовлення",
+        "ty.codeHint": "Збережіть цей номер. За ним ви будь-коли зможете перевірити статус замовлення.",
+        "ty.track": "Відстежити замовлення"
     },
     ru: {
         "ty.title": "Спасибо!",
         "ty.text": "Ваш заказ получен. Мы свяжемся с вами в ближайшее время для обсуждения деталей.",
         "ty.or": "Или свяжитесь с нами напрямую:",
-        "ty.home": "На главную"
+        "ty.home": "На главную",
+        "ty.codeLabel": "Номер вашего заказа",
+        "ty.codeHint": "Сохраните этот номер. По нему вы в любой момент сможете проверить статус заказа.",
+        "ty.track": "Отследить заказ"
     }
 };
 
@@ -38,6 +47,17 @@ function setLang(lang) {
 document.querySelectorAll('.lang-btn').forEach(function(btn) {
     btn.addEventListener('click', function() { setLang(this.dataset.lang); });
 });
+
+// Show order code + track link if present in URL
+(function() {
+    var params = new URLSearchParams(window.location.search);
+    var code = params.get('code');
+    if (!code) return;
+    var box = document.getElementById('tyCodeBox');
+    document.getElementById('tyCodeValue').textContent = code;
+    document.getElementById('tyTrackBtn').href = 'order.html?code=' + encodeURIComponent(code);
+    box.style.display = 'block';
+})();
 
 // Social links from Firebase content
 fbGet('content', function(content) {

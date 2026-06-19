@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I.N.E.S. — Order Status</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .os { min-height: 100vh; padding: 110px 20px 60px; }
+        .os__wrap { max-width: 620px; margin: 0 auto; }
+        .os__title { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--brown); text-align: center; margin-bottom: 6px; }
+        .os__sub { text-align: center; color: var(--text-light); margin-bottom: 30px; }
+
+        /* Lookup form (when no code) */
+        .os__lookup { background: #FBF6EC; border: 1px solid #E8D9BC; border-radius: 16px; padding: 26px; max-width: 420px; margin: 0 auto; text-align: center; }
+        .os__lookup input { width: 100%; padding: 14px 16px; border: 1px solid #E0CFA8; border-radius: 10px; font-size: 1.1rem; text-align: center; letter-spacing: 2px; text-transform: uppercase; margin: 14px 0; font-family: 'Montserrat', sans-serif; }
+        .os__lookup input:focus { outline: none; border-color: var(--gold); }
+
+        /* Result card */
+        .os__card { background: var(--white); border-radius: 18px; box-shadow: var(--shadow); padding: 30px; }
+        .os__code { text-align: center; margin-bottom: 22px; }
+        .os__code-label { font-size: .8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-light); }
+        .os__code-val { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: var(--gold); letter-spacing: 2px; }
+
+        .os__status-badge { display: block; text-align: center; font-size: 1.25rem; font-weight: 600; padding: 14px; border-radius: 12px; margin-bottom: 26px; }
+
+        /* Timeline */
+        .os__steps { list-style: none; padding: 0; margin: 0 0 26px; }
+        .os__step { display: flex; align-items: flex-start; gap: 14px; padding-bottom: 22px; position: relative; }
+        .os__step:not(:last-child)::before { content: ''; position: absolute; left: 13px; top: 28px; bottom: 0; width: 2px; background: #E8D9BC; }
+        .os__step-dot { flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; border: 2px solid #E8D9BC; background: var(--white); display: flex; align-items: center; justify-content: center; color: transparent; font-size: .9rem; z-index: 1; }
+        .os__step--done .os__step-dot { background: var(--gold); border-color: var(--gold); color: var(--white); }
+        .os__step--current .os__step-dot { border-color: var(--gold); box-shadow: 0 0 0 4px rgba(200,150,62,.18); }
+        .os__step-label { padding-top: 3px; color: var(--text-light); font-weight: 500; }
+        .os__step--done .os__step-label, .os__step--current .os__step-label { color: var(--brown); }
+        .os__step--current .os__step-label { font-weight: 600; }
+
+        .os__declined { text-align: center; padding: 16px; border-radius: 12px; background: #FBEAEA; color: #B23A3A; font-weight: 600; margin-bottom: 22px; }
+
+        .os__note { background: #FBF6EC; border-left: 3px solid var(--gold); border-radius: 8px; padding: 16px 18px; margin-bottom: 24px; }
+        .os__note-label { font-size: .8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-light); margin-bottom: 6px; }
+        .os__note-text { color: var(--brown); line-height: 1.6; white-space: pre-wrap; }
+
+        .os__summary { border-top: 1px solid #F0E6D2; padding-top: 18px; margin-bottom: 24px; }
+        .os__summary-row { display: flex; justify-content: space-between; padding: 6px 0; color: var(--text-light); font-size: .95rem; }
+        .os__summary-row strong { color: var(--brown); font-weight: 600; }
+
+        .os__wa { width: 100%; background: #25D366; color: #fff; border: none; border-radius: 12px; padding: 16px; font-size: 1.05rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; transition: var(--transition); }
+        .os__wa:hover { filter: brightness(.93); transform: translateY(-2px); }
+
+        .os__error { text-align: center; color: #B23A3A; background: #FBEAEA; border-radius: 12px; padding: 20px; max-width: 420px; margin: 20px auto 0; }
+        .os__back { text-align: center; margin-top: 30px; }
+    </style>
+</head>
+<body>
+
+<header class="header" id="header">
+    <div class="container header__inner">
+        <a href="index.html" class="logo">
+            <svg class="logo__icon" viewBox="0 0 60 60" width="42" height="42">
+                <path d="M30 8c-3 0-5.5 2-6 5h12c-.5-3-3-5-6-5z" fill="#C8963E"/>
+                <rect x="20" y="13" width="20" height="3" rx="1.5" fill="#C8963E"/>
+                <path d="M18 16c0 0-2 4-2 10s2 12 4 14h20c2-2 4-8 4-14s-2-10-2-10H18z" fill="#C8963E" opacity="0.85"/>
+                <path d="M22 40h16v4c0 2-3 4-8 4s-8-2-8-4v-4z" fill="#C8963E"/>
+                <ellipse cx="30" cy="16" rx="10" ry="2" fill="#E8C47A" opacity="0.5"/>
+                <path d="M28 5c0-2 1-3 2-3s2 1 2 3" stroke="#C8963E" stroke-width="1.5" fill="none"/>
+            </svg>
+            <div class="logo__text">
+                <span class="logo__name">I.N.E.S.</span>
+                <span class="logo__tagline">IMPECCABLE NATURALS<br>EXQUISITE SWEETS</span>
+            </div>
+        </a>
+        <div class="header__right">
+            <div class="lang-switcher">
+                <button class="lang-btn active" data-lang="en">EN</button>
+                <button class="lang-btn" data-lang="ua">UA</button>
+                <button class="lang-btn" data-lang="ru">RU</button>
+            </div>
+        </div>
+    </div>
+</header>
+
+<section class="os section--alt">
+    <div class="os__wrap">
+        <h1 class="os__title" data-i18n="os.title">Track Your Order</h1>
+        <p class="os__sub" data-i18n="os.sub">Enter your order number to see its status</p>
+
+        <!-- Lookup (shown when no/invalid code) -->
+        <div class="os__lookup" id="osLookup">
+            <label data-i18n="os.enterCode">Order number</label>
+            <input type="text" id="osCodeInput" placeholder="INES-XXXX" autocomplete="off">
+            <button class="btn btn--primary btn--full" id="osLookupBtn" data-i18n="os.check">Check status</button>
+            <div class="os__error" id="osError" style="display:none;" data-i18n="os.notFound">Order not found. Please check the number.</div>
+        </div>
+
+        <!-- Result -->
+        <div class="os__card" id="osCard" style="display:none;">
+            <div class="os__code">
+                <div class="os__code-label" data-i18n="os.codeLabel">Order number</div>
+                <div class="os__code-val" id="osCodeVal">—</div>
+            </div>
+
+            <div class="os__declined" id="osDeclined" style="display:none;" data-i18n="os.declinedMsg">Unfortunately this order could not be accepted. Please contact us for details.</div>
+
+            <ul class="os__steps" id="osSteps"></ul>
+
+            <div class="os__note" id="osNote" style="display:none;">
+                <div class="os__note-label" data-i18n="os.noteLabel">Message from the baker</div>
+                <div class="os__note-text" id="osNoteText"></div>
+            </div>
+
+            <div class="os__summary" id="osSummary"></div>
+
+            <a href="#" class="os__wa" id="osWa" target="_blank">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M17.6 6.3A7.85 7.85 0 0012 4a7.94 7.94 0 00-6.9 11.9L4 20l4.2-1.1A7.94 7.94 0 0012 19.9a7.94 7.94 0 005.6-13.6zM12 18.5a6.6 6.6 0 01-3.4-.9l-.24-.15-2.5.65.67-2.43-.16-.25A6.59 6.59 0 1118.6 12 6.6 6.6 0 0112 18.5zm3.6-4.95c-.2-.1-1.17-.58-1.35-.64s-.31-.1-.44.1-.51.64-.62.77-.23.15-.43.05a5.4 5.4 0 01-1.59-.98 6 6 0 01-1.1-1.37c-.11-.2 0-.3.09-.4l.3-.35a1.35 1.35 0 00.2-.33.37.37 0 000-.35c0-.1-.44-1.06-.6-1.45s-.32-.33-.44-.34h-.38a.72.72 0 00-.52.24 2.18 2.18 0 00-.68 1.62 3.79 3.79 0 00.79 2 8.66 8.66 0 003.32 2.93c.46.2.83.32 1.11.41a2.69 2.69 0 001.23.08 2 2 0 001.32-.93 1.65 1.65 0 00.11-.93c-.05-.08-.18-.13-.38-.23z"/></svg>
+                <span data-i18n="os.message">Message us on WhatsApp</span>
+            </a>
+        </div>
+
+        <div class="os__back">
+            <a href="index.html" class="btn btn--outline" data-i18n="os.home">Back to Home</a>
+        </div>
+    </div>
+</section>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+<script src="js/firebase-init.js"></script>
+<script src="js/order-page.js"></script>
+</body>
+</html>

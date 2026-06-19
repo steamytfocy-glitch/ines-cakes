@@ -15,6 +15,7 @@ export default async function handler(req, res) {
 
     var lines = [];
     lines.push('🎂 New Order — I.N.E.S.');
+    if (o.code) lines.push('🔖 Order: ' + o.code);
     lines.push('');
     if (o.name) lines.push('👤 Name: ' + o.name);
     if (o.phone) lines.push('📞 Phone: ' + o.phone);

@@ -482,6 +482,92 @@ body {
     color: var(--white);
 }
 
+/* Order status accents */
+.order-card { border-left: 4px solid transparent; }
+.order-card--new { border-left-color: var(--gold); }
+.order-card--confirmed { border-left-color: #2E6FA6; }
+.order-card--progress { border-left-color: var(--gold); }
+.order-card--ready { border-left-color: var(--green); }
+.order-card--done { border-left-color: var(--green); opacity: 0.85; }
+.order-card--declined { border-left-color: var(--red); opacity: 0.8; }
+
+.order-card__code {
+    display: inline-block;
+    margin-left: 8px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--gold-dark, #A67A2E);
+    background: var(--cream);
+    padding: 2px 8px;
+    border-radius: 6px;
+    vertical-align: middle;
+}
+
+.order-card__contact {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+}
+
+.order-wa-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #25D366;
+    color: #fff;
+    padding: 7px 14px;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: var(--transition);
+}
+.order-wa-btn:hover { filter: brightness(0.93); }
+
+.order-track-link {
+    font-size: 0.82rem;
+    color: var(--text-light);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--cream-dark);
+}
+.order-track-link:hover { color: var(--brown); }
+
+.order-card__note {
+    background: var(--cream);
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin-bottom: 12px;
+}
+.order-card__note label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-light);
+    margin-bottom: 6px;
+}
+.order-note-input {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid var(--cream-dark);
+    border-radius: 6px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.85rem;
+    resize: vertical;
+    outline: none;
+    margin-bottom: 8px;
+}
+.order-note-input:focus { border-color: var(--gold); }
+.order-note-save { padding: 6px 14px; font-size: 0.8rem; }
+.order-note-status {
+    margin-left: 10px;
+    font-size: 0.8rem;
+    color: var(--green);
+    font-weight: 600;
+}
+
 /* ===== CATEGORY PICKER ===== */
 .category-pick {
     display: flex;

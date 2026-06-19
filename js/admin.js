@@ -127,6 +127,30 @@ adminBurger.addEventListener('click', function() {
 });
 
 // ===== ORDERS =====
+var ORDER_STATUSES = [
+    { id: 'new', label: 'New' },
+    { id: 'confirmed', label: 'Confirmed' },
+    { id: 'progress', label: 'Being made' },
+    { id: 'ready', label: 'Ready' },
+    { id: 'done', label: 'Completed' },
+    { id: 'declined', label: 'Declined' }
+];
+
+function adminNormalizePhone(phone) {
+    var digits = String(phone || '').replace(/[^0-9]/g, '');
+    if (digits.indexOf('353') === 0) return digits;
+    if (digits.indexOf('0') === 0) return '353' + digits.slice(1);
+    return digits;
+}
+
+function adminWaMessage(order) {
+    var code = order.code || '';
+    var lang = order.lang || 'en';
+    if (lang === 'ua') return 'Вітаємо! Це пекарня I.N.E.S. щодо вашого замовлення ' + code + '.';
+    if (lang === 'ru') return 'Здравствуйте! Это пекарня I.N.E.S. по вашему заказу ' + code + '.';
+    return 'Hello! This is I.N.E.S. Bakery regarding your order ' + code + '.';
+}
+
 function loadOrders() {
     var orders = getData('orders', null);
     if (!orders) orders = [];
@@ -139,39 +163,66 @@ function loadOrders() {
         return;
     }
 
-    var counts = { new: 0, progress: 0, done: 0 };
+    var counts = { new: 0, active: 0, done: 0 };
     orders.forEach(function(o) {
-        counts[o.status || 'new']++;
+        var s = o.status || 'new';
+        if (s === 'new') counts.new++;
+        else if (s === 'done' || s === 'declined') counts.done++;
+        else counts.active++;
     });
 
     stats.innerHTML =
         '<span class="stat-badge"><span class="dot dot--new"></span> New: ' + counts.new + '</span>' +
-        '<span class="stat-badge"><span class="dot dot--progress"></span> In progress: ' + counts.progress + '</span>' +
-        '<span class="stat-badge"><span class="dot dot--done"></span> Done: ' + counts.done + '</span>';
+        '<span class="stat-badge"><span class="dot dot--progress"></span> In progress: ' + counts.active + '</span>' +
+        '<span class="stat-badge"><span class="dot dot--done"></span> Completed: ' + counts.done + '</span>';
 
     var html = '';
     for (var i = orders.length - 1; i >= 0; i--) {
         var o = orders[i];
-        html += '<div class="order-card">' +
+        var status = o.status || 'new';
+
+        var statusOptions = '';
+        for (var s = 0; s < ORDER_STATUSES.length; s++) {
+            statusOptions += '<option value="' + ORDER_STATUSES[s].id + '"' +
+                (status === ORDER_STATUSES[s].id ? ' selected' : '') + '>' +
+                ORDER_STATUSES[s].label + '</option>';
+        }
+
+        var waLink = o.phone
+            ? 'https://wa.me/' + adminNormalizePhone(o.phone) + '?text=' + encodeURIComponent(adminWaMessage(o))
+            : '';
+        var trackLink = o.code ? 'order.html?code=' + encodeURIComponent(o.code) : '';
+
+        html += '<div class="order-card order-card--' + status + '">' +
             '<div class="order-card__header">' +
-                '<span class="order-card__name">' + escapeHtml(o.name) + '</span>' +
+                '<span class="order-card__name">' + escapeHtml(o.name) +
+                    (o.code ? ' <span class="order-card__code">' + escapeHtml(o.code) + '</span>' : '') +
+                '</span>' +
                 '<span class="order-card__date">' + escapeHtml(o.submitted || '') + '</span>' +
             '</div>' +
             '<div class="order-card__details">' +
                 '<div class="order-card__detail"><strong>Phone:</strong> ' + escapeHtml(o.phone) + '</div>' +
                 (o.email ? '<div class="order-card__detail"><strong>Email:</strong> ' + escapeHtml(o.email) + '</div>' : '') +
                 '<div class="order-card__detail"><strong>Date needed:</strong> ' + escapeHtml(o.date) + '</div>' +
-                '<div class="order-card__detail"><strong>Size:</strong> ' + escapeHtml(o.cakeSize) + '</div>' +
+                '<div class="order-card__detail"><strong>Size:</strong> ' + escapeHtml(o.cakeSize) + (o.customDiameter ? ' (' + escapeHtml(o.customDiameter) + '")' : '') + '</div>' +
                 (o.flavour ? '<div class="order-card__detail"><strong>Flavour:</strong> ' + escapeHtml(o.flavour) + '</div>' : '') +
+                (o.total ? '<div class="order-card__detail"><strong>Est. total:</strong> ' + escapeHtml(o.total) + '</div>' : '') +
+                (o.allergies ? '<div class="order-card__detail"><strong>Allergies:</strong> ' + escapeHtml(o.allergies) + '</div>' : '') +
             '</div>' +
             (o.message ? '<div class="order-card__message">' + escapeHtml(o.message) + '</div>' : '') +
             (o.photo ? '<div class="order-card__photo"><img src="' + o.photo + '" alt="Reference" style="max-width:200px;border-radius:8px;margin-bottom:12px;"></div>' : '') +
+            '<div class="order-card__contact">' +
+                (waLink ? '<a href="' + waLink + '" target="_blank" class="order-wa-btn"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M17.6 6.3A7.85 7.85 0 0012 4a7.94 7.94 0 00-6.9 11.9L4 20l4.2-1.1A7.94 7.94 0 0012 19.9a7.94 7.94 0 005.6-13.6zM12 18.5a6.6 6.6 0 01-3.4-.9l-.24-.15-2.5.65.67-2.43-.16-.25A6.59 6.59 0 1118.6 12 6.6 6.6 0 0112 18.5z"/></svg> WhatsApp</a>' : '') +
+                (trackLink ? '<a href="' + trackLink + '" target="_blank" class="order-track-link">Status page &rarr;</a>' : '') +
+            '</div>' +
+            '<div class="order-card__note">' +
+                '<label>Message to client (shown on their status page)</label>' +
+                '<textarea class="order-note-input" data-note-id="' + i + '" rows="2" placeholder="e.g. Confirmed! Price €45, ready Saturday.">' + escapeHtml(o.note || '') + '</textarea>' +
+                '<button class="btn-admin order-note-save" data-note-save="' + i + '">Save message</button>' +
+                '<span class="order-note-status" data-note-status="' + i + '"></span>' +
+            '</div>' +
             '<div class="order-card__actions">' +
-                '<select class="status-select" data-order-id="' + i + '">' +
-                    '<option value="new"' + (o.status === 'new' ? ' selected' : '') + '>New</option>' +
-                    '<option value="progress"' + (o.status === 'progress' ? ' selected' : '') + '>In progress</option>' +
-                    '<option value="done"' + (o.status === 'done' ? ' selected' : '') + '>Done</option>' +
-                '</select>' +
+                '<select class="status-select" data-order-id="' + i + '">' + statusOptions + '</select>' +
                 '<button class="btn-delete" data-order-del="' + i + '">Delete</button>' +
             '</div>' +
         '</div>';
@@ -185,6 +236,22 @@ function loadOrders() {
             orders[idx].status = this.value;
             setData('orders', orders);
             loadOrders();
+        });
+    });
+
+    list.querySelectorAll('[data-note-save]').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var idx = parseInt(this.dataset.noteSave);
+            var ta = list.querySelector('[data-note-id="' + idx + '"]');
+            var orders = getData('orders', []);
+            if (!orders[idx]) return;
+            orders[idx].note = ta.value;
+            setData('orders', orders);
+            var statusEl = list.querySelector('[data-note-status="' + idx + '"]');
+            if (statusEl) {
+                statusEl.textContent = 'Saved ✓';
+                setTimeout(function() { statusEl.textContent = ''; }, 2500);
+            }
         });
     });
 

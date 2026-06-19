@@ -110,6 +110,7 @@ const translations = {
         "order.orContact": "Or contact us directly:",
 
         "footer.contacts": "Contacts",
+        "footer.track": "Track your order",
         "footer.shedHours": "Cake Shed Hours",
         "footer.schedule": "Fri–Sat 9:00–21:00, Sun 9:00–18:00",
         "footer.pickup": "Collection & delivery by arrangement"
@@ -225,6 +226,7 @@ const translations = {
         "order.orContact": "Або зв'яжіться з нами напряму:",
 
         "footer.contacts": "Контакти",
+        "footer.track": "Відстежити замовлення",
         "footer.shedHours": "Графік Кейк Шед",
         "footer.schedule": "Пт–Сб 9:00–21:00, Нд 9:00–18:00",
         "footer.pickup": "Самовивіз та доставка за домовленістю"
@@ -340,6 +342,7 @@ const translations = {
         "order.orContact": "Или свяжитесь с нами напрямую:",
 
         "footer.contacts": "Контакты",
+        "footer.track": "Отследить заказ",
         "footer.shedHours": "График Кейк Шед",
         "footer.schedule": "Пт–Сб 9:00–21:00, Вс 9:00–18:00",
         "footer.pickup": "Самовывоз и доставка по договорённости"
@@ -691,33 +694,51 @@ orderForm.addEventListener('submit', function(e) {
     });
 
     data.status = 'new';
+    data.note = '';
+    data.lang = currentLang;
     data.submitted = new Date().toLocaleString();
 
     var photoFile = document.getElementById('photo').files[0];
 
     var redirected = false;
+    var generatedCode = '';
     function goThankYou() {
         if (redirected) return;
         redirected = true;
-        window.location.href = 'thankyou.html';
+        var url = 'thankyou.html' + (generatedCode ? '?code=' + encodeURIComponent(generatedCode) : '');
+        window.location.href = url;
+    }
+
+    function genOrderCode(existing) {
+        var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // no ambiguous 0/O/1/I
+        var code;
+        do {
+            code = 'INES-';
+            for (var i = 0; i < 4; i++) code += chars[Math.floor(Math.random() * chars.length)];
+        } while (existing.indexOf(code) > -1);
+        return code;
     }
 
     function saveOrder(orderData) {
-        // Notify via Telegram — sendBeacon survives the page navigation
-        var notifyData = {};
-        for (var k in orderData) { if (k !== 'photo') notifyData[k] = orderData[k]; }
-        try {
-            var blob = new Blob([JSON.stringify(notifyData)], { type: 'application/json' });
-            navigator.sendBeacon('/api/notify', blob);
-        } catch (e) {}
-
         fbGetOnce('orders', function(orders) {
             if (!orders) orders = [];
+            var codes = orders.map(function(o) { return o && o.code; });
+            generatedCode = genOrderCode(codes);
+            orderData.code = generatedCode;
+
+            // Notify via Telegram — sendBeacon survives the page navigation
+            var notifyData = {};
+            for (var k in orderData) { if (k !== 'photo') notifyData[k] = orderData[k]; }
+            try {
+                var blob = new Blob([JSON.stringify(notifyData)], { type: 'application/json' });
+                navigator.sendBeacon('/api/notify', blob);
+            } catch (e) {}
+
             orders.push(orderData);
             fbSet('orders', orders, function() { goThankYou(); });
         });
         // Fallback: redirect even if save is slow
-        setTimeout(goThankYou, 2500);
+        setTimeout(goThankYou, 4000);
     }
 
     if (photoFile) {

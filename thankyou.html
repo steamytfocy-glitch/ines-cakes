@@ -16,6 +16,11 @@
         .ty__text { color: var(--text-light); font-size: 1.1rem; line-height: 1.7; margin-bottom: 30px; }
         .ty__or { font-weight: 600; color: var(--brown); margin-bottom: 16px; }
         .ty__home { margin-top: 32px; }
+        .ty__code { background: #FBF6EC; border: 1px solid #E8D9BC; border-radius: 16px; padding: 22px 24px; margin: 0 auto 28px; max-width: 420px; }
+        .ty__code-label { font-size: .85rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+        .ty__code-value { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: #C8963E; letter-spacing: 2px; }
+        .ty__code-hint { font-size: .9rem; color: var(--text-light); margin-top: 10px; line-height: 1.5; }
+        .ty__track { display: inline-flex; align-items: center; gap: 8px; margin-top: 16px; }
     </style>
 </head>
 <body>
@@ -53,6 +58,13 @@
         </div>
         <h1 class="ty__title" data-i18n="ty.title">Thank you!</h1>
         <p class="ty__text" data-i18n="ty.text">Your order has been received. We'll contact you soon to discuss all the details.</p>
+
+        <div class="ty__code" id="tyCodeBox" style="display:none;">
+            <div class="ty__code-label" data-i18n="ty.codeLabel">Your order number</div>
+            <div class="ty__code-value" id="tyCodeValue">—</div>
+            <p class="ty__code-hint" data-i18n="ty.codeHint">Save this number. Use it to check your order status at any time.</p>
+            <a href="#" id="tyTrackBtn" class="btn btn--outline ty__track" data-i18n="ty.track">Track my order</a>
+        </div>
 
         <p class="ty__or" data-i18n="ty.or">Or contact us directly:</p>
         <div class="success-contacts">
