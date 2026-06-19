@@ -82,6 +82,8 @@ const translations = {
         "order.flavour": "Preferred Flavour",
         "order.flavourPh": "e.g. Vanilla, Chocolate...",
         "order.chooseFlavour": "Choose a flavour",
+        "order.estTotal": "Estimated total",
+        "order.totalNote": "* Approximate price — final amount confirmed by our manager",
         "order.message": "Your Wishes / Description",
         "order.messagePh": "Describe your ideal cake — theme, colours, text, number of tiers...",
         "order.allergies": "Allergies",
@@ -185,6 +187,8 @@ const translations = {
         "order.flavour": "Бажаний смак",
         "order.flavourPh": "напр. Ваніль, Шоколад...",
         "order.chooseFlavour": "Оберіть смак",
+        "order.estTotal": "Орієнтовна сума",
+        "order.totalNote": "* Приблизна ціна — остаточну суму підтвердить менеджер",
         "order.message": "Ваші побажання / Опис",
         "order.messagePh": "Опишіть ваш ідеальний торт — тема, кольори, напис, кількість ярусів...",
         "order.allergies": "Алергії",
@@ -288,6 +292,8 @@ const translations = {
         "order.flavour": "Желаемый вкус",
         "order.flavourPh": "напр. Ваниль, Шоколад...",
         "order.chooseFlavour": "Выберите вкус",
+        "order.estTotal": "Примерная сумма",
+        "order.totalNote": "* Примерная цена — итоговую сумму подтвердит менеджер",
         "order.message": "Ваши пожелания / Описание",
         "order.messagePh": "Опишите ваш идеальный торт — тема, цвета, надпись, количество ярусов...",
         "order.allergies": "Аллергии",
@@ -537,7 +543,7 @@ function renderFlavourGrid(flavours) {
         var priceText = f.price
             ? '€' + escapeHtml(f.price) + ' / kg'
             : ((translations[currentLang] && translations[currentLang]['cakes.priceAgreed']) || 'Price on request');
-        html += '<div class="flavour-card" data-flavour="' + escapeHtml(f.name) + '">' +
+        html += '<div class="flavour-card" data-flavour="' + escapeHtml(f.name) + '" data-price="' + escapeHtml(f.price || '') + '">' +
             '<div class="flavour-card__imgwrap">' +
                 imgHtml +
                 '<div class="flavour-card__caption">' +
@@ -556,7 +562,9 @@ function renderFlavourGrid(flavours) {
             flavourHidden.value = name;
             flavourSelectText.textContent = name;
             flavourSelectBtn.classList.add('has-value');
+            selectedFlavourPrice = parseFloat(this.dataset.price) || 0;
             flavourModal.style.display = 'none';
+            recalcTotal();
         });
     });
 }
@@ -580,10 +588,56 @@ document.getElementById('flavourModalOverlay').addEventListener('click', functio
 // ===== CUSTOM SIZE TOGGLE =====
 var cakeSizeSelect = document.getElementById('cakeSize');
 var customSizeRow = document.getElementById('customSizeRow');
+var customDiameterInput = document.getElementById('customDiameter');
 
 cakeSizeSelect.addEventListener('change', function() {
     customSizeRow.style.display = this.value === 'custom' ? 'grid' : 'none';
+    recalcTotal();
 });
+customDiameterInput.addEventListener('input', recalcTotal);
+
+// ===== PRICE CALCULATOR =====
+var selectedFlavourPrice = 0;
+var basePriceMini = 30;   // price for 5"
+var basePriceMaxi = 35;   // price for 6"
+var PRICE_PER_INCH = 5;   // each extra inch beyond 5"
+
+function getInches() {
+    var size = cakeSizeSelect.value;
+    if (size === 'mini') return 5;
+    if (size === 'maxi') return 6;
+    if (size === 'custom') {
+        var d = parseFloat(customDiameterInput.value);
+        return isNaN(d) ? null : d;
+    }
+    return 5;
+}
+
+function sizePrice() {
+    var size = cakeSizeSelect.value;
+    if (size === 'mini') return basePriceMini;
+    if (size === 'maxi') return basePriceMaxi;
+    var inch = getInches();
+    if (inch === null) return null;
+    return Math.round(basePriceMini + Math.max(0, inch - 5) * PRICE_PER_INCH);
+}
+
+function recalcTotal() {
+    var valueEl = document.getElementById('orderTotalValue');
+    var hidden = document.getElementById('orderTotalHidden');
+    if (!valueEl) return;
+
+    var base = sizePrice();
+    if (base === null) {
+        var t = (translations[currentLang] && translations[currentLang]['cakes.priceAgreed']) || 'Price on request';
+        valueEl.textContent = t;
+        hidden.value = '';
+        return;
+    }
+    var total = base + (selectedFlavourPrice || 0);
+    valueEl.textContent = '€' + total;
+    hidden.value = '€' + total;
+}
 
 // ===== ORDER FORM =====
 var orderForm = document.getElementById('orderForm');
@@ -651,6 +705,8 @@ orderForm.addEventListener('submit', function(e) {
         flavourSelectText.textContent = (translations[currentLang] && translations[currentLang]['order.chooseFlavour']) || 'Choose a flavour';
         flavourSelectBtn.classList.remove('has-value');
         customSizeRow.style.display = 'none';
+        selectedFlavourPrice = 0;
+        recalcTotal();
     }, 5000);
 });
 
@@ -780,15 +836,18 @@ function loadAdminContent() {
     fbGet('content', function(content) {
         if (!content) return;
         if (content.priceMini) {
+            basePriceMini = parseFloat(content.priceMini) || basePriceMini;
             document.querySelectorAll('[data-i18n="cakes.from30"]').forEach(function(el) {
                 el.textContent = 'from €' + content.priceMini;
             });
         }
         if (content.priceMaxi) {
+            basePriceMaxi = parseFloat(content.priceMaxi) || basePriceMaxi;
             document.querySelectorAll('[data-i18n="cakes.from35"]').forEach(function(el) {
                 el.textContent = 'from €' + content.priceMaxi;
             });
         }
+        recalcTotal();
     });
 }
 
@@ -807,6 +866,7 @@ document.addEventListener('DOMContentLoaded', function() {
     loadFlavoursShowcase();
     loadLatestReviews();
     loadAdminContent();
+    recalcTotal();
 });
 
 setLanguage(currentLang);

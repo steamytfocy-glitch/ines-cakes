@@ -1087,6 +1087,41 @@ ul { list-style: none; }
     box-shadow: 0 0 0 3px rgba(200, 150, 62, 0.2);
 }
 
+/* ===== ORDER TOTAL ===== */
+.order-total {
+    background: var(--cream);
+    border: 1.5px solid var(--gold-light);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    margin-bottom: 20px;
+}
+
+.order-total__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.order-total__label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--brown);
+}
+
+.order-total__value {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--gold-dark);
+}
+
+.order-total__note {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    margin-top: 6px;
+    font-style: italic;
+}
+
 .flavour-grid--showcase {
     display: grid;
     grid-template-columns: repeat(3, 1fr);

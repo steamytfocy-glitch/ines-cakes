@@ -326,6 +326,14 @@
                 <label for="photo" data-i18n="order.photo">Attach Reference Photo</label>
                 <input type="file" id="photo" name="photo" accept="image/*">
             </div>
+            <div class="order-total" id="orderTotal">
+                <div class="order-total__row">
+                    <span class="order-total__label" data-i18n="order.estTotal">Estimated total</span>
+                    <span class="order-total__value" id="orderTotalValue">—</span>
+                </div>
+                <p class="order-total__note" data-i18n="order.totalNote">* Approximate price — final amount confirmed by our manager</p>
+            </div>
+            <input type="hidden" id="orderTotalHidden" name="total">
             <button type="submit" class="btn btn--primary btn--full" data-i18n="order.submit">Send Order</button>
         </form>
         <div class="order__success" id="orderSuccess" style="display:none;">
