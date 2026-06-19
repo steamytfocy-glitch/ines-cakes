@@ -1259,6 +1259,31 @@ ul { list-style: none; }
     letter-spacing: 1px;
 }
 
+.footer__socials {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.footer__social {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px solid rgba(232, 196, 122, 0.4);
+    color: var(--gold-light);
+    transition: var(--transition);
+}
+
+.footer__social:hover {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--white);
+    transform: translateY(-2px);
+}
+
 .footer h4 {
     font-family: 'Playfair Display', serif;
     font-size: 1.1rem;

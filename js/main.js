@@ -83,6 +83,10 @@ const translations = {
         "order.flavour": "Preferred Flavour",
         "order.flavourPh": "e.g. Vanilla, Chocolate...",
         "order.chooseFlavour": "Choose a flavour",
+        "order.decor": "Decor Complexity",
+        "order.decorSimple": "Simple",
+        "order.decorMedium": "Medium (+€10)",
+        "order.decorComplex": "Complex (+€20)",
         "order.estTotal": "Estimated total",
         "order.totalNote": "* Approximate price — final amount confirmed by our manager",
         "order.message": "Your Wishes / Description",
@@ -189,6 +193,10 @@ const translations = {
         "order.flavour": "Бажаний смак",
         "order.flavourPh": "напр. Ваніль, Шоколад...",
         "order.chooseFlavour": "Оберіть смак",
+        "order.decor": "Складність декору",
+        "order.decorSimple": "Простий",
+        "order.decorMedium": "Середній (+€10)",
+        "order.decorComplex": "Складний (+€20)",
         "order.estTotal": "Орієнтовна сума",
         "order.totalNote": "* Приблизна ціна — остаточну суму підтвердить менеджер",
         "order.message": "Ваші побажання / Опис",
@@ -295,6 +303,10 @@ const translations = {
         "order.flavour": "Желаемый вкус",
         "order.flavourPh": "напр. Ваниль, Шоколад...",
         "order.chooseFlavour": "Выберите вкус",
+        "order.decor": "Сложность декора",
+        "order.decorSimple": "Простой",
+        "order.decorMedium": "Средний (+€10)",
+        "order.decorComplex": "Сложный (+€20)",
         "order.estTotal": "Примерная сумма",
         "order.totalNote": "* Примерная цена — итоговую сумму подтвердит менеджер",
         "order.message": "Ваши пожелания / Описание",
@@ -599,11 +611,15 @@ cakeSizeSelect.addEventListener('change', function() {
 });
 customDiameterInput.addEventListener('input', recalcTotal);
 
+var decorSelect = document.getElementById('decorComplexity');
+decorSelect.addEventListener('change', recalcTotal);
+
 // ===== PRICE CALCULATOR =====
 var selectedFlavourPrice = 0;
 var basePriceMini = 30;   // price for 5"
 var basePriceMaxi = 35;   // price for 6"
 var PRICE_PER_INCH = 5;   // each extra inch beyond 5"
+var DECOR_ADDON = { simple: 0, medium: 10, complex: 20 };
 
 function getInches() {
     var size = cakeSizeSelect.value;
@@ -638,7 +654,8 @@ function recalcTotal() {
         hidden.value = '';
         return;
     }
-    var total = base + (selectedFlavourPrice || 0);
+    var decorAddon = DECOR_ADDON[decorSelect.value] || 0;
+    var total = base + (selectedFlavourPrice || 0) + decorAddon;
     valueEl.textContent = '€' + total;
     hidden.value = '€' + total;
 }
@@ -851,6 +868,10 @@ function loadAdminContent() {
                 el.textContent = 'from €' + content.priceMaxi;
             });
         }
+        var insta = document.getElementById('socialInsta');
+        var fb = document.getElementById('socialFacebook');
+        if (insta && content.contactInsta) insta.href = content.contactInsta;
+        if (fb && content.contactFacebook) fb.href = content.contactFacebook;
         recalcTotal();
     });
 }

@@ -306,6 +306,16 @@
                     <input type="number" id="customDiameter" name="customDiameter" min="4" max="20" placeholder="e.g. 8">
                 </div>
             </div>
+            <div class="form-row">
+                <div class="form-group form-group--full">
+                    <label for="decorComplexity" data-i18n="order.decor">Decor Complexity</label>
+                    <select id="decorComplexity" name="decorComplexity">
+                        <option value="simple" data-i18n="order.decorSimple">Simple</option>
+                        <option value="medium" data-i18n="order.decorMedium">Medium</option>
+                        <option value="complex" data-i18n="order.decorComplex">Complex</option>
+                    </select>
+                </div>
+            </div>
             <div class="form-group form-group--full">
                 <label data-i18n="order.allergies">Allergies</label>
                 <div class="allergy-chips" id="allergyChips">
@@ -373,6 +383,14 @@
                 </div>
             </div>
             <p class="footer__tagline">Impeccable Naturals Exquisite Sweets</p>
+            <div class="footer__socials">
+                <a href="#" id="socialInsta" class="footer__social" target="_blank" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg>
+                </a>
+                <a href="#" id="socialFacebook" class="footer__social" target="_blank" aria-label="Facebook">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+                </a>
+            </div>
         </div>
         <div class="footer__contacts">
             <h4 data-i18n="footer.contacts">Contacts</h4>
