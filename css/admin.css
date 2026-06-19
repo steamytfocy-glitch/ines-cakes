@@ -509,6 +509,11 @@ body {
     transform: translateY(-2px);
 }
 
+.category-pick-btn--add {
+    border-style: dashed;
+    color: var(--gold-dark);
+}
+
 /* ===== GALLERY ADMIN CATEGORIES ===== */
 .gallery-cat-section {
     margin-bottom: 28px;

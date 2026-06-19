@@ -5,17 +5,18 @@ var ADMINS = [
 ];
 
 // ===== CATEGORIES =====
-var CATEGORIES = [
+var DEFAULT_CATEGORIES = [
     { id: 'flowers', en: 'Flowers', ua: 'Квіти', ru: 'Цветы' },
     { id: 'kids', en: 'For Kids', ua: 'Дитячі', ru: 'Детские' },
     { id: 'birthday', en: 'Birthday', ua: 'На день народження', ru: 'На день рождения' },
     { id: 'sport', en: 'Sport', ua: 'Спортивні', ru: 'Спортивные' },
-
     { id: 'bento', en: 'Bento Cakes', ua: 'Бенто торти', ru: 'Бенто торты' },
     { id: 'gaming', en: 'Gaming', ua: 'Ігрові', ru: 'Игровые' },
     { id: 'berries', en: 'Natural Berries', ua: 'Натуральні ягоди', ru: 'Натуральные ягоды' },
     { id: 'other', en: 'Other', ua: 'Інше', ru: 'Другое' }
 ];
+var CATEGORIES = DEFAULT_CATEGORIES.slice();
+var categoriesSeeded = false;
 
 // ===== STORAGE HELPERS =====
 var _cache = {};
@@ -276,16 +277,49 @@ function compressImage(file, maxSize, quality, callback) {
     reader.readAsDataURL(file);
 }
 
+function addCategory(callback) {
+    var name = prompt('New category name:');
+    if (!name) return;
+    name = name.trim();
+    if (!name) return;
+    var id = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || ('cat' + Date.now());
+    // ensure unique id
+    var exists = CATEGORIES.some(function(c) { return c.id === id; });
+    if (exists) id = id + '-' + Date.now();
+    var newCat = { id: id, en: name, ua: name, ru: name };
+
+    fbGetOnce('categories', function(cats) {
+        if (!cats || !cats.length) cats = DEFAULT_CATEGORIES.slice();
+        // insert before "other" if present
+        var otherIdx = cats.findIndex(function(c) { return c.id === 'other'; });
+        if (otherIdx > -1) cats.splice(otherIdx, 0, newCat);
+        else cats.push(newCat);
+        setData('categories', cats);
+        if (callback) callback(id);
+    });
+}
+
 function showCategoryModal() {
     var picker = document.getElementById('categoryPick');
     var html = '';
     for (var i = 0; i < CATEGORIES.length; i++) {
-        html += '<button class="category-pick-btn" data-cat-id="' + CATEGORIES[i].id + '">' + CATEGORIES[i].en + '</button>';
+        html += '<button class="category-pick-btn" data-cat-id="' + CATEGORIES[i].id + '">' + escapeHtml(CATEGORIES[i].en) + '</button>';
     }
+    html += '<button class="category-pick-btn category-pick-btn--add" id="addCategoryBtn">+ New category</button>';
     picker.innerHTML = html;
     document.getElementById('categoryModal').style.display = 'flex';
 
     picker.querySelectorAll('.category-pick-btn').forEach(function(btn) {
+        if (btn.id === 'addCategoryBtn') {
+            btn.addEventListener('click', function() {
+                addCategory(function(newId) {
+                    pendingUploadCategory = newId;
+                    document.getElementById('categoryModal').style.display = 'none';
+                    document.getElementById('galleryUpload').click();
+                });
+            });
+            return;
+        }
         btn.addEventListener('click', function() {
             pendingUploadCategory = this.dataset.catId;
             document.getElementById('categoryModal').style.display = 'none';
@@ -789,6 +823,15 @@ function escapeHtml(str) {
 
 // ===== LOAD ALL =====
 function loadAllData() {
+    listenData('categories', function(val) {
+        if (val === null && !categoriesSeeded) {
+            categoriesSeeded = true;
+            setData('categories', DEFAULT_CATEGORIES);
+            return;
+        }
+        if (val && val.length) CATEGORIES = val;
+        loadGallery();
+    });
     listenData('orders', function() { loadOrders(); });
     listenData('gallery-cat', function() { loadGallery(); });
     listenData('certificates', function() { loadCertificates(); });

@@ -761,7 +761,6 @@ var CATEGORIES = [
     { id: 'kids', en: 'For Kids', ua: 'Дитячі', ru: 'Детские' },
     { id: 'birthday', en: 'Birthday', ua: 'На день народження', ru: 'На день рождения' },
     { id: 'sport', en: 'Sport', ua: 'Спортивні', ru: 'Спортивные' },
-
     { id: 'bento', en: 'Bento Cakes', ua: 'Бенто торти', ru: 'Бенто торты' },
     { id: 'gaming', en: 'Gaming', ua: 'Ігрові', ru: 'Игровые' },
     { id: 'berries', en: 'Natural Berries', ua: 'Натуральні ягоди', ru: 'Натуральные ягоды' },
@@ -977,11 +976,18 @@ function escapeHtml(str) {
     return div.innerHTML;
 }
 
+function loadCategories(callback) {
+    fbGet('categories', function(cats) {
+        if (cats && cats.length) CATEGORIES = cats;
+        if (callback) callback();
+    });
+}
+
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', function() {
     setLanguage(currentLang);
     initFadeIn();
-    loadAdminGallery();
+    loadCategories(function() { loadAdminGallery(); });
     loadCertificates();
     loadFlavoursShowcase();
     loadLatestReviews();

@@ -131,4 +131,7 @@ document.getElementById('galleryBack').addEventListener('click', function() {
 });
 
 setLang(currentLang);
-loadAllCategories();
+fbGet('categories', function(cats) {
+    if (cats && cats.length) CATEGORIES = cats;
+    loadAllCategories();
+});
