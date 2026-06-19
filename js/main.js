@@ -107,6 +107,7 @@ const translations = {
         "order.submit": "Send Order",
         "order.successTitle": "Thank you!",
         "order.successText": "Your order has been received. We'll contact you soon to discuss the details.",
+        "order.orContact": "Or contact us directly:",
 
         "footer.contacts": "Contacts",
         "footer.shedHours": "Cake Shed Hours",
@@ -221,6 +222,7 @@ const translations = {
         "order.submit": "Відправити замовлення",
         "order.successTitle": "Дякуємо!",
         "order.successText": "Ваше замовлення отримано. Ми зв'яжемося з вами найближчим часом для обговорення деталей.",
+        "order.orContact": "Або зв'яжіться з нами напряму:",
 
         "footer.contacts": "Контакти",
         "footer.shedHours": "Графік Кейк Шед",
@@ -335,6 +337,7 @@ const translations = {
         "order.submit": "Отправить заказ",
         "order.successTitle": "Спасибо!",
         "order.successText": "Ваш заказ получен. Мы свяжемся с вами в ближайшее время для обсуждения деталей.",
+        "order.orContact": "Или свяжитесь с нами напрямую:",
 
         "footer.contacts": "Контакты",
         "footer.shedHours": "График Кейк Шед",
@@ -971,6 +974,10 @@ function loadAdminContent() {
         var fb = document.getElementById('socialFacebook');
         if (insta && content.contactInsta) insta.href = content.contactInsta;
         if (fb && content.contactFacebook) fb.href = content.contactFacebook;
+        var sInsta = document.getElementById('successInsta');
+        var sFb = document.getElementById('successFacebook');
+        if (sInsta && content.contactInsta) sInsta.href = content.contactInsta;
+        if (sFb && content.contactFacebook) sFb.href = content.contactFacebook;
         recalcTotal();
     });
 }
