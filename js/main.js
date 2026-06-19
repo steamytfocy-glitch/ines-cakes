@@ -525,13 +525,18 @@ function renderFlavourGrid(flavours) {
         var imgHtml = f.photo
             ? '<img src="' + f.photo + '" class="flavour-card__img" alt="' + escapeHtml(f.name) + '">'
             : '<div class="flavour-card__placeholder"><svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>';
+        var priceText = f.price
+            ? '€' + escapeHtml(f.price) + ' / kg'
+            : ((translations[currentLang] && translations[currentLang]['cakes.priceAgreed']) || 'Price on request');
         html += '<div class="flavour-card" data-flavour="' + escapeHtml(f.name) + '">' +
-            imgHtml +
-            '<div class="flavour-card__body">' +
-                '<div class="flavour-card__name">' + escapeHtml(f.name) + '</div>' +
-                (f.desc ? '<div class="flavour-card__desc">' + escapeHtml(f.desc) + '</div>' : '') +
-                (f.price ? '<div class="flavour-card__price">€' + escapeHtml(f.price) + ' / kg</div>' : '') +
+            '<div class="flavour-card__imgwrap">' +
+                imgHtml +
+                '<div class="flavour-card__caption">' +
+                    '<div class="flavour-card__name">' + escapeHtml(f.name) + '</div>' +
+                    '<div class="flavour-card__price">' + priceText + '</div>' +
+                '</div>' +
             '</div>' +
+            (f.desc ? '<div class="flavour-card__desc">' + escapeHtml(f.desc) + '</div>' : '') +
         '</div>';
     }
     flavourGrid.innerHTML = html;

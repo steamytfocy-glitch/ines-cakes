@@ -1087,6 +1087,10 @@ ul { list-style: none; }
     box-shadow: 0 0 0 3px rgba(200, 150, 62, 0.2);
 }
 
+.flavour-card__imgwrap {
+    position: relative;
+}
+
 .flavour-card__img {
     width: 100%;
     aspect-ratio: 4/3;
@@ -1105,29 +1109,35 @@ ul { list-style: none; }
     color: var(--gold-light);
 }
 
-.flavour-card__body {
-    padding: 12px 14px;
+.flavour-card__caption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 22px 12px 10px;
+    background: linear-gradient(transparent, rgba(61, 46, 28, 0.82));
 }
 
 .flavour-card__name {
     font-family: 'Playfair Display', serif;
     font-size: 1.05rem;
     font-weight: 600;
-    color: var(--brown);
-    margin-bottom: 4px;
-}
-
-.flavour-card__desc {
-    font-size: 0.8rem;
-    color: var(--text-light);
-    line-height: 1.4;
-    margin-bottom: 6px;
+    color: #fff;
+    line-height: 1.2;
 }
 
 .flavour-card__price {
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     font-weight: 700;
-    color: var(--gold);
+    color: var(--gold-light);
+    margin-top: 2px;
+}
+
+.flavour-card__desc {
+    padding: 10px 14px 12px;
+    font-size: 0.8rem;
+    color: var(--text-light);
+    line-height: 1.4;
 }
 
 @media (max-width: 700px) {
