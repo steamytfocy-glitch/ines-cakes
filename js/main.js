@@ -64,6 +64,8 @@ const translations = {
         "reviews.r3.author": "— Michael D.",
         "reviews.viewAll": "View All Reviews",
         "gallery.viewAll": "View All Categories",
+        "cert.title": "Certificates",
+        "cert.subtitle": "Quality and safety you can trust",
         "flavours.title": "Our Flavours",
         "flavours.subtitle": "A look inside — choose the taste you love",
         "flavours.viewAll": "View All Flavours",
@@ -106,7 +108,7 @@ const translations = {
 
         "footer.contacts": "Contacts",
         "footer.shedHours": "Cake Shed Hours",
-        "footer.schedule": "Friday — Sunday, 9:00 — 21:00",
+        "footer.schedule": "Fri–Sat 9:00–21:00, Sun 9:00–18:00",
         "footer.pickup": "Collection & delivery by arrangement"
     },
 
@@ -174,6 +176,8 @@ const translations = {
         "reviews.r3.author": "— Майкл Д.",
         "reviews.viewAll": "Переглянути всі відгуки",
         "gallery.viewAll": "Переглянути всі категорії",
+        "cert.title": "Сертифікати",
+        "cert.subtitle": "Якість та безпека, якій можна довіряти",
         "flavours.title": "Наші смаки",
         "flavours.subtitle": "Загляньте всередину — оберіть свій улюблений смак",
         "flavours.viewAll": "Усі смаки",
@@ -216,7 +220,7 @@ const translations = {
 
         "footer.contacts": "Контакти",
         "footer.shedHours": "Графік Кейк Шед",
-        "footer.schedule": "П'ятниця — Неділя, 9:00 — 21:00",
+        "footer.schedule": "Пт–Сб 9:00–21:00, Нд 9:00–18:00",
         "footer.pickup": "Самовивіз та доставка за домовленістю"
     },
 
@@ -284,6 +288,8 @@ const translations = {
         "reviews.r3.author": "— Майкл Д.",
         "reviews.viewAll": "Смотреть все отзывы",
         "gallery.viewAll": "Смотреть все категории",
+        "cert.title": "Сертификаты",
+        "cert.subtitle": "Качество и безопасность, которым можно доверять",
         "flavours.title": "Наши вкусы",
         "flavours.subtitle": "Загляните внутрь — выберите любимый вкус",
         "flavours.viewAll": "Все вкусы",
@@ -326,7 +332,7 @@ const translations = {
 
         "footer.contacts": "Контакты",
         "footer.shedHours": "График Кейк Шед",
-        "footer.schedule": "Пятница — Воскресенье, 9:00 — 21:00",
+        "footer.schedule": "Пт–Сб 9:00–21:00, Вс 9:00–18:00",
         "footer.pickup": "Самовывоз и доставка по договорённости"
     }
 };
@@ -811,6 +817,33 @@ function loadAdminGallery() {
     });
 }
 
+function loadCertificates() {
+    var section = document.getElementById('certificates');
+    var grid = document.getElementById('certificatesGrid');
+    if (!grid) return;
+    fbGet('certificates', function(certs) {
+        if (!certs || !certs.length) {
+            section.style.display = 'none';
+            return;
+        }
+        section.style.display = '';
+        var html = '';
+        for (var i = 0; i < certs.length; i++) {
+            html += '<div class="certificates__item" data-cert="' + i + '"><img src="' + certs[i] + '" alt="Certificate"></div>';
+        }
+        grid.innerHTML = html;
+        grid.querySelectorAll('.certificates__item').forEach(function(item, idx) {
+            item.addEventListener('click', function() {
+                var lb = document.createElement('div');
+                lb.className = 'cert-lightbox';
+                lb.innerHTML = '<img src="' + certs[idx] + '" alt="Certificate">';
+                lb.addEventListener('click', function() { lb.remove(); });
+                document.body.appendChild(lb);
+            });
+        });
+    });
+}
+
 function loadFlavoursShowcase() {
     var grid = document.getElementById('flavoursShowcase');
     if (!grid) return;
@@ -898,6 +931,7 @@ document.addEventListener('DOMContentLoaded', function() {
     setLanguage(currentLang);
     initFadeIn();
     loadAdminGallery();
+    loadCertificates();
     loadFlavoursShowcase();
     loadLatestReviews();
     loadAdminContent();

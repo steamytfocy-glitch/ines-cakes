@@ -89,6 +89,7 @@ var topbarTitle = document.getElementById('topbarTitle');
 var tabTitles = {
     orders: 'Orders',
     gallery: 'Gallery',
+    certificates: 'Certificates',
     flavours: 'Flavours',
     reviews: 'Reviews',
     content: 'Content'
@@ -451,6 +452,66 @@ document.getElementById('sortDone').addEventListener('click', function() {
     loadGallery();
 });
 
+// ===== CERTIFICATES =====
+function loadCertificates() {
+    var certs = getData('certificates', null) || [];
+    var container = document.getElementById('certificatesAdmin');
+
+    if (certs.length === 0) {
+        container.innerHTML = '<div class="empty-state"><svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="#C8963E" stroke-width="1.5"><circle cx="12" cy="8" r="6"/><path d="M8.5 13.5L7 22l5-3 5 3-1.5-8.5"/></svg><p>No certificates yet</p><span>Upload your HACCP / hygiene certificates to show on the site</span></div>';
+        return;
+    }
+
+    var html = '';
+    for (var i = 0; i < certs.length; i++) {
+        html += '<div class="cert-admin-item">' +
+            '<img src="' + certs[i] + '" alt="Certificate">' +
+            '<button class="cert-admin-item__delete" data-cert-del="' + i + '">&times;</button>' +
+        '</div>';
+    }
+    container.innerHTML = html;
+
+    container.querySelectorAll('[data-cert-del]').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            if (!confirm('Delete this certificate?')) return;
+            var idx = parseInt(this.dataset.certDel);
+            var certs = getData('certificates', []) || [];
+            certs.splice(idx, 1);
+            setData('certificates', certs);
+        });
+    });
+}
+
+document.getElementById('addCertBtn').addEventListener('click', function() {
+    document.getElementById('certUpload').click();
+});
+
+document.getElementById('certUpload').addEventListener('change', function(e) {
+    var fileList = e.target.files;
+    if (!fileList.length) return;
+    var saved = [];
+    for (var f = 0; f < fileList.length; f++) saved.push(fileList[f]);
+    var total = saved.length;
+    var loaded = 0;
+    e.target.value = '';
+
+    fbGetOnce('certificates', function(certs) {
+        if (!certs) certs = [];
+        for (var i = 0; i < saved.length; i++) {
+            (function(file) {
+                // larger size + higher quality so document text stays readable
+                compressImage(file, 1400, 0.82, function(dataUrl) {
+                    certs.push(dataUrl);
+                    loaded++;
+                    if (loaded === total) {
+                        setData('certificates', certs);
+                    }
+                });
+            })(saved[i]);
+        }
+    });
+});
+
 // ===== FLAVOURS =====
 var DEFAULT_FLAVOURS = [
     { name: 'Chocolate', desc: 'Rich chocolate sponge with chocolate ganache', price: '', photo: null },
@@ -706,6 +767,7 @@ function escapeHtml(str) {
 function loadAllData() {
     listenData('orders', function() { loadOrders(); });
     listenData('gallery-cat', function() { loadGallery(); });
+    listenData('certificates', function() { loadCertificates(); });
     listenData('flavours', function(val) {
         if (val === null && !flavoursSeeded) {
             flavoursSeeded = true;
