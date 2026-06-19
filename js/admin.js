@@ -89,6 +89,7 @@ var topbarTitle = document.getElementById('topbarTitle');
 var tabTitles = {
     orders: 'Orders',
     gallery: 'Gallery',
+    flavours: 'Flavours',
     reviews: 'Reviews',
     content: 'Content'
 };
@@ -450,6 +451,129 @@ document.getElementById('sortDone').addEventListener('click', function() {
     loadGallery();
 });
 
+// ===== FLAVOURS =====
+var DEFAULT_FLAVOURS = [
+    { name: 'Chocolate', desc: 'Rich chocolate sponge with chocolate ganache', price: '', photo: null },
+    { name: 'Vanilla', desc: 'Classic vanilla sponge with vanilla cream', price: '', photo: null },
+    { name: 'Red Velvet', desc: 'Red velvet with cream cheese frosting', price: '', photo: null },
+    { name: 'Honey (Medovik)', desc: 'Delicate honey layers with sour cream', price: '', photo: null },
+    { name: 'Napoleon', desc: 'Puff pastry layers with custard cream', price: '', photo: null },
+    { name: 'Cheesecake', desc: 'Creamy baked cheesecake', price: '', photo: null },
+    { name: 'Carrot', desc: 'Carrot sponge with cream cheese frosting', price: '', photo: null },
+    { name: 'Strawberry', desc: 'Vanilla sponge with fresh strawberries', price: '', photo: null },
+    { name: 'Pistachio', desc: 'Pistachio sponge with delicate cream', price: '', photo: null },
+    { name: 'Lemon', desc: 'Zesty lemon sponge with lemon curd', price: '', photo: null }
+];
+var flavoursSeeded = false;
+
+function loadFlavours() {
+    var flavours = getData('flavours', null);
+    if (!flavours) flavours = [];
+    var container = document.getElementById('flavoursAdmin');
+
+    if (flavours.length === 0) {
+        container.innerHTML = '<div class="empty-state"><svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="#C8963E" stroke-width="1.5"><path d="M12 2a7 7 0 00-7 7c0 2 1 3 1 5h12c0-2 1-3 1-5a7 7 0 00-7-7z"/><line x1="6" y1="18" x2="18" y2="18"/></svg><p>No flavours yet</p><span>Add flavours with cross-section photos and prices</span></div>';
+        return;
+    }
+
+    var html = '';
+    for (var i = 0; i < flavours.length; i++) {
+        var f = flavours[i];
+        var imgHtml = f.photo
+            ? '<img src="' + f.photo + '" class="flavour-admin-card__img" alt="' + escapeHtml(f.name) + '">'
+            : '<div class="flavour-admin-card__placeholder"><svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>';
+        html += '<div class="flavour-admin-card">' +
+            imgHtml +
+            '<div class="flavour-admin-card__body">' +
+                '<div class="flavour-admin-card__name">' + escapeHtml(f.name) + '</div>' +
+                (f.desc ? '<div class="flavour-admin-card__desc">' + escapeHtml(f.desc) + '</div>' : '') +
+                (f.price ? '<div class="flavour-admin-card__price">€' + escapeHtml(f.price) + '</div>' : '') +
+                '<div class="flavour-admin-card__actions">' +
+                    '<button class="btn-edit" data-flavour-edit="' + i + '">Edit</button>' +
+                    '<button class="btn-delete" data-flavour-del="' + i + '">Delete</button>' +
+                '</div>' +
+            '</div>' +
+        '</div>';
+    }
+    container.innerHTML = html;
+
+    container.querySelectorAll('[data-flavour-del]').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            if (!confirm('Delete this flavour?')) return;
+            var idx = parseInt(this.dataset.flavourDel);
+            var flavours = getData('flavours', []) || [];
+            flavours.splice(idx, 1);
+            setData('flavours', flavours);
+        });
+    });
+
+    container.querySelectorAll('[data-flavour-edit]').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var idx = parseInt(this.dataset.flavourEdit);
+            var flavours = getData('flavours', []) || [];
+            var f = flavours[idx];
+            document.getElementById('flavourEditId').value = idx;
+            document.getElementById('flavourName').value = f.name || '';
+            document.getElementById('flavourDesc').value = f.desc || '';
+            document.getElementById('flavourPrice').value = f.price || '';
+            pendingFlavourPhoto = f.photo || null;
+            document.getElementById('flavourPhotoPreview').innerHTML = f.photo ? '<img src="' + f.photo + '" style="max-width:120px;border-radius:8px;">' : '';
+            document.getElementById('flavourModalTitle').textContent = 'Edit Flavour';
+            document.getElementById('flavourModal').style.display = 'flex';
+        });
+    });
+}
+
+var pendingFlavourPhoto = null;
+
+document.getElementById('addFlavourBtn').addEventListener('click', function() {
+    document.getElementById('flavourEditId').value = '';
+    document.getElementById('flavourName').value = '';
+    document.getElementById('flavourDesc').value = '';
+    document.getElementById('flavourPrice').value = '';
+    document.getElementById('flavourPhotoPreview').innerHTML = '';
+    pendingFlavourPhoto = null;
+    document.getElementById('flavourModalTitle').textContent = 'Add Flavour';
+    document.getElementById('flavourModal').style.display = 'flex';
+});
+
+document.getElementById('flavourCancel').addEventListener('click', function() {
+    document.getElementById('flavourModal').style.display = 'none';
+});
+
+document.querySelector('#flavourModal .modal__overlay').addEventListener('click', function() {
+    document.getElementById('flavourModal').style.display = 'none';
+});
+
+document.getElementById('flavourPhoto').addEventListener('change', function(e) {
+    var file = e.target.files[0];
+    if (!file) return;
+    compressImage(file, 600, 0.7, function(dataUrl) {
+        pendingFlavourPhoto = dataUrl;
+        document.getElementById('flavourPhotoPreview').innerHTML = '<img src="' + dataUrl + '" style="max-width:120px;border-radius:8px;">';
+    });
+});
+
+document.getElementById('flavourForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var editId = document.getElementById('flavourEditId').value;
+    var flavour = {
+        name: document.getElementById('flavourName').value.trim(),
+        desc: document.getElementById('flavourDesc').value.trim(),
+        price: document.getElementById('flavourPrice').value.trim(),
+        photo: pendingFlavourPhoto || null
+    };
+
+    var flavours = getData('flavours', []) || [];
+    if (editId !== '') {
+        flavours[parseInt(editId)] = flavour;
+    } else {
+        flavours.push(flavour);
+    }
+    setData('flavours', flavours);
+    document.getElementById('flavourModal').style.display = 'none';
+});
+
 // ===== REVIEWS =====
 function loadReviews() {
     var reviews = getData('reviews', null);
@@ -582,6 +706,14 @@ function escapeHtml(str) {
 function loadAllData() {
     listenData('orders', function() { loadOrders(); });
     listenData('gallery-cat', function() { loadGallery(); });
+    listenData('flavours', function(val) {
+        if (val === null && !flavoursSeeded) {
+            flavoursSeeded = true;
+            setData('flavours', DEFAULT_FLAVOURS);
+            return;
+        }
+        loadFlavours();
+    });
     listenData('reviews', function() { loadReviews(); });
     listenData('content', function() { loadContent(); });
 }

@@ -78,6 +78,7 @@ const translations = {
         "order.diameter": "Diameter (inch)",
         "order.flavour": "Preferred Flavour",
         "order.flavourPh": "e.g. Vanilla, Chocolate...",
+        "order.chooseFlavour": "Choose a flavour",
         "order.message": "Your Wishes / Description",
         "order.messagePh": "Describe your ideal cake — theme, colours, text, number of tiers...",
         "order.allergies": "Allergies",
@@ -177,6 +178,7 @@ const translations = {
         "order.diameter": "Діаметр (дюйми)",
         "order.flavour": "Бажаний смак",
         "order.flavourPh": "напр. Ваніль, Шоколад...",
+        "order.chooseFlavour": "Оберіть смак",
         "order.message": "Ваші побажання / Опис",
         "order.messagePh": "Опишіть ваш ідеальний торт — тема, кольори, напис, кількість ярусів...",
         "order.allergies": "Алергії",
@@ -276,6 +278,7 @@ const translations = {
         "order.diameter": "Диаметр (дюймы)",
         "order.flavour": "Желаемый вкус",
         "order.flavourPh": "напр. Ваниль, Шоколад...",
+        "order.chooseFlavour": "Выберите вкус",
         "order.message": "Ваши пожелания / Описание",
         "order.messagePh": "Опишите ваш идеальный торт — тема, цвета, надпись, количество ярусов...",
         "order.allergies": "Аллергии",
@@ -495,6 +498,71 @@ daySelect.addEventListener('change', updateHiddenDate);
 monthSelect.addEventListener('change', updateHiddenDate);
 populateDatePicker();
 
+// ===== FLAVOUR PICKER =====
+var DEFAULT_FLAVOURS = [
+    { name: 'Chocolate', desc: 'Rich chocolate sponge with chocolate ganache', price: '', photo: null },
+    { name: 'Vanilla', desc: 'Classic vanilla sponge with vanilla cream', price: '', photo: null },
+    { name: 'Red Velvet', desc: 'Red velvet with cream cheese frosting', price: '', photo: null },
+    { name: 'Honey (Medovik)', desc: 'Delicate honey layers with sour cream', price: '', photo: null },
+    { name: 'Napoleon', desc: 'Puff pastry layers with custard cream', price: '', photo: null },
+    { name: 'Cheesecake', desc: 'Creamy baked cheesecake', price: '', photo: null },
+    { name: 'Carrot', desc: 'Carrot sponge with cream cheese frosting', price: '', photo: null },
+    { name: 'Strawberry', desc: 'Vanilla sponge with fresh strawberries', price: '', photo: null },
+    { name: 'Pistachio', desc: 'Pistachio sponge with delicate cream', price: '', photo: null },
+    { name: 'Lemon', desc: 'Zesty lemon sponge with lemon curd', price: '', photo: null }
+];
+
+var flavourSelectBtn = document.getElementById('flavourSelectBtn');
+var flavourSelectText = document.getElementById('flavourSelectText');
+var flavourHidden = document.getElementById('flavour');
+var flavourModal = document.getElementById('flavourModal');
+var flavourGrid = document.getElementById('flavourGrid');
+
+function renderFlavourGrid(flavours) {
+    var html = '';
+    for (var i = 0; i < flavours.length; i++) {
+        var f = flavours[i];
+        var imgHtml = f.photo
+            ? '<img src="' + f.photo + '" class="flavour-card__img" alt="' + escapeHtml(f.name) + '">'
+            : '<div class="flavour-card__placeholder"><svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>';
+        html += '<div class="flavour-card" data-flavour="' + escapeHtml(f.name) + '">' +
+            imgHtml +
+            '<div class="flavour-card__body">' +
+                '<div class="flavour-card__name">' + escapeHtml(f.name) + '</div>' +
+                (f.desc ? '<div class="flavour-card__desc">' + escapeHtml(f.desc) + '</div>' : '') +
+                (f.price ? '<div class="flavour-card__price">€' + escapeHtml(f.price) + '</div>' : '') +
+            '</div>' +
+        '</div>';
+    }
+    flavourGrid.innerHTML = html;
+
+    flavourGrid.querySelectorAll('.flavour-card').forEach(function(card) {
+        card.addEventListener('click', function() {
+            var name = this.dataset.flavour;
+            flavourHidden.value = name;
+            flavourSelectText.textContent = name;
+            flavourSelectBtn.classList.add('has-value');
+            flavourModal.style.display = 'none';
+        });
+    });
+}
+
+function openFlavourModal() {
+    fbGet('flavours', function(flavours) {
+        if (!flavours || !flavours.length) flavours = DEFAULT_FLAVOURS;
+        renderFlavourGrid(flavours);
+    });
+    flavourModal.style.display = 'flex';
+}
+
+flavourSelectBtn.addEventListener('click', openFlavourModal);
+document.getElementById('flavourModalClose').addEventListener('click', function() {
+    flavourModal.style.display = 'none';
+});
+document.getElementById('flavourModalOverlay').addEventListener('click', function() {
+    flavourModal.style.display = 'none';
+});
+
 // ===== CUSTOM SIZE TOGGLE =====
 var cakeSizeSelect = document.getElementById('cakeSize');
 var customSizeRow = document.getElementById('customSizeRow');
@@ -565,6 +633,10 @@ orderForm.addEventListener('submit', function(e) {
         document.querySelectorAll('.allergy-chip').forEach(function(c) { c.classList.remove('selected'); });
         allergyOtherInput.style.display = 'none';
         allergyOtherInput.value = '';
+        flavourHidden.value = '';
+        flavourSelectText.textContent = (translations[currentLang] && translations[currentLang]['order.chooseFlavour']) || 'Choose a flavour';
+        flavourSelectBtn.classList.remove('has-value');
+        customSizeRow.style.display = 'none';
     }, 5000);
 });
 

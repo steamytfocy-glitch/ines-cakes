@@ -974,6 +974,176 @@ ul { list-style: none; }
     gap: 10px;
 }
 
+/* ===== FLAVOUR PICKER ===== */
+.flavour-select-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 12px 16px;
+    border: 1.5px solid var(--cream-dark);
+    border-radius: 8px;
+    background: var(--white);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95rem;
+    color: var(--text-light);
+    cursor: pointer;
+    transition: var(--transition);
+    text-align: left;
+}
+
+.flavour-select-btn:hover {
+    border-color: var(--gold);
+}
+
+.flavour-select-btn.has-value {
+    color: var(--text);
+    font-weight: 500;
+}
+
+.flavour-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.flavour-modal__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(61, 46, 28, 0.55);
+    animation: fadeIn 0.25s ease;
+}
+
+.flavour-modal__card {
+    position: relative;
+    background: var(--white);
+    border-radius: 16px;
+    width: 100%;
+    max-width: 760px;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 16px 50px rgba(61, 46, 28, 0.25);
+    animation: fadeUp 0.3s ease;
+}
+
+.flavour-modal__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 28px;
+    border-bottom: 1px solid var(--cream-dark);
+}
+
+.flavour-modal__header h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--brown);
+}
+
+.flavour-modal__close {
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    color: var(--text-light);
+    cursor: pointer;
+    line-height: 1;
+    transition: var(--transition);
+}
+
+.flavour-modal__close:hover {
+    color: var(--gold-dark);
+}
+
+.flavour-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    padding: 24px 28px;
+    overflow-y: auto;
+}
+
+.flavour-card {
+    border: 2px solid var(--cream-dark);
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: var(--transition);
+    background: var(--white);
+}
+
+.flavour-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow);
+}
+
+.flavour-card.selected {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(200, 150, 62, 0.2);
+}
+
+.flavour-card__img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    background: var(--cream);
+    display: block;
+}
+
+.flavour-card__placeholder {
+    width: 100%;
+    aspect-ratio: 4/3;
+    background: linear-gradient(135deg, var(--cream-dark), var(--cream));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold-light);
+}
+
+.flavour-card__body {
+    padding: 12px 14px;
+}
+
+.flavour-card__name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--brown);
+    margin-bottom: 4px;
+}
+
+.flavour-card__desc {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    line-height: 1.4;
+    margin-bottom: 6px;
+}
+
+.flavour-card__price {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--gold);
+}
+
+@media (max-width: 700px) {
+    .flavour-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        padding: 18px;
+    }
+}
+
+@media (max-width: 440px) {
+    .flavour-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 .date-picker-row select {
     flex: 1;
 }
