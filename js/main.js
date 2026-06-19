@@ -686,6 +686,16 @@ orderForm.addEventListener('submit', function(e) {
             orders.push(orderData);
             fbSet('orders', orders);
         });
+        // Notify via Telegram (photo not sent to keep message small)
+        var notifyData = {};
+        for (var k in orderData) { if (k !== 'photo') notifyData[k] = orderData[k]; }
+        try {
+            fetch('/api/notify', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(notifyData)
+            }).catch(function() {});
+        } catch (e) {}
     }
 
     if (photoFile) {
