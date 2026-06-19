@@ -284,7 +284,8 @@
             <div class="form-row">
                 <div class="form-group">
                     <label for="cakeSize" data-i18n="order.size">Cake Size</label>
-                    <select id="cakeSize" name="cakeSize">
+                    <select id="cakeSize" name="cakeSize" required>
+                        <option value="" disabled selected data-i18n="order.sizePlaceholder">Select size</option>
                         <option value="mini" data-i18n="order.sizeMini">Mini — 5" (13 cm)</option>
                         <option value="maxi" data-i18n="order.sizeMaxi">Maxi — 6" (15 cm)</option>
                         <option value="custom" data-i18n="order.sizeCustom">Custom size</option>

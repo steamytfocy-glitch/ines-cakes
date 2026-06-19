@@ -75,6 +75,7 @@ const translations = {
         "order.email": "Email",
         "order.date": "Date Needed",
         "order.size": "Cake Size",
+        "order.sizePlaceholder": "Select size",
         "order.sizeMini": "Mini — 5\" (13 cm)",
         "order.sizeMaxi": "Maxi — 6\" (15 cm)",
         "order.sizeCustom": "Custom size",
@@ -180,6 +181,7 @@ const translations = {
         "order.email": "Електронна пошта",
         "order.date": "Потрібна дата",
         "order.size": "Розмір торта",
+        "order.sizePlaceholder": "Оберіть розмір",
         "order.sizeMini": "Міні — 5\" (13 см)",
         "order.sizeMaxi": "Максі — 6\" (15 см)",
         "order.sizeCustom": "Індивідуальний розмір",
@@ -285,6 +287,7 @@ const translations = {
         "order.email": "Электронная почта",
         "order.date": "Нужная дата",
         "order.size": "Размер торта",
+        "order.sizePlaceholder": "Выберите размер",
         "order.sizeMini": "Мини — 5\" (13 см)",
         "order.sizeMaxi": "Макси — 6\" (15 см)",
         "order.sizeCustom": "Индивидуальный размер",
@@ -615,6 +618,7 @@ function getInches() {
 
 function sizePrice() {
     var size = cakeSizeSelect.value;
+    if (!size) return null;
     if (size === 'mini') return basePriceMini;
     if (size === 'maxi') return basePriceMaxi;
     var inch = getInches();
