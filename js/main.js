@@ -695,22 +695,29 @@ orderForm.addEventListener('submit', function(e) {
 
     var photoFile = document.getElementById('photo').files[0];
 
+    var redirected = false;
+    function goThankYou() {
+        if (redirected) return;
+        redirected = true;
+        window.location.href = 'thankyou.html';
+    }
+
     function saveOrder(orderData) {
-        fbGetOnce('orders', function(orders) {
-            if (!orders) orders = [];
-            orders.push(orderData);
-            fbSet('orders', orders);
-        });
-        // Notify via Telegram (photo not sent to keep message small)
+        // Notify via Telegram — sendBeacon survives the page navigation
         var notifyData = {};
         for (var k in orderData) { if (k !== 'photo') notifyData[k] = orderData[k]; }
         try {
-            fetch('/api/notify', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(notifyData)
-            }).catch(function() {});
+            var blob = new Blob([JSON.stringify(notifyData)], { type: 'application/json' });
+            navigator.sendBeacon('/api/notify', blob);
         } catch (e) {}
+
+        fbGetOnce('orders', function(orders) {
+            if (!orders) orders = [];
+            orders.push(orderData);
+            fbSet('orders', orders, function() { goThankYou(); });
+        });
+        // Fallback: redirect even if save is slow
+        setTimeout(goThankYou, 2500);
     }
 
     if (photoFile) {
@@ -735,25 +742,6 @@ orderForm.addEventListener('submit', function(e) {
     } else {
         saveOrder(data);
     }
-
-    orderForm.style.display = 'none';
-    orderSuccess.style.display = 'block';
-
-    setTimeout(function() {
-        orderForm.style.display = 'block';
-        orderSuccess.style.display = 'none';
-        orderForm.reset();
-        selectedAllergies = [];
-        document.querySelectorAll('.allergy-chip').forEach(function(c) { c.classList.remove('selected'); });
-        allergyOtherInput.style.display = 'none';
-        allergyOtherInput.value = '';
-        flavourHidden.value = '';
-        flavourSelectText.textContent = (translations[currentLang] && translations[currentLang]['order.chooseFlavour']) || 'Choose a flavour';
-        flavourSelectBtn.classList.remove('has-value');
-        customSizeRow.style.display = 'none';
-        selectedFlavourPrice = 0;
-        recalcTotal();
-    }, 5000);
 });
 
 // ===== SMOOTH SCROLL FOR ANCHOR LINKS =====
