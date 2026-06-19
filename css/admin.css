@@ -867,6 +867,18 @@ body {
     padding: 6px;
 }
 
+.cert-admin-item__badge {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    background: var(--gold);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 50px;
+}
+
 .cert-admin-item__delete {
     position: absolute;
     top: 8px;

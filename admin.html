@@ -164,8 +164,29 @@
                     Add Certificate
                 </button>
             </div>
-            <input type="file" id="certUpload" accept="image/*" multiple style="display:none;">
             <div class="certificates-admin" id="certificatesAdmin"></div>
+
+            <!-- Add Certificate Modal -->
+            <div class="modal" id="certModal" style="display:none;">
+                <div class="modal__overlay"></div>
+                <div class="modal__card">
+                    <h3>Add Certificate</h3>
+                    <div class="modal__field">
+                        <label>Front photo</label>
+                        <input type="file" id="certFront" accept="image/*">
+                        <div id="certFrontPreview" style="margin-top:8px;"></div>
+                    </div>
+                    <div class="modal__field">
+                        <label>Back photo (optional)</label>
+                        <input type="file" id="certBack" accept="image/*">
+                        <div id="certBackPreview" style="margin-top:8px;"></div>
+                    </div>
+                    <div class="modal__buttons">
+                        <button type="button" class="btn-cancel" id="certCancel">Cancel</button>
+                        <button type="button" class="btn-admin" id="certSave">Save Certificate</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- FLAVOURS TAB -->

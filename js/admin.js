@@ -453,6 +453,9 @@ document.getElementById('sortDone').addEventListener('click', function() {
 });
 
 // ===== CERTIFICATES =====
+function certFrontSrc(c) { return (typeof c === 'string') ? c : (c && c.front); }
+function certBackSrc(c) { return (typeof c === 'string') ? null : (c && c.back); }
+
 function loadCertificates() {
     var certs = getData('certificates', null) || [];
     var container = document.getElementById('certificatesAdmin');
@@ -464,8 +467,10 @@ function loadCertificates() {
 
     var html = '';
     for (var i = 0; i < certs.length; i++) {
+        var hasBack = certBackSrc(certs[i]) ? '<span class="cert-admin-item__badge">2 sides</span>' : '';
         html += '<div class="cert-admin-item">' +
-            '<img src="' + certs[i] + '" alt="Certificate">' +
+            '<img src="' + certFrontSrc(certs[i]) + '" alt="Certificate">' +
+            hasBack +
             '<button class="cert-admin-item__delete" data-cert-del="' + i + '">&times;</button>' +
         '</div>';
     }
@@ -482,33 +487,52 @@ function loadCertificates() {
     });
 }
 
+var certFrontData = null;
+var certBackData = null;
+
 document.getElementById('addCertBtn').addEventListener('click', function() {
-    document.getElementById('certUpload').click();
+    certFrontData = null;
+    certBackData = null;
+    document.getElementById('certFront').value = '';
+    document.getElementById('certBack').value = '';
+    document.getElementById('certFrontPreview').innerHTML = '';
+    document.getElementById('certBackPreview').innerHTML = '';
+    document.getElementById('certModal').style.display = 'flex';
 });
 
-document.getElementById('certUpload').addEventListener('change', function(e) {
-    var fileList = e.target.files;
-    if (!fileList.length) return;
-    var saved = [];
-    for (var f = 0; f < fileList.length; f++) saved.push(fileList[f]);
-    var total = saved.length;
-    var loaded = 0;
-    e.target.value = '';
+document.getElementById('certCancel').addEventListener('click', function() {
+    document.getElementById('certModal').style.display = 'none';
+});
+document.querySelector('#certModal .modal__overlay').addEventListener('click', function() {
+    document.getElementById('certModal').style.display = 'none';
+});
 
+document.getElementById('certFront').addEventListener('change', function(e) {
+    var file = e.target.files[0];
+    if (!file) return;
+    compressImage(file, 1400, 0.82, function(dataUrl) {
+        certFrontData = dataUrl;
+        document.getElementById('certFrontPreview').innerHTML = '<img src="' + dataUrl + '" style="max-width:120px;border-radius:6px;">';
+    });
+});
+
+document.getElementById('certBack').addEventListener('change', function(e) {
+    var file = e.target.files[0];
+    if (!file) return;
+    compressImage(file, 1400, 0.82, function(dataUrl) {
+        certBackData = dataUrl;
+        document.getElementById('certBackPreview').innerHTML = '<img src="' + dataUrl + '" style="max-width:120px;border-radius:6px;">';
+    });
+});
+
+document.getElementById('certSave').addEventListener('click', function() {
+    if (!certFrontData) { alert('Please choose a front photo'); return; }
+    var cert = { front: certFrontData, back: certBackData || null };
     fbGetOnce('certificates', function(certs) {
         if (!certs) certs = [];
-        for (var i = 0; i < saved.length; i++) {
-            (function(file) {
-                // larger size + higher quality so document text stays readable
-                compressImage(file, 1400, 0.82, function(dataUrl) {
-                    certs.push(dataUrl);
-                    loaded++;
-                    if (loaded === total) {
-                        setData('certificates', certs);
-                    }
-                });
-            })(saved[i]);
-        }
+        certs.push(cert);
+        setData('certificates', certs);
+        document.getElementById('certModal').style.display = 'none';
     });
 });
 
