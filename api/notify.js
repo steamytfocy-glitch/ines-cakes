@@ -31,14 +31,20 @@ export default async function handler(req, res) {
     lines.push('');
     lines.push('Submitted: ' + (o.submitted || ''));
 
+    var chatIds = String(chatId).split(',').map(function (s) { return s.trim(); }).filter(Boolean);
+    var text = lines.join('\n');
+
     try {
-        var tgRes = await fetch('https://api.telegram.org/bot' + token + '/sendMessage', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ chat_id: chatId, text: lines.join('\n') })
-        });
-        var data = await tgRes.json();
-        res.status(200).json(data);
+        var results = [];
+        for (var i = 0; i < chatIds.length; i++) {
+            var tgRes = await fetch('https://api.telegram.org/bot' + token + '/sendMessage', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ chat_id: chatIds[i], text: text })
+            });
+            results.push(await tgRes.json());
+        }
+        res.status(200).json({ sent: results });
     } catch (e) {
         res.status(500).json({ error: String(e) });
     }
