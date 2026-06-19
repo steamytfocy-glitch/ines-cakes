@@ -64,6 +64,9 @@ const translations = {
         "reviews.r3.author": "— Michael D.",
         "reviews.viewAll": "View All Reviews",
         "gallery.viewAll": "View All Categories",
+        "flavours.title": "Our Flavours",
+        "flavours.subtitle": "A look inside — choose the taste you love",
+        "flavours.viewAll": "View All Flavours",
 
         "order.title": "Place an Order",
         "order.subtitle": "Fill in the form below and we'll get back to you to discuss the details",
@@ -164,6 +167,9 @@ const translations = {
         "reviews.r3.author": "— Майкл Д.",
         "reviews.viewAll": "Переглянути всі відгуки",
         "gallery.viewAll": "Переглянути всі категорії",
+        "flavours.title": "Наші смаки",
+        "flavours.subtitle": "Загляньте всередину — оберіть свій улюблений смак",
+        "flavours.viewAll": "Усі смаки",
 
         "order.title": "Оформити замовлення",
         "order.subtitle": "Заповніть форму нижче і ми зв'яжемося з вами для обговорення деталей",
@@ -264,6 +270,9 @@ const translations = {
         "reviews.r3.author": "— Майкл Д.",
         "reviews.viewAll": "Смотреть все отзывы",
         "gallery.viewAll": "Смотреть все категории",
+        "flavours.title": "Наши вкусы",
+        "flavours.subtitle": "Загляните внутрь — выберите любимый вкус",
+        "flavours.viewAll": "Все вкусы",
 
         "order.title": "Оформить заказ",
         "order.subtitle": "Заполните форму ниже и мы свяжемся с вами для обсуждения деталей",
@@ -715,6 +724,35 @@ function loadAdminGallery() {
     });
 }
 
+function loadFlavoursShowcase() {
+    var grid = document.getElementById('flavoursShowcase');
+    if (!grid) return;
+    fbGet('flavours', function(flavours) {
+        if (!flavours || !flavours.length) flavours = DEFAULT_FLAVOURS;
+        var first = flavours.slice(0, 3);
+        var html = '';
+        for (var i = 0; i < first.length; i++) {
+            var f = first[i];
+            var imgHtml = f.photo
+                ? '<img src="' + f.photo + '" class="flavour-card__img" alt="' + escapeHtml(f.name) + '">'
+                : '<div class="flavour-card__placeholder"><svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>';
+            var priceText = f.price
+                ? '€' + escapeHtml(f.price) + ' / kg'
+                : ((translations[currentLang] && translations[currentLang]['cakes.priceAgreed']) || 'Price on request');
+            html += '<div class="flavour-card">' +
+                '<div class="flavour-card__imgwrap">' + imgHtml +
+                    '<div class="flavour-card__caption">' +
+                        '<div class="flavour-card__name">' + escapeHtml(f.name) + '</div>' +
+                        '<div class="flavour-card__price">' + priceText + '</div>' +
+                    '</div>' +
+                '</div>' +
+                (f.desc ? '<div class="flavour-card__desc">' + escapeHtml(f.desc) + '</div>' : '') +
+            '</div>';
+        }
+        grid.innerHTML = html;
+    });
+}
+
 function loadLatestReviews() {
     fbGet('reviews', function(reviews) {
         if (!reviews) reviews = [];
@@ -766,6 +804,7 @@ document.addEventListener('DOMContentLoaded', function() {
     setLanguage(currentLang);
     initFadeIn();
     loadAdminGallery();
+    loadFlavoursShowcase();
     loadLatestReviews();
     loadAdminContent();
 });
