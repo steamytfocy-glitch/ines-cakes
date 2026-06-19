@@ -530,7 +530,7 @@ function renderFlavourGrid(flavours) {
             '<div class="flavour-card__body">' +
                 '<div class="flavour-card__name">' + escapeHtml(f.name) + '</div>' +
                 (f.desc ? '<div class="flavour-card__desc">' + escapeHtml(f.desc) + '</div>' : '') +
-                (f.price ? '<div class="flavour-card__price">€' + escapeHtml(f.price) + '</div>' : '') +
+                (f.price ? '<div class="flavour-card__price">€' + escapeHtml(f.price) + ' / kg</div>' : '') +
             '</div>' +
         '</div>';
     }

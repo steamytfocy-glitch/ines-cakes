@@ -487,7 +487,7 @@ function loadFlavours() {
             '<div class="flavour-admin-card__body">' +
                 '<div class="flavour-admin-card__name">' + escapeHtml(f.name) + '</div>' +
                 (f.desc ? '<div class="flavour-admin-card__desc">' + escapeHtml(f.desc) + '</div>' : '') +
-                (f.price ? '<div class="flavour-admin-card__price">€' + escapeHtml(f.price) + '</div>' : '') +
+                (f.price ? '<div class="flavour-admin-card__price">€' + escapeHtml(f.price) + ' / kg</div>' : '') +
                 '<div class="flavour-admin-card__actions">' +
                     '<button class="btn-edit" data-flavour-edit="' + i + '">Edit</button>' +
                     '<button class="btn-delete" data-flavour-del="' + i + '">Delete</button>' +
