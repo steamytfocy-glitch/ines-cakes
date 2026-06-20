@@ -12,8 +12,12 @@ const translations = {
 
         "hero.title": "Homemade Cakes<br>with Love & Taste",
         "hero.subtitle": "Custom cakes for every occasion — made from natural ingredients in Donegal, Ireland",
-        "hero.cta": "Order a Cake",
+        "hero.cta": "Browse Cakes",
+        "hero.custom": "Custom Cake",
         "hero.gallery": "View Our Work",
+        "custom.ctaTitle": "Can't find your perfect cake?",
+        "custom.ctaText": "We make custom cakes to your design — tell us your idea and attach a photo, and we'll create it.",
+        "custom.ctaBtn": "Order a Custom Cake",
 
         "about.title": "About Us",
         "about.p1": "Welcome to I.N.E.S. Every cake we create is made with passion, using only natural and high-quality ingredients.",
@@ -76,8 +80,8 @@ const translations = {
         "flavours.subtitle": "A look inside — choose the taste you love",
         "flavours.viewAll": "View All Flavours",
 
-        "order.title": "Place an Order",
-        "order.subtitle": "Fill in the form below and we'll get back to you to discuss the details",
+        "order.title": "Order a Custom Cake",
+        "order.subtitle": "Have a specific design in mind? Describe it and attach a reference photo — we'll get back to you to discuss the details.",
         "order.name": "Your Name",
         "order.phone": "Phone Number",
         "order.email": "Email",
@@ -135,8 +139,12 @@ const translations = {
 
         "hero.title": "Домашні торти<br>з любов'ю та смаком",
         "hero.subtitle": "Торти на замовлення для будь-якої нагоди — з натуральних інгредієнтів у Донеголі, Ірландія",
-        "hero.cta": "Замовити торт",
+        "hero.cta": "Переглянути торти",
+        "hero.custom": "Індивідуальний торт",
         "hero.gallery": "Наші роботи",
+        "custom.ctaTitle": "Не знайшли свій ідеальний торт?",
+        "custom.ctaText": "Робимо торти за вашим дизайном — опишіть ідею та додайте фото, і ми її втілимо.",
+        "custom.ctaBtn": "Замовити індивідуальний торт",
 
         "about.title": "Про нас",
         "about.p1": "Ласкаво просимо до I.N.E.S. Кожен торт ми створюємо з любов'ю, використовуючи тільки натуральні та якісні інгредієнти.",
@@ -199,8 +207,8 @@ const translations = {
         "flavours.subtitle": "Загляньте всередину — оберіть свій улюблений смак",
         "flavours.viewAll": "Усі смаки",
 
-        "order.title": "Оформити замовлення",
-        "order.subtitle": "Заповніть форму нижче і ми зв'яжемося з вами для обговорення деталей",
+        "order.title": "Замовити індивідуальний торт",
+        "order.subtitle": "Маєте свій дизайн? Опишіть його та додайте фото-референс — ми зв'яжемося з вами для обговорення деталей.",
         "order.name": "Ваше ім'я",
         "order.phone": "Номер телефону",
         "order.email": "Електронна пошта",
@@ -258,8 +266,12 @@ const translations = {
 
         "hero.title": "Домашние торты<br>с любовью и вкусом",
         "hero.subtitle": "Торты на заказ для любого повода — из натуральных ингредиентов в Донеголе, Ирландия",
-        "hero.cta": "Заказать торт",
+        "hero.cta": "Смотреть торты",
+        "hero.custom": "Индивидуальный торт",
         "hero.gallery": "Наши работы",
+        "custom.ctaTitle": "Не нашли свой идеальный торт?",
+        "custom.ctaText": "Делаем торты по вашему дизайну — опишите идею и прикрепите фото, и мы её воплотим.",
+        "custom.ctaBtn": "Заказать индивидуальный торт",
 
         "about.title": "О нас",
         "about.p1": "Добро пожаловать в I.N.E.S. Каждый торт мы создаём с любовью, используя только натуральные и качественные ингредиенты.",
@@ -322,8 +334,8 @@ const translations = {
         "flavours.subtitle": "Загляните внутрь — выберите любимый вкус",
         "flavours.viewAll": "Все вкусы",
 
-        "order.title": "Оформить заказ",
-        "order.subtitle": "Заполните форму ниже и мы свяжемся с вами для обсуждения деталей",
+        "order.title": "Заказать индивидуальный торт",
+        "order.subtitle": "Есть свой дизайн? Опишите его и прикрепите фото-референс — мы свяжемся с вами для обсуждения деталей.",
         "order.name": "Ваше имя",
         "order.phone": "Номер телефона",
         "order.email": "Электронная почта",
