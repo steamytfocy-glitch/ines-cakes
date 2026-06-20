@@ -58,7 +58,7 @@ document.querySelectorAll('.lang-btn').forEach(function(btn) {
     if (!code) return;
     var box = document.getElementById('tyCodeBox');
     document.getElementById('tyCodeValue').textContent = code;
-    document.getElementById('tyTrackBtn').href = 'order.html?code=' + encodeURIComponent(code);
+    document.getElementById('tyTrackBtn').href = 'order?code=' + encodeURIComponent(code);
     box.style.display = 'block';
 
     // remember this order on the device for "My Orders"

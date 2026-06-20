@@ -767,7 +767,7 @@ orderForm.addEventListener('submit', function(e) {
             gift: false,
             giftPrice: 0
         });
-        window.location.href = 'cart.html';
+        window.location.href = 'cart';
     }
 
     var photoFile = document.getElementById('photo').files[0];
@@ -850,7 +850,7 @@ function loadAdminGallery() {
         for (var i = 0; i < mainCats.length; i++) {
             var cat = mainCats[i];
             var photos = gallery[cat.id] || [];
-            html += '<div class="gallery__cat-card" onclick="location.href=\'gallery.html\'">' +
+            html += '<div class="gallery__cat-card" onclick="location.href=\'gallery\'">' +
                 '<img src="' + photos[0] + '" alt="' + escapeHtml(getCatName(cat)) + '">' +
                 '<div class="gallery__cat-overlay">' +
                     '<div class="gallery__cat-name">' + escapeHtml(getCatName(cat)) + '</div>' +
@@ -1088,7 +1088,7 @@ function renderWorkCategories() {
                 ? '<img src="' + photo + '" alt="' + escapeHtml(getCatName(a.cat)) + '">'
                 : '<div class="gallery__cat-noimg"></div>';
             var word = workCountWord(a.items.length);
-            html += '<a class="gallery__cat-card" href="gallery.html?cat=' + a.cat.id + '">' +
+            html += '<a class="gallery__cat-card" href="gallery?cat=' + a.cat.id + '">' +
                 img +
                 '<div class="gallery__cat-overlay">' +
                     '<div class="gallery__cat-name">' + escapeHtml(getCatName(a.cat)) + '</div>' +

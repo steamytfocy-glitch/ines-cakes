@@ -205,7 +205,7 @@ document.getElementById('checkoutForm').addEventListener('submit', function(e) {
         if (redirected) return;
         redirected = true;
         setCart([]);
-        window.location.href = 'thankyou.html' + (code ? '?code=' + encodeURIComponent(code) : '');
+        window.location.href = 'thankyou' + (code ? '?code=' + encodeURIComponent(code) : '');
     }
 
     fbGetOnce('orders', function(orders) {

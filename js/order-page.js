@@ -192,7 +192,7 @@ function lookup(code) {
             if (orders[i] && orders[i].code === code) { found = orders[i]; break; }
         }
         if (found) {
-            history.replaceState(null, '', 'order.html?code=' + encodeURIComponent(code));
+            history.replaceState(null, '', 'order?code=' + encodeURIComponent(code));
             renderOrder(found);
         } else {
             document.getElementById('osError').style.display = 'block';

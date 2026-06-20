@@ -116,7 +116,7 @@ function render() {
                 (o.total ? '<span>' + t('mo.total') + ': ' + escapeHtml(o.total) + '</span>' : '') +
             '</div>' +
             '<div class="mo-card__actions">' +
-                '<a class="btn btn--outline" href="order.html?code=' + encodeURIComponent(o.code) + '">' + t('mo.view') + '</a>' +
+                '<a class="btn btn--outline" href="order?code=' + encodeURIComponent(o.code) + '">' + t('mo.view') + '</a>' +
                 '<button class="mo-card__remove" data-remove="' + escapeHtml(o.code) + '">' + t('mo.remove') + '</button>' +
             '</div>' +
         '</div>';

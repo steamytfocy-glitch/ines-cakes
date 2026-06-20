@@ -126,7 +126,7 @@ function openCategory(catId) {
     group.items.forEach(function(it) {
         var p = it.p;
         var img = p.photo ? '<img src="' + p.photo + '" alt="' + escapeHtml(p.name) + '">' : '<div class="catalog-card__noimg"></div>';
-        html += '<a class="catalog-card" href="product.html?i=' + it.index + '">' +
+        html += '<a class="catalog-card" href="product?i=' + it.index + '">' +
             '<div class="catalog-card__img">' + img + '</div>' +
             '<div class="catalog-card__body">' +
                 '<div class="catalog-card__name">' + escapeHtml(p.name) + '</div>' +

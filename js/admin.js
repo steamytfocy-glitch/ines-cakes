@@ -252,7 +252,7 @@ function loadOrders() {
         var waLink = o.phone
             ? 'https://wa.me/' + adminNormalizePhone(o.phone) + '?text=' + encodeURIComponent(adminWaMessage(o))
             : '';
-        var trackLink = o.code ? 'order.html?code=' + encodeURIComponent(o.code) : '';
+        var trackLink = o.code ? 'order?code=' + encodeURIComponent(o.code) : '';
 
         html += '<div class="order-card order-card--' + status + '">' +
             '<div class="order-card__header">' +
