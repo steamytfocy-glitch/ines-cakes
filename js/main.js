@@ -35,6 +35,8 @@ const translations = {
         "cakes.custom": "Custom Size",
         "cakes.serves12": "Any size & weight you need",
         "cakes.priceAgreed": "Price on request",
+        "cakes.from": "from",
+        "cakes.empty": "Our cakes are coming soon — check back shortly!",
         "cakes.flavoursTitle": "Popular Flavours",
         "cakes.fl1": "Vanilla",
         "cakes.fl2": "Chocolate",
@@ -156,6 +158,8 @@ const translations = {
         "cakes.custom": "Індивідуальний розмір",
         "cakes.serves12": "Будь-який розмір та вага",
         "cakes.priceAgreed": "Ціна за домовленістю",
+        "cakes.from": "від",
+        "cakes.empty": "Наші торти вже скоро — зазирніть трохи пізніше!",
         "cakes.flavoursTitle": "Популярні смаки",
         "cakes.fl1": "Ваніль",
         "cakes.fl2": "Шоколад",
@@ -277,6 +281,8 @@ const translations = {
         "cakes.custom": "Индивидуальный размер",
         "cakes.serves12": "Любой размер и вес",
         "cakes.priceAgreed": "Цена по договорённости",
+        "cakes.from": "от",
+        "cakes.empty": "Наши торты уже скоро — загляните чуть позже!",
         "cakes.flavoursTitle": "Популярные вкусы",
         "cakes.fl1": "Ваниль",
         "cakes.fl2": "Шоколад",
@@ -1026,6 +1032,46 @@ function loadCategories(callback) {
     });
 }
 
+// ===== CAKES CATALOGUE (storefront) =====
+function catalogPriceLabel(sizes) {
+    var t = translations[currentLang] || translations.en;
+    if (!sizes || !sizes.length) return (t['cakes.priceAgreed'] || 'Price on request');
+    var nums = sizes.map(function(s) { return parseFloat(s.price); }).filter(function(n) { return !isNaN(n); });
+    if (!nums.length) return (t['cakes.priceAgreed'] || 'Price on request');
+    var min = Math.min.apply(null, nums);
+    return (t['cakes.from'] || 'from') + ' €' + min;
+}
+
+function loadCatalog() {
+    var grid = document.getElementById('cakesCatalog');
+    if (!grid) return;
+    fbGet('products', function(products) {
+        if (!products) products = [];
+        var empty = document.getElementById('catalogEmpty');
+        if (!products.length) {
+            grid.innerHTML = '';
+            if (empty) empty.style.display = 'block';
+            return;
+        }
+        if (empty) empty.style.display = 'none';
+        var html = '';
+        for (var i = 0; i < products.length; i++) {
+            var p = products[i];
+            var img = p.photo
+                ? '<img src="' + p.photo + '" alt="' + escapeHtml(p.name) + '">'
+                : '<div class="catalog-card__noimg"></div>';
+            html += '<a class="catalog-card" href="product.html?i=' + i + '">' +
+                '<div class="catalog-card__img">' + img + '</div>' +
+                '<div class="catalog-card__body">' +
+                    '<div class="catalog-card__name">' + escapeHtml(p.name) + '</div>' +
+                    '<div class="catalog-card__price">' + catalogPriceLabel(p.sizes) + '</div>' +
+                '</div>' +
+            '</a>';
+        }
+        grid.innerHTML = html;
+    });
+}
+
 // ===== MAINTENANCE / SITE ON-OFF =====
 var maintCustom = '';
 
@@ -1122,6 +1168,7 @@ document.addEventListener('DOMContentLoaded', function() {
     setLanguage(currentLang);
     initFadeIn();
     loadSiteStatus();
+    loadCatalog();
     loadCategories(function() { loadAdminGallery(); });
     loadCertificates();
     loadFlavoursShowcase();
