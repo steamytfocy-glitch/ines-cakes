@@ -151,6 +151,46 @@ function adminWaMessage(order) {
     return 'Hello! This is I.N.E.S. Bakery regarding your order ' + code + '.';
 }
 
+var hideCompleted = localStorage.getItem('ines-hide-done') === '1';
+
+function isCompleted(o) {
+    var s = (o && o.status) || 'new';
+    return s === 'done' || s === 'declined';
+}
+
+(function() {
+    var btn = document.getElementById('toggleDoneBtn');
+    if (!btn) return;
+    function syncLabel() { btn.textContent = hideCompleted ? 'Show completed' : 'Hide completed'; }
+    syncLabel();
+    btn.addEventListener('click', function() {
+        hideCompleted = !hideCompleted;
+        localStorage.setItem('ines-hide-done', hideCompleted ? '1' : '0');
+        syncLabel();
+        loadOrders();
+    });
+})();
+
+function notifyClientStatus(order) {
+    if (!order || !order.email || order.email.indexOf('@') < 0) return;
+    try {
+        fetch('/api/notify-status', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                to: order.email,
+                name: order.name || '',
+                code: order.code || '',
+                status: order.status || 'new',
+                note: order.note || '',
+                lang: order.lang || 'en'
+            })
+        }).then(function(r) {
+            if (!r.ok) console.warn('Status email not sent (HTTP ' + r.status + ')');
+        }).catch(function(e) { console.warn('Status email error', e); });
+    } catch (e) { console.warn('Status email error', e); }
+}
+
 function loadOrders() {
     var orders = getData('orders', null);
     if (!orders) orders = [];
@@ -177,8 +217,11 @@ function loadOrders() {
         '<span class="stat-badge"><span class="dot dot--done"></span> Completed: ' + counts.done + '</span>';
 
     var html = '';
+    var shown = 0;
     for (var i = orders.length - 1; i >= 0; i--) {
         var o = orders[i];
+        if (hideCompleted && isCompleted(o)) continue;
+        shown++;
         var status = o.status || 'new';
 
         var statusOptions = '';
@@ -227,6 +270,9 @@ function loadOrders() {
             '</div>' +
         '</div>';
     }
+    if (shown === 0) {
+        html = '<div class="empty-state"><svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="#C8963E" stroke-width="1.5"><path d="M20 6L9 17l-5-5"/></svg><p>All caught up</p><span>Completed orders are hidden. Click "Show completed" to see them.</span></div>';
+    }
     list.innerHTML = html;
 
     list.querySelectorAll('.status-select').forEach(function(sel) {
@@ -235,6 +281,7 @@ function loadOrders() {
             var orders = getData('orders', []);
             orders[idx].status = this.value;
             setData('orders', orders);
+            notifyClientStatus(orders[idx]);
             loadOrders();
         });
     });
