@@ -217,6 +217,19 @@ function renderProduct() {
 // ===== FLAVOUR PICKER MODAL =====
 var _flavours = [];
 
+var DEFAULT_FLAVOURS = [
+    { name: 'Chocolate', desc: 'Rich chocolate sponge with chocolate ganache', price: '', photo: null },
+    { name: 'Vanilla', desc: 'Classic vanilla sponge with vanilla cream', price: '', photo: null },
+    { name: 'Red Velvet', desc: 'Red velvet with cream cheese frosting', price: '', photo: null },
+    { name: 'Honey (Medovik)', desc: 'Delicate honey layers with sour cream', price: '', photo: null },
+    { name: 'Napoleon', desc: 'Puff pastry layers with custard cream', price: '', photo: null },
+    { name: 'Cheesecake', desc: 'Creamy baked cheesecake', price: '', photo: null },
+    { name: 'Carrot', desc: 'Carrot sponge with cream cheese frosting', price: '', photo: null },
+    { name: 'Strawberry', desc: 'Vanilla sponge with fresh strawberries', price: '', photo: null },
+    { name: 'Pistachio', desc: 'Pistachio sponge with delicate cream', price: '', photo: null },
+    { name: 'Lemon', desc: 'Zesty lemon sponge with lemon curd', price: '', photo: null }
+];
+
 function flavourCardHtml(f) {
     var img = f.photo
         ? '<img src="' + f.photo + '" class="flavour-card__img" alt="' + escapeHtml(f.name) + '">'
@@ -345,6 +358,6 @@ document.querySelectorAll('.lang-btn').forEach(function(b) { b.classList.toggle(
         product = products[productIndex];
         document.getElementById('productGrid').style.display = '';
         renderProduct();
-        fbGet('flavours', function(fl) { _flavours = fl || []; setupFlavours(); });
+        fbGet('flavours', function(fl) { _flavours = (fl && fl.length) ? fl : DEFAULT_FLAVOURS; setupFlavours(); });
     });
 })();
