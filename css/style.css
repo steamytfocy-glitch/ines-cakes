@@ -78,6 +78,28 @@
     margin-bottom: 28px;
     white-space: pre-wrap;
 }
+.maintenance__contact {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+.maintenance__wa {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #25D366;
+    color: #fff;
+    transition: var(--transition);
+    flex-shrink: 0;
+}
+.maintenance__wa:hover {
+    filter: brightness(0.93);
+    transform: translateY(-2px);
+}
 .maintenance__socials {
     display: flex;
     justify-content: center;

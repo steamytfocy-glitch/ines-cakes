@@ -1057,7 +1057,12 @@ function renderMaintenance() {
             '<div class="maintenance__brand">I.N.E.S.</div>' +
             '<h1 class="maintenance__title"></h1>' +
             '<p class="maintenance__text"></p>' +
-            '<a href="tel:+353874917435" class="btn btn--outline maintenance__phone">087 491 7435</a>' +
+            '<div class="maintenance__contact">' +
+                '<a href="tel:+353874917435" class="btn btn--outline maintenance__phone">087 491 7435</a>' +
+                '<a href="https://wa.me/353874917435" target="_blank" class="maintenance__wa" aria-label="WhatsApp">' +
+                    '<svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M17.6 6.3A7.85 7.85 0 0012 4a7.94 7.94 0 00-6.9 11.9L4 20l4.2-1.1A7.94 7.94 0 0012 19.9a7.94 7.94 0 005.6-13.6zM12 18.5a6.6 6.6 0 01-3.4-.9l-.24-.15-2.5.65.67-2.43-.16-.25A6.59 6.59 0 1118.6 12 6.6 6.6 0 0112 18.5zm3.6-4.95c-.2-.1-1.17-.58-1.35-.64s-.31-.1-.44.1-.51.64-.62.77-.23.15-.43.05a5.4 5.4 0 01-1.59-.98 6 6 0 01-1.1-1.37c-.11-.2 0-.3.09-.4l.3-.35a1.35 1.35 0 00.2-.33.37.37 0 000-.35c0-.1-.44-1.06-.6-1.45s-.32-.33-.44-.34h-.38a.72.72 0 00-.52.24 2.18 2.18 0 00-.68 1.62 3.79 3.79 0 00.79 2 8.66 8.66 0 003.32 2.93c.46.2.83.32 1.11.41a2.69 2.69 0 001.23.08 2 2 0 001.32-.93 1.65 1.65 0 00.11-.93c-.05-.08-.18-.13-.38-.23z"/></svg>' +
+                '</a>' +
+            '</div>' +
             '<div class="maintenance__socials">' +
                 '<a href="#" id="maintInsta" class="maintenance__social" target="_blank" aria-label="Instagram" style="display:none;">' +
                     '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg>' +
