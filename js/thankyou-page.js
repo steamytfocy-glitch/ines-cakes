@@ -57,6 +57,15 @@ document.querySelectorAll('.lang-btn').forEach(function(btn) {
     document.getElementById('tyCodeValue').textContent = code;
     document.getElementById('tyTrackBtn').href = 'order.html?code=' + encodeURIComponent(code);
     box.style.display = 'block';
+
+    // remember this order on the device for "My Orders"
+    try {
+        var mine = JSON.parse(localStorage.getItem('ines-my-orders')) || [];
+        if (!mine.some(function(m) { return m.code === code; })) {
+            mine.push({ code: code, when: Date.now() });
+            localStorage.setItem('ines-my-orders', JSON.stringify(mine));
+        }
+    } catch (e) {}
 })();
 
 // Social links from Firebase content

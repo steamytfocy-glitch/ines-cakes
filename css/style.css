@@ -462,6 +462,40 @@ ul { list-style: none; }
 .cart__checkout h3 { font-family: 'Playfair Display', serif; color: var(--brown); margin-bottom: 16px; }
 .cart__note { margin-top: 12px; font-size: 0.82rem; color: var(--text-light); text-align: center; }
 
+/* ===== MY ORDERS ===== */
+.myorders__sub { color: var(--text-light); margin-bottom: 20px; }
+.myorders__add { display: flex; gap: 10px; margin-bottom: 8px; }
+.myorders__add input {
+    flex: 1;
+    padding: 12px 14px;
+    border: 1px solid var(--cream-dark);
+    border-radius: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    outline: none;
+}
+.myorders__add input:focus { border-color: var(--gold); }
+.myorders__list { margin-top: 18px; }
+.myorders__empty { text-align: center; padding: 30px 0; }
+.myorders__empty p { color: var(--text-light); margin-bottom: 16px; }
+.mo-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 16px 18px;
+    margin-bottom: 14px;
+}
+.mo-card__top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.mo-card__code { font-family: 'Playfair Display', serif; font-weight: 700; color: var(--gold-dark); letter-spacing: 1px; }
+.mo-card__status { padding: 4px 12px; border-radius: 50px; font-size: 0.8rem; font-weight: 600; }
+.mo-card__meta { display: flex; gap: 16px; flex-wrap: wrap; color: var(--text-light); font-size: 0.88rem; margin-bottom: 12px; }
+.mo-card__actions { display: flex; align-items: center; gap: 14px; }
+.mo-card__actions .btn { padding: 8px 18px; font-size: 0.85rem; }
+.mo-card__remove { background: none; border: none; color: var(--text-light); font-size: 0.82rem; cursor: pointer; }
+.mo-card__remove:hover { color: #D94F4F; text-decoration: underline; }
+
 @media (max-width: 768px) {
     .product__grid { grid-template-columns: 1fr; gap: 24px; }
     .product__opts { grid-template-columns: 1fr; }

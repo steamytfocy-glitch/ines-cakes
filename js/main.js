@@ -114,7 +114,7 @@ const translations = {
         "order.orContact": "Or contact us directly:",
 
         "footer.contacts": "Contacts",
-        "footer.track": "Track your order",
+        "footer.track": "My orders",
         "footer.shedHours": "Cake Shed Hours",
         "footer.schedule": "Fri–Sat 9:00–21:00, Sun 9:00–18:00",
         "footer.pickup": "Collection & delivery by arrangement",
@@ -237,7 +237,7 @@ const translations = {
         "order.orContact": "Або зв'яжіться з нами напряму:",
 
         "footer.contacts": "Контакти",
-        "footer.track": "Відстежити замовлення",
+        "footer.track": "Мої замовлення",
         "footer.shedHours": "Графік Кейк Шед",
         "footer.schedule": "Пт–Сб 9:00–21:00, Нд 9:00–18:00",
         "footer.pickup": "Самовивіз та доставка за домовленістю",
@@ -360,7 +360,7 @@ const translations = {
         "order.orContact": "Или свяжитесь с нами напрямую:",
 
         "footer.contacts": "Контакты",
-        "footer.track": "Отследить заказ",
+        "footer.track": "Мои заказы",
         "footer.shedHours": "График Кейк Шед",
         "footer.schedule": "Пт–Сб 9:00–21:00, Вс 9:00–18:00",
         "footer.pickup": "Самовывоз и доставка по договорённости",

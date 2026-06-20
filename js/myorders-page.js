@@ -1,0 +1,157 @@
+var translations = {
+    en: {
+        "mo.back": "← Back to Home",
+        "mo.title": "My Orders",
+        "mo.sub": "Your orders are saved on this device. On another phone, add an order by its code.",
+        "mo.add": "Add order",
+        "mo.notfound": "Order not found. Please check the number.",
+        "mo.empty": "No orders yet on this device.",
+        "mo.browse": "Browse cakes",
+        "mo.view": "View status",
+        "mo.remove": "Remove",
+        "mo.date": "Date",
+        "mo.total": "Total",
+        "st.new": "Order received", "st.confirmed": "Confirmed", "st.progress": "Being made",
+        "st.ready": "Ready for pickup", "st.done": "Completed", "st.declined": "Declined"
+    },
+    ua: {
+        "mo.back": "← На головну",
+        "mo.title": "Мої замовлення",
+        "mo.sub": "Замовлення зберігаються на цьому пристрої. На іншому телефоні додайте замовлення за його кодом.",
+        "mo.add": "Додати замовлення",
+        "mo.notfound": "Замовлення не знайдено. Перевірте номер.",
+        "mo.empty": "На цьому пристрої ще немає замовлень.",
+        "mo.browse": "Переглянути торти",
+        "mo.view": "Дивитись статус",
+        "mo.remove": "Прибрати",
+        "mo.date": "Дата",
+        "mo.total": "Разом",
+        "st.new": "Замовлення отримано", "st.confirmed": "Підтверджено", "st.progress": "Готується",
+        "st.ready": "Готово до видачі", "st.done": "Виконано", "st.declined": "Відхилено"
+    },
+    ru: {
+        "mo.back": "← На главную",
+        "mo.title": "Мои заказы",
+        "mo.sub": "Заказы сохраняются на этом устройстве. На другом телефоне добавьте заказ по его коду.",
+        "mo.add": "Добавить заказ",
+        "mo.notfound": "Заказ не найден. Проверьте номер.",
+        "mo.empty": "На этом устройстве пока нет заказов.",
+        "mo.browse": "Смотреть торты",
+        "mo.view": "Смотреть статус",
+        "mo.remove": "Убрать",
+        "mo.date": "Дата",
+        "mo.total": "Итого",
+        "st.new": "Заказ получен", "st.confirmed": "Подтверждён", "st.progress": "Готовится",
+        "st.ready": "Готов к выдаче", "st.done": "Выполнен", "st.declined": "Отклонён"
+    }
+};
+
+var STATUS_COLORS = {
+    new: { bg: '#FBF3E2', fg: '#A67A2E' }, confirmed: { bg: '#EAF3FB', fg: '#2E6FA6' },
+    progress: { bg: '#FBF3E2', fg: '#A67A2E' }, ready: { bg: '#EAF7EE', fg: '#2E8B57' },
+    done: { bg: '#EAF7EE', fg: '#2E8B57' }, declined: { bg: '#FBEAEA', fg: '#B23A3A' }
+};
+
+var currentLang = localStorage.getItem('ines-lang') || 'en';
+var _allOrders = [];
+
+function t(k) { var tr = translations[currentLang] || translations.en; return tr[k] || translations.en[k] || k; }
+function escapeHtml(s) { if (!s) return ''; var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+function getMine() {
+    try { return JSON.parse(localStorage.getItem('ines-my-orders')) || []; } catch (e) { return []; }
+}
+function setMine(list) { localStorage.setItem('ines-my-orders', JSON.stringify(list)); }
+
+function applyI18n() {
+    document.querySelectorAll('[data-i18n]').forEach(function(el) {
+        var k = el.getAttribute('data-i18n');
+        if (translations[currentLang] && translations[currentLang][k]) el.innerHTML = translations[currentLang][k];
+    });
+}
+function setLang(lang) {
+    currentLang = lang;
+    localStorage.setItem('ines-lang', lang);
+    document.querySelectorAll('.lang-btn').forEach(function(b) { b.classList.toggle('active', b.dataset.lang === lang); });
+    applyI18n();
+    render();
+}
+document.querySelectorAll('.lang-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() { setLang(this.dataset.lang); });
+});
+
+function findOrder(code) {
+    for (var i = 0; i < _allOrders.length; i++) if (_allOrders[i] && _allOrders[i].code === code) return _allOrders[i];
+    return null;
+}
+
+function render() {
+    var mine = getMine();
+    var list = document.getElementById('moList');
+    var empty = document.getElementById('moEmpty');
+
+    var existing = mine.filter(function(m) { return findOrder(m.code); });
+    if (existing.length !== mine.length) { setMine(existing); mine = existing; }
+
+    if (!mine.length) {
+        list.innerHTML = '';
+        empty.style.display = 'block';
+        return;
+    }
+    empty.style.display = 'none';
+
+    var html = '';
+    mine.slice().reverse().forEach(function(m) {
+        var o = findOrder(m.code);
+        if (!o) return;
+        var status = o.status || 'new';
+        var col = STATUS_COLORS[status] || STATUS_COLORS.new;
+        html += '<div class="mo-card">' +
+            '<div class="mo-card__top">' +
+                '<span class="mo-card__code">' + escapeHtml(o.code) + '</span>' +
+                '<span class="mo-card__status" style="background:' + col.bg + ';color:' + col.fg + ';">' + t('st.' + status) + '</span>' +
+            '</div>' +
+            '<div class="mo-card__meta">' +
+                (o.date ? '<span>' + t('mo.date') + ': ' + escapeHtml(o.date) + '</span>' : '') +
+                (o.total ? '<span>' + t('mo.total') + ': ' + escapeHtml(o.total) + '</span>' : '') +
+            '</div>' +
+            '<div class="mo-card__actions">' +
+                '<a class="btn btn--outline" href="order.html?code=' + encodeURIComponent(o.code) + '">' + t('mo.view') + '</a>' +
+                '<button class="mo-card__remove" data-remove="' + escapeHtml(o.code) + '">' + t('mo.remove') + '</button>' +
+            '</div>' +
+        '</div>';
+    });
+    list.innerHTML = html;
+
+    list.querySelectorAll('[data-remove]').forEach(function(b) {
+        b.addEventListener('click', function() {
+            var code = this.dataset.remove;
+            setMine(getMine().filter(function(m) { return m.code !== code; }));
+            render();
+        });
+    });
+}
+
+document.getElementById('moAddBtn').addEventListener('click', function() {
+    var input = document.getElementById('moCodeInput');
+    var code = input.value.trim().toUpperCase();
+    if (code && code.indexOf('INES') === 0 && code.indexOf('INES-') !== 0) code = 'INES-' + code.slice(4);
+    document.getElementById('moError').style.display = 'none';
+    if (!code) return;
+    if (!findOrder(code)) { document.getElementById('moError').style.display = 'block'; return; }
+    var mine = getMine();
+    if (!mine.some(function(m) { return m.code === code; })) { mine.push({ code: code, when: Date.now() }); setMine(mine); }
+    input.value = '';
+    render();
+});
+document.getElementById('moCodeInput').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') document.getElementById('moAddBtn').click();
+});
+
+applyI18n();
+document.querySelectorAll('.lang-btn').forEach(function(b) { b.classList.toggle('active', b.dataset.lang === currentLang); });
+
+fbGet('orders', function(orders) {
+    _allOrders = orders || [];
+    render();
+});
