@@ -344,8 +344,9 @@ function loadGallery() {
             '<div class="gallery-admin">';
 
         for (var p = 0; p < photos.length; p++) {
-            html += '<div class="gallery-admin-item">' +
+            html += '<div class="gallery-admin-item" data-cat="' + cat.id + '" data-idx="' + p + '">' +
                 '<img src="' + photos[p] + '" alt="' + escapeHtml(cat.en) + '">' +
+                '<div class="gallery-admin-item__check">✓</div>' +
                 '<button class="gallery-admin-item__delete" data-cat="' + cat.id + '" data-idx="' + p + '">&times;</button>' +
             '</div>';
         }
@@ -353,20 +354,108 @@ function loadGallery() {
     }
     container.innerHTML = html;
 
-    container.querySelectorAll('.gallery-admin-item__delete').forEach(function(btn) {
-        btn.addEventListener('click', function() {
-            if (!confirm('Delete this photo?')) return;
-            var catId = this.dataset.cat;
-            var idx = parseInt(this.dataset.idx);
-            var gallery = getData('gallery-cat', {});
-            if (gallery[catId]) {
-                gallery[catId].splice(idx, 1);
-                setData('gallery-cat', gallery);
-            }
-            loadGallery();
+    if (gallerySelectMode) {
+        container.classList.add('gallery-admin--selecting');
+        container.querySelectorAll('.gallery-admin-item').forEach(function(item) {
+            var key = item.dataset.cat + '#' + item.dataset.idx;
+            if (gallerySelected[key]) item.classList.add('selected');
+            item.addEventListener('click', function() {
+                var k = this.dataset.cat + '#' + this.dataset.idx;
+                if (gallerySelected[k]) { delete gallerySelected[k]; this.classList.remove('selected'); }
+                else { gallerySelected[k] = { cat: this.dataset.cat, idx: parseInt(this.dataset.idx) }; this.classList.add('selected'); }
+                updateGalleryDelCount();
+            });
         });
-    });
+        updateGalleryDelCount();
+    } else {
+        container.classList.remove('gallery-admin--selecting');
+        container.querySelectorAll('.gallery-admin-item__delete').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                if (!confirm('Delete this photo?')) return;
+                var catId = this.dataset.cat;
+                var idx = parseInt(this.dataset.idx);
+                var gallery = getData('gallery-cat', {});
+                if (gallery[catId]) {
+                    gallery[catId].splice(idx, 1);
+                    setData('gallery-cat', gallery);
+                }
+                loadGallery();
+            });
+        });
+    }
 }
+
+// ===== GALLERY MULTI-DELETE =====
+var gallerySelectMode = false;
+var gallerySelected = {};
+
+function updateGalleryDelCount() {
+    var n = Object.keys(gallerySelected).length;
+    var el = document.getElementById('galleryDelCount');
+    if (el) el.textContent = n + ' selected';
+}
+
+function exitGalleryDeleteMode() {
+    gallerySelectMode = false;
+    gallerySelected = {};
+    var bar = document.getElementById('galleryDelBar');
+    if (bar) bar.style.display = 'none';
+    var btn = document.getElementById('multiDeleteBtn');
+    if (btn) btn.textContent = 'Select to delete';
+    loadGallery();
+}
+
+(function initGalleryMultiDelete() {
+    var btn = document.getElementById('multiDeleteBtn');
+    if (!btn) return;
+    btn.addEventListener('click', function() {
+        if (gallerySelectMode) { exitGalleryDeleteMode(); return; }
+        gallerySelectMode = true;
+        gallerySelected = {};
+        this.textContent = 'Cancel selection';
+        document.getElementById('galleryDelBar').style.display = 'flex';
+        loadGallery();
+    });
+
+    document.getElementById('galleryDelCancel').addEventListener('click', exitGalleryDeleteMode);
+
+    document.getElementById('gallerySelectAllDel').addEventListener('click', function() {
+        var items = document.querySelectorAll('#galleryAdmin .gallery-admin-item');
+        var allSelected = items.length > 0 && Object.keys(gallerySelected).length === items.length;
+        gallerySelected = {};
+        items.forEach(function(item) {
+            if (!allSelected) {
+                gallerySelected[item.dataset.cat + '#' + item.dataset.idx] = { cat: item.dataset.cat, idx: parseInt(item.dataset.idx) };
+                item.classList.add('selected');
+            } else {
+                item.classList.remove('selected');
+            }
+        });
+        updateGalleryDelCount();
+    });
+
+    document.getElementById('galleryDeleteSelected').addEventListener('click', function() {
+        var keys = Object.keys(gallerySelected);
+        if (!keys.length) { alert('Select photos first.'); return; }
+        if (!confirm('Delete ' + keys.length + ' selected photo(s)?')) return;
+
+        var gallery = getData('gallery-cat', {}) || {};
+        var byCat = {};
+        keys.forEach(function(k) {
+            var sel = gallerySelected[k];
+            if (!byCat[sel.cat]) byCat[sel.cat] = [];
+            byCat[sel.cat].push(sel.idx);
+        });
+        for (var cat in byCat) {
+            if (!gallery[cat]) continue;
+            byCat[cat].sort(function(a, b) { return b - a; }).forEach(function(idx) {
+                gallery[cat].splice(idx, 1);
+            });
+        }
+        setData('gallery-cat', gallery);
+        exitGalleryDeleteMode();
+    });
+})();
 
 function compressImage(file, maxSize, quality, callback) {
     var reader = new FileReader();
