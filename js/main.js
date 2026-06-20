@@ -995,6 +995,9 @@ function loadAdminContent() {
         var fb = document.getElementById('socialFacebook');
         if (insta && content.contactInsta) insta.href = content.contactInsta;
         if (fb && content.contactFacebook) fb.href = content.contactFacebook;
+        maintInstaUrl = content.contactInsta || '';
+        maintFacebookUrl = content.contactFacebook || '';
+        applyMaintSocials();
         var sInsta = document.getElementById('successInsta');
         var sFb = document.getElementById('successFacebook');
         if (sInsta && content.contactInsta) sInsta.href = content.contactInsta;
@@ -1055,6 +1058,14 @@ function renderMaintenance() {
             '<h1 class="maintenance__title"></h1>' +
             '<p class="maintenance__text"></p>' +
             '<a href="tel:+353874917435" class="btn btn--outline maintenance__phone">087 491 7435</a>' +
+            '<div class="maintenance__socials">' +
+                '<a href="#" id="maintInsta" class="maintenance__social" target="_blank" aria-label="Instagram" style="display:none;">' +
+                    '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg>' +
+                '</a>' +
+                '<a href="#" id="maintFacebook" class="maintenance__social" target="_blank" aria-label="Facebook" style="display:none;">' +
+                    '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>' +
+                '</a>' +
+            '</div>' +
         '</div>';
     document.body.appendChild(el);
     document.body.style.overflow = 'hidden';
@@ -1063,7 +1074,24 @@ function renderMaintenance() {
         b.addEventListener('click', function() { setLanguage(this.dataset.lang); });
     });
 
+    applyMaintSocials();
     renderMaintenance();
+}
+
+var maintInstaUrl = '';
+var maintFacebookUrl = '';
+
+function applyMaintSocials() {
+    var ig = document.getElementById('maintInsta');
+    var fb = document.getElementById('maintFacebook');
+    if (ig) {
+        if (maintInstaUrl) { ig.href = maintInstaUrl; ig.style.display = ''; }
+        else { ig.style.display = 'none'; }
+    }
+    if (fb) {
+        if (maintFacebookUrl) { fb.href = maintFacebookUrl; fb.style.display = ''; }
+        else { fb.style.display = 'none'; }
+    }
 }
 
 function hideMaintenance() {

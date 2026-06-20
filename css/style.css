@@ -78,6 +78,28 @@
     margin-bottom: 28px;
     white-space: pre-wrap;
 }
+.maintenance__socials {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    margin-top: 22px;
+}
+.maintenance__social {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    border: 1.5px solid var(--gold);
+    color: var(--gold);
+    transition: var(--transition);
+}
+.maintenance__social:hover {
+    background: var(--gold);
+    color: #fff;
+    transform: translateY(-2px);
+}
 
 /* ===== RESET ===== */
 *, *::before, *::after {
