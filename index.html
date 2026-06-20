@@ -84,56 +84,14 @@
     </div>
 </section>
 
-<!-- Cakes to Order (temporarily hidden — to be replaced by product catalogue) -->
-<section class="cakes section section--alt" id="cakes" style="display:none;">
+<!-- Gallery -->
+<section class="gallery section section--alt" id="gallery">
     <div class="container">
-        <h2 class="section__title" data-i18n="cakes.title">Cakes to Order</h2>
-        <p class="section__subtitle" data-i18n="cakes.subtitle">Choose your size, flavour and design — we'll create the perfect cake for your occasion</p>
-
-        <div class="cakes__sizes">
-            <div class="size-card">
-                <div class="size-card__icon">
-                    <svg viewBox="0 0 80 80" width="80" height="80">
-                        <ellipse cx="40" cy="55" rx="25" ry="5" fill="#C8963E" opacity="0.2"/>
-                        <rect x="25" y="35" width="30" height="20" rx="3" fill="#C8963E" opacity="0.4"/>
-                        <ellipse cx="40" cy="35" rx="15" ry="4" fill="#E8C47A"/>
-                        <text x="40" y="50" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">5"</text>
-                    </svg>
-                </div>
-                <h3 class="size-card__title">Mini — 5" (13 cm)</h3>
-                <p class="size-card__serves" data-i18n="cakes.serves6">Serves 6 people</p>
-                <p class="size-card__price" data-i18n="cakes.from30">from €30</p>
-            </div>
-            <div class="size-card">
-                <div class="size-card__icon">
-                    <svg viewBox="0 0 80 80" width="80" height="80">
-                        <ellipse cx="40" cy="55" rx="28" ry="5" fill="#C8963E" opacity="0.2"/>
-                        <rect x="22" y="30" width="36" height="25" rx="3" fill="#C8963E" opacity="0.4"/>
-                        <ellipse cx="40" cy="30" rx="18" ry="5" fill="#E8C47A"/>
-                        <text x="40" y="48" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">6"</text>
-                    </svg>
-                </div>
-                <h3 class="size-card__title">Maxi — 6" (15 cm)</h3>
-                <p class="size-card__serves" data-i18n="cakes.serves8">Serves 8 people</p>
-                <p class="size-card__price" data-i18n="cakes.from35">from €35</p>
-            </div>
-            <div class="size-card">
-                <div class="size-card__icon">
-                    <svg viewBox="0 0 80 80" width="80" height="80">
-                        <ellipse cx="40" cy="58" rx="32" ry="5" fill="#C8963E" opacity="0.2"/>
-                        <rect x="15" y="22" width="50" height="36" rx="3" fill="#C8963E" opacity="0.4"/>
-                        <ellipse cx="40" cy="22" rx="25" ry="6" fill="#E8C47A"/>
-                        <text x="40" y="46" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">8"+</text>
-                    </svg>
-                </div>
-                <h3 class="size-card__title" data-i18n="cakes.custom">Custom Size</h3>
-                <p class="size-card__serves" data-i18n="cakes.serves12">Any size & weight you need</p>
-                <p class="size-card__price" data-i18n="cakes.priceAgreed">Price on request</p>
-            </div>
-        </div>
-
-        <div class="cakes__cta">
-            <a href="#order" class="btn btn--primary" data-i18n="cakes.cta">Order Your Cake</a>
+        <h2 class="section__title" data-i18n="gallery.title">Our Work</h2>
+        <p class="section__subtitle" data-i18n="gallery.subtitle">A selection of our recent cakes — each one unique and made with care</p>
+        <div class="gallery__categories" id="galleryCategories"></div>
+        <div class="gallery__more-wrap" id="galleryMoreWrap" style="display:none;">
+            <a href="gallery.html" class="btn btn--outline" data-i18n="gallery.viewAll">View All Categories</a>
         </div>
     </div>
 </section>
@@ -247,14 +205,56 @@
     </div>
 </section>
 
-<!-- Gallery -->
-<section class="gallery section section--alt" id="gallery">
+<!-- Cakes to Order (temporarily hidden — to be replaced by product catalogue) -->
+<section class="cakes section section--alt" id="cakes" style="display:none;">
     <div class="container">
-        <h2 class="section__title" data-i18n="gallery.title">Our Work</h2>
-        <p class="section__subtitle" data-i18n="gallery.subtitle">A selection of our recent cakes — each one unique and made with care</p>
-        <div class="gallery__categories" id="galleryCategories"></div>
-        <div class="gallery__more-wrap" id="galleryMoreWrap" style="display:none;">
-            <a href="gallery.html" class="btn btn--outline" data-i18n="gallery.viewAll">View All Categories</a>
+        <h2 class="section__title" data-i18n="cakes.title">Cakes to Order</h2>
+        <p class="section__subtitle" data-i18n="cakes.subtitle">Choose your size, flavour and design — we'll create the perfect cake for your occasion</p>
+
+        <div class="cakes__sizes">
+            <div class="size-card">
+                <div class="size-card__icon">
+                    <svg viewBox="0 0 80 80" width="80" height="80">
+                        <ellipse cx="40" cy="55" rx="25" ry="5" fill="#C8963E" opacity="0.2"/>
+                        <rect x="25" y="35" width="30" height="20" rx="3" fill="#C8963E" opacity="0.4"/>
+                        <ellipse cx="40" cy="35" rx="15" ry="4" fill="#E8C47A"/>
+                        <text x="40" y="50" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">5"</text>
+                    </svg>
+                </div>
+                <h3 class="size-card__title">Mini — 5" (13 cm)</h3>
+                <p class="size-card__serves" data-i18n="cakes.serves6">Serves 6 people</p>
+                <p class="size-card__price" data-i18n="cakes.from30">from €30</p>
+            </div>
+            <div class="size-card">
+                <div class="size-card__icon">
+                    <svg viewBox="0 0 80 80" width="80" height="80">
+                        <ellipse cx="40" cy="55" rx="28" ry="5" fill="#C8963E" opacity="0.2"/>
+                        <rect x="22" y="30" width="36" height="25" rx="3" fill="#C8963E" opacity="0.4"/>
+                        <ellipse cx="40" cy="30" rx="18" ry="5" fill="#E8C47A"/>
+                        <text x="40" y="48" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">6"</text>
+                    </svg>
+                </div>
+                <h3 class="size-card__title">Maxi — 6" (15 cm)</h3>
+                <p class="size-card__serves" data-i18n="cakes.serves8">Serves 8 people</p>
+                <p class="size-card__price" data-i18n="cakes.from35">from €35</p>
+            </div>
+            <div class="size-card">
+                <div class="size-card__icon">
+                    <svg viewBox="0 0 80 80" width="80" height="80">
+                        <ellipse cx="40" cy="58" rx="32" ry="5" fill="#C8963E" opacity="0.2"/>
+                        <rect x="15" y="22" width="50" height="36" rx="3" fill="#C8963E" opacity="0.4"/>
+                        <ellipse cx="40" cy="22" rx="25" ry="6" fill="#E8C47A"/>
+                        <text x="40" y="46" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">8"+</text>
+                    </svg>
+                </div>
+                <h3 class="size-card__title" data-i18n="cakes.custom">Custom Size</h3>
+                <p class="size-card__serves" data-i18n="cakes.serves12">Any size & weight you need</p>
+                <p class="size-card__price" data-i18n="cakes.priceAgreed">Price on request</p>
+            </div>
+        </div>
+
+        <div class="cakes__cta">
+            <a href="#order" class="btn btn--primary" data-i18n="cakes.cta">Order Your Cake</a>
         </div>
     </div>
 </section>
