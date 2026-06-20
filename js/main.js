@@ -400,6 +400,9 @@ function applyTranslations(lang) {
     if (document.getElementById('maintenanceOverlay') && typeof renderMaintenance === 'function') {
         renderMaintenance();
     }
+    if (typeof renderWorkCategories === 'function') {
+        renderWorkCategories();
+    }
 }
 
 function setLanguage(lang, animate) {
@@ -1033,11 +1036,19 @@ function loadCategories(callback) {
 }
 
 // ===== OUR WORK — CAKE CATEGORIES (storefront) =====
+var _workProducts = null;
+
 function loadWorkCategories() {
-    var grid = document.getElementById('galleryCategories');
-    if (!grid) return;
     fbGet('products', function(products) {
-        if (!products) products = [];
+        _workProducts = products || [];
+        renderWorkCategories();
+    });
+}
+
+function renderWorkCategories() {
+    var grid = document.getElementById('galleryCategories');
+    if (!grid || _workProducts === null) return;
+    (function(products) {
         var empty = document.getElementById('catalogEmpty');
         var moreWrap = document.getElementById('galleryMoreWrap');
 
@@ -1080,7 +1091,7 @@ function loadWorkCategories() {
         });
         grid.innerHTML = html;
         if (moreWrap) moreWrap.style.display = active.length > 6 ? 'block' : 'none';
-    });
+    })(_workProducts);
 }
 
 // ===== MAINTENANCE / SITE ON-OFF =====
