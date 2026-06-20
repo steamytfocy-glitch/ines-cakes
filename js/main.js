@@ -1032,43 +1032,54 @@ function loadCategories(callback) {
     });
 }
 
-// ===== CAKES CATALOGUE (storefront) =====
-function catalogPriceLabel(sizes) {
-    var t = translations[currentLang] || translations.en;
-    if (!sizes || !sizes.length) return (t['cakes.priceAgreed'] || 'Price on request');
-    var nums = sizes.map(function(s) { return parseFloat(s.price); }).filter(function(n) { return !isNaN(n); });
-    if (!nums.length) return (t['cakes.priceAgreed'] || 'Price on request');
-    var min = Math.min.apply(null, nums);
-    return (t['cakes.from'] || 'from') + ' €' + min;
-}
-
-function loadCatalog() {
-    var grid = document.getElementById('cakesCatalog');
+// ===== OUR WORK — CAKE CATEGORIES (storefront) =====
+function loadWorkCategories() {
+    var grid = document.getElementById('galleryCategories');
     if (!grid) return;
     fbGet('products', function(products) {
         if (!products) products = [];
         var empty = document.getElementById('catalogEmpty');
-        if (!products.length) {
+        var moreWrap = document.getElementById('galleryMoreWrap');
+
+        var byCat = {};
+        products.forEach(function(p) {
+            if (!p) return;
+            var c = p.category || 'other';
+            (byCat[c] = byCat[c] || []).push(p);
+        });
+
+        var active = [];
+        for (var i = 0; i < CATEGORIES.length; i++) {
+            var cat = CATEGORIES[i];
+            if (byCat[cat.id] && byCat[cat.id].length) active.push({ cat: cat, items: byCat[cat.id] });
+        }
+
+        if (!active.length) {
             grid.innerHTML = '';
             if (empty) empty.style.display = 'block';
+            if (moreWrap) moreWrap.style.display = 'none';
             return;
         }
         if (empty) empty.style.display = 'none';
+
+        var show = active.slice(0, 6);
         var html = '';
-        for (var i = 0; i < products.length; i++) {
-            var p = products[i];
-            var img = p.photo
-                ? '<img src="' + p.photo + '" alt="' + escapeHtml(p.name) + '">'
-                : '<div class="catalog-card__noimg"></div>';
-            html += '<a class="catalog-card" href="product.html?i=' + i + '">' +
-                '<div class="catalog-card__img">' + img + '</div>' +
-                '<div class="catalog-card__body">' +
-                    '<div class="catalog-card__name">' + escapeHtml(p.name) + '</div>' +
-                    '<div class="catalog-card__price">' + catalogPriceLabel(p.sizes) + '</div>' +
+        show.forEach(function(a) {
+            var photo = a.items[0].photo || '';
+            var img = photo
+                ? '<img src="' + photo + '" alt="' + escapeHtml(getCatName(a.cat)) + '">'
+                : '<div class="gallery__cat-noimg"></div>';
+            var word = a.items.length === 1 ? 'cake' : 'cakes';
+            html += '<a class="gallery__cat-card" href="gallery.html?cat=' + a.cat.id + '">' +
+                img +
+                '<div class="gallery__cat-overlay">' +
+                    '<div class="gallery__cat-name">' + escapeHtml(getCatName(a.cat)) + '</div>' +
+                    '<div class="gallery__cat-count">' + a.items.length + ' ' + word + '</div>' +
                 '</div>' +
             '</a>';
-        }
+        });
         grid.innerHTML = html;
+        if (moreWrap) moreWrap.style.display = active.length > 6 ? 'block' : 'none';
     });
 }
 
@@ -1168,8 +1179,7 @@ document.addEventListener('DOMContentLoaded', function() {
     setLanguage(currentLang);
     initFadeIn();
     loadSiteStatus();
-    loadCatalog();
-    loadCategories(function() { loadAdminGallery(); });
+    loadCategories(function() { loadWorkCategories(); });
     loadCertificates();
     loadFlavoursShowcase();
     loadLatestReviews();
