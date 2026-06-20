@@ -594,6 +594,40 @@ body {
     color: var(--text);
     cursor: pointer;
 }
+.add-flavour-row { display: flex; gap: 8px; margin-top: 10px; }
+.add-flavour-row input {
+    flex: 1;
+    padding: 8px 10px;
+    border: 1px solid var(--cream-dark);
+    border-radius: 6px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.85rem;
+    outline: none;
+}
+.add-flavour-row input:focus { border-color: var(--gold); }
+
+/* Cake card select-to-delete */
+.cake-admin-card { position: relative; }
+.cake-admin-card__check {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--gold);
+    color: #fff;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 700;
+    z-index: 2;
+}
+.cakes-admin--selecting .cake-admin-card { cursor: pointer; }
+.cakes-admin--selecting .cake-admin-card__actions { display: none; }
+.cake-admin-card.selected { outline: 3px solid var(--gold); outline-offset: -3px; }
+.cake-admin-card.selected .cake-admin-card__check { display: flex; }
 
 .site-toggle-row {
     display: flex;

@@ -1158,6 +1158,19 @@ function escapeHtml(str) {
 // ===== CAKES CATALOGUE =====
 var pendingCakePhoto = null;
 
+var STANDARD_SIZES = [
+    { size: '6"', serves: '6-8' },
+    { size: '7"', serves: '10-13' },
+    { size: '8"', serves: '15-18' },
+    { size: '9"', serves: '20-25' },
+    { size: '10"', serves: '30-35' },
+    { size: '11"', serves: '40-45' },
+    { size: '12"', serves: '50-55' }
+];
+function addAllStandardSizes() {
+    STANDARD_SIZES.forEach(function(s) { addCakeSizeRow(s.size, s.serves, ''); });
+}
+
 function priceRange(sizes) {
     if (!sizes || !sizes.length) return 'Price on request';
     var nums = sizes.map(function(s) { return parseFloat(s.price); }).filter(function(n) { return !isNaN(n); });
@@ -1188,7 +1201,8 @@ function loadCakes() {
         var img = c.photo
             ? '<img src="' + c.photo + '" alt="' + escapeHtml(c.name) + '">'
             : '<div class="cake-admin-card__noimg"></div>';
-        html += '<div class="cake-admin-card">' +
+        html += '<div class="cake-admin-card" data-idx="' + i + '">' +
+            '<div class="cake-admin-card__check">✓</div>' +
             img +
             '<div class="cake-admin-card__body">' +
                 '<div class="cake-admin-card__name">' + escapeHtml(c.name) + '</div>' +
@@ -1202,18 +1216,83 @@ function loadCakes() {
     }
     container.innerHTML = html;
 
-    container.querySelectorAll('[data-cake-edit]').forEach(function(btn) {
-        btn.addEventListener('click', function() { openCakeModal(parseInt(this.dataset.cakeEdit)); });
-    });
-    container.querySelectorAll('[data-cake-del]').forEach(function(btn) {
-        btn.addEventListener('click', function() {
-            if (!confirm('Delete this cake?')) return;
-            var cakes = getData('products', []) || [];
-            cakes.splice(parseInt(this.dataset.cakeDel), 1);
-            setData('products', cakes);
+    if (cakeDeleteMode) {
+        container.classList.add('cakes-admin--selecting');
+        container.querySelectorAll('.cake-admin-card').forEach(function(card) {
+            if (cakeDeleteSelected[card.dataset.idx]) card.classList.add('selected');
+            card.addEventListener('click', function() {
+                var idx = this.dataset.idx;
+                if (cakeDeleteSelected[idx]) { delete cakeDeleteSelected[idx]; this.classList.remove('selected'); }
+                else { cakeDeleteSelected[idx] = true; this.classList.add('selected'); }
+                updateCakesDelCount();
+            });
         });
-    });
+        updateCakesDelCount();
+    } else {
+        container.classList.remove('cakes-admin--selecting');
+        container.querySelectorAll('[data-cake-edit]').forEach(function(btn) {
+            btn.addEventListener('click', function() { openCakeModal(parseInt(this.dataset.cakeEdit)); });
+        });
+        container.querySelectorAll('[data-cake-del]').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                if (!confirm('Delete this cake?')) return;
+                var cakes = getData('products', []) || [];
+                cakes.splice(parseInt(this.dataset.cakeDel), 1);
+                setData('products', cakes);
+            });
+        });
+    }
 }
+
+// ===== CAKES MULTI-DELETE =====
+var cakeDeleteMode = false;
+var cakeDeleteSelected = {};
+
+function updateCakesDelCount() {
+    var el = document.getElementById('cakesDelCount');
+    if (el) el.textContent = Object.keys(cakeDeleteSelected).length + ' selected';
+}
+function exitCakesDeleteMode() {
+    cakeDeleteMode = false;
+    cakeDeleteSelected = {};
+    var bar = document.getElementById('cakesDelBar');
+    if (bar) bar.style.display = 'none';
+    var btn = document.getElementById('cakesMultiDeleteBtn');
+    if (btn) btn.textContent = 'Select to delete';
+    loadCakes();
+}
+(function initCakesMultiDelete() {
+    var btn = document.getElementById('cakesMultiDeleteBtn');
+    if (!btn) return;
+    btn.addEventListener('click', function() {
+        if (cakeDeleteMode) { exitCakesDeleteMode(); return; }
+        cakeDeleteMode = true;
+        cakeDeleteSelected = {};
+        this.textContent = 'Cancel selection';
+        document.getElementById('cakesDelBar').style.display = 'flex';
+        loadCakes();
+    });
+    document.getElementById('cakesDelCancel').addEventListener('click', exitCakesDeleteMode);
+    document.getElementById('cakesSelectAllDel').addEventListener('click', function() {
+        var cards = document.querySelectorAll('#cakesAdmin .cake-admin-card');
+        var allSel = cards.length > 0 && Object.keys(cakeDeleteSelected).length === cards.length;
+        cakeDeleteSelected = {};
+        cards.forEach(function(card) {
+            if (allSel) card.classList.remove('selected');
+            else { cakeDeleteSelected[card.dataset.idx] = true; card.classList.add('selected'); }
+        });
+        updateCakesDelCount();
+    });
+    document.getElementById('cakesDeleteSelected').addEventListener('click', function() {
+        var keys = Object.keys(cakeDeleteSelected).map(Number);
+        if (!keys.length) { alert('Select cakes first.'); return; }
+        if (!confirm('Delete ' + keys.length + ' selected cake(s)?')) return;
+        var cakes = getData('products', []) || [];
+        keys.sort(function(a, b) { return b - a; }).forEach(function(idx) { cakes.splice(idx, 1); });
+        setData('products', cakes);
+        exitCakesDeleteMode();
+    });
+})();
 
 function populateCakeCategorySelect(selected) {
     var sel = document.getElementById('cakeCategory');
@@ -1278,7 +1357,7 @@ function openCakeModal(editId) {
         populateCakeCategorySelect('');
         renderCakeFlavoursPick([]);
         document.getElementById('cakePhotoPreview').innerHTML = '';
-        addCakeSizeRow('6"', '6-8', '');
+        addAllStandardSizes();
     }
     document.getElementById('cakeModal').style.display = 'flex';
 }
@@ -1287,6 +1366,28 @@ document.getElementById('addCakeBtn').addEventListener('click', function() { ope
 document.getElementById('cakeCancel').addEventListener('click', function() { document.getElementById('cakeModal').style.display = 'none'; });
 document.querySelector('#cakeModal .modal__overlay').addEventListener('click', function() { document.getElementById('cakeModal').style.display = 'none'; });
 document.getElementById('addSizeRowBtn').addEventListener('click', function() { addCakeSizeRow('', '', ''); });
+document.getElementById('addAllSizesBtn').addEventListener('click', function() { addAllStandardSizes(); });
+
+document.getElementById('addFlavourOptBtn').addEventListener('click', function() {
+    var input = document.getElementById('newFlavourInput');
+    var name = input.value.trim();
+    if (!name) return;
+    var box = document.getElementById('cakeFlavoursPick');
+    var inputs = box.querySelectorAll('input');
+    var exists = false;
+    inputs.forEach(function(cb) { if (cb.value.toLowerCase() === name.toLowerCase()) { cb.checked = true; exists = true; } });
+    if (!exists) {
+        var label = document.createElement('label');
+        label.className = 'cake-flavour-opt';
+        label.innerHTML = '<input type="checkbox" value="' + escapeHtml(name) + '" checked> ' + escapeHtml(name);
+        box.appendChild(label);
+    }
+    // also save to the global Flavours list so other cakes can use it
+    var flavours = getData('flavours', []) || [];
+    var inGlobal = flavours.some(function(f) { return (f.name || '').toLowerCase() === name.toLowerCase(); });
+    if (!inGlobal) { flavours.push({ name: name, desc: '', price: '', photo: null }); setData('flavours', flavours); }
+    input.value = '';
+});
 
 document.getElementById('cakePhoto').addEventListener('change', function(e) {
     var file = e.target.files[0];
