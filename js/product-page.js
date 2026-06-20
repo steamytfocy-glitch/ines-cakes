@@ -158,13 +158,6 @@ function renderProduct() {
     }
     sizeSel.innerHTML = html;
 
-    // flavours
-    var flavSel = document.getElementById('pFlavour');
-    var flavs = product.flavours || [];
-    var fhtml = '<option value="">' + t('prod.choose') + '</option>';
-    for (var j = 0; j < flavs.length; j++) fhtml += '<option value="' + escapeHtml(flavs[j]) + '">' + escapeHtml(flavs[j]) + '</option>';
-    flavSel.innerHTML = fhtml;
-
     // date min (today + notice)
     var notice = parseInt(product.noticeDays) || 0;
     var d = new Date(); d.setDate(d.getDate() + notice);
@@ -190,6 +183,62 @@ function renderProduct() {
 
     updatePrice();
 }
+
+// ===== FLAVOUR PICKER MODAL =====
+var _flavours = [];
+
+function flavourCardHtml(f) {
+    var img = f.photo
+        ? '<img src="' + f.photo + '" class="flavour-card__img" alt="' + escapeHtml(f.name) + '">'
+        : '<div class="flavour-card__placeholder"><svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>';
+    var price = f.price ? ('€' + escapeHtml(f.price) + ' / kg') : '';
+    return '<div class="flavour-card" data-flavour="' + escapeHtml(f.name) + '">' +
+        '<div class="flavour-card__imgwrap">' + img +
+            '<div class="flavour-card__caption">' +
+                '<div class="flavour-card__name">' + escapeHtml(f.name) + '</div>' +
+                (price ? '<div class="flavour-card__price">' + price + '</div>' : '') +
+            '</div>' +
+        '</div>' +
+        (f.desc ? '<div class="flavour-card__desc">' + escapeHtml(f.desc) + '</div>' : '') +
+    '</div>';
+}
+
+function setupFlavours() {
+    var names = (product.flavours && product.flavours.length) ? product.flavours : null;
+    var list;
+    if (names) {
+        list = names.map(function(n) {
+            var found = null;
+            for (var i = 0; i < _flavours.length; i++) if (_flavours[i].name === n) { found = _flavours[i]; break; }
+            return found || { name: n, photo: null, price: '', desc: '' };
+        });
+    } else {
+        list = _flavours;
+    }
+    var grid = document.getElementById('pFlavourGrid');
+    grid.innerHTML = list.map(flavourCardHtml).join('');
+    grid.querySelectorAll('.flavour-card').forEach(function(card) {
+        card.addEventListener('click', function() {
+            var name = this.dataset.flavour;
+            document.getElementById('pFlavour').value = name;
+            var txt = document.getElementById('pFlavourText');
+            txt.textContent = name;
+            txt.removeAttribute('data-i18n');
+            document.getElementById('pFlavourBtn').classList.add('has-value');
+            document.getElementById('flavourModal').style.display = 'none';
+        });
+    });
+}
+
+document.getElementById('pFlavourBtn').addEventListener('click', function() {
+    document.getElementById('flavourModal').style.display = 'flex';
+});
+document.getElementById('flavourModalClose').addEventListener('click', function() {
+    document.getElementById('flavourModal').style.display = 'none';
+});
+document.getElementById('flavourModalOverlay').addEventListener('click', function() {
+    document.getElementById('flavourModal').style.display = 'none';
+});
 
 // allergies
 document.querySelectorAll('#pAllergyChips .allergy-chip:not(.allergy-chip--other)').forEach(function(chip) {
@@ -266,5 +315,6 @@ document.querySelectorAll('.lang-btn').forEach(function(b) { b.classList.toggle(
         product = products[productIndex];
         document.getElementById('productGrid').style.display = '';
         renderProduct();
+        fbGet('flavours', function(fl) { _flavours = fl || []; setupFlavours(); });
     });
 })();
