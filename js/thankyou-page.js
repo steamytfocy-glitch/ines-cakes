@@ -6,7 +6,8 @@ var translations = {
         "ty.home": "Back to Home",
         "ty.codeLabel": "Your order number",
         "ty.codeHint": "Save this number. Use it to check your order status at any time.",
-        "ty.track": "Track my order"
+        "ty.track": "Track my order",
+        "ty.spam": "📧 If you gave your email, we've sent a confirmation. Don't see it? Please check your Spam folder."
     },
     ua: {
         "ty.title": "Дякуємо!",
@@ -15,7 +16,8 @@ var translations = {
         "ty.home": "На головну",
         "ty.codeLabel": "Номер вашого замовлення",
         "ty.codeHint": "Збережіть цей номер. За ним ви будь-коли зможете перевірити статус замовлення.",
-        "ty.track": "Відстежити замовлення"
+        "ty.track": "Відстежити замовлення",
+        "ty.spam": "📧 Якщо ви вказали пошту, ми надіслали підтвердження. Не бачите? Перевірте папку «Спам»."
     },
     ru: {
         "ty.title": "Спасибо!",
@@ -24,7 +26,8 @@ var translations = {
         "ty.home": "На главную",
         "ty.codeLabel": "Номер вашего заказа",
         "ty.codeHint": "Сохраните этот номер. По нему вы в любой момент сможете проверить статус заказа.",
-        "ty.track": "Отследить заказ"
+        "ty.track": "Отследить заказ",
+        "ty.spam": "📧 Если вы указали почту, мы отправили подтверждение. Не видите? Проверьте папку «Спам»."
     }
 };
 
