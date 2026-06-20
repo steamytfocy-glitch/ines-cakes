@@ -110,7 +110,10 @@
         <div class="tab-content active" id="tab-orders">
             <div class="tab-header">
                 <div class="tab-stats" id="orderStats"></div>
-                <button class="btn-admin" id="toggleDoneBtn" style="background:#5A4530;">Hide completed</button>
+                <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+                    <input type="text" id="orderSearch" class="order-search" placeholder="Search name / phone / code">
+                    <button class="btn-admin" id="toggleDoneBtn" style="background:#5A4530;">Hide completed</button>
+                </div>
             </div>
             <div class="orders-list" id="ordersList">
                 <div class="empty-state">

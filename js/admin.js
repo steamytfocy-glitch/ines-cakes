@@ -153,6 +153,22 @@ function adminWaMessage(order) {
 }
 
 var hideCompleted = localStorage.getItem('ines-hide-done') === '1';
+var orderSearch = '';
+
+(function() {
+    var input = document.getElementById('orderSearch');
+    if (!input) return;
+    input.addEventListener('input', function() {
+        orderSearch = this.value.trim().toLowerCase();
+        loadOrders();
+    });
+})();
+
+function orderMatchesSearch(o) {
+    if (!orderSearch) return true;
+    var hay = [(o.name || ''), (o.phone || ''), (o.code || ''), (o.email || '')].join(' ').toLowerCase();
+    return hay.indexOf(orderSearch) > -1;
+}
 
 function isCompleted(o) {
     var s = (o && o.status) || 'new';
@@ -222,6 +238,7 @@ function loadOrders() {
     for (var i = orders.length - 1; i >= 0; i--) {
         var o = orders[i];
         if (hideCompleted && isCompleted(o)) continue;
+        if (!orderMatchesSearch(o)) continue;
         shown++;
         var status = o.status || 'new';
 

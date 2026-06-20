@@ -69,6 +69,29 @@ function buildEmailHtml(o, adminUrl) {
         '</div></div>';
 }
 
+var CUST = {
+    en: { subject: 'your order', greeting: 'Hi', received: "Thanks! We've received your order", track: 'Track your order status', save: 'Keep this number to check your order any time:', signoff: '— I.N.E.S. Bakery' },
+    ua: { subject: 'ваше замовлення', greeting: 'Вітаємо', received: 'Дякуємо! Ми отримали ваше замовлення', track: 'Відстежити статус замовлення', save: 'Збережіть цей номер, щоб перевіряти замовлення будь-коли:', signoff: '— Пекарня I.N.E.S.' },
+    ru: { subject: 'ваш заказ', greeting: 'Здравствуйте', received: 'Спасибо! Мы получили ваш заказ', track: 'Отследить статус заказа', save: 'Сохраните этот номер, чтобы проверять заказ в любой момент:', signoff: '— Пекарня I.N.E.S.' }
+};
+
+function buildCustomerHtml(o, lang, orderUrl) {
+    var C = CUST[lang] || CUST.en;
+    var btn = orderUrl
+        ? '<div style="text-align:center;margin:18px 0;"><a href="' + orderUrl + '" style="display:inline-block;background:#C8963E;color:#fff;text-decoration:none;padding:12px 22px;border-radius:10px;font-weight:600;">' + esc(C.track) + '</a></div>'
+        : '';
+    return '<div style="font-family:Arial,Helvetica,sans-serif;max-width:520px;margin:0 auto;color:#3D2E1C;">' +
+        '<div style="text-align:center;padding:20px 0;"><span style="font-size:26px;font-weight:700;color:#C8963E;letter-spacing:3px;">I.N.E.S.</span></div>' +
+        '<div style="background:#fff;border:1px solid #EEE5D2;border-radius:16px;padding:28px;">' +
+        '<p style="font-size:15px;">' + esc(C.greeting) + (o.name ? ' ' + esc(o.name) : '') + ',</p>' +
+        '<p style="font-size:15px;">' + esc(C.received) + ' <strong>' + esc(o.code || '') + '</strong>.</p>' +
+        '<p style="font-size:13px;color:#6B5B4E;margin-top:14px;">' + esc(C.save) + '</p>' +
+        '<p style="font-size:22px;font-weight:700;color:#C8963E;margin:4px 0;">' + esc(o.code || '') + '</p>' +
+        btn +
+        '<p style="font-size:13px;color:#6B5B4E;margin-top:22px;">' + esc(C.signoff) + '</p>' +
+        '</div></div>';
+}
+
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
         res.status(405).json({ error: 'Method not allowed' });
@@ -78,10 +101,11 @@ export default async function handler(req, res) {
     var o = req.body || {};
     var lines = buildLines(o);
     var text = lines.join('\n');
-    var result = { telegram: null, email: null };
+    var result = { telegram: null, email: null, customer: null };
 
     var host = req.headers['x-forwarded-host'] || req.headers.host || '';
     var adminUrl = host ? 'https://' + host + '/admin.html' : '';
+    var orderUrl = (host && o.code) ? 'https://' + host + '/order.html?code=' + encodeURIComponent(o.code) : '';
 
     // ----- Telegram -----
     var token = process.env.TELEGRAM_TOKEN;
@@ -129,6 +153,29 @@ export default async function handler(req, res) {
                 result.email = await brevoRes.json();
             } catch (e) {
                 result.email = { error: String(e) };
+            }
+        }
+
+        // ----- Confirmation email to the customer -----
+        var custEmail = (o.email || '').trim();
+        if (custEmail && custEmail.indexOf('@') > -1) {
+            var lang = CUST[o.lang] ? o.lang : 'en';
+            var C = CUST[lang];
+            try {
+                var custRes = await fetch('https://api.brevo.com/v3/smtp/email', {
+                    method: 'POST',
+                    headers: { 'api-key': key, 'Content-Type': 'application/json', 'accept': 'application/json' },
+                    body: JSON.stringify({
+                        sender: { email: sender, name: process.env.BREVO_SENDER_NAME || 'I.N.E.S. Bakery' },
+                        to: [{ email: custEmail, name: o.name || custEmail }],
+                        subject: 'I.N.E.S. — ' + C.subject + (o.code ? ' ' + o.code : ''),
+                        htmlContent: buildCustomerHtml(o, lang, orderUrl),
+                        textContent: C.received + ' ' + (o.code || '') + (orderUrl ? ('\n' + C.track + ': ' + orderUrl) : '') + '\n' + C.signoff
+                    })
+                });
+                result.customer = await custRes.json();
+            } catch (e) {
+                result.customer = { error: String(e) };
             }
         }
     }

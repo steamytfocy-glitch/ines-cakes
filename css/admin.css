@@ -668,6 +668,17 @@ body {
     color: var(--brown);
 }
 
+.order-search {
+    padding: 8px 12px;
+    border: 1px solid var(--cream-dark);
+    border-radius: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.85rem;
+    outline: none;
+    min-width: 220px;
+}
+.order-search:focus { border-color: var(--gold); }
+
 /* Order status accents */
 .order-card { border-left: 4px solid transparent; }
 .order-card--new { border-left-color: var(--gold); }
