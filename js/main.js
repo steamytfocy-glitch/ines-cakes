@@ -2,8 +2,10 @@
 const translations = {
     en: {
         "nav.about": "About Us",
-        "nav.cakes": "Cakes to Order",
+        "nav.cakes": "Cakes",
+        "nav.flavours": "Flavours",
         "nav.cakeshed": "Cake Shed",
+        "nav.certs": "Certificates",
         "nav.gallery": "Gallery",
         "nav.reviews": "Reviews",
         "nav.order": "Order Now",
@@ -121,8 +123,10 @@ const translations = {
 
     ua: {
         "nav.about": "Про нас",
-        "nav.cakes": "Торти на замовлення",
+        "nav.cakes": "Торти",
+        "nav.flavours": "Смаки",
         "nav.cakeshed": "Кейк Шед",
+        "nav.certs": "Сертифікати",
         "nav.gallery": "Галерея",
         "nav.reviews": "Відгуки",
         "nav.order": "Замовити",
@@ -240,8 +244,10 @@ const translations = {
 
     ru: {
         "nav.about": "О нас",
-        "nav.cakes": "Торты на заказ",
+        "nav.cakes": "Торты",
+        "nav.flavours": "Вкусы",
         "nav.cakeshed": "Кейк Шед",
+        "nav.certs": "Сертификаты",
         "nav.gallery": "Галерея",
         "nav.reviews": "Отзывы",
         "nav.order": "Заказать",

@@ -110,7 +110,7 @@
 
 html {
     scroll-behavior: smooth;
-    scroll-padding-top: 80px;
+    scroll-padding-top: 120px;
 }
 
 body {
@@ -211,6 +211,42 @@ ul { list-style: none; }
     justify-content: space-between;
     height: 76px;
 }
+
+/* Home header: phone left, logo centre, controls right, nav as 2nd row */
+.header__inner--home {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    grid-template-areas:
+        "phone logo right"
+        "nav nav nav";
+    align-items: center;
+    height: auto;
+    row-gap: 2px;
+    padding-top: 10px;
+    padding-bottom: 4px;
+}
+.header__phone { grid-area: phone; justify-self: start; }
+.header__inner--home .logo { grid-area: logo; justify-self: center; text-align: center; }
+.header__inner--home .header__right { grid-area: right; justify-self: end; }
+.header__inner--home .nav {
+    grid-area: nav;
+    justify-self: center;
+    border-top: 1px solid rgba(200, 150, 62, 0.14);
+    margin-top: 6px;
+    padding-top: 10px;
+}
+
+.header__phone {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--brown);
+    transition: var(--transition);
+}
+.header__phone svg { color: var(--gold); flex-shrink: 0; }
+.header__phone:hover { color: var(--gold); }
 
 /* Logo */
 .logo {
@@ -368,7 +404,7 @@ ul { list-style: none; }
 
 /* ===== HERO ===== */
 .hero {
-    padding: 140px 0 80px;
+    padding: 160px 0 80px;
     background: var(--white);
     position: relative;
     overflow: hidden;
@@ -1690,7 +1726,7 @@ ul { list-style: none; }
 @media (max-width: 992px) {
     .nav {
         position: fixed;
-        top: 76px;
+        top: 64px;
         left: 0;
         right: 0;
         background: var(--white);
@@ -1706,6 +1742,19 @@ ul { list-style: none; }
     .nav.open {
         transform: translateY(0);
     }
+
+    /* Home header collapses to a single row on mobile */
+    .header__inner--home {
+        padding-top: 0;
+        padding-bottom: 0;
+        row-gap: 0;
+    }
+    .header__inner--home .nav {
+        border-top: none;
+        margin-top: 0;
+        padding-top: 24px;
+    }
+    .header__phone span { display: none; }
 
     .burger {
         display: flex;
