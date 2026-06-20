@@ -303,6 +303,23 @@
         <div class="tab-content" id="tab-content">
             <div class="content-admin">
                 <div class="content-section">
+                    <h3>Website status</h3>
+                    <div class="site-toggle-row">
+                        <label class="switch">
+                            <input type="checkbox" id="siteEnabledToggle" checked>
+                            <span class="switch__slider"></span>
+                        </label>
+                        <span class="site-status-label" id="siteStatusLabel">Website is ON</span>
+                    </div>
+                    <p class="content-hint" style="margin-top:6px;">When OFF, visitors see a "We'll be right back" maintenance screen instead of the site. Changes apply instantly.</p>
+                    <div class="content-field" style="margin-top:14px;">
+                        <label>Message shown when website is OFF (optional)</label>
+                        <textarea id="siteMessage" rows="2" placeholder="e.g. We're on holiday until July 5th — see you soon!"></textarea>
+                        <button class="btn-admin" id="saveSiteMessage" style="margin-top:8px;">Save message</button>
+                    </div>
+                </div>
+
+                <div class="content-section">
                     <h3>Cake Prices</h3>
                     <div class="content-grid">
                         <div class="content-field">

@@ -113,7 +113,10 @@ const translations = {
         "footer.track": "Track your order",
         "footer.shedHours": "Cake Shed Hours",
         "footer.schedule": "Fri–Sat 9:00–21:00, Sun 9:00–18:00",
-        "footer.pickup": "Collection & delivery by arrangement"
+        "footer.pickup": "Collection & delivery by arrangement",
+
+        "maint.title": "We'll be right back",
+        "maint.text": "Our website is temporarily closed for orders. Please check back soon!"
     },
 
     ua: {
@@ -229,7 +232,10 @@ const translations = {
         "footer.track": "Відстежити замовлення",
         "footer.shedHours": "Графік Кейк Шед",
         "footer.schedule": "Пт–Сб 9:00–21:00, Нд 9:00–18:00",
-        "footer.pickup": "Самовивіз та доставка за домовленістю"
+        "footer.pickup": "Самовивіз та доставка за домовленістю",
+
+        "maint.title": "Скоро повернемося",
+        "maint.text": "Наш сайт тимчасово закритий для замовлень. Завітайте трохи пізніше!"
     },
 
     ru: {
@@ -345,7 +351,10 @@ const translations = {
         "footer.track": "Отследить заказ",
         "footer.shedHours": "График Кейк Шед",
         "footer.schedule": "Пт–Сб 9:00–21:00, Вс 9:00–18:00",
-        "footer.pickup": "Самовывоз и доставка по договорённости"
+        "footer.pickup": "Самовывоз и доставка по договорённости",
+
+        "maint.title": "Скоро вернёмся",
+        "maint.text": "Наш сайт временно закрыт для заказов. Загляните чуть позже!"
     }
 };
 
@@ -375,6 +384,10 @@ function applyTranslations(lang) {
             el.placeholder = t[key];
         }
     });
+
+    if (document.getElementById('maintenanceOverlay') && typeof renderMaintenance === 'function') {
+        renderMaintenance();
+    }
 }
 
 function setLanguage(lang, animate) {
@@ -1004,10 +1017,75 @@ function loadCategories(callback) {
     });
 }
 
+// ===== MAINTENANCE / SITE ON-OFF =====
+var maintCustom = '';
+
+function renderMaintenance() {
+    var t = translations[currentLang] || translations.en;
+    var title = t['maint.title'] || "We'll be right back";
+    var text = (maintCustom && maintCustom.trim()) ? maintCustom : (t['maint.text'] || '');
+
+    var el = document.getElementById('maintenanceOverlay');
+    if (el) {
+        el.querySelector('.maintenance__title').textContent = title;
+        el.querySelector('.maintenance__text').textContent = text;
+        el.querySelectorAll('.lang-btn').forEach(function(b) {
+            b.classList.toggle('active', b.dataset.lang === currentLang);
+        });
+        return;
+    }
+
+    el = document.createElement('div');
+    el.id = 'maintenanceOverlay';
+    el.className = 'maintenance';
+    el.innerHTML =
+        '<div class="maintenance__lang">' +
+            '<button class="lang-btn" data-lang="en">EN</button>' +
+            '<button class="lang-btn" data-lang="ua">UA</button>' +
+            '<button class="lang-btn" data-lang="ru">RU</button>' +
+        '</div>' +
+        '<div class="maintenance__card">' +
+            '<svg class="maintenance__logo" viewBox="0 0 60 60" width="64" height="64">' +
+                '<path d="M30 8c-3 0-5.5 2-6 5h12c-.5-3-3-5-6-5z" fill="#C8963E"/>' +
+                '<rect x="20" y="13" width="20" height="3" rx="1.5" fill="#C8963E"/>' +
+                '<path d="M18 16c0 0-2 4-2 10s2 12 4 14h20c2-2 4-8 4-14s-2-10-2-10H18z" fill="#C8963E" opacity="0.85"/>' +
+                '<path d="M22 40h16v4c0 2-3 4-8 4s-8-2-8-4v-4z" fill="#C8963E"/>' +
+            '</svg>' +
+            '<div class="maintenance__brand">I.N.E.S.</div>' +
+            '<h1 class="maintenance__title"></h1>' +
+            '<p class="maintenance__text"></p>' +
+            '<a href="tel:+353874917435" class="btn btn--outline maintenance__phone">087 491 7435</a>' +
+        '</div>';
+    document.body.appendChild(el);
+    document.body.style.overflow = 'hidden';
+
+    el.querySelectorAll('.lang-btn').forEach(function(b) {
+        b.addEventListener('click', function() { setLanguage(this.dataset.lang); });
+    });
+
+    renderMaintenance();
+}
+
+function hideMaintenance() {
+    var el = document.getElementById('maintenanceOverlay');
+    if (el) el.remove();
+    document.body.style.overflow = '';
+}
+
+function loadSiteStatus() {
+    fbGet('site-status', function(s) {
+        var enabled = !s || s.enabled !== false; // default: site is ON
+        maintCustom = (s && s.message) || '';
+        if (enabled) hideMaintenance();
+        else renderMaintenance();
+    });
+}
+
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', function() {
     setLanguage(currentLang);
     initFadeIn();
+    loadSiteStatus();
     loadCategories(function() { loadAdminGallery(); });
     loadCertificates();
     loadFlavoursShowcase();

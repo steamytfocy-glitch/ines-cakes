@@ -994,6 +994,45 @@ document.getElementById('reviewForm').addEventListener('submit', function(e) {
     loadReviews();
 });
 
+// ===== SITE ON/OFF =====
+var siteEnabledToggle = document.getElementById('siteEnabledToggle');
+var siteStatusLabel = document.getElementById('siteStatusLabel');
+var siteMessageInput = document.getElementById('siteMessage');
+
+function writeSiteStatus() {
+    setData('site-status', {
+        enabled: siteEnabledToggle.checked,
+        message: siteMessageInput.value.trim()
+    });
+}
+
+if (siteEnabledToggle) {
+    siteEnabledToggle.addEventListener('change', function() {
+        siteStatusLabel.textContent = this.checked ? 'Website is ON' : 'Website is OFF';
+        writeSiteStatus();
+    });
+}
+
+var saveSiteMessageBtn = document.getElementById('saveSiteMessage');
+if (saveSiteMessageBtn) {
+    saveSiteMessageBtn.addEventListener('click', function() {
+        writeSiteStatus();
+        var b = this;
+        b.textContent = 'Saved ✓';
+        setTimeout(function() { b.textContent = 'Save message'; }, 2000);
+    });
+}
+
+function updateSiteToggle(s) {
+    if (!siteEnabledToggle) return;
+    var enabled = !s || s.enabled !== false;
+    siteEnabledToggle.checked = enabled;
+    siteStatusLabel.textContent = enabled ? 'Website is ON' : 'Website is OFF';
+    if (document.activeElement !== siteMessageInput) {
+        siteMessageInput.value = (s && s.message) || '';
+    }
+}
+
 // ===== CONTENT =====
 function loadContent() {
     var content = getData('content', null);
@@ -1052,6 +1091,7 @@ function loadAllData() {
     });
     listenData('reviews', function() { loadReviews(); });
     listenData('content', function() { loadContent(); });
+    listenData('site-status', function(s) { updateSiteToggle(s); });
 }
 
 // ===== INIT =====
