@@ -122,6 +122,39 @@ document.querySelectorAll('.lang-btn').forEach(function(btn) {
     btn.addEventListener('click', function() { setLang(this.dataset.lang); });
 });
 
+var monthNames = {
+    en: ['January','February','March','April','May','June','July','August','September','October','November','December'],
+    ua: ['Січень','Лютий','Березень','Квітень','Травень','Червень','Липень','Серпень','Вересень','Жовтень','Листопад','Грудень'],
+    ru: ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь']
+};
+
+function populatePDate() {
+    var daySel = document.getElementById('pDateDay');
+    var monthSel = document.getElementById('pDateMonth');
+    if (!daySel || !monthSel) return;
+    var names = monthNames[currentLang] || monthNames.en;
+    var dayLabel = currentLang === 'en' ? 'Day' : 'День';
+    var monthLabel = currentLang === 'ru' ? 'Месяц' : (currentLang === 'ua' ? 'Місяць' : 'Month');
+
+    var prevDay = daySel.value, prevMonth = monthSel.value;
+    var dh = '<option value="">' + dayLabel + '</option>';
+    for (var d = 1; d <= 31; d++) dh += '<option value="' + d + '">' + d + '</option>';
+    daySel.innerHTML = dh;
+    var mh = '<option value="">' + monthLabel + '</option>';
+    for (var m = 0; m < 12; m++) mh += '<option value="' + (m + 1) + '">' + names[m] + '</option>';
+    monthSel.innerHTML = mh;
+    if (prevDay) daySel.value = prevDay;
+    if (prevMonth) monthSel.value = prevMonth;
+}
+
+function selectedDate() {
+    var day = document.getElementById('pDateDay').value;
+    var month = document.getElementById('pDateMonth').value;
+    if (!day || !month) return '';
+    var names = monthNames[currentLang] || monthNames.en;
+    return day + ' ' + names[parseInt(month) - 1];
+}
+
 function currentSize() {
     var sel = document.getElementById('pSize');
     if (!sel || sel.value === '') return null;
@@ -158,10 +191,7 @@ function renderProduct() {
     }
     sizeSel.innerHTML = html;
 
-    // date min (today + notice)
-    var notice = parseInt(product.noticeDays) || 0;
-    var d = new Date(); d.setDate(d.getDate() + notice);
-    document.getElementById('pDate').min = d.toISOString().split('T')[0];
+    populatePDate();
 
     // notice text
     var noticeEl = document.getElementById('pNotice');
@@ -277,7 +307,7 @@ document.getElementById('pSize').addEventListener('change', updatePrice);
 document.getElementById('pAddBtn').addEventListener('click', function() {
     var s = currentSize();
     if (!s) { showToast(t('prod.pickSize')); return; }
-    var date = document.getElementById('pDate').value;
+    var date = selectedDate();
     if (!date) { showToast(t('prod.pickDate')); return; }
     var gift = document.getElementById('pGift').checked;
     var qty = parseInt(document.getElementById('pQty').value) || 1;
