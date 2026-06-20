@@ -124,11 +124,34 @@
         <!-- CAKES (CATALOGUE) TAB -->
         <div class="tab-content" id="tab-cakes">
             <div class="tab-header">
-                <button class="btn-admin" id="addCakeBtn">
-                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                    Add Cake
-                </button>
+                <div class="tab-header__left" style="display:flex;gap:10px;flex-wrap:wrap;">
+                    <button class="btn-admin" id="addCakeBtn">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        Add Cake
+                    </button>
+                    <button class="btn-admin" id="cakesSortBtn" style="background:#5A4530;">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+                        Sort by Category
+                    </button>
+                </div>
             </div>
+
+            <!-- Cakes sort mode panel -->
+            <div id="cakesSortPanel" style="display:none;">
+                <div class="sort-header">
+                    <div class="sort-header__left">
+                        <p class="sort-hint">Select cakes, then assign a category</p>
+                        <span class="sort-count" id="cakesSortCount">0 selected</span>
+                    </div>
+                    <div class="sort-header__actions">
+                        <button class="btn-cancel" id="cakesSortSelectAll">Select all</button>
+                        <button class="btn-admin" id="cakesSortDone">Done Sorting</button>
+                    </div>
+                </div>
+                <div class="sort-assign" id="cakesSortAssign"></div>
+                <div class="sort-grid" id="cakesSortGrid"></div>
+            </div>
+
             <div class="cakes-admin" id="cakesAdmin"></div>
 
             <!-- Add/Edit Cake Modal -->

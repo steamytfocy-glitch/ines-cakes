@@ -1327,6 +1327,93 @@ document.getElementById('cakeForm').addEventListener('submit', function(e) {
     document.getElementById('cakeModal').style.display = 'none';
 });
 
+// ===== CAKES SORT BY CATEGORY =====
+var cakeSortSelection = {};
+
+function updateCakeSortCount() {
+    var n = Object.keys(cakeSortSelection).length;
+    document.getElementById('cakesSortCount').textContent = n + ' selected';
+    document.getElementById('cakesSortAssign').style.display = n > 0 ? 'flex' : 'none';
+}
+
+function renderCakeSortAssign() {
+    var bar = document.getElementById('cakesSortAssign');
+    var html = '<span class="sort-assign__label">Assign to:</span>';
+    for (var i = 0; i < CATEGORIES.length; i++) {
+        html += '<button class="sort-assign__btn" data-assign="' + CATEGORIES[i].id + '">' + escapeHtml(CATEGORIES[i].en) + '</button>';
+    }
+    bar.innerHTML = html;
+    bar.querySelectorAll('[data-assign]').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var catId = this.dataset.assign;
+            Object.keys(cakeSortSelection).forEach(function(idx) {
+                window._cakeSortItems[idx].category = catId;
+                var item = document.querySelector('#cakesSortGrid [data-sort-idx="' + idx + '"]');
+                if (item) {
+                    item.classList.remove('selected');
+                    var badge = item.querySelector('.sort-item__badge');
+                    if (badge) badge.textContent = catNameById(catId);
+                }
+            });
+            cakeSortSelection = {};
+            updateCakeSortCount();
+        });
+    });
+}
+
+document.getElementById('cakesSortBtn').addEventListener('click', function() {
+    var cakes = (getData('products', []) || []).map(function(c) { return Object.assign({}, c); });
+    if (!cakes.length) { alert('No cakes to sort. Add some first!'); return; }
+    window._cakeSortItems = cakes;
+    cakeSortSelection = {};
+
+    document.getElementById('cakesSortPanel').style.display = 'block';
+    document.getElementById('cakesAdmin').style.display = 'none';
+    document.querySelector('#tab-cakes .tab-header').style.display = 'none';
+
+    var html = '';
+    for (var k = 0; k < cakes.length; k++) {
+        var c = cakes[k];
+        var img = c.photo ? '<img src="' + c.photo + '" alt="">' : '<div class="cake-admin-card__noimg" style="height:100%"></div>';
+        html += '<div class="sort-item sorted" data-sort-idx="' + k + '">' + img +
+            '<div class="sort-item__check">✓</div>' +
+            '<div class="sort-item__badge">' + escapeHtml(catNameById(c.category)) + '</div>' +
+        '</div>';
+    }
+    var grid = document.getElementById('cakesSortGrid');
+    grid.innerHTML = html;
+    renderCakeSortAssign();
+    updateCakeSortCount();
+
+    grid.querySelectorAll('.sort-item').forEach(function(item) {
+        item.addEventListener('click', function() {
+            var idx = this.dataset.sortIdx;
+            if (cakeSortSelection[idx]) { delete cakeSortSelection[idx]; this.classList.remove('selected'); }
+            else { cakeSortSelection[idx] = true; this.classList.add('selected'); }
+            updateCakeSortCount();
+        });
+    });
+});
+
+document.getElementById('cakesSortSelectAll').addEventListener('click', function() {
+    var items = document.querySelectorAll('#cakesSortGrid .sort-item');
+    var allSel = items.length > 0 && Object.keys(cakeSortSelection).length === items.length;
+    cakeSortSelection = {};
+    items.forEach(function(item) {
+        if (allSel) item.classList.remove('selected');
+        else { cakeSortSelection[item.dataset.sortIdx] = true; item.classList.add('selected'); }
+    });
+    updateCakeSortCount();
+});
+
+document.getElementById('cakesSortDone').addEventListener('click', function() {
+    setData('products', window._cakeSortItems || []);
+    document.getElementById('cakesSortPanel').style.display = 'none';
+    document.getElementById('cakesAdmin').style.display = '';
+    document.querySelector('#tab-cakes .tab-header').style.display = '';
+    loadCakes();
+});
+
 // ===== LOAD ALL =====
 function loadAllData() {
     listenData('categories', function(val) {
