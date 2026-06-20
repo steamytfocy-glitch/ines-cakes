@@ -94,7 +94,9 @@ function render() {
     active.forEach(function(a) {
         var photo = a.items[0].p.photo || '';
         var img = photo ? '<img src="' + photo + '" alt="' + escapeHtml(getCatName(a.cat)) + '">' : '<div class="gallery__cat-noimg"></div>';
-        var word = a.items.length === 1 ? 'cake' : 'cakes';
+        var word = (currentLang === 'ua') ? (a.items.length === 1 ? 'торт' : 'торти')
+                 : (currentLang === 'ru') ? (a.items.length === 1 ? 'торт' : 'торта')
+                 : (a.items.length === 1 ? 'cake' : 'cakes');
         html += '<div class="gallery__cat-card" data-cat-id="' + a.cat.id + '">' +
             img +
             '<div class="gallery__cat-overlay">' +

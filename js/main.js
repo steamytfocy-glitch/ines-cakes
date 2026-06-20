@@ -1038,6 +1038,12 @@ function loadCategories(callback) {
 // ===== OUR WORK — CAKE CATEGORIES (storefront) =====
 var _workProducts = null;
 
+function workCountWord(n) {
+    if (currentLang === 'ua') return n === 1 ? 'торт' : 'торти';
+    if (currentLang === 'ru') return n === 1 ? 'торт' : 'торта';
+    return n === 1 ? 'cake' : 'cakes';
+}
+
 function loadWorkCategories() {
     fbGet('products', function(products) {
         _workProducts = products || [];
@@ -1080,7 +1086,7 @@ function renderWorkCategories() {
             var img = photo
                 ? '<img src="' + photo + '" alt="' + escapeHtml(getCatName(a.cat)) + '">'
                 : '<div class="gallery__cat-noimg"></div>';
-            var word = a.items.length === 1 ? 'cake' : 'cakes';
+            var word = workCountWord(a.items.length);
             html += '<a class="gallery__cat-card" href="gallery.html?cat=' + a.cat.id + '">' +
                 img +
                 '<div class="gallery__cat-overlay">' +
