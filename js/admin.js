@@ -89,6 +89,7 @@ var topbarTitle = document.getElementById('topbarTitle');
 
 var tabTitles = {
     orders: 'Orders',
+    cakes: 'Cakes',
     gallery: 'Gallery',
     certificates: 'Certificates',
     flavours: 'Flavours',
@@ -1065,6 +1066,178 @@ function escapeHtml(str) {
     return div.innerHTML;
 }
 
+// ===== CAKES CATALOGUE =====
+var pendingCakePhoto = null;
+
+function priceRange(sizes) {
+    if (!sizes || !sizes.length) return 'Price on request';
+    var nums = sizes.map(function(s) { return parseFloat(s.price); }).filter(function(n) { return !isNaN(n); });
+    if (!nums.length) return 'Price on request';
+    var min = Math.min.apply(null, nums);
+    var max = Math.max.apply(null, nums);
+    return min === max ? ('€' + min) : ('€' + min + ' – €' + max);
+}
+
+function catNameById(id) {
+    for (var i = 0; i < CATEGORIES.length; i++) if (CATEGORIES[i].id === id) return CATEGORIES[i].en;
+    return id || '';
+}
+
+function loadCakes() {
+    var cakes = getData('products', null) || [];
+    var container = document.getElementById('cakesAdmin');
+    if (!container) return;
+
+    if (cakes.length === 0) {
+        container.innerHTML = '<div class="empty-state"><svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="#C8963E" stroke-width="1.5"><path d="M3 21h18"/><path d="M5 21v-8a7 7 0 0114 0v8"/><path d="M12 6V3"/></svg><p>No cakes yet</p><span>Add cakes with photo, sizes &amp; prices — they appear on the site for ordering</span></div>';
+        return;
+    }
+
+    var html = '';
+    for (var i = 0; i < cakes.length; i++) {
+        var c = cakes[i];
+        var img = c.photo
+            ? '<img src="' + c.photo + '" alt="' + escapeHtml(c.name) + '">'
+            : '<div class="cake-admin-card__noimg"></div>';
+        html += '<div class="cake-admin-card">' +
+            img +
+            '<div class="cake-admin-card__body">' +
+                '<div class="cake-admin-card__name">' + escapeHtml(c.name) + '</div>' +
+                '<div class="cake-admin-card__meta">' + escapeHtml(catNameById(c.category)) + ' · ' + priceRange(c.sizes) + '</div>' +
+                '<div class="cake-admin-card__actions">' +
+                    '<button class="btn-edit" data-cake-edit="' + i + '">Edit</button>' +
+                    '<button class="btn-delete" data-cake-del="' + i + '">Delete</button>' +
+                '</div>' +
+            '</div>' +
+        '</div>';
+    }
+    container.innerHTML = html;
+
+    container.querySelectorAll('[data-cake-edit]').forEach(function(btn) {
+        btn.addEventListener('click', function() { openCakeModal(parseInt(this.dataset.cakeEdit)); });
+    });
+    container.querySelectorAll('[data-cake-del]').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            if (!confirm('Delete this cake?')) return;
+            var cakes = getData('products', []) || [];
+            cakes.splice(parseInt(this.dataset.cakeDel), 1);
+            setData('products', cakes);
+        });
+    });
+}
+
+function populateCakeCategorySelect(selected) {
+    var sel = document.getElementById('cakeCategory');
+    var html = '';
+    for (var i = 0; i < CATEGORIES.length; i++) {
+        html += '<option value="' + CATEGORIES[i].id + '"' + (CATEGORIES[i].id === selected ? ' selected' : '') + '>' + escapeHtml(CATEGORIES[i].en) + '</option>';
+    }
+    sel.innerHTML = html;
+}
+
+function renderCakeFlavoursPick(selectedNames) {
+    selectedNames = selectedNames || [];
+    var flavours = getData('flavours', null) || DEFAULT_FLAVOURS;
+    var box = document.getElementById('cakeFlavoursPick');
+    var html = '';
+    for (var i = 0; i < flavours.length; i++) {
+        var name = flavours[i].name;
+        var checked = selectedNames.indexOf(name) > -1 ? ' checked' : '';
+        html += '<label class="cake-flavour-opt"><input type="checkbox" value="' + escapeHtml(name) + '"' + checked + '> ' + escapeHtml(name) + '</label>';
+    }
+    box.innerHTML = html || '<span class="content-hint">Add flavours in the Flavours tab first.</span>';
+}
+
+function addCakeSizeRow(size, serves, price) {
+    var wrap = document.getElementById('cakeSizesRows');
+    var row = document.createElement('div');
+    row.className = 'cake-size-row';
+    row.innerHTML =
+        '<input type="text" class="cs-size" placeholder="Size (e.g. 6&quot;)" value="' + escapeHtml(size || '') + '">' +
+        '<input type="text" class="cs-serves" placeholder="Serves (e.g. 6-8)" value="' + escapeHtml(serves || '') + '">' +
+        '<input type="number" class="cs-price" placeholder="€" min="0" step="0.5" value="' + (price != null ? escapeHtml(String(price)) : '') + '">' +
+        '<button type="button" class="cake-size-row__del" aria-label="Remove">&times;</button>';
+    row.querySelector('.cake-size-row__del').addEventListener('click', function() { row.remove(); });
+    wrap.appendChild(row);
+}
+
+function openCakeModal(editId) {
+    var cakes = getData('products', []) || [];
+    document.getElementById('cakeSizesRows').innerHTML = '';
+    pendingCakePhoto = null;
+
+    if (editId != null && cakes[editId]) {
+        var c = cakes[editId];
+        document.getElementById('cakeModalTitle').textContent = 'Edit Cake';
+        document.getElementById('cakeEditId').value = editId;
+        document.getElementById('cakeName').value = c.name || '';
+        document.getElementById('cakeDesc').value = c.desc || '';
+        document.getElementById('cakeNotice').value = (c.noticeDays != null ? c.noticeDays : 3);
+        populateCakeCategorySelect(c.category);
+        renderCakeFlavoursPick(c.flavours || []);
+        pendingCakePhoto = c.photo || null;
+        document.getElementById('cakePhotoPreview').innerHTML = c.photo ? '<img src="' + c.photo + '" style="max-width:140px;border-radius:8px;">' : '';
+        var sizes = c.sizes || [];
+        if (!sizes.length) addCakeSizeRow('', '', '');
+        else sizes.forEach(function(s) { addCakeSizeRow(s.size, s.serves, s.price); });
+    } else {
+        document.getElementById('cakeModalTitle').textContent = 'Add Cake';
+        document.getElementById('cakeEditId').value = '';
+        document.getElementById('cakeName').value = '';
+        document.getElementById('cakeDesc').value = '';
+        document.getElementById('cakeNotice').value = 3;
+        populateCakeCategorySelect('');
+        renderCakeFlavoursPick([]);
+        document.getElementById('cakePhotoPreview').innerHTML = '';
+        addCakeSizeRow('6"', '6-8', '');
+    }
+    document.getElementById('cakeModal').style.display = 'flex';
+}
+
+document.getElementById('addCakeBtn').addEventListener('click', function() { openCakeModal(null); });
+document.getElementById('cakeCancel').addEventListener('click', function() { document.getElementById('cakeModal').style.display = 'none'; });
+document.querySelector('#cakeModal .modal__overlay').addEventListener('click', function() { document.getElementById('cakeModal').style.display = 'none'; });
+document.getElementById('addSizeRowBtn').addEventListener('click', function() { addCakeSizeRow('', '', ''); });
+
+document.getElementById('cakePhoto').addEventListener('change', function(e) {
+    var file = e.target.files[0];
+    if (!file) return;
+    compressImage(file, 900, 0.75, function(dataUrl) {
+        pendingCakePhoto = dataUrl;
+        document.getElementById('cakePhotoPreview').innerHTML = '<img src="' + dataUrl + '" style="max-width:140px;border-radius:8px;">';
+    });
+});
+
+document.getElementById('cakeForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var sizes = [];
+    document.querySelectorAll('#cakeSizesRows .cake-size-row').forEach(function(row) {
+        var size = row.querySelector('.cs-size').value.trim();
+        var serves = row.querySelector('.cs-serves').value.trim();
+        var price = row.querySelector('.cs-price').value.trim();
+        if (size || price) sizes.push({ size: size, serves: serves, price: price });
+    });
+    var flavours = [];
+    document.querySelectorAll('#cakeFlavoursPick input:checked').forEach(function(cb) { flavours.push(cb.value); });
+
+    var cake = {
+        name: document.getElementById('cakeName').value.trim(),
+        category: document.getElementById('cakeCategory').value,
+        desc: document.getElementById('cakeDesc').value.trim(),
+        photo: pendingCakePhoto || null,
+        sizes: sizes,
+        flavours: flavours,
+        noticeDays: parseInt(document.getElementById('cakeNotice').value) || 0
+    };
+
+    var cakes = getData('products', []) || [];
+    var editId = document.getElementById('cakeEditId').value;
+    if (editId !== '') cakes[parseInt(editId)] = cake;
+    else cakes.push(cake);
+    setData('products', cakes);
+    document.getElementById('cakeModal').style.display = 'none';
+});
+
 // ===== LOAD ALL =====
 function loadAllData() {
     listenData('categories', function(val) {
@@ -1075,10 +1248,12 @@ function loadAllData() {
         }
         if (val && val.length) CATEGORIES = val;
         loadGallery();
+        loadCakes();
         var mcm = document.getElementById('manageCatsModal');
         if (mcm && mcm.style.display === 'flex') renderManageCats();
     });
     listenData('orders', function() { loadOrders(); });
+    listenData('products', function() { loadCakes(); });
     listenData('gallery-cat', function() { loadGallery(); });
     listenData('certificates', function() { loadCertificates(); });
     listenData('flavours', function(val) {

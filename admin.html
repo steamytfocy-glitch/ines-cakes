@@ -59,6 +59,10 @@
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 14l2 2 4-4"/></svg>
                 Orders
             </button>
+            <button class="sidebar__link" data-tab="cakes">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18"/><path d="M5 21v-8a7 7 0 0114 0v8"/><path d="M12 6V3"/><circle cx="12" cy="2.2" r="1"/></svg>
+                Cakes
+            </button>
             <button class="sidebar__link" data-tab="gallery">
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
                 Gallery
@@ -113,6 +117,67 @@
                     <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="#C8963E" stroke-width="1.5"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
                     <p>No orders yet</p>
                     <span>Orders from the website form will appear here</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- CAKES (CATALOGUE) TAB -->
+        <div class="tab-content" id="tab-cakes">
+            <div class="tab-header">
+                <button class="btn-admin" id="addCakeBtn">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    Add Cake
+                </button>
+            </div>
+            <div class="cakes-admin" id="cakesAdmin"></div>
+
+            <!-- Add/Edit Cake Modal -->
+            <div class="modal" id="cakeModal" style="display:none;">
+                <div class="modal__overlay"></div>
+                <div class="modal__card modal__card--wide">
+                    <h3 id="cakeModalTitle">Add Cake</h3>
+                    <form id="cakeForm">
+                        <input type="hidden" id="cakeEditId">
+                        <div class="modal__field">
+                            <label>Cake Name</label>
+                            <input type="text" id="cakeName" required placeholder="e.g. Sunset Fields Art Cake">
+                        </div>
+                        <div class="modal__field">
+                            <label>Category</label>
+                            <select id="cakeCategory"></select>
+                        </div>
+                        <div class="modal__field">
+                            <label>Photo</label>
+                            <input type="file" id="cakePhoto" accept="image/*">
+                            <div id="cakePhotoPreview" style="margin-top:8px;"></div>
+                        </div>
+                        <div class="modal__field">
+                            <label>Description (optional)</label>
+                            <textarea id="cakeDesc" rows="2" placeholder="Short description"></textarea>
+                        </div>
+
+                        <div class="modal__field">
+                            <label>Sizes &amp; prices</label>
+                            <p class="content-hint" style="margin:0 0 8px;">Add each size you offer with its price and how many it serves.</p>
+                            <div id="cakeSizesRows"></div>
+                            <button type="button" class="btn-cancel" id="addSizeRowBtn" style="margin-top:6px;">+ Add size</button>
+                        </div>
+
+                        <div class="modal__field">
+                            <label>Available flavours</label>
+                            <div id="cakeFlavoursPick" class="cake-flavours-pick"></div>
+                        </div>
+
+                        <div class="modal__field">
+                            <label>Lead time — days notice required</label>
+                            <input type="number" id="cakeNotice" min="0" value="3" style="max-width:120px;">
+                        </div>
+
+                        <div class="modal__buttons">
+                            <button type="button" class="btn-cancel" id="cakeCancel">Cancel</button>
+                            <button type="submit" class="btn-admin">Save Cake</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

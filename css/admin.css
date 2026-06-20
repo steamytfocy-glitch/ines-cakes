@@ -483,6 +483,76 @@ body {
 }
 
 /* Site on/off toggle */
+/* ===== CAKES CATALOGUE (admin) ===== */
+.cakes-admin {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+}
+.cake-admin-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+.cake-admin-card img,
+.cake-admin-card__noimg {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    background: var(--cream);
+}
+.cake-admin-card__body { padding: 12px 14px; }
+.cake-admin-card__name { font-weight: 600; color: var(--brown); margin-bottom: 4px; }
+.cake-admin-card__meta { font-size: 0.82rem; color: var(--text-light); margin-bottom: 10px; }
+.cake-admin-card__actions { display: flex; gap: 8px; }
+
+.modal__card--wide { max-width: 600px; }
+
+.cake-size-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 90px 32px;
+    gap: 8px;
+    margin-bottom: 8px;
+    align-items: center;
+}
+.cake-size-row input {
+    padding: 8px 10px;
+    border: 1px solid var(--cream-dark);
+    border-radius: 6px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.85rem;
+    outline: none;
+}
+.cake-size-row input:focus { border-color: var(--gold); }
+.cake-size-row__del {
+    background: none;
+    border: 1px solid var(--red);
+    color: var(--red);
+    border-radius: 6px;
+    cursor: pointer;
+    height: 34px;
+    font-size: 1.1rem;
+    line-height: 1;
+}
+.cake-size-row__del:hover { background: var(--red); color: #fff; }
+
+.cake-flavours-pick {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+}
+.cake-flavour-opt {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    color: var(--text);
+    cursor: pointer;
+}
+
 .site-toggle-row {
     display: flex;
     align-items: center;
