@@ -12,7 +12,8 @@ var translations = {
         "cart.gift": "Gift wrap",
         "cart.size": "Size", "cart.flavour": "Flavour", "cart.date": "Date", "cart.qty": "Qty",
         "order.name": "Your Name", "order.phone": "Phone Number", "order.email": "Email",
-        "cart.fill": "Please fill in your name and phone."
+        "cart.fill": "Please fill in your name and phone.",
+        "cart.onRequest": "Price on request"
     },
     ua: {
         "cart.back": "← Продовжити покупки",
@@ -27,7 +28,8 @@ var translations = {
         "cart.gift": "Подарункова стрічка",
         "cart.size": "Розмір", "cart.flavour": "Смак", "cart.date": "Дата", "cart.qty": "К-сть",
         "order.name": "Ваше ім'я", "order.phone": "Номер телефону", "order.email": "Ел. пошта",
-        "cart.fill": "Будь ласка, вкажіть ім'я та телефон."
+        "cart.fill": "Будь ласка, вкажіть ім'я та телефон.",
+        "cart.onRequest": "Ціна за домовленістю"
     },
     ru: {
         "cart.back": "← Продолжить покупки",
@@ -42,7 +44,8 @@ var translations = {
         "cart.gift": "Подарочная лента",
         "cart.size": "Размер", "cart.flavour": "Вкус", "cart.date": "Дата", "cart.qty": "Кол-во",
         "order.name": "Ваше имя", "order.phone": "Номер телефона", "order.email": "Эл. почта",
-        "cart.fill": "Пожалуйста, укажите имя и телефон."
+        "cart.fill": "Пожалуйста, укажите имя и телефон.",
+        "cart.onRequest": "Цена по договорённости"
     }
 };
 
@@ -68,6 +71,10 @@ document.querySelectorAll('.lang-btn').forEach(function(btn) {
 });
 
 function lineTotal(it) { return (it.qty || 1) * ((parseFloat(it.price) || 0) + (parseFloat(it.giftPrice) || 0)); }
+function priceText(it) {
+    if (it.custom || !parseFloat(it.price)) return t('cart.onRequest');
+    return '€' + lineTotal(it);
+}
 
 function renderCart() {
     var cart = getCart();
@@ -88,6 +95,7 @@ function renderCart() {
         if (it.size) meta.push(t('cart.size') + ': ' + escapeHtml(it.size));
         if (it.flavour) meta.push(t('cart.flavour') + ': ' + escapeHtml(it.flavour));
         if (it.date) meta.push(t('cart.date') + ': ' + escapeHtml(it.date));
+        if (it.decor) meta.push(escapeHtml(it.decor));
         if (it.gift) meta.push('🎁 ' + t('cart.gift') + ' (+€' + it.giftPrice + ')');
         var extras = [];
         if (it.message) extras.push('✍️ ' + escapeHtml(it.message));
@@ -108,7 +116,7 @@ function renderCart() {
                     '<button type="button" class="cart-item__remove" data-remove="' + i + '">' + t('cart.remove') + '</button>' +
                 '</div>' +
             '</div>' +
-            '<div class="cart-item__price">€' + lineTotal(it) + '</div>' +
+            '<div class="cart-item__price">' + priceText(it) + '</div>' +
         '</div>';
     }
     document.getElementById('cartItems').innerHTML = html;
@@ -152,9 +160,10 @@ function buildSummary(cart) {
         if (it.size) sub.push(it.size);
         if (it.flavour) sub.push(it.flavour);
         if (it.date) sub.push(it.date);
+        if (it.decor) sub.push(it.decor);
         if (it.gift) sub.push('gift wrap');
         if (sub.length) parts.push('(' + sub.join(', ') + ')');
-        parts.push('€' + lineTotal(it));
+        parts.push((it.custom || !parseFloat(it.price)) ? 'price on request' : ('€' + lineTotal(it)));
         var line = parts.join(' ');
         if (it.message) line += ' — note: ' + it.message;
         if (it.allergies) line += ' — allergies: ' + it.allergies;

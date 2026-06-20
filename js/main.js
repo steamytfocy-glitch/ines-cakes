@@ -113,6 +113,8 @@ const translations = {
         "order.al.otherPh": "Specify your allergy...",
         "order.photo": "Attach Reference Photo",
         "order.submit": "Send Order",
+        "order.addCart": "Add to cart",
+        "order.customNote": "Price for custom cakes is confirmed by us after we see your idea.",
         "order.successTitle": "Thank you!",
         "order.successText": "Your order has been received. We'll contact you soon to discuss the details.",
         "order.orContact": "Or contact us directly:",
@@ -240,6 +242,8 @@ const translations = {
         "order.al.otherPh": "Вкажіть вашу алергію...",
         "order.photo": "Прикріпити фото-референс",
         "order.submit": "Відправити замовлення",
+        "order.addCart": "Додати в кошик",
+        "order.customNote": "Ціну на індивідуальні торти ми підтверджуємо після того, як побачимо вашу ідею.",
         "order.successTitle": "Дякуємо!",
         "order.successText": "Ваше замовлення отримано. Ми зв'яжемося з вами найближчим часом для обговорення деталей.",
         "order.orContact": "Або зв'яжіться з нами напряму:",
@@ -367,6 +371,8 @@ const translations = {
         "order.al.otherPh": "Укажите вашу аллергию...",
         "order.photo": "Прикрепить фото-референс",
         "order.submit": "Отправить заказ",
+        "order.addCart": "В корзину",
+        "order.customNote": "Цену на индивидуальные торты мы подтверждаем после того, как увидим вашу идею.",
         "order.successTitle": "Спасибо!",
         "order.successText": "Ваш заказ получен. Мы свяжемся с вами в ближайшее время для обсуждения деталей.",
         "order.orContact": "Или свяжитесь с нами напрямую:",
@@ -544,9 +550,11 @@ function updateAllergyHidden() {
 
 // ===== PHONE VALIDATION =====
 var phoneInput = document.getElementById('phone');
-phoneInput.addEventListener('input', function() {
-    this.value = this.value.replace(/[^0-9+\s\-()]/g, '');
-});
+if (phoneInput) {
+    phoneInput.addEventListener('input', function() {
+        this.value = this.value.replace(/[^0-9+\s\-()]/g, '');
+    });
+}
 
 // ===== DATE PICKER =====
 var daySelect = document.getElementById('dateDay');
@@ -725,62 +733,44 @@ var orderSuccess = document.getElementById('orderSuccess');
 orderForm.addEventListener('submit', function(e) {
     e.preventDefault();
 
-    var formData = new FormData(orderForm);
-    var data = {};
-    formData.forEach(function(value, key) {
-        if (key !== 'photo') {
-            data[key] = value;
-        }
-    });
+    var dayv = daySelect.value, monthv = monthSelect.value;
+    var sizeOk = cakeSizeSelect.value;
+    if (!dayv || !monthv || !sizeOk) {
+        var msg = { en: 'Please choose a date and size.', ua: 'Будь ласка, оберіть дату та розмір.', ru: 'Пожалуйста, выберите дату и размер.' }[currentLang] || 'Please choose a date and size.';
+        alert(msg);
+        return;
+    }
 
-    data.status = 'new';
-    data.note = '';
-    data.lang = currentLang;
-    data.submitted = new Date().toLocaleString();
+    var names = monthNames[currentLang] || monthNames.en;
+    var dateStr = dayv + ' ' + names[parseInt(monthv) - 1];
+
+    var sizeText = cakeSizeSelect.options[cakeSizeSelect.selectedIndex].text;
+    if (cakeSizeSelect.value === 'custom' && customDiameterInput.value) {
+        sizeText = customDiameterInput.value + '" (custom)';
+    }
+
+    var customNameMap = { en: 'Custom Cake', ua: 'Індивідуальний торт', ru: 'Индивидуальный торт' };
+
+    function finish(photoData) {
+        addToCart({
+            custom: true,
+            name: customNameMap[currentLang] || 'Custom Cake',
+            photo: photoData || '',
+            size: sizeText,
+            flavour: document.getElementById('flavour').value || '',
+            date: dateStr,
+            decor: decorSelect.value || '',
+            message: document.getElementById('message').value.trim(),
+            allergies: document.getElementById('allergyHidden').value || '',
+            qty: 1,
+            price: 0,
+            gift: false,
+            giftPrice: 0
+        });
+        window.location.href = 'cart.html';
+    }
 
     var photoFile = document.getElementById('photo').files[0];
-
-    var redirected = false;
-    var generatedCode = '';
-    function goThankYou() {
-        if (redirected) return;
-        redirected = true;
-        var url = 'thankyou.html' + (generatedCode ? '?code=' + encodeURIComponent(generatedCode) : '');
-        window.location.href = url;
-    }
-
-    function genOrderCode(existing) {
-        var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // no ambiguous 0/O/1/I
-        var code;
-        do {
-            code = 'INES-';
-            for (var i = 0; i < 4; i++) code += chars[Math.floor(Math.random() * chars.length)];
-        } while (existing.indexOf(code) > -1);
-        return code;
-    }
-
-    function saveOrder(orderData) {
-        fbGetOnce('orders', function(orders) {
-            if (!orders) orders = [];
-            var codes = orders.map(function(o) { return o && o.code; });
-            generatedCode = genOrderCode(codes);
-            orderData.code = generatedCode;
-
-            // Notify via Telegram — sendBeacon survives the page navigation
-            var notifyData = {};
-            for (var k in orderData) { if (k !== 'photo') notifyData[k] = orderData[k]; }
-            try {
-                var blob = new Blob([JSON.stringify(notifyData)], { type: 'application/json' });
-                navigator.sendBeacon('/api/notify', blob);
-            } catch (e) {}
-
-            orders.push(orderData);
-            fbSet('orders', orders, function() { goThankYou(); });
-        });
-        // Fallback: redirect even if save is slow
-        setTimeout(goThankYou, 4000);
-    }
-
     if (photoFile) {
         var reader = new FileReader();
         reader.onload = function(ev) {
@@ -794,14 +784,13 @@ orderForm.addEventListener('submit', function(e) {
                 }
                 canvas.width = w; canvas.height = h;
                 canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-                data.photo = canvas.toDataURL('image/jpeg', 0.6);
-                saveOrder(data);
+                finish(canvas.toDataURL('image/jpeg', 0.6));
             };
             img.src = ev.target.result;
         };
         reader.readAsDataURL(photoFile);
     } else {
-        saveOrder(data);
+        finish('');
     }
 });
 

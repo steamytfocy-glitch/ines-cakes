@@ -228,21 +228,7 @@
         <p class="section__subtitle" data-i18n="order.subtitle">Fill in the form below and we'll get back to you to discuss the details</p>
         <form class="order__form" id="orderForm">
             <div class="form-row">
-                <div class="form-group">
-                    <label for="name" data-i18n="order.name">Your Name</label>
-                    <input type="text" id="name" name="name" required>
-                </div>
-                <div class="form-group">
-                    <label for="phone" data-i18n="order.phone">Phone Number</label>
-                    <input type="tel" id="phone" name="phone" required pattern="[0-9+\s\-()]+" inputmode="numeric">
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="email" data-i18n="order.email">Email</label>
-                    <input type="email" id="email" name="email">
-                </div>
-                <div class="form-group">
+                <div class="form-group form-group--full">
                     <label data-i18n="order.date">Date Needed</label>
                     <div class="date-picker-row">
                         <select id="dateDay" name="dateDay" required>
@@ -311,7 +297,7 @@
                 <label for="photo" data-i18n="order.photo">Attach Reference Photo</label>
                 <input type="file" id="photo" name="photo" accept="image/*">
             </div>
-            <div class="order-total" id="orderTotal">
+            <div class="order-total" id="orderTotal" style="display:none;">
                 <div class="order-total__row">
                     <span class="order-total__label" data-i18n="order.estTotal">Estimated total</span>
                     <span class="order-total__value" id="orderTotalValue">—</span>
@@ -319,7 +305,8 @@
                 <p class="order-total__note" data-i18n="order.totalNote">* Approximate price — final amount confirmed by our manager</p>
             </div>
             <input type="hidden" id="orderTotalHidden" name="total">
-            <button type="submit" class="btn btn--primary btn--full" data-i18n="order.submit">Send Order</button>
+            <p class="order__custom-note" data-i18n="order.customNote">Price for custom cakes is confirmed by us after we see your idea.</p>
+            <button type="submit" class="btn btn--primary btn--full" data-i18n="order.addCart">Add to cart</button>
         </form>
         <div class="order__success" id="orderSuccess" style="display:none;">
             <svg viewBox="0 0 64 64" width="64" height="64"><circle cx="32" cy="32" r="30" fill="#C8963E" opacity="0.15"/><path d="M20 32l8 8 16-16" stroke="#C8963E" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
