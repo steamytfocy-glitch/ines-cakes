@@ -1320,17 +1320,61 @@ function populateCakeCategorySelect(selected) {
     sel.innerHTML = html;
 }
 
-function renderCakeFlavoursPick(selectedNames) {
-    selectedNames = selectedNames || [];
-    var flavours = getData('flavours', null) || DEFAULT_FLAVOURS;
-    var box = document.getElementById('cakeFlavoursPick');
-    var html = '';
-    for (var i = 0; i < flavours.length; i++) {
-        var name = flavours[i].name;
-        var checked = selectedNames.indexOf(name) > -1 ? ' checked' : '';
-        html += '<label class="cake-flavour-opt"><input type="checkbox" value="' + escapeHtml(name) + '"' + checked + '> ' + escapeHtml(name) + '</label>';
+var cakeSelectedFlavours = [];
+
+function renderCakeFlavoursSelected() {
+    var box = document.getElementById('cakeFlavoursSelected');
+    var txt = document.getElementById('cakeFlavourText');
+    if (cakeSelectedFlavours.length) {
+        txt.textContent = cakeSelectedFlavours.length + ' flavour' + (cakeSelectedFlavours.length > 1 ? 's' : '') + ' selected';
+        box.innerHTML = cakeSelectedFlavours.map(function(n) {
+            return '<span class="flavour-chip">' + escapeHtml(n) + '<button type="button" class="flavour-chip__x" data-rm="' + escapeHtml(n) + '">&times;</button></span>';
+        }).join('');
+        box.querySelectorAll('[data-rm]').forEach(function(b) {
+            b.addEventListener('click', function() {
+                var n = this.getAttribute('data-rm');
+                cakeSelectedFlavours = cakeSelectedFlavours.filter(function(x) { return x !== n; });
+                renderCakeFlavoursSelected();
+            });
+        });
+    } else {
+        txt.textContent = 'Choose flavours';
+        box.innerHTML = '';
     }
-    box.innerHTML = html || '<span class="content-hint">Add flavours in the Flavours tab first.</span>';
+}
+
+function openCakeFlavourModal() {
+    var flavours = getData('flavours', null) || DEFAULT_FLAVOURS;
+    var grid = document.getElementById('cakeFlavourGrid');
+    if (!flavours.length) {
+        grid.innerHTML = '<p class="content-hint">No flavours yet. Add them in the Flavours tab first.</p>';
+    } else {
+        grid.innerHTML = flavours.map(function(f) {
+            var sel = cakeSelectedFlavours.indexOf(f.name) > -1;
+            var img = f.photo
+                ? '<img src="' + f.photo + '" class="flavour-pick-card__img" alt="">'
+                : '<div class="flavour-pick-card__ph"><svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>';
+            return '<div class="flavour-pick-card' + (sel ? ' selected' : '') + '" data-flavour="' + escapeHtml(f.name) + '">' +
+                '<div class="flavour-pick-card__check">&#10003;</div>' +
+                img +
+                '<div class="flavour-pick-card__name">' + escapeHtml(f.name) + '</div>' +
+                (f.price ? '<div class="flavour-pick-card__price">€' + escapeHtml(f.price) + ' / kg</div>' : '') +
+            '</div>';
+        }).join('');
+        grid.querySelectorAll('.flavour-pick-card').forEach(function(card) {
+            card.addEventListener('click', function() {
+                var n = this.dataset.flavour;
+                if (cakeSelectedFlavours.indexOf(n) > -1) {
+                    cakeSelectedFlavours = cakeSelectedFlavours.filter(function(x) { return x !== n; });
+                    this.classList.remove('selected');
+                } else {
+                    cakeSelectedFlavours.push(n);
+                    this.classList.add('selected');
+                }
+            });
+        });
+    }
+    document.getElementById('cakeFlavourModal').style.display = 'flex';
 }
 
 function addCakeSizeRow(size, serves, price) {
@@ -1359,7 +1403,8 @@ function openCakeModal(editId) {
         document.getElementById('cakeDesc').value = c.desc || '';
         document.getElementById('cakeNotice').value = (c.noticeDays != null ? c.noticeDays : 3);
         populateCakeCategorySelect(c.category);
-        renderCakeFlavoursPick(c.flavours || []);
+        cakeSelectedFlavours = (c.flavours || []).slice();
+        renderCakeFlavoursSelected();
         pendingCakePhoto = c.photo || null;
         document.getElementById('cakePhotoPreview').innerHTML = c.photo ? '<img src="' + c.photo + '" style="max-width:140px;border-radius:8px;">' : '';
         var sizes = c.sizes || [];
@@ -1372,7 +1417,8 @@ function openCakeModal(editId) {
         document.getElementById('cakeDesc').value = '';
         document.getElementById('cakeNotice').value = 3;
         populateCakeCategorySelect('');
-        renderCakeFlavoursPick([]);
+        cakeSelectedFlavours = [];
+        renderCakeFlavoursSelected();
         document.getElementById('cakePhotoPreview').innerHTML = '';
         addAllStandardSizes();
     }
@@ -1385,25 +1431,21 @@ document.querySelector('#cakeModal .modal__overlay').addEventListener('click', f
 document.getElementById('addSizeRowBtn').addEventListener('click', function() { addCakeSizeRow('', '', ''); });
 document.getElementById('addAllSizesBtn').addEventListener('click', function() { addAllStandardSizes(); });
 
-document.getElementById('addFlavourOptBtn').addEventListener('click', function() {
-    var input = document.getElementById('newFlavourInput');
-    var name = input.value.trim();
-    if (!name) return;
-    var box = document.getElementById('cakeFlavoursPick');
-    var inputs = box.querySelectorAll('input');
-    var exists = false;
-    inputs.forEach(function(cb) { if (cb.value.toLowerCase() === name.toLowerCase()) { cb.checked = true; exists = true; } });
-    if (!exists) {
-        var label = document.createElement('label');
-        label.className = 'cake-flavour-opt';
-        label.innerHTML = '<input type="checkbox" value="' + escapeHtml(name) + '" checked> ' + escapeHtml(name);
-        box.appendChild(label);
-    }
-    // also save to the global Flavours list so other cakes can use it
-    var flavours = getData('flavours', []) || [];
-    var inGlobal = flavours.some(function(f) { return (f.name || '').toLowerCase() === name.toLowerCase(); });
-    if (!inGlobal) { flavours.push({ name: name, desc: '', price: '', photo: null }); setData('flavours', flavours); }
-    input.value = '';
+document.getElementById('cakeFlavourBtn').addEventListener('click', openCakeFlavourModal);
+document.getElementById('cakeFlavourDone').addEventListener('click', function() {
+    document.getElementById('cakeFlavourModal').style.display = 'none';
+    renderCakeFlavoursSelected();
+});
+document.querySelector('#cakeFlavourModal .modal__overlay').addEventListener('click', function() {
+    document.getElementById('cakeFlavourModal').style.display = 'none';
+    renderCakeFlavoursSelected();
+});
+
+document.getElementById('cakeNewCatBtn').addEventListener('click', function() {
+    addCategory(function(newId) {
+        CATEGORIES = getData('categories', CATEGORIES);
+        populateCakeCategorySelect(newId);
+    });
 });
 
 document.getElementById('cakePhoto').addEventListener('change', function(e) {
@@ -1424,8 +1466,7 @@ document.getElementById('cakeForm').addEventListener('submit', function(e) {
         var price = row.querySelector('.cs-price').value.trim();
         if (size || price) sizes.push({ size: size, serves: serves, price: price });
     });
-    var flavours = [];
-    document.querySelectorAll('#cakeFlavoursPick input:checked').forEach(function(cb) { flavours.push(cb.value); });
+    var flavours = cakeSelectedFlavours.slice();
 
     var cake = {
         name: document.getElementById('cakeName').value.trim(),

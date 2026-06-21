@@ -180,7 +180,10 @@
                         </div>
                         <div class="modal__field">
                             <label>Category</label>
-                            <select id="cakeCategory"></select>
+                            <div class="cake-cat-row">
+                                <select id="cakeCategory"></select>
+                                <button type="button" class="btn-cancel" id="cakeNewCatBtn">+ New category</button>
+                            </div>
                         </div>
                         <div class="modal__field">
                             <label>Photo</label>
@@ -204,11 +207,11 @@
 
                         <div class="modal__field">
                             <label>Available flavours</label>
-                            <div id="cakeFlavoursPick" class="cake-flavours-pick"></div>
-                            <div class="add-flavour-row">
-                                <input type="text" id="newFlavourInput" placeholder="New flavour name">
-                                <button type="button" class="btn-cancel" id="addFlavourOptBtn">+ Add flavour</button>
-                            </div>
+                            <button type="button" class="flavour-pick-btn" id="cakeFlavourBtn">
+                                <span id="cakeFlavourText">Choose flavours</span>
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                            </button>
+                            <div id="cakeFlavoursSelected" class="cake-flavours-selected"></div>
                         </div>
 
                         <div class="modal__field">
@@ -221,6 +224,19 @@
                             <button type="submit" class="btn-admin">Save Cake</button>
                         </div>
                     </form>
+                </div>
+            </div>
+
+            <!-- Cake flavour picker modal -->
+            <div class="modal" id="cakeFlavourModal" style="display:none;">
+                <div class="modal__overlay"></div>
+                <div class="modal__card modal__card--wide">
+                    <h3>Select flavours</h3>
+                    <p class="content-hint" style="margin:0 0 12px;">Tap the flavours available for this cake. To add a new flavour, use the Flavours tab.</p>
+                    <div id="cakeFlavourGrid" class="flavour-pick-grid"></div>
+                    <div class="modal__buttons">
+                        <button type="button" class="btn-admin" id="cakeFlavourDone">Done</button>
+                    </div>
                 </div>
             </div>
         </div>
