@@ -689,15 +689,11 @@ cakeSizeSelect.addEventListener('change', function() {
 });
 customDiameterInput.addEventListener('input', recalcTotal);
 
-var decorSelect = document.getElementById('decorComplexity');
-decorSelect.addEventListener('change', recalcTotal);
-
 // ===== PRICE CALCULATOR =====
 var selectedFlavourPrice = 0;
 var basePriceMini = 30;   // price for 5"
 var basePriceMaxi = 35;   // price for 6"
 var PRICE_PER_INCH = 5;   // each extra inch beyond 5"
-var DECOR_ADDON = { simple: 0, medium: 10, complex: 20 };
 
 function getInches() {
     var size = cakeSizeSelect.value;
@@ -732,8 +728,7 @@ function recalcTotal() {
         hidden.value = '';
         return;
     }
-    var decorAddon = DECOR_ADDON[decorSelect.value] || 0;
-    var total = base + (selectedFlavourPrice || 0) + decorAddon;
+    var total = base + (selectedFlavourPrice || 0);
     valueEl.textContent = '€' + total;
     hidden.value = '€' + total;
 }
@@ -750,6 +745,8 @@ function clearCustomRef() {
     try { localStorage.removeItem('ines-ref-cake'); } catch (e) {}
     var box = document.getElementById('orderRef');
     if (box) box.style.display = 'none';
+    var pick = document.getElementById('orderRefPickWrap');
+    if (pick) pick.style.display = '';
 }
 
 function initCustomReference() {
@@ -770,12 +767,18 @@ function initCustomReference() {
         removeBtn.addEventListener('click', clearCustomRef);
     }
 
+    var pickWrap = document.getElementById('orderRefPickWrap');
     try { customRef = JSON.parse(localStorage.getItem('ines-ref-cake')); } catch (e) { customRef = null; }
-    if (!customRef || !customRef.name) { refBox.style.display = 'none'; return; }
+    if (!customRef || !customRef.name) {
+        refBox.style.display = 'none';
+        if (pickWrap) pickWrap.style.display = '';
+        return;
+    }
 
     document.getElementById('orderRefImg').src = customRef.photo || '';
     document.getElementById('orderRefName').textContent = customRef.name;
     refBox.style.display = 'flex';
+    if (pickWrap) pickWrap.style.display = 'none';
 
     // Prefill flavour
     if (customRef.flavour) {
@@ -842,7 +845,6 @@ orderForm.addEventListener('submit', function(e) {
             size: sizeText,
             flavour: document.getElementById('flavour').value || '',
             date: dateStr,
-            decor: decorSelect.value || '',
             message: document.getElementById('message').value.trim(),
             allergies: document.getElementById('allergyHidden').value || '',
             qty: 1,
