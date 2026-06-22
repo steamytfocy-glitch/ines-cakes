@@ -780,16 +780,25 @@ function initCustomReference() {
     refBox.style.display = 'flex';
     if (pickWrap) pickWrap.style.display = 'none';
 
-    // We arrived here from the reference flow — scroll to the order form.
-    // Repeat after async content (categories, certificates, reviews) renders and
-    // pushes the form down, so the anchor doesn't land short.
-    function scrollToOrderForm() {
-        var el = document.getElementById('order');
-        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-    setTimeout(scrollToOrderForm, 250);
-    setTimeout(scrollToOrderForm, 800);
-    setTimeout(scrollToOrderForm, 1500);
+    // Keep the reference only for this visit — drop it so a page refresh clears it
+    // (it stays in memory for placing the order).
+    try { localStorage.removeItem('ines-ref-cake'); } catch (e) {}
+
+    // We arrived here from the reference flow — scroll to the order form once,
+    // after async content (categories, certificates, reviews) finished rendering
+    // and the page height has settled, so the jump isn't jerky.
+    var lastH = 0, stable = 0, tries = 0;
+    var iv = setInterval(function() {
+        var h = document.body.scrollHeight;
+        if (h === lastH) stable++; else stable = 0;
+        lastH = h;
+        tries++;
+        if (stable >= 2 || tries > 16) {
+            clearInterval(iv);
+            var el = document.getElementById('order');
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }, 150);
 
     // Prefill flavour
     if (customRef.flavour) {
