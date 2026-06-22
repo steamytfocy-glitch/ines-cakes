@@ -201,6 +201,7 @@ function renderProduct() {
     populatePDate();
 
     // notice text
+    var notice = parseInt(product.noticeDays) || 0;
     var noticeEl = document.getElementById('pNotice');
     noticeEl.textContent = notice > 0 ? (t('prod.notice') + ' ' + notice + ' ' + t('prod.days')) : '';
 
