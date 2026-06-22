@@ -1299,6 +1299,13 @@ function loadSiteStatus() {
     });
 }
 
+// Always open the page at the top on refresh (don't restore old scroll position).
+// Exception: when arriving via the reference flow, we scroll to the order form instead.
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+window.addEventListener('load', function() {
+    if (!customRef) window.scrollTo(0, 0);
+});
+
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', function() {
     setLanguage(currentLang);
