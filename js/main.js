@@ -780,6 +780,17 @@ function initCustomReference() {
     refBox.style.display = 'flex';
     if (pickWrap) pickWrap.style.display = 'none';
 
+    // We arrived here from the reference flow — scroll to the order form.
+    // Repeat after async content (categories, certificates, reviews) renders and
+    // pushes the form down, so the anchor doesn't land short.
+    function scrollToOrderForm() {
+        var el = document.getElementById('order');
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    setTimeout(scrollToOrderForm, 250);
+    setTimeout(scrollToOrderForm, 800);
+    setTimeout(scrollToOrderForm, 1500);
+
     // Prefill flavour
     if (customRef.flavour) {
         var fh = document.getElementById('flavour');
