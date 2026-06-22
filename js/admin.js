@@ -569,6 +569,10 @@ document.getElementById('manageCatsBtn').addEventListener('click', function() {
     renderManageCats();
     document.getElementById('manageCatsModal').style.display = 'flex';
 });
+document.getElementById('cakesManageCatsBtn').addEventListener('click', function() {
+    renderManageCats();
+    document.getElementById('manageCatsModal').style.display = 'flex';
+});
 document.getElementById('manageCatsClose').addEventListener('click', function() {
     document.getElementById('manageCatsModal').style.display = 'none';
 });
