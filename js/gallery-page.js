@@ -56,7 +56,7 @@ function selectAsRef(p) {
         localStorage.setItem('ines-ref-cake', JSON.stringify(ref));
         localStorage.removeItem('ines-ref-pick');
     } catch (e) {}
-    window.location.href = '/#order';
+    window.location.href = '/';
 }
 
 function showRefBanner() {

@@ -1303,7 +1303,7 @@ function loadSiteStatus() {
 // Exception: when arriving via the reference flow, we scroll to the order form instead.
 if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 window.addEventListener('load', function() {
-    if (!customRef) window.scrollTo(0, 0);
+    if (!customRef && location.hash !== '#order') window.scrollTo(0, 0);
 });
 
 // ===== INIT =====

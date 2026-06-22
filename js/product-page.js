@@ -366,7 +366,7 @@ document.getElementById('pRefBtn').addEventListener('click', function() {
         date: selectedDate()
     };
     try { localStorage.setItem('ines-ref-cake', JSON.stringify(ref)); } catch (e) {}
-    window.location.href = '/#order';
+    window.location.href = '/';
 });
 
 // init
