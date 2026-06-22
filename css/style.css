@@ -676,6 +676,9 @@ ul { list-style: none; }
     transform: rotate(-45deg) translate(5px, -5px);
 }
 
+/* Mobile-only nav links (My Orders, phone) shown inside the dropdown */
+.nav__link--mobile { display: none; }
+
 /* ===== HERO ===== */
 .hero {
     padding: 160px 0 80px;
@@ -2069,6 +2072,9 @@ ul { list-style: none; }
         display: flex;
     }
 
+    /* Show My Orders + phone links inside the dropdown menu */
+    .nav__link--mobile { display: block; }
+
     .hero__inner {
         flex-direction: column;
         text-align: center;
@@ -2188,4 +2194,36 @@ ul { list-style: none; }
     .logo__tagline {
         font-size: 0.45rem;
     }
+
+    /* ---- Compact mobile header so nothing is cut off ---- */
+    .container { padding-left: 16px; padding-right: 16px; }
+
+    .header__inner--home {
+        grid-template-columns: auto 1fr auto;
+        column-gap: 6px;
+    }
+    .header__inner--home .logo { gap: 6px; }
+    .header__inner--home .logo__icon { width: 34px; height: 34px; }
+    .logo__tagline { display: none; }          /* keep just the name on phones */
+    .logo__name { font-size: 1.05rem; letter-spacing: 1px; }
+
+    .header__phone { justify-self: start; }
+    .header__phone svg { width: 20px; height: 20px; }
+
+    .header__right { gap: 8px; }
+
+    /* On the home page the My Orders icon lives in the dropdown menu instead */
+    .header__inner--home .header__cart[aria-label="My Orders"] { display: none; }
+
+    /* Tighter language switcher */
+    .lang-switcher { gap: 2px; padding: 2px; }
+    .lang-btn { padding: 5px 8px; font-size: 0.7rem; }
+
+    .header__cart svg { width: 24px; height: 24px; }
+}
+
+/* Very small phones */
+@media (max-width: 360px) {
+    .header__phone { display: none; }          /* phone still in the menu */
+    .lang-btn { padding: 5px 6px; font-size: 0.65rem; }
 }
