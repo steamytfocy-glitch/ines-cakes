@@ -247,17 +247,20 @@ function flavourCardHtml(f) {
 }
 
 function setupFlavours() {
+    var globals = (_flavours || []).filter(function(f) { return f && f.name; });
     var names = (product.flavours && product.flavours.length) ? product.flavours : null;
     var list;
     if (names) {
-        list = names.map(function(n) {
+        list = names.filter(Boolean).map(function(n) {
             var found = null;
-            for (var i = 0; i < _flavours.length; i++) if (_flavours[i].name === n) { found = _flavours[i]; break; }
+            for (var i = 0; i < globals.length; i++) if (globals[i].name === n) { found = globals[i]; break; }
             return found || { name: n, photo: null, price: '', desc: '' };
         });
     } else {
-        list = _flavours;
+        list = globals;
     }
+    // Never show an empty picker — fall back to the standard flavours
+    if (!list.length) list = DEFAULT_FLAVOURS;
     var grid = document.getElementById('pFlavourGrid');
     grid.innerHTML = list.map(flavourCardHtml).join('');
     grid.querySelectorAll('.flavour-card').forEach(function(card) {
