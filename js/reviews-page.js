@@ -10,7 +10,8 @@ var translations = {
         "reviews.yourReview": "Your Review",
         "reviews.reviewPh": "Tell us about your experience...",
         "reviews.submit": "Send Review",
-        "reviews.thanks": "Thank you! Your review has been submitted."
+        "reviews.thanks": "Thank you! Your review has been submitted.",
+        "reviews.photo": "Add a photo (optional)"
     },
     ua: {
         "revpage.back": "На головну",
@@ -23,7 +24,8 @@ var translations = {
         "reviews.yourReview": "Ваш відгук",
         "reviews.reviewPh": "Розкажіть про ваш досвід...",
         "reviews.submit": "Надіслати відгук",
-        "reviews.thanks": "Дякуємо! Ваш відгук надіслано."
+        "reviews.thanks": "Дякуємо! Ваш відгук надіслано.",
+        "reviews.photo": "Додати фото (необов'язково)"
     },
     ru: {
         "revpage.back": "На главную",
@@ -36,7 +38,8 @@ var translations = {
         "reviews.yourReview": "Ваш отзыв",
         "reviews.reviewPh": "Расскажите о вашем опыте...",
         "reviews.submit": "Отправить отзыв",
-        "reviews.thanks": "Спасибо! Ваш отзыв отправлен."
+        "reviews.thanks": "Спасибо! Ваш отзыв отправлен.",
+        "reviews.photo": "Добавить фото (необязательно)"
     }
 };
 
@@ -71,6 +74,27 @@ function escapeHtml(str) {
     return div.innerHTML;
 }
 
+// Compress an image file to a base64 data URL via canvas
+function compressReviewImage(file, maxSize, quality, cb) {
+    var reader = new FileReader();
+    reader.onload = function(e) {
+        var img = new Image();
+        img.onload = function() {
+            var w = img.width, h = img.height;
+            if (w > h) { if (w > maxSize) { h = Math.round(h * maxSize / w); w = maxSize; } }
+            else { if (h > maxSize) { w = Math.round(w * maxSize / h); h = maxSize; } }
+            var canvas = document.createElement('canvas');
+            canvas.width = w; canvas.height = h;
+            canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+            cb(canvas.toDataURL('image/jpeg', quality));
+        };
+        img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+}
+
+var pendingReviewPhoto = null;
+
 function loadAllReviews() {
     fbGet('reviews', function(reviews) {
         if (!reviews) reviews = [];
@@ -94,6 +118,7 @@ function loadAllReviews() {
             html += '<div class="review-card review-card--deletable">' +
                 '<button class="review-card__delete" data-rev-del="' + i + '" title="Delete">&times;</button>' +
                 '<div class="review-card__stars">' + stars + '</div>' +
+                (r.photo ? '<img class="review-card__photo" src="' + r.photo + '" alt="" loading="lazy">' : '') +
                 '<p class="review-card__text">"' + escapeHtml(r.text) + '"</p>' +
                 '<p class="review-card__author">— ' + escapeHtml(r.author) + '</p>' +
             '</div>';
@@ -133,6 +158,22 @@ document.getElementById('writeReviewBtn').addEventListener('click', function() {
     wrap.style.display = wrap.style.display === 'none' ? 'block' : 'none';
 });
 
+// Photo upload
+document.getElementById('revPhoto').addEventListener('change', function(e) {
+    var file = e.target.files[0];
+    if (!file) { pendingReviewPhoto = null; document.getElementById('revPhotoPreview').innerHTML = ''; return; }
+    compressReviewImage(file, 900, 0.75, function(dataUrl) {
+        pendingReviewPhoto = dataUrl;
+        document.getElementById('revPhotoPreview').innerHTML =
+            '<img src="' + dataUrl + '" alt=""><button type="button" class="review-photo-preview__x" id="revPhotoRemove">&times;</button>';
+        document.getElementById('revPhotoRemove').addEventListener('click', function() {
+            pendingReviewPhoto = null;
+            document.getElementById('revPhoto').value = '';
+            document.getElementById('revPhotoPreview').innerHTML = '';
+        });
+    });
+});
+
 // Submit review
 document.getElementById('clientReviewForm').addEventListener('submit', function(e) {
     e.preventDefault();
@@ -140,6 +181,7 @@ document.getElementById('clientReviewForm').addEventListener('submit', function(
         author: document.getElementById('revName').value.trim(),
         rating: parseInt(revRating.value),
         text: document.getElementById('revText').value.trim(),
+        photo: pendingReviewPhoto || null,
         fromClient: true
     };
     fbGetOnce('reviews', function(reviews) {
@@ -156,6 +198,8 @@ document.getElementById('clientReviewForm').addEventListener('submit', function(
         document.getElementById('reviewSuccess').style.display = 'none';
         document.getElementById('reviewFormWrap').style.display = 'none';
         form.reset();
+        pendingReviewPhoto = null;
+        document.getElementById('revPhotoPreview').innerHTML = '';
         starPicker.querySelectorAll('.star-pick').forEach(function(s) { s.classList.add('active'); });
         revRating.value = '5';
         loadAllReviews();

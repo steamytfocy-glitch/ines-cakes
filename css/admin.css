@@ -994,6 +994,14 @@ body {
     gap: 16px;
 }
 
+.review-admin-card__photo {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 10px;
+    flex-shrink: 0;
+}
+
 .review-admin-card__content {
     flex: 1;
 }

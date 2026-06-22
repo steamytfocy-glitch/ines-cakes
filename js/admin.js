@@ -1023,6 +1023,7 @@ function loadReviews() {
         for (var s = 0; s < r.rating; s++) stars += '★';
 
         html += '<div class="review-admin-card">' +
+            (r.photo ? '<img class="review-admin-card__photo" src="' + r.photo + '" alt="">' : '') +
             '<div class="review-admin-card__content">' +
                 '<div class="review-admin-card__stars">' + stars + '</div>' +
                 '<p class="review-admin-card__text">"' + escapeHtml(r.text) + '"</p>' +

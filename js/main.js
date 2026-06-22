@@ -984,6 +984,7 @@ function loadLatestReviews() {
             for (var s = 0; s < (r.rating || 5); s++) stars += '★';
             html += '<div class="review-card">' +
                 '<div class="review-card__stars">' + stars + '</div>' +
+                (r.photo ? '<img class="review-card__photo" src="' + r.photo + '" alt="" loading="lazy">' : '') +
                 '<p class="review-card__text">"' + escapeHtml(r.text) + '"</p>' +
                 '<p class="review-card__author">— ' + escapeHtml(r.author) + '</p>' +
             '</div>';

@@ -95,6 +95,11 @@
                     <label for="revText" data-i18n="reviews.yourReview">Your Review</label>
                     <textarea id="revText" name="revText" rows="3" required data-i18n-placeholder="reviews.reviewPh" placeholder="Tell us about your experience..."></textarea>
                 </div>
+                <div class="form-group form-group--full">
+                    <label for="revPhoto" data-i18n="reviews.photo">Add a photo (optional)</label>
+                    <input type="file" id="revPhoto" name="revPhoto" accept="image/*">
+                    <div id="revPhotoPreview" class="review-photo-preview"></div>
+                </div>
                 <button type="submit" class="btn btn--primary" data-i18n="reviews.submit">Send Review</button>
             </form>
             <div class="review-form__success" id="reviewSuccess" style="display:none;">
