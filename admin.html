@@ -22,19 +22,19 @@
                 <path d="M22 40h16v4c0 2-3 4-8 4s-8-2-8-4v-4z" fill="#C8963E"/>
             </svg>
             <h1>I.N.E.S.</h1>
-            <p>Admin Panel</p>
+            <p data-i18n="login.title">Admin Panel</p>
         </div>
         <form id="loginForm">
             <div class="login-field">
-                <label for="loginUser">Login</label>
+                <label for="loginUser" data-i18n="login.user">Login</label>
                 <input type="text" id="loginUser" required autocomplete="username">
             </div>
             <div class="login-field">
-                <label for="loginPass">Password</label>
+                <label for="loginPass" data-i18n="login.pass">Password</label>
                 <input type="password" id="loginPass" required autocomplete="current-password">
             </div>
             <p class="login-error" id="loginError"></p>
-            <button type="submit" class="login-btn">Sign In</button>
+            <button type="submit" class="login-btn" data-i18n="login.signin">Sign In</button>
         </form>
     </div>
 </div>
@@ -57,27 +57,27 @@
         <nav class="sidebar__nav">
             <button class="sidebar__link active" data-tab="orders">
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 14l2 2 4-4"/></svg>
-                Orders
+                <span data-i18n="nav.orders">Orders</span>
             </button>
             <button class="sidebar__link" data-tab="cakes">
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18"/><path d="M5 21v-8a7 7 0 0114 0v8"/><path d="M12 6V3"/><circle cx="12" cy="2.2" r="1"/></svg>
-                Cakes
+                <span data-i18n="nav.cakes">Cakes</span>
             </button>
             <button class="sidebar__link" data-tab="flavours">
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a7 7 0 00-7 7c0 2 1 3 1 5h12c0-2 1-3 1-5a7 7 0 00-7-7z"/><line x1="6" y1="18" x2="18" y2="18"/><line x1="7" y1="22" x2="17" y2="22"/></svg>
-                Flavours
+                <span data-i18n="nav.flavours">Flavours</span>
             </button>
             <button class="sidebar__link" data-tab="certificates">
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M8.5 13.5L7 22l5-3 5 3-1.5-8.5"/></svg>
-                Certificates
+                <span data-i18n="nav.certificates">Certificates</span>
             </button>
             <button class="sidebar__link" data-tab="reviews">
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
-                Reviews
+                <span data-i18n="nav.reviews">Reviews</span>
             </button>
             <button class="sidebar__link" data-tab="content">
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-                Content
+                <span data-i18n="nav.content">Content</span>
             </button>
         </nav>
 
@@ -85,7 +85,7 @@
             <div class="sidebar__user" id="sidebarUser">admin</div>
             <button class="sidebar__logout" id="logoutBtn">
                 <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-                Log out
+                <span data-i18n="logout">Log out</span>
             </button>
         </div>
     </aside>
@@ -99,7 +99,14 @@
                 <span></span><span></span><span></span>
             </button>
             <h2 class="topbar__title" id="topbarTitle">Orders</h2>
-            <a href="/" class="topbar__site" target="_blank">View Site &rarr;</a>
+            <div class="topbar__right">
+                <div class="admin-lang lang-switcher">
+                    <button class="lang-btn active" data-lang="en">EN</button>
+                    <button class="lang-btn" data-lang="ua">UA</button>
+                    <button class="lang-btn" data-lang="ru">RU</button>
+                </div>
+                <a href="/" class="topbar__site" target="_blank" data-i18n="viewSite">View Site &rarr;</a>
+            </div>
         </header>
 
         <!-- ORDERS TAB -->
@@ -107,7 +114,7 @@
             <div class="tab-header">
                 <div class="tab-stats" id="orderStats"></div>
                 <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
-                    <input type="text" id="orderSearch" class="order-search" placeholder="Search name / phone / code">
+                    <input type="text" id="orderSearch" class="order-search" placeholder="Search name / phone / code" data-i18n-placeholder="orders.searchPh">
                     <button class="btn-admin" id="toggleDoneBtn" style="background:#5A4530;">Hide completed</button>
                 </div>
             </div>
@@ -126,19 +133,19 @@
                 <div class="tab-header__left" style="display:flex;gap:10px;flex-wrap:wrap;">
                     <button class="btn-admin" id="addCakeBtn">
                         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                        Add Cake
+                        <span data-i18n="cakes.add">Add Cake</span>
                     </button>
                     <button class="btn-admin" id="cakesSortBtn" style="background:#5A4530;">
                         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
-                        Sort by Category
+                        <span data-i18n="sortByCategory">Sort by Category</span>
                     </button>
                     <button class="btn-admin" id="cakesMultiDeleteBtn" style="background:#5A4530;">
                         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>
-                        Select to delete
+                        <span data-i18n="selectToDelete">Select to delete</span>
                     </button>
                     <button class="btn-admin" id="cakesManageCatsBtn" style="background:#5A4530;">
                         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-                        Manage Categories
+                        <span data-i18n="manageCategories">Manage Categories</span>
                     </button>
                 </div>
             </div>
@@ -147,9 +154,9 @@
             <div class="gallery-del-bar" id="cakesDelBar" style="display:none;">
                 <span class="gallery-del-count" id="cakesDelCount">0 selected</span>
                 <div class="gallery-del-bar__actions">
-                    <button class="btn-cancel" id="cakesSelectAllDel">Select all</button>
-                    <button class="btn-cancel" id="cakesDelCancel">Cancel</button>
-                    <button class="btn-delete" id="cakesDeleteSelected">Delete selected</button>
+                    <button class="btn-cancel" id="cakesSelectAllDel" data-i18n="selectAll">Select all</button>
+                    <button class="btn-cancel" id="cakesDelCancel" data-i18n="cancel">Cancel</button>
+                    <button class="btn-delete" id="cakesDeleteSelected" data-i18n="deleteSelected">Delete selected</button>
                 </div>
             </div>
 
@@ -157,12 +164,12 @@
             <div id="cakesSortPanel" style="display:none;">
                 <div class="sort-header">
                     <div class="sort-header__left">
-                        <p class="sort-hint">Select cakes, then assign a category</p>
+                        <p class="sort-hint" data-i18n="cakes.sortHint">Select cakes, then assign a category</p>
                         <span class="sort-count" id="cakesSortCount">0 selected</span>
                     </div>
                     <div class="sort-header__actions">
-                        <button class="btn-cancel" id="cakesSortSelectAll">Select all</button>
-                        <button class="btn-admin" id="cakesSortDone">Done Sorting</button>
+                        <button class="btn-cancel" id="cakesSortSelectAll" data-i18n="selectAll">Select all</button>
+                        <button class="btn-admin" id="cakesSortDone" data-i18n="doneSorting">Done Sorting</button>
                     </div>
                 </div>
                 <div class="sort-assign" id="cakesSortAssign"></div>
@@ -179,53 +186,53 @@
                     <form id="cakeForm">
                         <input type="hidden" id="cakeEditId">
                         <div class="modal__field">
-                            <label>Cake Name</label>
-                            <input type="text" id="cakeName" required placeholder="e.g. Sunset Fields Art Cake">
+                            <label data-i18n="cake.name">Cake Name</label>
+                            <input type="text" id="cakeName" required placeholder="e.g. Sunset Fields Art Cake" data-i18n-placeholder="cake.namePh">
                         </div>
                         <div class="modal__field">
-                            <label>Category</label>
+                            <label data-i18n="category">Category</label>
                             <div class="cake-cat-row">
                                 <select id="cakeCategory"></select>
-                                <button type="button" class="btn-cancel" id="cakeNewCatBtn">+ New category</button>
+                                <button type="button" class="btn-cancel" id="cakeNewCatBtn" data-i18n="newCategory">+ New category</button>
                             </div>
                         </div>
                         <div class="modal__field">
-                            <label>Photo</label>
+                            <label data-i18n="photo">Photo</label>
                             <input type="file" id="cakePhoto" accept="image/*">
                             <div id="cakePhotoPreview" style="margin-top:8px;"></div>
                         </div>
                         <div class="modal__field">
-                            <label>Description (optional)</label>
-                            <textarea id="cakeDesc" rows="2" placeholder="Short description"></textarea>
+                            <label data-i18n="descOptional">Description (optional)</label>
+                            <textarea id="cakeDesc" rows="2" placeholder="Short description" data-i18n-placeholder="descPh"></textarea>
                         </div>
 
                         <div class="modal__field">
-                            <label>Sizes &amp; prices</label>
-                            <p class="content-hint" style="margin:0 0 8px;">Add each size you offer with its price and how many it serves.</p>
+                            <label data-i18n="sizesPrices">Sizes &amp; prices</label>
+                            <p class="content-hint" style="margin:0 0 8px;" data-i18n="sizesHint">Add each size you offer with its price and how many it serves.</p>
                             <div id="cakeSizesRows"></div>
                             <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;">
-                                <button type="button" class="btn-cancel" id="addSizeRowBtn">+ Add size</button>
-                                <button type="button" class="btn-cancel" id="addAllSizesBtn">+ Add all standard sizes (6"–12")</button>
+                                <button type="button" class="btn-cancel" id="addSizeRowBtn" data-i18n="addSize">+ Add size</button>
+                                <button type="button" class="btn-cancel" id="addAllSizesBtn" data-i18n="addAllSizes">+ Add all standard sizes (6"–12")</button>
                             </div>
                         </div>
 
                         <div class="modal__field">
-                            <label>Available flavours</label>
+                            <label data-i18n="availableFlavours">Available flavours</label>
                             <button type="button" class="flavour-pick-btn" id="cakeFlavourBtn">
-                                <span id="cakeFlavourText">Choose flavours</span>
+                                <span id="cakeFlavourText" data-i18n="chooseFlavours">Choose flavours</span>
                                 <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
                             </button>
                             <div id="cakeFlavoursSelected" class="cake-flavours-selected"></div>
                         </div>
 
                         <div class="modal__field">
-                            <label>Lead time — days notice required</label>
+                            <label data-i18n="leadTime">Lead time — days notice required</label>
                             <input type="number" id="cakeNotice" min="0" value="3" style="max-width:120px;">
                         </div>
 
                         <div class="modal__buttons">
-                            <button type="button" class="btn-cancel" id="cakeCancel">Cancel</button>
-                            <button type="submit" class="btn-admin">Save Cake</button>
+                            <button type="button" class="btn-cancel" id="cakeCancel" data-i18n="cancel">Cancel</button>
+                            <button type="submit" class="btn-admin" data-i18n="saveCake">Save Cake</button>
                         </div>
                     </form>
                 </div>
@@ -235,11 +242,11 @@
             <div class="modal" id="cakeFlavourModal" style="display:none;">
                 <div class="modal__overlay"></div>
                 <div class="modal__card modal__card--wide">
-                    <h3>Select flavours</h3>
-                    <p class="content-hint" style="margin:0 0 12px;">Tap the flavours available for this cake. To add a new flavour, use the Flavours tab.</p>
+                    <h3 data-i18n="selectFlavours">Select flavours</h3>
+                    <p class="content-hint" style="margin:0 0 12px;" data-i18n="flavourPickHint">Tap the flavours available for this cake. To add a new flavour, use the Flavours tab.</p>
                     <div id="cakeFlavourGrid" class="flavour-pick-grid"></div>
                     <div class="modal__buttons">
-                        <button type="button" class="btn-admin" id="cakeFlavourDone">Done</button>
+                        <button type="button" class="btn-admin" id="cakeFlavourDone" data-i18n="done">Done</button>
                     </div>
                 </div>
             </div>
@@ -248,12 +255,12 @@
             <div class="modal" id="manageCatsModal" style="display:none;">
                 <div class="modal__overlay"></div>
                 <div class="modal__card">
-                    <h3>Manage Categories</h3>
-                    <p class="content-hint" style="margin:0 0 12px;">Add, rename or delete the categories used for your cakes.</p>
+                    <h3 data-i18n="manageCategories">Manage Categories</h3>
+                    <p class="content-hint" style="margin:0 0 12px;" data-i18n="manageCatsHint">Add, rename or delete the categories used for your cakes.</p>
                     <div class="cats-manage-list" id="catsManageList"></div>
-                    <button type="button" class="btn-admin" id="manageAddCatBtn" style="margin-top:8px;">+ Add Category</button>
+                    <button type="button" class="btn-admin" id="manageAddCatBtn" style="margin-top:8px;" data-i18n="addCategory">+ Add Category</button>
                     <div class="modal__buttons">
-                        <button type="button" class="btn-cancel" id="manageCatsClose">Close</button>
+                        <button type="button" class="btn-cancel" id="manageCatsClose" data-i18n="close">Close</button>
                     </div>
                 </div>
             </div>
@@ -330,7 +337,7 @@
             <div class="tab-header">
                 <button class="btn-admin" id="addCertBtn">
                     <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                    Add Certificate
+                    <span data-i18n="cert.add">Add Certificate</span>
                 </button>
             </div>
             <div class="certificates-admin" id="certificatesAdmin"></div>
@@ -339,20 +346,20 @@
             <div class="modal" id="certModal" style="display:none;">
                 <div class="modal__overlay"></div>
                 <div class="modal__card">
-                    <h3>Add Certificate</h3>
+                    <h3 data-i18n="cert.modalTitle">Add Certificate</h3>
                     <div class="modal__field">
-                        <label>Front photo</label>
+                        <label data-i18n="cert.front">Front photo</label>
                         <input type="file" id="certFront" accept="image/*">
                         <div id="certFrontPreview" style="margin-top:8px;"></div>
                     </div>
                     <div class="modal__field">
-                        <label>Back photo (optional)</label>
+                        <label data-i18n="cert.back">Back photo (optional)</label>
                         <input type="file" id="certBack" accept="image/*">
                         <div id="certBackPreview" style="margin-top:8px;"></div>
                     </div>
                     <div class="modal__buttons">
-                        <button type="button" class="btn-cancel" id="certCancel">Cancel</button>
-                        <button type="button" class="btn-admin" id="certSave">Save Certificate</button>
+                        <button type="button" class="btn-cancel" id="certCancel" data-i18n="cancel">Cancel</button>
+                        <button type="button" class="btn-admin" id="certSave" data-i18n="cert.save">Save Certificate</button>
                     </div>
                 </div>
             </div>
@@ -363,7 +370,7 @@
             <div class="tab-header">
                 <button class="btn-admin" id="addFlavourBtn">
                     <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                    Add Flavour
+                    <span data-i18n="flavour.add">Add Flavour</span>
                 </button>
             </div>
             <div class="flavours-admin" id="flavoursAdmin"></div>
@@ -372,29 +379,29 @@
             <div class="modal" id="flavourModal" style="display:none;">
                 <div class="modal__overlay"></div>
                 <div class="modal__card">
-                    <h3 id="flavourModalTitle">Add Flavour</h3>
+                    <h3 id="flavourModalTitle" data-i18n="flavour.addTitle">Add Flavour</h3>
                     <form id="flavourForm">
                         <input type="hidden" id="flavourEditId">
                         <div class="modal__field">
-                            <label>Flavour Name</label>
-                            <input type="text" id="flavourName" required placeholder="e.g. Chocolate">
+                            <label data-i18n="flavour.name">Flavour Name</label>
+                            <input type="text" id="flavourName" required placeholder="e.g. Chocolate" data-i18n-placeholder="flavour.namePh">
                         </div>
                         <div class="modal__field">
-                            <label>Description</label>
-                            <textarea id="flavourDesc" rows="2" placeholder="Short description of the flavour"></textarea>
+                            <label data-i18n="flavour.desc">Description</label>
+                            <textarea id="flavourDesc" rows="2" placeholder="Short description of the flavour" data-i18n-placeholder="flavour.descPh"></textarea>
                         </div>
                         <div class="modal__field">
-                            <label>Price per kg (€) — optional</label>
-                            <input type="text" id="flavourPrice" placeholder="e.g. 30">
+                            <label data-i18n="flavour.price">Price per kg (€) — optional</label>
+                            <input type="text" id="flavourPrice" placeholder="e.g. 30" data-i18n-placeholder="flavour.pricePh">
                         </div>
                         <div class="modal__field">
-                            <label>Cross-section Photo</label>
+                            <label data-i18n="flavour.photo">Cross-section Photo</label>
                             <input type="file" id="flavourPhoto" accept="image/*">
                             <div id="flavourPhotoPreview" style="margin-top:8px;"></div>
                         </div>
                         <div class="modal__buttons">
-                            <button type="button" class="btn-cancel" id="flavourCancel">Cancel</button>
-                            <button type="submit" class="btn-admin">Save Flavour</button>
+                            <button type="button" class="btn-cancel" id="flavourCancel" data-i18n="cancel">Cancel</button>
+                            <button type="submit" class="btn-admin" data-i18n="flavour.save">Save Flavour</button>
                         </div>
                     </form>
                 </div>
@@ -406,7 +413,7 @@
             <div class="tab-header">
                 <button class="btn-admin" id="addReviewBtn">
                     <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                    Add Review
+                    <span data-i18n="review.add">Add Review</span>
                 </button>
             </div>
             <div class="reviews-admin" id="reviewsAdmin"></div>
@@ -415,28 +422,28 @@
             <div class="modal" id="reviewModal" style="display:none;">
                 <div class="modal__overlay"></div>
                 <div class="modal__card">
-                    <h3 id="reviewModalTitle">Add Review</h3>
+                    <h3 id="reviewModalTitle" data-i18n="review.addTitle">Add Review</h3>
                     <form id="reviewForm">
                         <input type="hidden" id="reviewEditId">
                         <div class="modal__field">
-                            <label>Customer Name</label>
+                            <label data-i18n="review.name">Customer Name</label>
                             <input type="text" id="reviewAuthor" required>
                         </div>
                         <div class="modal__field">
-                            <label>Rating</label>
+                            <label data-i18n="review.rating">Rating</label>
                             <select id="reviewRating">
-                                <option value="5">5 Stars</option>
-                                <option value="4">4 Stars</option>
-                                <option value="3">3 Stars</option>
+                                <option value="5" data-i18n="review.stars5">5 Stars</option>
+                                <option value="4" data-i18n="review.stars4">4 Stars</option>
+                                <option value="3" data-i18n="review.stars3">3 Stars</option>
                             </select>
                         </div>
                         <div class="modal__field">
-                            <label>Review Text</label>
+                            <label data-i18n="review.text">Review Text</label>
                             <textarea id="reviewText" rows="3" required></textarea>
                         </div>
                         <div class="modal__buttons">
-                            <button type="button" class="btn-cancel" id="reviewCancel">Cancel</button>
-                            <button type="submit" class="btn-admin">Save Review</button>
+                            <button type="button" class="btn-cancel" id="reviewCancel" data-i18n="cancel">Cancel</button>
+                            <button type="submit" class="btn-admin" data-i18n="review.save">Save Review</button>
                         </div>
                     </form>
                 </div>
@@ -447,7 +454,7 @@
         <div class="tab-content" id="tab-content">
             <div class="content-admin">
                 <div class="content-section">
-                    <h3>Website status</h3>
+                    <h3 data-i18n="content.websiteStatus">Website status</h3>
                     <div class="site-toggle-row">
                         <label class="switch">
                             <input type="checkbox" id="siteEnabledToggle" checked>
@@ -455,61 +462,61 @@
                         </label>
                         <span class="site-status-label" id="siteStatusLabel">Website is ON</span>
                     </div>
-                    <p class="content-hint" style="margin-top:6px;">When OFF, visitors see a "We'll be right back" maintenance screen instead of the site. Changes apply instantly.</p>
+                    <p class="content-hint" style="margin-top:6px;" data-i18n="content.maintHint">When OFF, visitors see a "We'll be right back" maintenance screen instead of the site. Changes apply instantly.</p>
                     <div class="content-field" style="margin-top:14px;">
-                        <label>Message shown when website is OFF (optional)</label>
-                        <textarea id="siteMessage" rows="2" placeholder="e.g. We're on holiday until July 5th — see you soon!"></textarea>
-                        <button class="btn-admin" id="saveSiteMessage" style="margin-top:8px;">Save message</button>
+                        <label data-i18n="content.msgOff">Message shown when website is OFF (optional)</label>
+                        <textarea id="siteMessage" rows="2" placeholder="e.g. We're on holiday until July 5th — see you soon!" data-i18n-placeholder="content.msgPh"></textarea>
+                        <button class="btn-admin" id="saveSiteMessage" style="margin-top:8px;" data-i18n="content.saveMsg">Save message</button>
                     </div>
                 </div>
 
                 <div class="content-section">
-                    <h3>Cake Prices</h3>
+                    <h3 data-i18n="content.prices">Cake Prices</h3>
                     <div class="content-grid">
                         <div class="content-field">
-                            <label>Mini 5" (13 cm) price</label>
+                            <label data-i18n="content.mini">Mini 5" (13 cm) price</label>
                             <input type="text" id="priceMini" value="30" data-key="priceMini">
-                            <span class="content-hint">Number only, e.g. 30</span>
+                            <span class="content-hint" data-i18n="content.numOnly30">Number only, e.g. 30</span>
                         </div>
                         <div class="content-field">
-                            <label>Maxi 6" (15 cm) price</label>
+                            <label data-i18n="content.maxi">Maxi 6" (15 cm) price</label>
                             <input type="text" id="priceMaxi" value="35" data-key="priceMaxi">
-                            <span class="content-hint">Number only, e.g. 35</span>
+                            <span class="content-hint" data-i18n="content.numOnly35">Number only, e.g. 35</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="content-section">
-                    <h3>Cake Shed Schedule</h3>
+                    <h3 data-i18n="content.shed">Cake Shed Schedule</h3>
                     <div class="content-grid">
                         <div class="content-field">
-                            <label>Open days</label>
+                            <label data-i18n="content.openDays">Open days</label>
                             <input type="text" id="shedDays" value="Friday, Saturday, Sunday" data-key="shedDays">
                         </div>
                         <div class="content-field">
-                            <label>Opening hours</label>
-                            <input type="text" id="shedHours" value="" data-key="shedHours" placeholder="e.g. 10:00 — 17:00">
+                            <label data-i18n="content.openHours">Opening hours</label>
+                            <input type="text" id="shedHours" value="" data-key="shedHours" placeholder="e.g. 10:00 — 17:00" data-i18n-placeholder="content.hoursPh">
                         </div>
                     </div>
                 </div>
 
                 <div class="content-section">
-                    <h3>Contact Info</h3>
+                    <h3 data-i18n="content.contact">Contact Info</h3>
                     <div class="content-grid">
                         <div class="content-field">
-                            <label>Phone</label>
+                            <label data-i18n="content.phone">Phone</label>
                             <input type="text" id="contactPhone" value="087 491 7435" data-key="contactPhone">
                         </div>
                         <div class="content-field">
-                            <label>Address</label>
+                            <label data-i18n="content.address">Address</label>
                             <input type="text" id="contactAddress" value="Mullaghdaff Scotch, Kincasslagh, Co. Donegal, F94 C2D7" data-key="contactAddress">
                         </div>
                         <div class="content-field">
-                            <label>Instagram link</label>
+                            <label data-i18n="content.insta">Instagram link</label>
                             <input type="text" id="contactInsta" value="" data-key="contactInsta" placeholder="https://instagram.com/...">
                         </div>
                         <div class="content-field">
-                            <label>Facebook link</label>
+                            <label data-i18n="content.fb">Facebook link</label>
                             <input type="text" id="contactFacebook" value="" data-key="contactFacebook" placeholder="https://facebook.com/...">
                         </div>
                     </div>
@@ -517,7 +524,7 @@
 
                 <button class="btn-admin" id="saveContentBtn">
                     <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
-                    Save Changes
+                    <span data-i18n="content.save">Save Changes</span>
                 </button>
                 <p class="save-status" id="saveStatus"></p>
             </div>

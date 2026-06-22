@@ -286,6 +286,37 @@ body {
     color: var(--gold-dark);
 }
 
+.topbar__right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.admin-lang {
+    display: flex;
+    gap: 3px;
+    background: var(--cream);
+    border-radius: 50px;
+    padding: 3px;
+}
+.admin-lang .lang-btn {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 50px;
+    background: transparent;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--text-light);
+    cursor: pointer;
+    transition: var(--transition);
+}
+.admin-lang .lang-btn.active {
+    background: var(--gold);
+    color: #fff;
+}
+.admin-lang .lang-btn:hover:not(.active) { color: var(--gold); }
+
 /* Tab Content */
 .tab-content {
     display: none;

@@ -37,6 +37,136 @@ function listenData(key, callback) {
     });
 }
 
+// ===== ADMIN I18N =====
+var A = {
+    en: {
+        'login.title': 'Admin Panel', 'login.user': 'Login', 'login.pass': 'Password', 'login.signin': 'Sign In', 'login.wrong': 'Wrong login or password',
+        'nav.orders': 'Orders', 'nav.cakes': 'Cakes', 'nav.flavours': 'Flavours', 'nav.certificates': 'Certificates', 'nav.reviews': 'Reviews', 'nav.content': 'Content',
+        'logout': 'Log out', 'viewSite': 'View Site →',
+        'orders.searchPh': 'Search name / phone / code', 'orders.emptyTitle': 'No orders yet', 'orders.emptySub': 'Orders from the website form will appear here',
+        'orders.allCaught': 'All caught up', 'orders.allCaughtSub': 'Completed orders are hidden. Click "Show completed" to see them.',
+        'hideCompleted': 'Hide completed', 'showCompleted': 'Show completed',
+        'stats.new': 'New', 'stats.progress': 'In progress', 'stats.done': 'Completed',
+        'status.new': 'New', 'status.confirmed': 'Confirmed', 'status.progress': 'Being made', 'status.ready': 'Ready', 'status.done': 'Completed', 'status.declined': 'Declined',
+        'order.phone': 'Phone', 'order.email': 'Email', 'order.dateNeeded': 'Date needed', 'order.size': 'Size', 'order.flavour': 'Flavour', 'order.total': 'Est. total', 'order.allergies': 'Allergies',
+        'order.statusPage': 'Status page →', 'order.noteLabel': 'Message to client (shown on their status page)', 'order.notePh': 'e.g. Confirmed! Price €45, ready Saturday.', 'order.saveMsg': 'Save message', 'saved': 'Saved ✓',
+        'edit': 'Edit', 'delete': 'Delete', 'selected': 'selected', 'selectAll': 'Select all', 'cancel': 'Cancel', 'deleteSelected': 'Delete selected', 'cancelSelection': 'Cancel selection', 'done': 'Done', 'close': 'Close',
+        'confirm.order': 'Delete this order?', 'confirm.cake': 'Delete this cake?', 'confirm.flavour': 'Delete this flavour?', 'confirm.review': 'Delete this review?', 'confirm.cert': 'Delete this certificate?', 'confirm.cat': 'Delete this category? Its photos will move to "Other".',
+        'alert.selectCakes': 'Select cakes first.', 'alert.noCakesSort': 'No cakes to sort. Add some first!', 'alert.certFront': 'Please choose a front photo',
+        'confirm.delCakesPre': 'Delete ', 'confirm.delCakesPost': ' selected cake(s)?',
+        'cakes.add': 'Add Cake', 'sortByCategory': 'Sort by Category', 'selectToDelete': 'Select to delete', 'manageCategories': 'Manage Categories', 'cakes.sortHint': 'Select cakes, then assign a category', 'doneSorting': 'Done Sorting', 'assignTo': 'Assign to:', 'cakes.emptyTitle': 'No cakes yet', 'cakes.emptySub': 'Add cakes with photo, sizes & prices — they appear on the site for ordering',
+        'priceOnRequest': 'Price on request',
+        'cakeModal.addTitle': 'Add Cake', 'cakeModal.editTitle': 'Edit Cake', 'cake.name': 'Cake Name', 'cake.namePh': 'e.g. Sunset Fields Art Cake', 'category': 'Category', 'newCategory': '+ New category', 'photo': 'Photo', 'descOptional': 'Description (optional)', 'descPh': 'Short description',
+        'sizesPrices': 'Sizes & prices', 'sizesHint': 'Add each size you offer with its price and how many it serves.', 'addSize': '+ Add size', 'addAllSizes': '+ Add all standard sizes (6"–12")', 'availableFlavours': 'Available flavours', 'chooseFlavours': 'Choose flavours', 'flavoursSuffix': 'selected', 'leadTime': 'Lead time — days notice required', 'saveCake': 'Save Cake',
+        'selectFlavours': 'Select flavours', 'flavourPickHint': 'Tap the flavours available for this cake. To add a new flavour, use the Flavours tab.', 'flavoursNoneModal': 'No flavours yet. Add them in the Flavours tab first.',
+        'manageCatsHint': 'Add, rename or delete the categories used for your cakes.', 'addCategory': '+ Add Category', 'newCatPrompt': 'New category name:',
+        'cert.add': 'Add Certificate', 'cert.modalTitle': 'Add Certificate', 'cert.front': 'Front photo', 'cert.back': 'Back photo (optional)', 'cert.save': 'Save Certificate', 'cert.emptyTitle': 'No certificates yet', 'cert.emptySub': 'Upload your HACCP / hygiene certificates to show on the site',
+        'flavour.add': 'Add Flavour', 'flavour.addTitle': 'Add Flavour', 'flavour.editTitle': 'Edit Flavour', 'flavour.name': 'Flavour Name', 'flavour.namePh': 'e.g. Chocolate', 'flavour.desc': 'Description', 'flavour.descPh': 'Short description of the flavour', 'flavour.price': 'Price per kg (€) — optional', 'flavour.pricePh': 'e.g. 30', 'flavour.photo': 'Cross-section Photo', 'flavour.save': 'Save Flavour', 'flavour.emptyTitle': 'No flavours yet', 'flavour.emptySub': 'Add flavours with cross-section photos and prices',
+        'review.add': 'Add Review', 'review.addTitle': 'Add Review', 'review.editTitle': 'Edit Review', 'review.name': 'Customer Name', 'review.rating': 'Rating', 'review.stars5': '5 Stars', 'review.stars4': '4 Stars', 'review.stars3': '3 Stars', 'review.text': 'Review Text', 'review.save': 'Save Review', 'review.emptyTitle': 'No reviews yet', 'review.emptySub': 'Add customer reviews to display on the website',
+        'content.websiteStatus': 'Website status', 'siteOn': 'Website is ON', 'siteOff': 'Website is OFF', 'content.maintHint': 'When OFF, visitors see a "We\'ll be right back" maintenance screen instead of the site. Changes apply instantly.', 'content.msgOff': 'Message shown when website is OFF (optional)', 'content.msgPh': "e.g. We're on holiday until July 5th — see you soon!", 'content.saveMsg': 'Save message',
+        'content.prices': 'Cake Prices', 'content.mini': 'Mini 5" (13 cm) price', 'content.maxi': 'Maxi 6" (15 cm) price', 'content.numOnly30': 'Number only, e.g. 30', 'content.numOnly35': 'Number only, e.g. 35',
+        'content.shed': 'Cake Shed Schedule', 'content.openDays': 'Open days', 'content.openHours': 'Opening hours', 'content.hoursPh': 'e.g. 10:00 — 17:00',
+        'content.contact': 'Contact Info', 'content.phone': 'Phone', 'content.address': 'Address', 'content.insta': 'Instagram link', 'content.fb': 'Facebook link', 'content.save': 'Save Changes', 'content.saved': 'Changes saved!'
+    },
+    ua: {
+        'login.title': 'Панель адміністратора', 'login.user': 'Логін', 'login.pass': 'Пароль', 'login.signin': 'Увійти', 'login.wrong': 'Невірний логін або пароль',
+        'nav.orders': 'Замовлення', 'nav.cakes': 'Торти', 'nav.flavours': 'Смаки', 'nav.certificates': 'Сертифікати', 'nav.reviews': 'Відгуки', 'nav.content': 'Контент',
+        'logout': 'Вийти', 'viewSite': 'Перейти на сайт →',
+        'orders.searchPh': 'Пошук: ім\'я / телефон / код', 'orders.emptyTitle': 'Замовлень поки немає', 'orders.emptySub': 'Замовлення з форми на сайті з\'являться тут',
+        'orders.allCaught': 'Усе опрацьовано', 'orders.allCaughtSub': 'Завершені замовлення приховані. Натисніть «Показати завершені», щоб побачити їх.',
+        'hideCompleted': 'Приховати завершені', 'showCompleted': 'Показати завершені',
+        'stats.new': 'Нові', 'stats.progress': 'В роботі', 'stats.done': 'Завершені',
+        'status.new': 'Нове', 'status.confirmed': 'Підтверджено', 'status.progress': 'Готується', 'status.ready': 'Готово', 'status.done': 'Завершено', 'status.declined': 'Відхилено',
+        'order.phone': 'Телефон', 'order.email': 'Ел. пошта', 'order.dateNeeded': 'Потрібно на дату', 'order.size': 'Розмір', 'order.flavour': 'Смак', 'order.total': 'Орієнт. сума', 'order.allergies': 'Алергії',
+        'order.statusPage': 'Сторінка статусу →', 'order.noteLabel': 'Повідомлення клієнту (видно на сторінці статусу)', 'order.notePh': 'напр. Підтверджено! Ціна €45, готово в суботу.', 'order.saveMsg': 'Зберегти повідомлення', 'saved': 'Збережено ✓',
+        'edit': 'Редагувати', 'delete': 'Видалити', 'selected': 'вибрано', 'selectAll': 'Вибрати всі', 'cancel': 'Скасувати', 'deleteSelected': 'Видалити вибрані', 'cancelSelection': 'Скасувати вибір', 'done': 'Готово', 'close': 'Закрити',
+        'confirm.order': 'Видалити це замовлення?', 'confirm.cake': 'Видалити цей торт?', 'confirm.flavour': 'Видалити цей смак?', 'confirm.review': 'Видалити цей відгук?', 'confirm.cert': 'Видалити цей сертифікат?', 'confirm.cat': 'Видалити цю категорію? Її фото перейдуть у «Інше».',
+        'alert.selectCakes': 'Спочатку виберіть торти.', 'alert.noCakesSort': 'Немає тортів для сортування. Спочатку додайте.', 'alert.certFront': 'Будь ласка, оберіть фото лицьового боку',
+        'confirm.delCakesPre': 'Видалити ', 'confirm.delCakesPost': ' вибраних тортів?',
+        'cakes.add': 'Додати торт', 'sortByCategory': 'Сортувати за категорією', 'selectToDelete': 'Вибрати для видалення', 'manageCategories': 'Керування категоріями', 'cakes.sortHint': 'Виберіть торти, потім призначте категорію', 'doneSorting': 'Готово', 'assignTo': 'Призначити до:', 'cakes.emptyTitle': 'Тортів поки немає', 'cakes.emptySub': 'Додайте торти з фото, розмірами та цінами — вони з\'являться на сайті для замовлення',
+        'priceOnRequest': 'Ціна за домовленістю',
+        'cakeModal.addTitle': 'Додати торт', 'cakeModal.editTitle': 'Редагувати торт', 'cake.name': 'Назва торта', 'cake.namePh': 'напр. Sunset Fields Art Cake', 'category': 'Категорія', 'newCategory': '+ Нова категорія', 'photo': 'Фото', 'descOptional': 'Опис (необов\'язково)', 'descPh': 'Короткий опис',
+        'sizesPrices': 'Розміри та ціни', 'sizesHint': 'Додайте кожен розмір з ціною та кількістю порцій.', 'addSize': '+ Додати розмір', 'addAllSizes': '+ Додати всі стандартні розміри (6"–12")', 'availableFlavours': 'Доступні смаки', 'chooseFlavours': 'Обрати смаки', 'flavoursSuffix': 'вибрано', 'leadTime': 'Термін — за скільки днів замовляти', 'saveCake': 'Зберегти торт',
+        'selectFlavours': 'Оберіть смаки', 'flavourPickHint': 'Торкніться смаків, доступних для цього торта. Щоб додати новий смак, скористайтеся вкладкою «Смаки».', 'flavoursNoneModal': 'Смаків поки немає. Спершу додайте їх у вкладці «Смаки».',
+        'manageCatsHint': 'Додавайте, перейменовуйте або видаляйте категорії тортів.', 'addCategory': '+ Додати категорію', 'newCatPrompt': 'Назва нової категорії:',
+        'cert.add': 'Додати сертифікат', 'cert.modalTitle': 'Додати сертифікат', 'cert.front': 'Фото лицьового боку', 'cert.back': 'Фото зворотного боку (необов\'язково)', 'cert.save': 'Зберегти сертифікат', 'cert.emptyTitle': 'Сертифікатів поки немає', 'cert.emptySub': 'Завантажте сертифікати HACCP / гігієни для показу на сайті',
+        'flavour.add': 'Додати смак', 'flavour.addTitle': 'Додати смак', 'flavour.editTitle': 'Редагувати смак', 'flavour.name': 'Назва смаку', 'flavour.namePh': 'напр. Шоколад', 'flavour.desc': 'Опис', 'flavour.descPh': 'Короткий опис смаку', 'flavour.price': 'Ціна за кг (€) — необов\'язково', 'flavour.pricePh': 'напр. 30', 'flavour.photo': 'Фото розрізу', 'flavour.save': 'Зберегти смак', 'flavour.emptyTitle': 'Смаків поки немає', 'flavour.emptySub': 'Додайте смаки з фото розрізу та цінами',
+        'review.add': 'Додати відгук', 'review.addTitle': 'Додати відгук', 'review.editTitle': 'Редагувати відгук', 'review.name': 'Ім\'я клієнта', 'review.rating': 'Оцінка', 'review.stars5': '5 зірок', 'review.stars4': '4 зірки', 'review.stars3': '3 зірки', 'review.text': 'Текст відгуку', 'review.save': 'Зберегти відгук', 'review.emptyTitle': 'Відгуків поки немає', 'review.emptySub': 'Додайте відгуки клієнтів для показу на сайті',
+        'content.websiteStatus': 'Статус сайту', 'siteOn': 'Сайт УВІМКНЕНО', 'siteOff': 'Сайт ВИМКНЕНО', 'content.maintHint': 'Коли ВИМКНЕНО, відвідувачі бачать екран «Скоро повернемося» замість сайту. Зміни застосовуються миттєво.', 'content.msgOff': 'Повідомлення, коли сайт вимкнено (необов\'язково)', 'content.msgPh': 'напр. Ми у відпустці до 5 липня — до зустрічі!', 'content.saveMsg': 'Зберегти повідомлення',
+        'content.prices': 'Ціни на торти', 'content.mini': 'Ціна Mini 5" (13 см)', 'content.maxi': 'Ціна Maxi 6" (15 см)', 'content.numOnly30': 'Лише число, напр. 30', 'content.numOnly35': 'Лише число, напр. 35',
+        'content.shed': 'Розклад Cake Shed', 'content.openDays': 'Дні роботи', 'content.openHours': 'Години роботи', 'content.hoursPh': 'напр. 10:00 — 17:00',
+        'content.contact': 'Контактна інформація', 'content.phone': 'Телефон', 'content.address': 'Адреса', 'content.insta': 'Посилання Instagram', 'content.fb': 'Посилання Facebook', 'content.save': 'Зберегти зміни', 'content.saved': 'Зміни збережено!'
+    },
+    ru: {
+        'login.title': 'Панель администратора', 'login.user': 'Логин', 'login.pass': 'Пароль', 'login.signin': 'Войти', 'login.wrong': 'Неверный логин или пароль',
+        'nav.orders': 'Заказы', 'nav.cakes': 'Торты', 'nav.flavours': 'Вкусы', 'nav.certificates': 'Сертификаты', 'nav.reviews': 'Отзывы', 'nav.content': 'Контент',
+        'logout': 'Выйти', 'viewSite': 'Открыть сайт →',
+        'orders.searchPh': 'Поиск: имя / телефон / код', 'orders.emptyTitle': 'Заказов пока нет', 'orders.emptySub': 'Заказы с формы на сайте появятся здесь',
+        'orders.allCaught': 'Всё обработано', 'orders.allCaughtSub': 'Завершённые заказы скрыты. Нажмите «Показать завершённые», чтобы увидеть их.',
+        'hideCompleted': 'Скрыть завершённые', 'showCompleted': 'Показать завершённые',
+        'stats.new': 'Новые', 'stats.progress': 'В работе', 'stats.done': 'Завершённые',
+        'status.new': 'Новый', 'status.confirmed': 'Подтверждён', 'status.progress': 'Готовится', 'status.ready': 'Готов', 'status.done': 'Завершён', 'status.declined': 'Отклонён',
+        'order.phone': 'Телефон', 'order.email': 'Эл. почта', 'order.dateNeeded': 'Нужно к дате', 'order.size': 'Размер', 'order.flavour': 'Вкус', 'order.total': 'Ориент. сумма', 'order.allergies': 'Аллергии',
+        'order.statusPage': 'Страница статуса →', 'order.noteLabel': 'Сообщение клиенту (видно на его странице статуса)', 'order.notePh': 'напр. Подтверждено! Цена €45, готово в субботу.', 'order.saveMsg': 'Сохранить сообщение', 'saved': 'Сохранено ✓',
+        'edit': 'Изменить', 'delete': 'Удалить', 'selected': 'выбрано', 'selectAll': 'Выбрать все', 'cancel': 'Отмена', 'deleteSelected': 'Удалить выбранные', 'cancelSelection': 'Отменить выбор', 'done': 'Готово', 'close': 'Закрыть',
+        'confirm.order': 'Удалить этот заказ?', 'confirm.cake': 'Удалить этот торт?', 'confirm.flavour': 'Удалить этот вкус?', 'confirm.review': 'Удалить этот отзыв?', 'confirm.cert': 'Удалить этот сертификат?', 'confirm.cat': 'Удалить эту категорию? Её фото перейдут в «Другое».',
+        'alert.selectCakes': 'Сначала выберите торты.', 'alert.noCakesSort': 'Нет тортов для сортировки. Сначала добавьте.', 'alert.certFront': 'Пожалуйста, выберите фото лицевой стороны',
+        'confirm.delCakesPre': 'Удалить ', 'confirm.delCakesPost': ' выбранных тортов?',
+        'cakes.add': 'Добавить торт', 'sortByCategory': 'Сортировать по категории', 'selectToDelete': 'Выбрать для удаления', 'manageCategories': 'Управление категориями', 'cakes.sortHint': 'Выберите торты, затем назначьте категорию', 'doneSorting': 'Готово', 'assignTo': 'Назначить в:', 'cakes.emptyTitle': 'Тортов пока нет', 'cakes.emptySub': 'Добавьте торты с фото, размерами и ценами — они появятся на сайте для заказа',
+        'priceOnRequest': 'Цена по договорённости',
+        'cakeModal.addTitle': 'Добавить торт', 'cakeModal.editTitle': 'Изменить торт', 'cake.name': 'Название торта', 'cake.namePh': 'напр. Sunset Fields Art Cake', 'category': 'Категория', 'newCategory': '+ Новая категория', 'photo': 'Фото', 'descOptional': 'Описание (необязательно)', 'descPh': 'Краткое описание',
+        'sizesPrices': 'Размеры и цены', 'sizesHint': 'Добавьте каждый размер с ценой и количеством порций.', 'addSize': '+ Добавить размер', 'addAllSizes': '+ Добавить все стандартные размеры (6"–12")', 'availableFlavours': 'Доступные вкусы', 'chooseFlavours': 'Выбрать вкусы', 'flavoursSuffix': 'выбрано', 'leadTime': 'Срок — за сколько дней заказывать', 'saveCake': 'Сохранить торт',
+        'selectFlavours': 'Выберите вкусы', 'flavourPickHint': 'Нажмите вкусы, доступные для этого торта. Чтобы добавить новый вкус, используйте вкладку «Вкусы».', 'flavoursNoneModal': 'Вкусов пока нет. Сначала добавьте их во вкладке «Вкусы».',
+        'manageCatsHint': 'Добавляйте, переименовывайте или удаляйте категории тортов.', 'addCategory': '+ Добавить категорию', 'newCatPrompt': 'Название новой категории:',
+        'cert.add': 'Добавить сертификат', 'cert.modalTitle': 'Добавить сертификат', 'cert.front': 'Фото лицевой стороны', 'cert.back': 'Фото обратной стороны (необязательно)', 'cert.save': 'Сохранить сертификат', 'cert.emptyTitle': 'Сертификатов пока нет', 'cert.emptySub': 'Загрузите сертификаты HACCP / гигиены для показа на сайте',
+        'flavour.add': 'Добавить вкус', 'flavour.addTitle': 'Добавить вкус', 'flavour.editTitle': 'Изменить вкус', 'flavour.name': 'Название вкуса', 'flavour.namePh': 'напр. Шоколад', 'flavour.desc': 'Описание', 'flavour.descPh': 'Краткое описание вкуса', 'flavour.price': 'Цена за кг (€) — необязательно', 'flavour.pricePh': 'напр. 30', 'flavour.photo': 'Фото разреза', 'flavour.save': 'Сохранить вкус', 'flavour.emptyTitle': 'Вкусов пока нет', 'flavour.emptySub': 'Добавьте вкусы с фото разреза и ценами',
+        'review.add': 'Добавить отзыв', 'review.addTitle': 'Добавить отзыв', 'review.editTitle': 'Изменить отзыв', 'review.name': 'Имя клиента', 'review.rating': 'Оценка', 'review.stars5': '5 звёзд', 'review.stars4': '4 звезды', 'review.stars3': '3 звезды', 'review.text': 'Текст отзыва', 'review.save': 'Сохранить отзыв', 'review.emptyTitle': 'Отзывов пока нет', 'review.emptySub': 'Добавьте отзывы клиентов для показа на сайте',
+        'content.websiteStatus': 'Статус сайта', 'siteOn': 'Сайт ВКЛЮЧЁН', 'siteOff': 'Сайт ВЫКЛЮЧЕН', 'content.maintHint': 'Когда ВЫКЛЮЧЕНО, посетители видят экран «Скоро вернёмся» вместо сайта. Изменения применяются мгновенно.', 'content.msgOff': 'Сообщение, когда сайт выключен (необязательно)', 'content.msgPh': 'напр. Мы в отпуске до 5 июля — до встречи!', 'content.saveMsg': 'Сохранить сообщение',
+        'content.prices': 'Цены на торты', 'content.mini': 'Цена Mini 5" (13 см)', 'content.maxi': 'Цена Maxi 6" (15 см)', 'content.numOnly30': 'Только число, напр. 30', 'content.numOnly35': 'Только число, напр. 35',
+        'content.shed': 'Расписание Cake Shed', 'content.openDays': 'Рабочие дни', 'content.openHours': 'Часы работы', 'content.hoursPh': 'напр. 10:00 — 17:00',
+        'content.contact': 'Контактная информация', 'content.phone': 'Телефон', 'content.address': 'Адрес', 'content.insta': 'Ссылка Instagram', 'content.fb': 'Ссылка Facebook', 'content.save': 'Сохранить изменения', 'content.saved': 'Изменения сохранены!'
+    }
+};
+var aLang = localStorage.getItem('ines-admin-lang') || 'en';
+function at(k) { var t = A[aLang] || A.en; return (t[k] != null ? t[k] : (A.en[k] != null ? A.en[k] : k)); }
+
+function applyAdminI18n() {
+    document.querySelectorAll('[data-i18n]').forEach(function(el) {
+        var v = at(el.getAttribute('data-i18n'));
+        if (v != null) el.textContent = v;
+    });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el) {
+        var v = at(el.getAttribute('data-i18n-placeholder'));
+        if (v != null) el.placeholder = v;
+    });
+    var active = document.querySelector('.sidebar__link.active');
+    if (active && topbarTitle) topbarTitle.textContent = at('nav.' + active.dataset.tab);
+    document.querySelectorAll('.admin-lang .lang-btn').forEach(function(b) {
+        b.classList.toggle('active', b.dataset.lang === aLang);
+    });
+    var tdb = document.getElementById('toggleDoneBtn');
+    if (tdb) tdb.textContent = hideCompleted ? at('showCompleted') : at('hideCompleted');
+    var stl = document.getElementById('siteStatusLabel');
+    var stt = document.getElementById('siteEnabledToggle');
+    if (stl && stt) stl.textContent = stt.checked ? at('siteOn') : at('siteOff');
+    // Re-render dynamic lists in the new language
+    if (typeof loadOrders === 'function') loadOrders();
+    if (typeof loadCakes === 'function') loadCakes();
+    if (typeof loadFlavours === 'function') loadFlavours();
+    if (typeof loadReviews === 'function') loadReviews();
+    if (typeof loadCertificates === 'function') loadCertificates();
+}
+
+function initAdminLang() {
+    document.querySelectorAll('.admin-lang .lang-btn').forEach(function(b) {
+        b.addEventListener('click', function() {
+            aLang = this.dataset.lang;
+            localStorage.setItem('ines-admin-lang', aLang);
+            applyAdminI18n();
+        });
+    });
+}
+
 // ===== AUTH =====
 var loginScreen = document.getElementById('loginScreen');
 var adminPanel = document.getElementById('adminPanel');
@@ -52,8 +182,10 @@ function checkAuth() {
         adminPanel.style.display = 'flex';
         sidebarUser.textContent = session.login;
         loadAllData();
+        applyAdminI18n();
     }
 }
+initAdminLang();
 
 loginForm.addEventListener('submit', function(e) {
     e.preventDefault();
@@ -73,7 +205,7 @@ loginForm.addEventListener('submit', function(e) {
         loginError.textContent = '';
         checkAuth();
     } else {
-        loginError.textContent = 'Wrong login or password';
+        loginError.textContent = at('login.wrong');
     }
 });
 
@@ -104,7 +236,7 @@ function switchTab(tab) {
     if (btn) btn.classList.add('active');
     var content = document.getElementById('tab-' + tab);
     if (content) content.classList.add('active');
-    topbarTitle.textContent = tabTitles[tab] || tab;
+    topbarTitle.textContent = at('nav.' + tab) || tabTitles[tab] || tab;
     localStorage.setItem('ines-admin-tab', tab);
 }
 
@@ -178,7 +310,7 @@ function isCompleted(o) {
 (function() {
     var btn = document.getElementById('toggleDoneBtn');
     if (!btn) return;
-    function syncLabel() { btn.textContent = hideCompleted ? 'Show completed' : 'Hide completed'; }
+    function syncLabel() { btn.textContent = hideCompleted ? at('showCompleted') : at('hideCompleted'); }
     syncLabel();
     btn.addEventListener('click', function() {
         hideCompleted = !hideCompleted;
@@ -215,7 +347,7 @@ function loadOrders() {
     var stats = document.getElementById('orderStats');
 
     if (orders.length === 0) {
-        list.innerHTML = '<div class="empty-state"><svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="#C8963E" stroke-width="1.5"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg><p>No orders yet</p><span>Orders from the website form will appear here</span></div>';
+        list.innerHTML = '<div class="empty-state"><svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="#C8963E" stroke-width="1.5"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg><p>' + at('orders.emptyTitle') + '</p><span>' + at('orders.emptySub') + '</span></div>';
         stats.innerHTML = '';
         return;
     }
@@ -229,9 +361,9 @@ function loadOrders() {
     });
 
     stats.innerHTML =
-        '<span class="stat-badge"><span class="dot dot--new"></span> New: ' + counts.new + '</span>' +
-        '<span class="stat-badge"><span class="dot dot--progress"></span> In progress: ' + counts.active + '</span>' +
-        '<span class="stat-badge"><span class="dot dot--done"></span> Completed: ' + counts.done + '</span>';
+        '<span class="stat-badge"><span class="dot dot--new"></span> ' + at('stats.new') + ': ' + counts.new + '</span>' +
+        '<span class="stat-badge"><span class="dot dot--progress"></span> ' + at('stats.progress') + ': ' + counts.active + '</span>' +
+        '<span class="stat-badge"><span class="dot dot--done"></span> ' + at('stats.done') + ': ' + counts.done + '</span>';
 
     var html = '';
     var shown = 0;
@@ -246,7 +378,7 @@ function loadOrders() {
         for (var s = 0; s < ORDER_STATUSES.length; s++) {
             statusOptions += '<option value="' + ORDER_STATUSES[s].id + '"' +
                 (status === ORDER_STATUSES[s].id ? ' selected' : '') + '>' +
-                ORDER_STATUSES[s].label + '</option>';
+                at('status.' + ORDER_STATUSES[s].id) + '</option>';
         }
 
         var waLink = o.phone
@@ -262,34 +394,34 @@ function loadOrders() {
                 '<span class="order-card__date">' + escapeHtml(o.submitted || '') + '</span>' +
             '</div>' +
             '<div class="order-card__details">' +
-                '<div class="order-card__detail"><strong>Phone:</strong> ' + escapeHtml(o.phone) + '</div>' +
-                (o.email ? '<div class="order-card__detail"><strong>Email:</strong> ' + escapeHtml(o.email) + '</div>' : '') +
-                '<div class="order-card__detail"><strong>Date needed:</strong> ' + escapeHtml(o.date) + '</div>' +
-                '<div class="order-card__detail"><strong>Size:</strong> ' + escapeHtml(o.cakeSize) + (o.customDiameter ? ' (' + escapeHtml(o.customDiameter) + '")' : '') + '</div>' +
-                (o.flavour ? '<div class="order-card__detail"><strong>Flavour:</strong> ' + escapeHtml(o.flavour) + '</div>' : '') +
-                (o.total ? '<div class="order-card__detail"><strong>Est. total:</strong> ' + escapeHtml(o.total) + '</div>' : '') +
-                (o.allergies ? '<div class="order-card__detail"><strong>Allergies:</strong> ' + escapeHtml(o.allergies) + '</div>' : '') +
+                '<div class="order-card__detail"><strong>' + at('order.phone') + ':</strong> ' + escapeHtml(o.phone) + '</div>' +
+                (o.email ? '<div class="order-card__detail"><strong>' + at('order.email') + ':</strong> ' + escapeHtml(o.email) + '</div>' : '') +
+                '<div class="order-card__detail"><strong>' + at('order.dateNeeded') + ':</strong> ' + escapeHtml(o.date) + '</div>' +
+                '<div class="order-card__detail"><strong>' + at('order.size') + ':</strong> ' + escapeHtml(o.cakeSize) + (o.customDiameter ? ' (' + escapeHtml(o.customDiameter) + '")' : '') + '</div>' +
+                (o.flavour ? '<div class="order-card__detail"><strong>' + at('order.flavour') + ':</strong> ' + escapeHtml(o.flavour) + '</div>' : '') +
+                (o.total ? '<div class="order-card__detail"><strong>' + at('order.total') + ':</strong> ' + escapeHtml(o.total) + '</div>' : '') +
+                (o.allergies ? '<div class="order-card__detail"><strong>' + at('order.allergies') + ':</strong> ' + escapeHtml(o.allergies) + '</div>' : '') +
             '</div>' +
             (o.message ? '<div class="order-card__message">' + escapeHtml(o.message) + '</div>' : '') +
             (o.photo ? '<div class="order-card__photo"><img src="' + o.photo + '" alt="Reference" style="max-width:200px;border-radius:8px;margin-bottom:12px;"></div>' : '') +
             '<div class="order-card__contact">' +
                 (waLink ? '<a href="' + waLink + '" target="_blank" class="order-wa-btn"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M17.6 6.3A7.85 7.85 0 0012 4a7.94 7.94 0 00-6.9 11.9L4 20l4.2-1.1A7.94 7.94 0 0012 19.9a7.94 7.94 0 005.6-13.6zM12 18.5a6.6 6.6 0 01-3.4-.9l-.24-.15-2.5.65.67-2.43-.16-.25A6.59 6.59 0 1118.6 12 6.6 6.6 0 0112 18.5z"/></svg> WhatsApp</a>' : '') +
-                (trackLink ? '<a href="' + trackLink + '" target="_blank" class="order-track-link">Status page &rarr;</a>' : '') +
+                (trackLink ? '<a href="' + trackLink + '" target="_blank" class="order-track-link">' + at('order.statusPage') + '</a>' : '') +
             '</div>' +
             '<div class="order-card__note">' +
-                '<label>Message to client (shown on their status page)</label>' +
-                '<textarea class="order-note-input" data-note-id="' + i + '" rows="2" placeholder="e.g. Confirmed! Price €45, ready Saturday.">' + escapeHtml(o.note || '') + '</textarea>' +
-                '<button class="btn-admin order-note-save" data-note-save="' + i + '">Save message</button>' +
+                '<label>' + at('order.noteLabel') + '</label>' +
+                '<textarea class="order-note-input" data-note-id="' + i + '" rows="2" placeholder="' + at('order.notePh') + '">' + escapeHtml(o.note || '') + '</textarea>' +
+                '<button class="btn-admin order-note-save" data-note-save="' + i + '">' + at('order.saveMsg') + '</button>' +
                 '<span class="order-note-status" data-note-status="' + i + '"></span>' +
             '</div>' +
             '<div class="order-card__actions">' +
                 '<select class="status-select" data-order-id="' + i + '">' + statusOptions + '</select>' +
-                '<button class="btn-delete" data-order-del="' + i + '">Delete</button>' +
+                '<button class="btn-delete" data-order-del="' + i + '">' + at('delete') + '</button>' +
             '</div>' +
         '</div>';
     }
     if (shown === 0) {
-        html = '<div class="empty-state"><svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="#C8963E" stroke-width="1.5"><path d="M20 6L9 17l-5-5"/></svg><p>All caught up</p><span>Completed orders are hidden. Click "Show completed" to see them.</span></div>';
+        html = '<div class="empty-state"><svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="#C8963E" stroke-width="1.5"><path d="M20 6L9 17l-5-5"/></svg><p>' + at('orders.allCaught') + '</p><span>' + at('orders.allCaughtSub') + '</span></div>';
     }
     list.innerHTML = html;
 
@@ -314,7 +446,7 @@ function loadOrders() {
             setData('orders', orders);
             var statusEl = list.querySelector('[data-note-status="' + idx + '"]');
             if (statusEl) {
-                statusEl.textContent = 'Saved ✓';
+                statusEl.textContent = at('saved');
                 setTimeout(function() { statusEl.textContent = ''; }, 2500);
             }
         });
@@ -322,7 +454,7 @@ function loadOrders() {
 
     list.querySelectorAll('[data-order-del]').forEach(function(btn) {
         btn.addEventListener('click', function() {
-            if (!confirm('Delete this order?')) return;
+            if (!confirm(at('confirm.order'))) return;
             var idx = parseInt(this.dataset.orderDel);
             var orders = getData('orders', []);
             orders.splice(idx, 1);
@@ -499,7 +631,7 @@ function compressImage(file, maxSize, quality, callback) {
 }
 
 function addCategory(callback) {
-    var name = prompt('New category name:');
+    var name = prompt(at('newCatPrompt'));
     if (!name) return;
     name = name.trim();
     if (!name) return;
@@ -527,7 +659,7 @@ function renderManageCats() {
         var c = CATEGORIES[i];
         html += '<div class="cat-manage-row" data-cat-id="' + c.id + '">' +
             '<input type="text" class="cat-manage-input" value="' + escapeHtml(c.en) + '" data-cat-id="' + c.id + '">' +
-            '<button class="btn-delete cat-manage-del" data-cat-id="' + c.id + '">Delete</button>' +
+            '<button class="btn-delete cat-manage-del" data-cat-id="' + c.id + '">' + at('delete') + '</button>' +
         '</div>';
     }
     list.innerHTML = html;
@@ -535,7 +667,7 @@ function renderManageCats() {
     list.querySelectorAll('.cat-manage-del').forEach(function(btn) {
         btn.addEventListener('click', function() {
             var catId = this.dataset.catId;
-            if (!confirm('Delete this category? Its photos will move to "Other".')) return;
+            if (!confirm(at('confirm.cat'))) return;
             // move photos to other
             fbGetOnce('gallery-cat', function(gallery) {
                 if (!gallery) gallery = {};
@@ -811,7 +943,7 @@ function loadCertificates() {
     var container = document.getElementById('certificatesAdmin');
 
     if (certs.length === 0) {
-        container.innerHTML = '<div class="empty-state"><svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="#C8963E" stroke-width="1.5"><circle cx="12" cy="8" r="6"/><path d="M8.5 13.5L7 22l5-3 5 3-1.5-8.5"/></svg><p>No certificates yet</p><span>Upload your HACCP / hygiene certificates to show on the site</span></div>';
+        container.innerHTML = '<div class="empty-state"><svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="#C8963E" stroke-width="1.5"><circle cx="12" cy="8" r="6"/><path d="M8.5 13.5L7 22l5-3 5 3-1.5-8.5"/></svg><p>' + at('cert.emptyTitle') + '</p><span>' + at('cert.emptySub') + '</span></div>';
         return;
     }
 
@@ -828,7 +960,7 @@ function loadCertificates() {
 
     container.querySelectorAll('[data-cert-del]').forEach(function(btn) {
         btn.addEventListener('click', function() {
-            if (!confirm('Delete this certificate?')) return;
+            if (!confirm(at('confirm.cert'))) return;
             var idx = parseInt(this.dataset.certDel);
             var certs = getData('certificates', []) || [];
             certs.splice(idx, 1);
@@ -876,7 +1008,7 @@ document.getElementById('certBack').addEventListener('change', function(e) {
 });
 
 document.getElementById('certSave').addEventListener('click', function() {
-    if (!certFrontData) { alert('Please choose a front photo'); return; }
+    if (!certFrontData) { alert(at('alert.certFront')); return; }
     var cert = { front: certFrontData, back: certBackData || null };
     fbGetOnce('certificates', function(certs) {
         if (!certs) certs = [];
@@ -907,7 +1039,7 @@ function loadFlavours() {
     var container = document.getElementById('flavoursAdmin');
 
     if (flavours.length === 0) {
-        container.innerHTML = '<div class="empty-state"><svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="#C8963E" stroke-width="1.5"><path d="M12 2a7 7 0 00-7 7c0 2 1 3 1 5h12c0-2 1-3 1-5a7 7 0 00-7-7z"/><line x1="6" y1="18" x2="18" y2="18"/></svg><p>No flavours yet</p><span>Add flavours with cross-section photos and prices</span></div>';
+        container.innerHTML = '<div class="empty-state"><svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="#C8963E" stroke-width="1.5"><path d="M12 2a7 7 0 00-7 7c0 2 1 3 1 5h12c0-2 1-3 1-5a7 7 0 00-7-7z"/><line x1="6" y1="18" x2="18" y2="18"/></svg><p>' + at('flavour.emptyTitle') + '</p><span>' + at('flavour.emptySub') + '</span></div>';
         return;
     }
 
@@ -924,8 +1056,8 @@ function loadFlavours() {
                 (f.desc ? '<div class="flavour-admin-card__desc">' + escapeHtml(f.desc) + '</div>' : '') +
                 (f.price ? '<div class="flavour-admin-card__price">€' + escapeHtml(f.price) + ' / kg</div>' : '') +
                 '<div class="flavour-admin-card__actions">' +
-                    '<button class="btn-edit" data-flavour-edit="' + i + '">Edit</button>' +
-                    '<button class="btn-delete" data-flavour-del="' + i + '">Delete</button>' +
+                    '<button class="btn-edit" data-flavour-edit="' + i + '">' + at('edit') + '</button>' +
+                    '<button class="btn-delete" data-flavour-del="' + i + '">' + at('delete') + '</button>' +
                 '</div>' +
             '</div>' +
         '</div>';
@@ -934,7 +1066,7 @@ function loadFlavours() {
 
     container.querySelectorAll('[data-flavour-del]').forEach(function(btn) {
         btn.addEventListener('click', function() {
-            if (!confirm('Delete this flavour?')) return;
+            if (!confirm(at('confirm.flavour'))) return;
             var idx = parseInt(this.dataset.flavourDel);
             var flavours = getData('flavours', []) || [];
             flavours.splice(idx, 1);
@@ -953,7 +1085,7 @@ function loadFlavours() {
             document.getElementById('flavourPrice').value = f.price || '';
             pendingFlavourPhoto = f.photo || null;
             document.getElementById('flavourPhotoPreview').innerHTML = f.photo ? '<img src="' + f.photo + '" style="max-width:120px;border-radius:8px;">' : '';
-            document.getElementById('flavourModalTitle').textContent = 'Edit Flavour';
+            document.getElementById('flavourModalTitle').textContent = at('flavour.editTitle');
             document.getElementById('flavourModal').style.display = 'flex';
         });
     });
@@ -968,7 +1100,7 @@ document.getElementById('addFlavourBtn').addEventListener('click', function() {
     document.getElementById('flavourPrice').value = '';
     document.getElementById('flavourPhotoPreview').innerHTML = '';
     pendingFlavourPhoto = null;
-    document.getElementById('flavourModalTitle').textContent = 'Add Flavour';
+    document.getElementById('flavourModalTitle').textContent = at('flavour.addTitle');
     document.getElementById('flavourModal').style.display = 'flex';
 });
 
@@ -1016,7 +1148,7 @@ function loadReviews() {
     var container = document.getElementById('reviewsAdmin');
 
     if (reviews.length === 0) {
-        container.innerHTML = '<div class="empty-state"><svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="#C8963E" stroke-width="1.5"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg><p>No reviews yet</p><span>Add customer reviews to display on the website</span></div>';
+        container.innerHTML = '<div class="empty-state"><svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="#C8963E" stroke-width="1.5"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg><p>' + at('review.emptyTitle') + '</p><span>' + at('review.emptySub') + '</span></div>';
         return;
     }
 
@@ -1034,8 +1166,8 @@ function loadReviews() {
                 '<p class="review-admin-card__author">— ' + escapeHtml(r.author) + '</p>' +
             '</div>' +
             '<div class="review-admin-card__actions">' +
-                '<button class="btn-edit" data-review-edit="' + i + '">Edit</button>' +
-                '<button class="btn-delete" data-review-del="' + i + '">Delete</button>' +
+                '<button class="btn-edit" data-review-edit="' + i + '">' + at('edit') + '</button>' +
+                '<button class="btn-delete" data-review-del="' + i + '">' + at('delete') + '</button>' +
             '</div>' +
         '</div>';
     }
@@ -1043,7 +1175,7 @@ function loadReviews() {
 
     container.querySelectorAll('[data-review-del]').forEach(function(btn) {
         btn.addEventListener('click', function() {
-            if (!confirm('Delete this review?')) return;
+            if (!confirm(at('confirm.review'))) return;
             var idx = parseInt(this.dataset.reviewDel);
             var reviews = getData('reviews', []);
             reviews.splice(idx, 1);
@@ -1061,7 +1193,7 @@ function loadReviews() {
             document.getElementById('reviewAuthor').value = r.author;
             document.getElementById('reviewRating').value = r.rating;
             document.getElementById('reviewText').value = r.text;
-            document.getElementById('reviewModalTitle').textContent = 'Edit Review';
+            document.getElementById('reviewModalTitle').textContent = at('review.editTitle');
             document.getElementById('reviewModal').style.display = 'flex';
         });
     });
@@ -1072,7 +1204,7 @@ document.getElementById('addReviewBtn').addEventListener('click', function() {
     document.getElementById('reviewAuthor').value = '';
     document.getElementById('reviewRating').value = '5';
     document.getElementById('reviewText').value = '';
-    document.getElementById('reviewModalTitle').textContent = 'Add Review';
+    document.getElementById('reviewModalTitle').textContent = at('review.addTitle');
     document.getElementById('reviewModal').style.display = 'flex';
 });
 
@@ -1120,7 +1252,7 @@ function writeSiteStatus() {
 
 if (siteEnabledToggle) {
     siteEnabledToggle.addEventListener('change', function() {
-        siteStatusLabel.textContent = this.checked ? 'Website is ON' : 'Website is OFF';
+        siteStatusLabel.textContent = this.checked ? at('siteOn') : at('siteOff');
         writeSiteStatus();
     });
 }
@@ -1130,8 +1262,8 @@ if (saveSiteMessageBtn) {
     saveSiteMessageBtn.addEventListener('click', function() {
         writeSiteStatus();
         var b = this;
-        b.textContent = 'Saved ✓';
-        setTimeout(function() { b.textContent = 'Save message'; }, 2000);
+        b.textContent = at('saved');
+        setTimeout(function() { b.textContent = at('content.saveMsg'); }, 2000);
     });
 }
 
@@ -1139,7 +1271,7 @@ function updateSiteToggle(s) {
     if (!siteEnabledToggle) return;
     var enabled = !s || s.enabled !== false;
     siteEnabledToggle.checked = enabled;
-    siteStatusLabel.textContent = enabled ? 'Website is ON' : 'Website is OFF';
+    siteStatusLabel.textContent = enabled ? at('siteOn') : at('siteOff');
     if (document.activeElement !== siteMessageInput) {
         siteMessageInput.value = (s && s.message) || '';
     }
@@ -1165,7 +1297,7 @@ document.getElementById('saveContentBtn').addEventListener('click', function() {
     });
     setData('content', content);
     var status = document.getElementById('saveStatus');
-    status.textContent = 'Changes saved!';
+    status.textContent = at('content.saved');
     setTimeout(function() { status.textContent = ''; }, 3000);
 });
 
@@ -1194,9 +1326,9 @@ function addAllStandardSizes() {
 }
 
 function priceRange(sizes) {
-    if (!sizes || !sizes.length) return 'Price on request';
+    if (!sizes || !sizes.length) return at('priceOnRequest');
     var nums = sizes.map(function(s) { return parseFloat(s.price); }).filter(function(n) { return !isNaN(n); });
-    if (!nums.length) return 'Price on request';
+    if (!nums.length) return at('priceOnRequest');
     var min = Math.min.apply(null, nums);
     var max = Math.max.apply(null, nums);
     return min === max ? ('€' + min) : ('€' + min + ' – €' + max);
@@ -1213,7 +1345,7 @@ function loadCakes() {
     if (!container) return;
 
     if (cakes.length === 0) {
-        container.innerHTML = '<div class="empty-state"><svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="#C8963E" stroke-width="1.5"><path d="M3 21h18"/><path d="M5 21v-8a7 7 0 0114 0v8"/><path d="M12 6V3"/></svg><p>No cakes yet</p><span>Add cakes with photo, sizes &amp; prices — they appear on the site for ordering</span></div>';
+        container.innerHTML = '<div class="empty-state"><svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="#C8963E" stroke-width="1.5"><path d="M3 21h18"/><path d="M5 21v-8a7 7 0 0114 0v8"/><path d="M12 6V3"/></svg><p>' + at('cakes.emptyTitle') + '</p><span>' + at('cakes.emptySub') + '</span></div>';
         return;
     }
 
@@ -1230,8 +1362,8 @@ function loadCakes() {
                 '<div class="cake-admin-card__name">' + escapeHtml(c.name) + '</div>' +
                 '<div class="cake-admin-card__meta">' + escapeHtml(catNameById(c.category)) + ' · ' + priceRange(c.sizes) + '</div>' +
                 '<div class="cake-admin-card__actions">' +
-                    '<button class="btn-edit" data-cake-edit="' + i + '">Edit</button>' +
-                    '<button class="btn-delete" data-cake-del="' + i + '">Delete</button>' +
+                    '<button class="btn-edit" data-cake-edit="' + i + '">' + at('edit') + '</button>' +
+                    '<button class="btn-delete" data-cake-del="' + i + '">' + at('delete') + '</button>' +
                 '</div>' +
             '</div>' +
         '</div>';
@@ -1257,7 +1389,7 @@ function loadCakes() {
         });
         container.querySelectorAll('[data-cake-del]').forEach(function(btn) {
             btn.addEventListener('click', function() {
-                if (!confirm('Delete this cake?')) return;
+                if (!confirm(at('confirm.cake'))) return;
                 var cakes = getData('products', []) || [];
                 cakes.splice(parseInt(this.dataset.cakeDel), 1);
                 setData('products', cakes);
@@ -1272,7 +1404,7 @@ var cakeDeleteSelected = {};
 
 function updateCakesDelCount() {
     var el = document.getElementById('cakesDelCount');
-    if (el) el.textContent = Object.keys(cakeDeleteSelected).length + ' selected';
+    if (el) el.textContent = Object.keys(cakeDeleteSelected).length + ' ' + at('selected');
 }
 function exitCakesDeleteMode() {
     cakeDeleteMode = false;
@@ -1280,7 +1412,7 @@ function exitCakesDeleteMode() {
     var bar = document.getElementById('cakesDelBar');
     if (bar) bar.style.display = 'none';
     var btn = document.getElementById('cakesMultiDeleteBtn');
-    if (btn) btn.textContent = 'Select to delete';
+    if (btn) { var sp = btn.querySelector('span'); if (sp) sp.textContent = at('selectToDelete'); else btn.textContent = at('selectToDelete'); }
     loadCakes();
 }
 (function initCakesMultiDelete() {
@@ -1290,7 +1422,7 @@ function exitCakesDeleteMode() {
         if (cakeDeleteMode) { exitCakesDeleteMode(); return; }
         cakeDeleteMode = true;
         cakeDeleteSelected = {};
-        this.textContent = 'Cancel selection';
+        var sp0 = this.querySelector('span'); if (sp0) sp0.textContent = at('cancelSelection'); else this.textContent = at('cancelSelection');
         document.getElementById('cakesDelBar').style.display = 'flex';
         loadCakes();
     });
@@ -1307,8 +1439,8 @@ function exitCakesDeleteMode() {
     });
     document.getElementById('cakesDeleteSelected').addEventListener('click', function() {
         var keys = Object.keys(cakeDeleteSelected).map(Number);
-        if (!keys.length) { alert('Select cakes first.'); return; }
-        if (!confirm('Delete ' + keys.length + ' selected cake(s)?')) return;
+        if (!keys.length) { alert(at('alert.selectCakes')); return; }
+        if (!confirm(at('confirm.delCakesPre') + keys.length + at('confirm.delCakesPost'))) return;
         var cakes = getData('products', []) || [];
         keys.sort(function(a, b) { return b - a; }).forEach(function(idx) { cakes.splice(idx, 1); });
         setData('products', cakes);
@@ -1331,7 +1463,7 @@ function renderCakeFlavoursSelected() {
     var box = document.getElementById('cakeFlavoursSelected');
     var txt = document.getElementById('cakeFlavourText');
     if (cakeSelectedFlavours.length) {
-        txt.textContent = cakeSelectedFlavours.length + ' flavour' + (cakeSelectedFlavours.length > 1 ? 's' : '') + ' selected';
+        txt.textContent = cakeSelectedFlavours.length + ' ' + at('flavoursSuffix');
         box.innerHTML = cakeSelectedFlavours.map(function(n) {
             return '<span class="flavour-chip">' + escapeHtml(n) + '<button type="button" class="flavour-chip__x" data-rm="' + escapeHtml(n) + '">&times;</button></span>';
         }).join('');
@@ -1343,7 +1475,7 @@ function renderCakeFlavoursSelected() {
             });
         });
     } else {
-        txt.textContent = 'Choose flavours';
+        txt.textContent = at('chooseFlavours');
         box.innerHTML = '';
     }
 }
@@ -1352,7 +1484,7 @@ function openCakeFlavourModal() {
     var flavours = getData('flavours', null) || DEFAULT_FLAVOURS;
     var grid = document.getElementById('cakeFlavourGrid');
     if (!flavours.length) {
-        grid.innerHTML = '<p class="content-hint">No flavours yet. Add them in the Flavours tab first.</p>';
+        grid.innerHTML = '<p class="content-hint">' + at('flavoursNoneModal') + '</p>';
     } else {
         grid.innerHTML = flavours.map(function(f) {
             var sel = cakeSelectedFlavours.indexOf(f.name) > -1;
@@ -1402,7 +1534,7 @@ function openCakeModal(editId) {
 
     if (editId != null && cakes[editId]) {
         var c = cakes[editId];
-        document.getElementById('cakeModalTitle').textContent = 'Edit Cake';
+        document.getElementById('cakeModalTitle').textContent = at('cakeModal.editTitle');
         document.getElementById('cakeEditId').value = editId;
         document.getElementById('cakeName').value = c.name || '';
         document.getElementById('cakeDesc').value = c.desc || '';
@@ -1416,7 +1548,7 @@ function openCakeModal(editId) {
         if (!sizes.length) addCakeSizeRow('', '', '');
         else sizes.forEach(function(s) { addCakeSizeRow(s.size, s.serves, s.price); });
     } else {
-        document.getElementById('cakeModalTitle').textContent = 'Add Cake';
+        document.getElementById('cakeModalTitle').textContent = at('cakeModal.addTitle');
         document.getElementById('cakeEditId').value = '';
         document.getElementById('cakeName').value = '';
         document.getElementById('cakeDesc').value = '';
@@ -1496,13 +1628,13 @@ var cakeSortSelection = {};
 
 function updateCakeSortCount() {
     var n = Object.keys(cakeSortSelection).length;
-    document.getElementById('cakesSortCount').textContent = n + ' selected';
+    document.getElementById('cakesSortCount').textContent = n + ' ' + at('selected');
     document.getElementById('cakesSortAssign').style.display = n > 0 ? 'flex' : 'none';
 }
 
 function renderCakeSortAssign() {
     var bar = document.getElementById('cakesSortAssign');
-    var html = '<span class="sort-assign__label">Assign to:</span>';
+    var html = '<span class="sort-assign__label">' + at('assignTo') + '</span>';
     for (var i = 0; i < CATEGORIES.length; i++) {
         html += '<button class="sort-assign__btn" data-assign="' + CATEGORIES[i].id + '">' + escapeHtml(CATEGORIES[i].en) + '</button>';
     }
@@ -1527,7 +1659,7 @@ function renderCakeSortAssign() {
 
 document.getElementById('cakesSortBtn').addEventListener('click', function() {
     var cakes = (getData('products', []) || []).map(function(c) { return Object.assign({}, c); });
-    if (!cakes.length) { alert('No cakes to sort. Add some first!'); return; }
+    if (!cakes.length) { alert(at('alert.noCakesSort')); return; }
     window._cakeSortItems = cakes;
     cakeSortSelection = {};
 
@@ -1611,3 +1743,4 @@ function loadAllData() {
 
 // ===== INIT =====
 checkAuth();
+applyAdminI18n();
