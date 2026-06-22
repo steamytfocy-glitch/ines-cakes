@@ -17,7 +17,9 @@ var translations = {
         "gallery.back": "Back to categories",
         "gal.from": "from",
         "gal.priceReq": "Price on request",
-        "gal.empty": "Our cakes are coming soon — check back shortly!"
+        "gal.empty": "Our cakes are coming soon — check back shortly!",
+        "gal.refBanner": "📷 Tap a cake to use it as a reference for your custom order",
+        "gal.refCancel": "Cancel"
     },
     ua: {
         "galpage.back": "На головну",
@@ -26,7 +28,9 @@ var translations = {
         "gallery.back": "Назад до категорій",
         "gal.from": "від",
         "gal.priceReq": "Ціна за домовленістю",
-        "gal.empty": "Наші торти вже скоро — зазирніть трохи пізніше!"
+        "gal.empty": "Наші торти вже скоро — зазирніть трохи пізніше!",
+        "gal.refBanner": "📷 Торкніться торта, щоб взяти його як референс для кастомного замовлення",
+        "gal.refCancel": "Скасувати"
     },
     ru: {
         "galpage.back": "На главную",
@@ -35,12 +39,42 @@ var translations = {
         "gallery.back": "Назад к категориям",
         "gal.from": "от",
         "gal.priceReq": "Цена по договорённости",
-        "gal.empty": "Наши торты уже скоро — загляните чуть позже!"
+        "gal.empty": "Наши торты уже скоро — загляните чуть позже!",
+        "gal.refBanner": "📷 Нажмите на торт, чтобы взять его как референс для кастомного заказа",
+        "gal.refCancel": "Отмена"
     }
 };
 
 var currentLang = localStorage.getItem('ines-lang') || 'en';
 var _products = [];
+var refPick = false;
+try { refPick = localStorage.getItem('ines-ref-pick') === '1'; } catch (e) {}
+
+function selectAsRef(p) {
+    var ref = { name: p.name || '', photo: p.photo || '', size: '', flavour: '', date: '' };
+    try {
+        localStorage.setItem('ines-ref-cake', JSON.stringify(ref));
+        localStorage.removeItem('ines-ref-pick');
+    } catch (e) {}
+    window.location.href = '/#order';
+}
+
+function showRefBanner() {
+    if (!refPick) return;
+    if (document.getElementById('galRefBanner')) return;
+    var bar = document.createElement('div');
+    bar.id = 'galRefBanner';
+    bar.className = 'gal-ref-banner';
+    bar.innerHTML = '<span data-i18n="gal.refBanner">' + t('gal.refBanner') + '</span>' +
+        '<button type="button" id="galRefCancel" data-i18n="gal.refCancel">' + t('gal.refCancel') + '</button>';
+    var anchor = document.getElementById('allGalleryCategories');
+    if (anchor && anchor.parentNode) anchor.parentNode.insertBefore(bar, anchor);
+    else document.body.insertBefore(bar, document.body.firstChild);
+    document.getElementById('galRefCancel').addEventListener('click', function() {
+        try { localStorage.removeItem('ines-ref-pick'); } catch (e) {}
+        window.location.href = '/#order';
+    });
+}
 
 function getCatName(cat) { return cat[currentLang] || cat.en; }
 function t(k) { var tr = translations[currentLang] || translations.en; return tr[k] || translations.en[k] || k; }
@@ -62,6 +96,7 @@ document.querySelectorAll('.lang-btn').forEach(function(btn) {
 function escapeHtml(str) { if (!str) return ''; var d = document.createElement('div'); d.textContent = str; return d.innerHTML; }
 
 function priceLabel(p) {
+    if (p.price && parseFloat(p.price)) return '€' + p.price;
     var sizes = p.sizes || [];
     var nums = sizes.map(function(s) { return parseFloat(s.price); }).filter(function(n) { return !isNaN(n); });
     if (!nums.length) return t('gal.priceReq');
@@ -135,6 +170,16 @@ function openCategory(catId) {
         '</a>';
     });
     document.getElementById('galleryCatGrid').innerHTML = html;
+
+    if (refPick) {
+        document.querySelectorAll('#galleryCatGrid .catalog-card').forEach(function(card, i) {
+            card.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (group.items[i]) selectAsRef(group.items[i].p);
+            });
+        });
+    }
+
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -149,6 +194,7 @@ function init() {
         fbGet('products', function(products) {
             _products = products || [];
             render();
+            showRefBanner();
             var params = new URLSearchParams(window.location.search);
             var cat = params.get('cat');
             if (cat) openCategory(cat);

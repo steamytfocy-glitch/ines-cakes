@@ -115,6 +115,10 @@ const translations = {
         "order.submit": "Send Order",
         "order.addCart": "Add to cart",
         "order.customNote": "Price for custom cakes is confirmed by us after we see your idea.",
+        "order.chooseRef": "📷 Pick a cake as a reference",
+        "order.refTitle": "Reference cake",
+        "order.refHint": "We'll base your cake on this one — describe the changes you'd like below.",
+        "order.removeRef": "Remove",
         "order.successTitle": "Thank you!",
         "order.successText": "Your order has been received. We'll contact you soon to discuss the details.",
         "order.orContact": "Or contact us directly:",
@@ -244,6 +248,10 @@ const translations = {
         "order.submit": "Відправити замовлення",
         "order.addCart": "Додати в кошик",
         "order.customNote": "Ціну на індивідуальні торти ми підтверджуємо після того, як побачимо вашу ідею.",
+        "order.chooseRef": "📷 Обрати торт як референс",
+        "order.refTitle": "Торт-референс",
+        "order.refHint": "Зробимо ваш торт на основі цього — опишіть бажані зміни нижче.",
+        "order.removeRef": "Прибрати",
         "order.successTitle": "Дякуємо!",
         "order.successText": "Ваше замовлення отримано. Ми зв'яжемося з вами найближчим часом для обговорення деталей.",
         "order.orContact": "Або зв'яжіться з нами напряму:",
@@ -373,6 +381,10 @@ const translations = {
         "order.submit": "Отправить заказ",
         "order.addCart": "В корзину",
         "order.customNote": "Цену на индивидуальные торты мы подтверждаем после того, как увидим вашу идею.",
+        "order.chooseRef": "📷 Выбрать торт как референс",
+        "order.refTitle": "Торт-референс",
+        "order.refHint": "Сделаем ваш торт на основе этого — опишите желаемые изменения ниже.",
+        "order.removeRef": "Убрать",
         "order.successTitle": "Спасибо!",
         "order.successText": "Ваш заказ получен. Мы свяжемся с вами в ближайшее время для обсуждения деталей.",
         "order.orContact": "Или свяжитесь с нами напрямую:",
@@ -730,6 +742,76 @@ function recalcTotal() {
 var orderForm = document.getElementById('orderForm');
 var orderSuccess = document.getElementById('orderSuccess');
 
+// ----- Reference cake (from a product page or the cakes catalogue) -----
+var customRef = null;
+
+function clearCustomRef() {
+    customRef = null;
+    try { localStorage.removeItem('ines-ref-cake'); } catch (e) {}
+    var box = document.getElementById('orderRef');
+    if (box) box.style.display = 'none';
+}
+
+function initCustomReference() {
+    var refBox = document.getElementById('orderRef');
+    if (!refBox) return;
+
+    var pickBtn = document.getElementById('orderRefPickBtn');
+    if (pickBtn && !pickBtn._wired) {
+        pickBtn._wired = true;
+        pickBtn.addEventListener('click', function() {
+            try { localStorage.setItem('ines-ref-pick', '1'); } catch (e) {}
+            window.location.href = 'gallery';
+        });
+    }
+    var removeBtn = document.getElementById('orderRefRemove');
+    if (removeBtn && !removeBtn._wired) {
+        removeBtn._wired = true;
+        removeBtn.addEventListener('click', clearCustomRef);
+    }
+
+    try { customRef = JSON.parse(localStorage.getItem('ines-ref-cake')); } catch (e) { customRef = null; }
+    if (!customRef || !customRef.name) { refBox.style.display = 'none'; return; }
+
+    document.getElementById('orderRefImg').src = customRef.photo || '';
+    document.getElementById('orderRefName').textContent = customRef.name;
+    refBox.style.display = 'flex';
+
+    // Prefill flavour
+    if (customRef.flavour) {
+        var fh = document.getElementById('flavour');
+        var ft = document.getElementById('flavourSelectText');
+        if (fh) fh.value = customRef.flavour;
+        if (ft) { ft.textContent = customRef.flavour; ft.removeAttribute('data-i18n'); }
+    }
+    // Prefill date ("D MonthName")
+    if (customRef.date) {
+        var parts = String(customRef.date).split(' ');
+        var d = parts[0];
+        var mName = parts.slice(1).join(' ');
+        var mNames = monthNames[currentLang] || monthNames.en;
+        var mIdx = mNames.indexOf(mName);
+        var daySel = document.getElementById('dateDay');
+        var monthSel = document.getElementById('dateMonth');
+        if (daySel && d) daySel.value = d;
+        if (monthSel && mIdx > -1) monthSel.value = String(mIdx + 1);
+        var dh = document.getElementById('date'); if (dh) dh.value = customRef.date;
+    }
+    // Prefill size -> custom diameter if numeric
+    if (customRef.size) {
+        var num = parseInt(String(customRef.size).replace(/[^0-9]/g, ''));
+        if (!isNaN(num)) {
+            var cs = document.getElementById('cakeSize');
+            if (cs) cs.value = 'custom';
+            var csRow = document.getElementById('customSizeRow');
+            if (csRow) csRow.style.display = '';
+            var cd = document.getElementById('customDiameter');
+            if (cd) cd.value = num;
+        }
+    }
+    if (typeof recalcTotal === 'function') recalcTotal();
+}
+
 orderForm.addEventListener('submit', function(e) {
     e.preventDefault();
 
@@ -755,7 +837,8 @@ orderForm.addEventListener('submit', function(e) {
         addToCart({
             custom: true,
             name: customNameMap[currentLang] || 'Custom Cake',
-            photo: photoData || '',
+            photo: photoData || (customRef && customRef.photo) || '',
+            refName: (customRef && customRef.name) || '',
             size: sizeText,
             flavour: document.getElementById('flavour').value || '',
             date: dateStr,
@@ -767,6 +850,7 @@ orderForm.addEventListener('submit', function(e) {
             gift: false,
             giftPrice: 0
         });
+        clearCustomRef();
         window.location.href = 'cart';
     }
 
@@ -1204,6 +1288,7 @@ document.addEventListener('DOMContentLoaded', function() {
     loadLatestReviews();
     loadAdminContent();
     recalcTotal();
+    initCustomReference();
 });
 
 setLanguage(currentLang);

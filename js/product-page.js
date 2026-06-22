@@ -12,6 +12,7 @@ var translations = {
         "prod.gift": "Tied with Ribbon & Personalised Gift Tag (+€3)",
         "prod.add": "Add to cart",
         "prod.added": "Added to cart ✓",
+        "prod.useRef": "Use as reference for a custom cake",
         "prod.details": "Details",
         "prod.loc": "Available in Co. Donegal",
         "prod.choose": "Choose",
@@ -41,6 +42,7 @@ var translations = {
         "prod.gift": "Перев'язати стрічкою + іменна бирка (+€3)",
         "prod.add": "Додати в кошик",
         "prod.added": "Додано в кошик ✓",
+        "prod.useRef": "Взяти як референс для кастомного торта",
         "prod.details": "Деталі",
         "prod.loc": "Доступно в графстві Донегол",
         "prod.choose": "Оберіть",
@@ -70,6 +72,7 @@ var translations = {
         "prod.gift": "Перевязать лентой + именная бирка (+€3)",
         "prod.add": "В корзину",
         "prod.added": "Добавлено в корзину ✓",
+        "prod.useRef": "Взять как референс для кастомного торта",
         "prod.details": "Детали",
         "prod.loc": "Доступно в графстве Донегол",
         "prod.choose": "Выберите",
@@ -163,6 +166,10 @@ function currentSize() {
 
 function updatePrice() {
     var el = document.getElementById('pPrice');
+    if (product.price && parseFloat(product.price)) {
+        el.textContent = '€ ' + parseFloat(product.price);
+        return;
+    }
     var s = currentSize();
     if (s && parseFloat(s.price)) {
         el.textContent = '€ ' + parseFloat(s.price);
@@ -320,9 +327,11 @@ function showToast(msg) {
 
 document.getElementById('pSize').addEventListener('change', updatePrice);
 
+function hasSizes() { return product.sizes && product.sizes.length; }
+
 document.getElementById('pAddBtn').addEventListener('click', function() {
     var s = currentSize();
-    if (!s) { showToast(t('prod.pickSize')); return; }
+    if (hasSizes() && !s) { showToast(t('prod.pickSize')); return; }
     var date = selectedDate();
     if (!date) { showToast(t('prod.pickDate')); return; }
     var gift = document.getElementById('pGift').checked;
@@ -332,9 +341,9 @@ document.getElementById('pAddBtn').addEventListener('click', function() {
         i: productIndex,
         name: product.name,
         photo: product.photo || '',
-        size: s.size,
-        serves: s.serves || '',
-        price: parseFloat(s.price) || 0,
+        size: s ? s.size : '',
+        serves: s ? (s.serves || '') : '',
+        price: parseFloat(product.price) || (s ? parseFloat(s.price) : 0) || 0,
         flavour: document.getElementById('pFlavour').value || '',
         date: date,
         qty: qty,
@@ -344,6 +353,20 @@ document.getElementById('pAddBtn').addEventListener('click', function() {
         giftPrice: gift ? 3 : 0
     });
     showToast(t('prod.added'));
+});
+
+// "Use as reference" — save this cake (photo + name + current choices) and go to the custom order form
+document.getElementById('pRefBtn').addEventListener('click', function() {
+    var s = currentSize();
+    var ref = {
+        name: product.name || '',
+        photo: product.photo || '',
+        size: s ? s.size : '',
+        flavour: document.getElementById('pFlavour').value || '',
+        date: selectedDate()
+    };
+    try { localStorage.setItem('ines-ref-cake', JSON.stringify(ref)); } catch (e) {}
+    window.location.href = '/#order';
 });
 
 // init

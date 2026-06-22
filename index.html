@@ -229,6 +229,18 @@
         <h2 class="section__title" data-i18n="order.title">Place an Order</h2>
         <p class="section__subtitle" data-i18n="order.subtitle">Fill in the form below and we'll get back to you to discuss the details</p>
         <form class="order__form" id="orderForm">
+            <div class="order-ref" id="orderRef" style="display:none;">
+                <img id="orderRefImg" class="order-ref__img" src="" alt="">
+                <div class="order-ref__info">
+                    <div class="order-ref__title" data-i18n="order.refTitle">Reference cake</div>
+                    <div class="order-ref__name" id="orderRefName"></div>
+                    <p class="order-ref__hint" data-i18n="order.refHint">We'll base your cake on this one — describe the changes you'd like below.</p>
+                </div>
+                <button type="button" class="order-ref__remove" id="orderRefRemove" data-i18n="order.removeRef">Remove</button>
+            </div>
+            <div class="order-ref-pick" id="orderRefPickWrap">
+                <button type="button" class="btn btn--outline" id="orderRefPickBtn" data-i18n="order.chooseRef">📷 Pick a cake as a reference</button>
+            </div>
             <div class="form-row">
                 <div class="form-group form-group--full">
                     <label data-i18n="order.date">Date Needed</label>

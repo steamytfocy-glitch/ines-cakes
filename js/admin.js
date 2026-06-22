@@ -57,6 +57,7 @@ var A = {
         'cakes.add': 'Add Cake', 'sortByCategory': 'Sort by Category', 'selectToDelete': 'Select to delete', 'manageCategories': 'Manage Categories', 'cakes.sortHint': 'Select cakes, then assign a category', 'doneSorting': 'Done Sorting', 'assignTo': 'Assign to:', 'cakes.emptyTitle': 'No cakes yet', 'cakes.emptySub': 'Add cakes with photo, sizes & prices — they appear on the site for ordering',
         'priceOnRequest': 'Price on request',
         'cakeModal.addTitle': 'Add Cake', 'cakeModal.editTitle': 'Edit Cake', 'cake.name': 'Cake Name', 'cake.namePh': 'e.g. Sunset Fields Art Cake', 'category': 'Category', 'newCategory': '+ New category', 'photo': 'Photo', 'descOptional': 'Description (optional)', 'descPh': 'Short description',
+        'cake.price': 'Cake price (€) — optional', 'cake.priceHint': 'One fixed price for this cake. If set, it is used instead of the per-size prices below.',
         'sizesPrices': 'Sizes & prices', 'sizesHint': 'Add each size you offer with its price and how many it serves.', 'addSize': '+ Add size', 'addAllSizes': '+ Add all standard sizes (6"–12")', 'availableFlavours': 'Available flavours', 'chooseFlavours': 'Choose flavours', 'flavoursSuffix': 'selected', 'leadTime': 'Lead time — days notice required', 'saveCake': 'Save Cake',
         'selectFlavours': 'Select flavours', 'flavourPickHint': 'Tap the flavours available for this cake. To add a new flavour, use the Flavours tab.', 'flavoursNoneModal': 'No flavours yet. Add them in the Flavours tab first.',
         'manageCatsHint': 'Add, rename or delete the categories used for your cakes.', 'addCategory': '+ Add Category', 'newCatPrompt': 'New category name:',
@@ -86,6 +87,7 @@ var A = {
         'cakes.add': 'Додати торт', 'sortByCategory': 'Сортувати за категорією', 'selectToDelete': 'Вибрати для видалення', 'manageCategories': 'Керування категоріями', 'cakes.sortHint': 'Виберіть торти, потім призначте категорію', 'doneSorting': 'Готово', 'assignTo': 'Призначити до:', 'cakes.emptyTitle': 'Тортів поки немає', 'cakes.emptySub': 'Додайте торти з фото, розмірами та цінами — вони з\'являться на сайті для замовлення',
         'priceOnRequest': 'Ціна за домовленістю',
         'cakeModal.addTitle': 'Додати торт', 'cakeModal.editTitle': 'Редагувати торт', 'cake.name': 'Назва торта', 'cake.namePh': 'напр. Sunset Fields Art Cake', 'category': 'Категорія', 'newCategory': '+ Нова категорія', 'photo': 'Фото', 'descOptional': 'Опис (необов\'язково)', 'descPh': 'Короткий опис',
+        'cake.price': 'Ціна торта (€) — необов\'язково', 'cake.priceHint': 'Одна фіксована ціна за цей торт. Якщо вказана, використовується замість цін за розмірами нижче.',
         'sizesPrices': 'Розміри та ціни', 'sizesHint': 'Додайте кожен розмір з ціною та кількістю порцій.', 'addSize': '+ Додати розмір', 'addAllSizes': '+ Додати всі стандартні розміри (6"–12")', 'availableFlavours': 'Доступні смаки', 'chooseFlavours': 'Обрати смаки', 'flavoursSuffix': 'вибрано', 'leadTime': 'Термін — за скільки днів замовляти', 'saveCake': 'Зберегти торт',
         'selectFlavours': 'Оберіть смаки', 'flavourPickHint': 'Торкніться смаків, доступних для цього торта. Щоб додати новий смак, скористайтеся вкладкою «Смаки».', 'flavoursNoneModal': 'Смаків поки немає. Спершу додайте їх у вкладці «Смаки».',
         'manageCatsHint': 'Додавайте, перейменовуйте або видаляйте категорії тортів.', 'addCategory': '+ Додати категорію', 'newCatPrompt': 'Назва нової категорії:',
@@ -115,6 +117,7 @@ var A = {
         'cakes.add': 'Добавить торт', 'sortByCategory': 'Сортировать по категории', 'selectToDelete': 'Выбрать для удаления', 'manageCategories': 'Управление категориями', 'cakes.sortHint': 'Выберите торты, затем назначьте категорию', 'doneSorting': 'Готово', 'assignTo': 'Назначить в:', 'cakes.emptyTitle': 'Тортов пока нет', 'cakes.emptySub': 'Добавьте торты с фото, размерами и ценами — они появятся на сайте для заказа',
         'priceOnRequest': 'Цена по договорённости',
         'cakeModal.addTitle': 'Добавить торт', 'cakeModal.editTitle': 'Изменить торт', 'cake.name': 'Название торта', 'cake.namePh': 'напр. Sunset Fields Art Cake', 'category': 'Категория', 'newCategory': '+ Новая категория', 'photo': 'Фото', 'descOptional': 'Описание (необязательно)', 'descPh': 'Краткое описание',
+        'cake.price': 'Цена торта (€) — необязательно', 'cake.priceHint': 'Одна фиксированная цена за торт. Если указана, используется вместо цен по размерам ниже.',
         'sizesPrices': 'Размеры и цены', 'sizesHint': 'Добавьте каждый размер с ценой и количеством порций.', 'addSize': '+ Добавить размер', 'addAllSizes': '+ Добавить все стандартные размеры (6"–12")', 'availableFlavours': 'Доступные вкусы', 'chooseFlavours': 'Выбрать вкусы', 'flavoursSuffix': 'выбрано', 'leadTime': 'Срок — за сколько дней заказывать', 'saveCake': 'Сохранить торт',
         'selectFlavours': 'Выберите вкусы', 'flavourPickHint': 'Нажмите вкусы, доступные для этого торта. Чтобы добавить новый вкус, используйте вкладку «Вкусы».', 'flavoursNoneModal': 'Вкусов пока нет. Сначала добавьте их во вкладке «Вкусы».',
         'manageCatsHint': 'Добавляйте, переименовывайте или удаляйте категории тортов.', 'addCategory': '+ Добавить категорию', 'newCatPrompt': 'Название новой категории:',
@@ -1360,7 +1363,7 @@ function loadCakes() {
             img +
             '<div class="cake-admin-card__body">' +
                 '<div class="cake-admin-card__name">' + escapeHtml(c.name) + '</div>' +
-                '<div class="cake-admin-card__meta">' + escapeHtml(catNameById(c.category)) + ' · ' + priceRange(c.sizes) + '</div>' +
+                '<div class="cake-admin-card__meta">' + escapeHtml(catNameById(c.category)) + ' · ' + (c.price ? '€' + escapeHtml(c.price) : priceRange(c.sizes)) + '</div>' +
                 '<div class="cake-admin-card__actions">' +
                     '<button class="btn-edit" data-cake-edit="' + i + '">' + at('edit') + '</button>' +
                     '<button class="btn-delete" data-cake-del="' + i + '">' + at('delete') + '</button>' +
@@ -1537,6 +1540,7 @@ function openCakeModal(editId) {
         document.getElementById('cakeModalTitle').textContent = at('cakeModal.editTitle');
         document.getElementById('cakeEditId').value = editId;
         document.getElementById('cakeName').value = c.name || '';
+        document.getElementById('cakePrice').value = c.price || '';
         document.getElementById('cakeDesc').value = c.desc || '';
         document.getElementById('cakeNotice').value = (c.noticeDays != null ? c.noticeDays : 3);
         populateCakeCategorySelect(c.category);
@@ -1551,6 +1555,7 @@ function openCakeModal(editId) {
         document.getElementById('cakeModalTitle').textContent = at('cakeModal.addTitle');
         document.getElementById('cakeEditId').value = '';
         document.getElementById('cakeName').value = '';
+        document.getElementById('cakePrice').value = '';
         document.getElementById('cakeDesc').value = '';
         document.getElementById('cakeNotice').value = 3;
         populateCakeCategorySelect('');
@@ -1607,6 +1612,7 @@ document.getElementById('cakeForm').addEventListener('submit', function(e) {
 
     var cake = {
         name: document.getElementById('cakeName').value.trim(),
+        price: document.getElementById('cakePrice').value.trim(),
         category: document.getElementById('cakeCategory').value,
         desc: document.getElementById('cakeDesc').value.trim(),
         photo: pendingCakePhoto || null,

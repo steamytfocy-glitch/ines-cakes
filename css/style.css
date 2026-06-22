@@ -274,6 +274,79 @@ ul { list-style: none; }
     justify-content: center;
 }
 
+/* Reference cake block in the custom order form */
+.order-ref {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: #FBF6EC;
+    border: 1px solid #E8D9BC;
+    border-radius: 14px;
+    padding: 14px 16px;
+    margin-bottom: 20px;
+}
+.order-ref__img {
+    width: 72px;
+    height: 72px;
+    object-fit: cover;
+    border-radius: 10px;
+    flex-shrink: 0;
+    background: var(--cream);
+}
+.order-ref__info { flex: 1; }
+.order-ref__title {
+    font-size: .8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--gold-dark);
+    font-weight: 700;
+}
+.order-ref__name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    color: var(--brown);
+    margin: 2px 0 4px;
+}
+.order-ref__hint { font-size: .85rem; color: var(--text-light); line-height: 1.4; }
+.order-ref__remove {
+    background: none;
+    border: 1px solid var(--cream-dark);
+    color: var(--text-light);
+    border-radius: 8px;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: .85rem;
+    flex-shrink: 0;
+    transition: var(--transition);
+}
+.order-ref__remove:hover { border-color: var(--brown); color: var(--brown); }
+.order-ref-pick { margin-bottom: 20px; }
+
+/* Reference-pick banner on the cakes catalogue */
+.gal-ref-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    background: var(--gold);
+    color: #fff;
+    border-radius: 12px;
+    padding: 12px 18px;
+    margin-bottom: 24px;
+    font-weight: 600;
+}
+.gal-ref-banner button {
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.5);
+    color: #fff;
+    border-radius: 8px;
+    padding: 6px 14px;
+    cursor: pointer;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+.gal-ref-banner button:hover { background: rgba(255,255,255,0.3); }
+
 .header__cart--bump { animation: cartBump 0.45s ease; }
 @keyframes cartBump {
     0%   { transform: scale(1); }
