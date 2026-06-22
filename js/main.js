@@ -117,6 +117,8 @@ const translations = {
         "order.submit": "Send Order",
         "order.addCart": "Add to cart",
         "order.customNote": "Price for custom cakes is confirmed by us after we see your idea.",
+        "order.weight": "Weight",
+        "order.weightChoose": "Choose a weight",
         "order.chooseRef": "📷 Pick a cake as a reference",
         "order.refTitle": "Reference cake",
         "order.refHint": "We'll base your cake on this one — describe the changes you'd like below.",
@@ -252,6 +254,8 @@ const translations = {
         "order.submit": "Відправити замовлення",
         "order.addCart": "Додати в кошик",
         "order.customNote": "Ціну на індивідуальні торти ми підтверджуємо після того, як побачимо вашу ідею.",
+        "order.weight": "Вага",
+        "order.weightChoose": "Оберіть вагу",
         "order.chooseRef": "📷 Обрати торт як референс",
         "order.refTitle": "Торт-референс",
         "order.refHint": "Зробимо ваш торт на основі цього — опишіть бажані зміни нижче.",
@@ -387,6 +391,8 @@ const translations = {
         "order.submit": "Отправить заказ",
         "order.addCart": "В корзину",
         "order.customNote": "Цену на индивидуальные торты мы подтверждаем после того, как увидим вашу идею.",
+        "order.weight": "Вес",
+        "order.weightChoose": "Выберите вес",
         "order.chooseRef": "📷 Выбрать торт как референс",
         "order.refTitle": "Торт-референс",
         "order.refHint": "Сделаем ваш торт на основе этого — опишите желаемые изменения ниже.",
@@ -695,6 +701,9 @@ cakeSizeSelect.addEventListener('change', function() {
 });
 customDiameterInput.addEventListener('input', recalcTotal);
 
+var cakeWeightSelect = document.getElementById('cakeWeight');
+if (cakeWeightSelect) cakeWeightSelect.addEventListener('change', recalcTotal);
+
 // ===== PRICE CALCULATOR =====
 var selectedFlavourPrice = 0;
 var basePriceMini = 30;   // price for 5"
@@ -727,7 +736,8 @@ function recalcTotal() {
     var hidden = document.getElementById('orderTotalHidden');
     if (!valueEl) return;
 
-    var base = sizePrice();
+    var weightPrice = (typeof selectedWeightPrice === 'function') ? selectedWeightPrice() : null;
+    var base = weightPrice !== null ? weightPrice : sizePrice();
     if (base === null) {
         var t = (translations[currentLang] && translations[currentLang]['cakes.priceAgreed']) || 'Price on request';
         valueEl.textContent = t;
@@ -869,6 +879,7 @@ orderForm.addEventListener('submit', function(e) {
             photo: photoData || (customRef && customRef.photo) || '',
             refName: (customRef && customRef.name) || '',
             size: sizeText,
+            weight: selectedWeightText(),
             flavour: document.getElementById('flavour').value || '',
             date: dateStr,
             message: document.getElementById('message').value.trim(),
@@ -1131,8 +1142,42 @@ function loadAdminContent() {
         var sFb = document.getElementById('successFacebook');
         if (sInsta && content.contactInsta) sInsta.href = content.contactInsta;
         if (sFb && content.contactFacebook) sFb.href = content.contactFacebook;
+        populateWeightOptions(content.weightPrices);
         recalcTotal();
     });
+}
+
+function populateWeightOptions(list) {
+    var sel = document.getElementById('cakeWeight');
+    var row = document.getElementById('weightRow');
+    if (!sel || !row) return;
+    list = (list || []).filter(function(w) { return w && (w.weight || w.price); });
+    if (!list.length) { row.style.display = 'none'; return; }
+    var prev = sel.value;
+    var ph = (translations[currentLang] && translations[currentLang]['order.weightChoose']) || 'Choose a weight';
+    var html = '<option value="">' + ph + '</option>';
+    for (var i = 0; i < list.length; i++) {
+        var w = list[i];
+        var label = w.weight + (w.price ? ' — €' + w.price : '');
+        html += '<option value="' + i + '" data-price="' + escapeHtml(w.price || '') + '">' + escapeHtml(label) + '</option>';
+    }
+    sel.innerHTML = html;
+    if (prev) sel.value = prev;
+    row.style.display = '';
+}
+
+function selectedWeightPrice() {
+    var sel = document.getElementById('cakeWeight');
+    if (!sel || !sel.value) return null;
+    var opt = sel.options[sel.selectedIndex];
+    var p = parseFloat(opt.getAttribute('data-price'));
+    return isNaN(p) ? null : p;
+}
+
+function selectedWeightText() {
+    var sel = document.getElementById('cakeWeight');
+    if (!sel || !sel.value) return '';
+    return sel.options[sel.selectedIndex].textContent;
 }
 
 function escapeHtml(str) {

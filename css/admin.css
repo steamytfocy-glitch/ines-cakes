@@ -612,6 +612,23 @@ body {
 }
 .cake-size-row__del:hover { background: var(--red); color: #fff; }
 
+.weight-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 32px;
+    gap: 8px;
+    margin-bottom: 8px;
+    align-items: center;
+}
+.weight-row input {
+    padding: 8px 10px;
+    border: 1px solid var(--cream-dark);
+    border-radius: 6px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.85rem;
+    outline: none;
+}
+.weight-row input:focus { border-color: var(--gold); }
+
 .cake-flavours-pick {
     display: flex;
     flex-wrap: wrap;

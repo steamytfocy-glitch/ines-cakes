@@ -10,7 +10,7 @@ var translations = {
         "cart.note": "No online payment — we'll contact you to confirm and arrange payment.",
         "cart.remove": "Remove",
         "cart.gift": "Gift wrap",
-        "cart.size": "Size", "cart.flavour": "Flavour", "cart.date": "Date", "cart.qty": "Qty", "cart.ref": "Reference",
+        "cart.size": "Size", "cart.flavour": "Flavour", "cart.date": "Date", "cart.qty": "Qty", "cart.ref": "Reference", "cart.weight": "Weight",
         "order.name": "Your Name", "order.phone": "Phone Number", "order.email": "Email",
         "cart.fill": "Please fill in your name and phone.",
         "cart.onRequest": "Price on request"
@@ -26,7 +26,7 @@ var translations = {
         "cart.note": "Без онлайн-оплати — ми зв'яжемося, щоб підтвердити та домовитися про оплату.",
         "cart.remove": "Прибрати",
         "cart.gift": "Подарункова стрічка",
-        "cart.size": "Розмір", "cart.flavour": "Смак", "cart.date": "Дата", "cart.qty": "К-сть", "cart.ref": "Референс",
+        "cart.size": "Розмір", "cart.flavour": "Смак", "cart.date": "Дата", "cart.qty": "К-сть", "cart.ref": "Референс", "cart.weight": "Вага",
         "order.name": "Ваше ім'я", "order.phone": "Номер телефону", "order.email": "Ел. пошта",
         "cart.fill": "Будь ласка, вкажіть ім'я та телефон.",
         "cart.onRequest": "Ціна за домовленістю"
@@ -42,7 +42,7 @@ var translations = {
         "cart.note": "Без онлайн-оплаты — мы свяжемся, чтобы подтвердить и договориться об оплате.",
         "cart.remove": "Убрать",
         "cart.gift": "Подарочная лента",
-        "cart.size": "Размер", "cart.flavour": "Вкус", "cart.date": "Дата", "cart.qty": "Кол-во", "cart.ref": "Референс",
+        "cart.size": "Размер", "cart.flavour": "Вкус", "cart.date": "Дата", "cart.qty": "Кол-во", "cart.ref": "Референс", "cart.weight": "Вес",
         "order.name": "Ваше имя", "order.phone": "Номер телефона", "order.email": "Эл. почта",
         "cart.fill": "Пожалуйста, укажите имя и телефон.",
         "cart.onRequest": "Цена по договорённости"
@@ -93,6 +93,7 @@ function renderCart() {
         var it = cart[i];
         var meta = [];
         if (it.refName) meta.push('📷 ' + t('cart.ref') + ': ' + escapeHtml(it.refName));
+        if (it.weight) meta.push(t('cart.weight') + ': ' + escapeHtml(it.weight));
         if (it.size) meta.push(t('cart.size') + ': ' + escapeHtml(it.size));
         if (it.flavour) meta.push(t('cart.flavour') + ': ' + escapeHtml(it.flavour));
         if (it.date) meta.push(t('cart.date') + ': ' + escapeHtml(it.date));
@@ -159,6 +160,7 @@ function buildSummary(cart) {
         var parts = [(it.qty || 1) + '× ' + it.name];
         var sub = [];
         if (it.refName) sub.push('ref: ' + it.refName);
+        if (it.weight) sub.push(it.weight);
         if (it.size) sub.push(it.size);
         if (it.flavour) sub.push(it.flavour);
         if (it.date) sub.push(it.date);

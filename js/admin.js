@@ -66,6 +66,7 @@ var A = {
         'review.add': 'Add Review', 'review.addTitle': 'Add Review', 'review.editTitle': 'Edit Review', 'review.name': 'Customer Name', 'review.rating': 'Rating', 'review.stars5': '5 Stars', 'review.stars4': '4 Stars', 'review.stars3': '3 Stars', 'review.text': 'Review Text', 'review.save': 'Save Review', 'review.emptyTitle': 'No reviews yet', 'review.emptySub': 'Add customer reviews to display on the website',
         'content.websiteStatus': 'Website status', 'siteOn': 'Website is ON', 'siteOff': 'Website is OFF', 'content.maintHint': 'When OFF, visitors see a "We\'ll be right back" maintenance screen instead of the site. Changes apply instantly.', 'content.msgOff': 'Message shown when website is OFF (optional)', 'content.msgPh': "e.g. We're on holiday until July 5th — see you soon!", 'content.saveMsg': 'Save message',
         'content.prices': 'Cake Prices', 'content.mini': 'Mini 5" (13 cm) price', 'content.maxi': 'Maxi 6" (15 cm) price', 'content.numOnly30': 'Number only, e.g. 30', 'content.numOnly35': 'Number only, e.g. 35',
+        'content.weight': 'Weight prices', 'content.weightHint': 'List of weights and their fixed prices — shown in the custom order form.', 'content.addWeight': '+ Add weight', 'weight.weightPh': 'Weight, e.g. 1 kg', 'weight.pricePh': '€ price',
         'content.shed': 'Cake Shed Schedule', 'content.openDays': 'Open days', 'content.openHours': 'Opening hours', 'content.hoursPh': 'e.g. 10:00 — 17:00',
         'content.contact': 'Contact Info', 'content.phone': 'Phone', 'content.address': 'Address', 'content.insta': 'Instagram link', 'content.fb': 'Facebook link', 'content.save': 'Save Changes', 'content.saved': 'Changes saved!'
     },
@@ -96,6 +97,7 @@ var A = {
         'review.add': 'Додати відгук', 'review.addTitle': 'Додати відгук', 'review.editTitle': 'Редагувати відгук', 'review.name': 'Ім\'я клієнта', 'review.rating': 'Оцінка', 'review.stars5': '5 зірок', 'review.stars4': '4 зірки', 'review.stars3': '3 зірки', 'review.text': 'Текст відгуку', 'review.save': 'Зберегти відгук', 'review.emptyTitle': 'Відгуків поки немає', 'review.emptySub': 'Додайте відгуки клієнтів для показу на сайті',
         'content.websiteStatus': 'Статус сайту', 'siteOn': 'Сайт УВІМКНЕНО', 'siteOff': 'Сайт ВИМКНЕНО', 'content.maintHint': 'Коли ВИМКНЕНО, відвідувачі бачать екран «Скоро повернемося» замість сайту. Зміни застосовуються миттєво.', 'content.msgOff': 'Повідомлення, коли сайт вимкнено (необов\'язково)', 'content.msgPh': 'напр. Ми у відпустці до 5 липня — до зустрічі!', 'content.saveMsg': 'Зберегти повідомлення',
         'content.prices': 'Ціни на торти', 'content.mini': 'Ціна Mini 5" (13 см)', 'content.maxi': 'Ціна Maxi 6" (15 см)', 'content.numOnly30': 'Лише число, напр. 30', 'content.numOnly35': 'Лише число, напр. 35',
+        'content.weight': 'Ціни за вагою', 'content.weightHint': 'Список ваг та їх фіксованих цін — показується у формі кастомного замовлення.', 'content.addWeight': '+ Додати вагу', 'weight.weightPh': 'Вага, напр. 1 кг', 'weight.pricePh': '€ ціна',
         'content.shed': 'Розклад Cake Shed', 'content.openDays': 'Дні роботи', 'content.openHours': 'Години роботи', 'content.hoursPh': 'напр. 10:00 — 17:00',
         'content.contact': 'Контактна інформація', 'content.phone': 'Телефон', 'content.address': 'Адреса', 'content.insta': 'Посилання Instagram', 'content.fb': 'Посилання Facebook', 'content.save': 'Зберегти зміни', 'content.saved': 'Зміни збережено!'
     },
@@ -126,6 +128,7 @@ var A = {
         'review.add': 'Добавить отзыв', 'review.addTitle': 'Добавить отзыв', 'review.editTitle': 'Изменить отзыв', 'review.name': 'Имя клиента', 'review.rating': 'Оценка', 'review.stars5': '5 звёзд', 'review.stars4': '4 звезды', 'review.stars3': '3 звезды', 'review.text': 'Текст отзыва', 'review.save': 'Сохранить отзыв', 'review.emptyTitle': 'Отзывов пока нет', 'review.emptySub': 'Добавьте отзывы клиентов для показа на сайте',
         'content.websiteStatus': 'Статус сайта', 'siteOn': 'Сайт ВКЛЮЧЁН', 'siteOff': 'Сайт ВЫКЛЮЧЕН', 'content.maintHint': 'Когда ВЫКЛЮЧЕНО, посетители видят экран «Скоро вернёмся» вместо сайта. Изменения применяются мгновенно.', 'content.msgOff': 'Сообщение, когда сайт выключен (необязательно)', 'content.msgPh': 'напр. Мы в отпуске до 5 июля — до встречи!', 'content.saveMsg': 'Сохранить сообщение',
         'content.prices': 'Цены на торты', 'content.mini': 'Цена Mini 5" (13 см)', 'content.maxi': 'Цена Maxi 6" (15 см)', 'content.numOnly30': 'Только число, напр. 30', 'content.numOnly35': 'Только число, напр. 35',
+        'content.weight': 'Цены за вес', 'content.weightHint': 'Список весов и их фиксированных цен — показывается в форме кастомного заказа.', 'content.addWeight': '+ Добавить вес', 'weight.weightPh': 'Вес, напр. 1 кг', 'weight.pricePh': '€ цена',
         'content.shed': 'Расписание Cake Shed', 'content.openDays': 'Рабочие дни', 'content.openHours': 'Часы работы', 'content.hoursPh': 'напр. 10:00 — 17:00',
         'content.contact': 'Контактная информация', 'content.phone': 'Телефон', 'content.address': 'Адрес', 'content.insta': 'Ссылка Instagram', 'content.fb': 'Ссылка Facebook', 'content.save': 'Сохранить изменения', 'content.saved': 'Изменения сохранены!'
     }
@@ -1281,6 +1284,41 @@ function updateSiteToggle(s) {
 }
 
 // ===== CONTENT =====
+function addWeightRow(weight, price) {
+    var wrap = document.getElementById('weightPricesList');
+    if (!wrap) return;
+    var row = document.createElement('div');
+    row.className = 'weight-row';
+    row.innerHTML =
+        '<input type="text" class="wp-weight" placeholder="' + at('weight.weightPh') + '" value="' + escapeHtml(weight || '') + '">' +
+        '<input type="text" class="wp-price" placeholder="' + at('weight.pricePh') + '" value="' + escapeHtml(price != null ? String(price) : '') + '">' +
+        '<button type="button" class="cake-size-row__del" aria-label="Remove">&times;</button>';
+    row.querySelector('.cake-size-row__del').addEventListener('click', function() { row.remove(); });
+    wrap.appendChild(row);
+}
+
+function renderWeightPrices(list) {
+    var wrap = document.getElementById('weightPricesList');
+    if (!wrap) return;
+    wrap.innerHTML = '';
+    (list || []).forEach(function(w) { if (w) addWeightRow(w.weight, w.price); });
+}
+
+function gatherWeightPrices() {
+    var list = [];
+    document.querySelectorAll('#weightPricesList .weight-row').forEach(function(r) {
+        var w = r.querySelector('.wp-weight').value.trim();
+        var p = r.querySelector('.wp-price').value.trim();
+        if (w || p) list.push({ weight: w, price: p });
+    });
+    return list;
+}
+
+(function() {
+    var btn = document.getElementById('addWeightBtn');
+    if (btn) btn.addEventListener('click', function() { addWeightRow('', ''); });
+})();
+
 function loadContent() {
     var content = getData('content', null);
     if (!content) return;
@@ -1291,6 +1329,7 @@ function loadContent() {
             field.value = content[key];
         }
     });
+    renderWeightPrices(content.weightPrices);
 }
 
 document.getElementById('saveContentBtn').addEventListener('click', function() {
@@ -1298,6 +1337,7 @@ document.getElementById('saveContentBtn').addEventListener('click', function() {
     document.querySelectorAll('[data-key]').forEach(function(field) {
         content[field.dataset.key] = field.value.trim();
     });
+    content.weightPrices = gatherWeightPrices();
     setData('content', content);
     var status = document.getElementById('saveStatus');
     status.textContent = at('content.saved');
