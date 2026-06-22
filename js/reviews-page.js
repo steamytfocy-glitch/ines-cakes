@@ -208,3 +208,14 @@ document.getElementById('clientReviewForm').addEventListener('submit', function(
 
 setLang(currentLang);
 loadAllReviews();
+
+// Auto-open the review form when arriving from the "Write a Review" button
+(function() {
+    var params = new URLSearchParams(window.location.search);
+    if (params.get('write') !== '1') return;
+    var wrap = document.getElementById('reviewFormWrap');
+    if (wrap) {
+        wrap.style.display = 'block';
+        setTimeout(function() { wrap.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 300);
+    }
+})();
