@@ -341,7 +341,6 @@ document.getElementById('pAddBtn').addEventListener('click', function() {
     if (hasSizes() && !s) { showToast(t('prod.pickSize')); return; }
     var date = selectedDate();
     if (!date) { showToast(t('prod.pickDate')); return; }
-    var gift = document.getElementById('pGift').checked;
     var qty = parseInt(document.getElementById('pQty').value) || 1;
 
     addToCart({
@@ -355,9 +354,7 @@ document.getElementById('pAddBtn').addEventListener('click', function() {
         date: date,
         qty: qty,
         message: document.getElementById('pMessage').value.trim(),
-        allergies: collectAllergies(),
-        gift: gift,
-        giftPrice: gift ? 3 : 0
+        allergies: collectAllergies()
     });
     showToast(t('prod.added'));
 });

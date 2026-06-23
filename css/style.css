@@ -1838,6 +1838,13 @@ ul { list-style: none; }
     color: var(--gold-dark);
 }
 
+.order-total__breakdown {
+    font-size: 0.85rem;
+    color: var(--brown);
+    margin-top: 8px;
+}
+.order-total__breakdown:empty { display: none; }
+
 .order-total__note {
     font-size: 0.75rem;
     color: var(--text-light);

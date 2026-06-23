@@ -102,6 +102,7 @@ const translations = {
         "order.decorMedium": "Medium (+€10)",
         "order.decorComplex": "Complex (+€20)",
         "order.estTotal": "Estimated total",
+        "order.kg": "kg",
         "order.totalNote": "* Approximate price — final amount confirmed by our manager",
         "order.message": "Your Wishes / Description",
         "order.messagePh": "Describe your ideal cake — theme, colours, text, number of tiers...",
@@ -239,6 +240,7 @@ const translations = {
         "order.decorMedium": "Середній (+€10)",
         "order.decorComplex": "Складний (+€20)",
         "order.estTotal": "Орієнтовна сума",
+        "order.kg": "кг",
         "order.totalNote": "* Приблизна ціна — остаточну суму підтвердить менеджер",
         "order.message": "Ваші побажання / Опис",
         "order.messagePh": "Опишіть ваш ідеальний торт — тема, кольори, напис, кількість ярусів...",
@@ -376,6 +378,7 @@ const translations = {
         "order.decorMedium": "Средний (+€10)",
         "order.decorComplex": "Сложный (+€20)",
         "order.estTotal": "Примерная сумма",
+        "order.kg": "кг",
         "order.totalNote": "* Примерная цена — итоговую сумму подтвердит менеджер",
         "order.message": "Ваши пожелания / Описание",
         "order.messagePh": "Опишите ваш идеальный торт — тема, цвета, надпись, количество ярусов...",
@@ -447,6 +450,9 @@ function applyTranslations(lang) {
     }
     if (typeof populateCustomSizes === 'function') {
         populateCustomSizes(_customSizes);
+    }
+    if (typeof recalcTotal === 'function') {
+        recalcTotal();
     }
 }
 
@@ -710,12 +716,13 @@ function populateCustomSizes(list) {
     if (!cakeSizeSelect) return;
     var tr = translations[currentLang] || translations.en;
     var prev = cakeSizeSelect.value;
-    _customSizes = (list || []).filter(function(s) { return s && (s.size || s.price); });
+    _customSizes = (list || []).filter(function(s) { return s && (s.size || s.price || s.weight); });
+    var kgLabel = (tr['order.kg'] || 'kg');
     var html = '<option value="" disabled selected>' + (tr['order.sizePlaceholder'] || 'Select size') + '</option>';
     if (_customSizes.length) {
         for (var i = 0; i < _customSizes.length; i++) {
             var s = _customSizes[i];
-            var lbl = s.size + (s.serves ? ' (' + s.serves + ')' : '') + (s.price ? ' — €' + s.price : '');
+            var lbl = s.size + (s.weight ? ' — ' + s.weight + ' ' + kgLabel : '') + (s.serves ? ' (' + s.serves + ')' : '');
             html += '<option value="g' + i + '">' + escapeHtml(lbl) + '</option>';
         }
     } else {
@@ -818,21 +825,61 @@ function sizePrice() {
     return Math.round(basePriceMini + Math.max(0, inch - 5) * PRICE_PER_INCH);
 }
 
+// Rough weight from diameter (6" ≈ 1 kg, scales with area) for sizes without an explicit weight.
+function inchesToKg(inch) { return Math.round((inch * inch / 36) * 10) / 10; }
+
+function sizeWeight() {
+    var size = cakeSizeSelect.value;
+    if (!size) return 0;
+    if (size.charAt(0) === 'g') {
+        var gs = _customSizes[parseInt(size.slice(1))];
+        if (gs) {
+            var w = parseFloat(gs.weight);
+            if (!isNaN(w)) return w;
+            var sn = parseFloat(String(gs.size).replace(/[^0-9.]/g, ''));
+            if (!isNaN(sn)) return inchesToKg(sn);
+        }
+        return 0;
+    }
+    var inch = getInches();
+    return inch === null ? 0 : inchesToKg(inch);
+}
+
 function recalcTotal() {
     var valueEl = document.getElementById('orderTotalValue');
     var hidden = document.getElementById('orderTotalHidden');
     if (!valueEl) return;
+    var box = document.getElementById('orderTotal');
+    var bdEl = document.getElementById('orderTotalBreakdown');
+    var tr = translations[currentLang] || translations.en;
+    var kg = tr['order.kg'] || 'kg';
+    var priceReq = tr['cakes.priceAgreed'] || 'Price on request';
 
-    var base = sizePrice();
-    if (base === null) {
-        var t = (translations[currentLang] && translations[currentLang]['cakes.priceAgreed']) || 'Price on request';
-        valueEl.textContent = t;
-        hidden.value = '';
+    var sizeSelected = !!cakeSizeSelect.value;
+    var base = sizePrice();                 // may be null (size without its own base price)
+    var weight = sizeWeight();              // kg (0 if unknown)
+    var flavRate = selectedFlavourPrice || 0;
+    var flavourCost = Math.round(flavRate * weight);
+    var hasBase = base !== null;
+
+    if (!sizeSelected || (!hasBase && !flavourCost)) {
+        valueEl.textContent = sizeSelected ? priceReq : '—';
+        if (hidden) hidden.value = '';
+        if (box) box.style.display = sizeSelected ? '' : 'none';
+        if (bdEl) bdEl.textContent = '';
         return;
     }
-    var total = base + (selectedFlavourPrice || 0);
+
+    var total = (hasBase ? base : 0) + flavourCost;
     valueEl.textContent = '€' + total;
-    hidden.value = '€' + total;
+    if (hidden) hidden.value = '€' + total;
+    if (box) box.style.display = '';
+    if (bdEl) {
+        var parts = [];
+        if (hasBase) parts.push('€' + base);
+        if (flavourCost) parts.push('€' + flavRate + '/' + kg + ' × ' + weight + ' ' + kg + ' = €' + flavourCost);
+        bdEl.textContent = parts.join('  +  ');
+    }
 }
 
 // ===== ORDER FORM =====
@@ -959,6 +1006,13 @@ orderForm.addEventListener('submit', function(e) {
 
     var customNameMap = { en: 'Custom Cake', ua: 'Індивідуальний торт', ru: 'Индивидуальный торт' };
 
+    // Reference orders stay "price on request"; pure custom orders carry the estimate.
+    var est = 0;
+    if (!customRef) {
+        var hv = document.getElementById('orderTotalHidden').value;
+        est = parseFloat(String(hv).replace(/[^0-9.]/g, '')) || 0;
+    }
+
     function finish(photoData) {
         addToCart({
             custom: true,
@@ -971,9 +1025,7 @@ orderForm.addEventListener('submit', function(e) {
             message: document.getElementById('message').value.trim(),
             allergies: document.getElementById('allergyHidden').value || '',
             qty: 1,
-            price: 0,
-            gift: false,
-            giftPrice: 0
+            price: est
         });
         clearCustomRef();
         window.location.href = 'cart';
