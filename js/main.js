@@ -102,6 +102,7 @@ const translations = {
         "order.decorMedium": "Medium (+€10)",
         "order.decorComplex": "Complex (+€20)",
         "order.estTotal": "Estimated total",
+        "order.leadNote": "⏳ Please order at least 7 days ahead. Urgent orders only by prior arrangement.",
         "order.kg": "kg",
         "order.totalNote": "* Approximate price — final amount confirmed by our manager",
         "order.message": "Your Wishes / Description",
@@ -240,6 +241,7 @@ const translations = {
         "order.decorMedium": "Середній (+€10)",
         "order.decorComplex": "Складний (+€20)",
         "order.estTotal": "Орієнтовна сума",
+        "order.leadNote": "⏳ Замовляйте щонайменше за 7 днів. Термінові замовлення — лише за попередньою домовленістю.",
         "order.kg": "кг",
         "order.totalNote": "* Приблизна ціна — остаточну суму підтвердить менеджер",
         "order.message": "Ваші побажання / Опис",
@@ -378,6 +380,7 @@ const translations = {
         "order.decorMedium": "Средний (+€10)",
         "order.decorComplex": "Сложный (+€20)",
         "order.estTotal": "Примерная сумма",
+        "order.leadNote": "⏳ Заказывайте минимум за 7 дней. Срочные заказы — только по предварительному согласованию.",
         "order.kg": "кг",
         "order.totalNote": "* Примерная цена — итоговую сумму подтвердит менеджер",
         "order.message": "Ваши пожелания / Описание",
@@ -1059,6 +1062,13 @@ function getCatName(cat) {
     return cat[lang] || cat.en;
 }
 
+// Categories shown to customers, sorted alphabetically by their current-language name.
+function sortedCategories() {
+    return CATEGORIES.slice().sort(function(a, b) {
+        return getCatName(a).localeCompare(getCatName(b));
+    });
+}
+
 // ===== LOAD ADMIN DATA =====
 var MAIN_CAT_LIMIT = 6;
 
@@ -1070,8 +1080,9 @@ function loadAdminGallery() {
         if (!container) return;
 
         var activeCats = [];
-        for (var c = 0; c < CATEGORIES.length; c++) {
-            var cat = CATEGORIES[c];
+        var _cats = sortedCategories();
+        for (var c = 0; c < _cats.length; c++) {
+            var cat = _cats[c];
             var photos = gallery[cat.id] || [];
             if (photos.length > 0) activeCats.push(cat);
         }
@@ -1303,8 +1314,9 @@ function renderWorkCategories() {
         });
 
         var active = [];
-        for (var i = 0; i < CATEGORIES.length; i++) {
-            var cat = CATEGORIES[i];
+        var _cats = sortedCategories();
+        for (var i = 0; i < _cats.length; i++) {
+            var cat = _cats[i];
             if (byCat[cat.id] && byCat[cat.id].length) active.push({ cat: cat, items: byCat[cat.id] });
         }
 

@@ -112,8 +112,9 @@ function groupByCategory() {
         (byCat[c] = byCat[c] || []).push({ p: p, index: idx });
     });
     var active = [];
-    for (var i = 0; i < CATEGORIES.length; i++) {
-        var cat = CATEGORIES[i];
+    var cats = CATEGORIES.slice().sort(function(a, b) { return getCatName(a).localeCompare(getCatName(b)); });
+    for (var i = 0; i < cats.length; i++) {
+        var cat = cats[i];
         if (byCat[cat.id] && byCat[cat.id].length) active.push({ cat: cat, items: byCat[cat.id] });
     }
     return active;
