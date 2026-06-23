@@ -725,12 +725,65 @@ function populateCustomSizes(list) {
     html += '<option value="custom">' + (tr['order.sizeCustom'] || 'Custom size') + '</option>';
     cakeSizeSelect.innerHTML = html;
     if (prev) { cakeSizeSelect.value = prev; }
+    if (cakeSizeSelect._enhanced) syncNiceSelect(cakeSizeSelect);
 }
 function loadCustomSizes() {
     fbGet('default-sizes', function(ds) {
         populateCustomSizes(ds || []);
         recalcTotal();
     });
+}
+
+// ===== NICE SELECT (custom-styled dropdown replacing the native <select>) =====
+function enhanceSelect(sel) {
+    if (!sel || sel._enhanced) return;
+    var wrap = document.createElement('div');
+    wrap.className = 'nice-select';
+    sel.parentNode.insertBefore(wrap, sel);
+    wrap.appendChild(sel);
+    sel.classList.add('nice-select__native');
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'nice-select__btn';
+    btn.innerHTML = '<span></span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>';
+    var menu = document.createElement('div');
+    menu.className = 'nice-select__menu';
+    wrap.appendChild(btn);
+    wrap.appendChild(menu);
+    sel._enhanced = { wrap: wrap, btn: btn, menu: menu };
+    btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        document.querySelectorAll('.nice-select.open').forEach(function(w) { if (w !== wrap) w.classList.remove('open'); });
+        wrap.classList.toggle('open');
+    });
+    document.addEventListener('click', function(e) { if (!wrap.contains(e.target)) wrap.classList.remove('open'); });
+    syncNiceSelect(sel);
+}
+function syncNiceSelect(sel) {
+    var e = sel && sel._enhanced;
+    if (!e) return;
+    e.menu.innerHTML = '';
+    var span = e.btn.querySelector('span');
+    var selOpt = sel.options[sel.selectedIndex];
+    var isPlaceholder = !sel.value || (selOpt && selOpt.disabled);
+    e.btn.classList.toggle('nice-select__btn--placeholder', !!isPlaceholder);
+    span.textContent = selOpt ? selOpt.text : '';
+    for (var i = 0; i < sel.options.length; i++) {
+        var o = sel.options[i];
+        if (o.disabled) continue;
+        var item = document.createElement('div');
+        item.className = 'nice-select__opt' + (o.value === sel.value && !isPlaceholder ? ' nice-select__opt--active' : '');
+        item.textContent = o.text;
+        (function(val) {
+            item.addEventListener('click', function() {
+                sel.value = val;
+                sel.dispatchEvent(new Event('change', { bubbles: true }));
+                syncNiceSelect(sel);
+                e.wrap.classList.remove('open');
+            });
+        })(o.value);
+        e.menu.appendChild(item);
+    }
 }
 
 // ===== PRICE CALCULATOR =====
@@ -879,6 +932,7 @@ function initCustomReference() {
             if (csRow) csRow.style.display = '';
             var cd = document.getElementById('customDiameter');
             if (cd) cd.value = num;
+            if (cs && cs._enhanced) syncNiceSelect(cs);
         }
     }
     if (typeof recalcTotal === 'function') recalcTotal();
@@ -1365,6 +1419,7 @@ document.addEventListener('DOMContentLoaded', function() {
     loadFlavoursShowcase();
     loadLatestReviews();
     loadAdminContent();
+    enhanceSelect(cakeSizeSelect);
     loadCustomSizes();
     recalcTotal();
     initCustomReference();
