@@ -875,8 +875,8 @@ body {
 .flavour-pick-card__img,
 .flavour-pick-card__ph {
     width: 100%;
-    aspect-ratio: 4/3;
-    object-fit: cover;
+    aspect-ratio: 1/1;
+    object-fit: contain;
     background: linear-gradient(135deg, var(--cream-dark), var(--cream));
     display: flex;
     align-items: center;
@@ -1648,14 +1648,14 @@ body {
 
 .flavour-admin-card__img {
     width: 100%;
-    aspect-ratio: 4/3;
-    object-fit: cover;
+    aspect-ratio: 1/1;
+    object-fit: contain;
     background: var(--cream);
 }
 
 .flavour-admin-card__placeholder {
     width: 100%;
-    aspect-ratio: 4/3;
+    aspect-ratio: 1/1;
     background: linear-gradient(135deg, var(--cream-dark), var(--cream));
     display: flex;
     align-items: center;
