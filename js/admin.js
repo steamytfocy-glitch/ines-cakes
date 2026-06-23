@@ -43,6 +43,7 @@ var A = {
         'login.title': 'Admin Panel', 'login.user': 'Login', 'login.pass': 'Password', 'login.signin': 'Sign In', 'login.wrong': 'Wrong login or password',
         'nav.orders': 'Orders', 'nav.cakes': 'Cakes', 'nav.sizes': 'Sizes & Prices', 'nav.flavours': 'Flavours', 'nav.certificates': 'Certificates', 'nav.reviews': 'Reviews', 'nav.content': 'Content',
         'sizes.hint': 'These sizes & prices apply to every cake automatically. Set them once here. You can still override sizes for a single cake in its form.', 'sizes.add': '+ Add size', 'sizes.fillStandard': '+ Add standard sizes (6"–12")', 'sizes.save': 'Save sizes',
+        'ptable.title': 'Price table — all cakes', 'ptable.hint': 'Type a price for each size, per cake. Leave a cake empty to use the default prices above. Fill only some sizes to offer just those.', 'ptable.cake': 'Cake', 'ptable.save': 'Save all prices', 'ptable.needSizes': 'Add at least one size above first, then save it — the table will appear here.', 'ptable.empty': 'No cakes yet. Add cakes in the Cakes tab.', 'ptable.fixed': 'Fixed €', 'ptable.search': 'Search cake…',
         'size.sizePh': 'Size, e.g. 8"', 'size.servesPh': 'Serves, e.g. 15-18', 'size.pricePh': '€ price',
         'logout': 'Log out', 'viewSite': 'View Site →',
         'orders.searchPh': 'Search name / phone / code', 'orders.emptyTitle': 'No orders yet', 'orders.emptySub': 'Orders from the website form will appear here',
@@ -76,6 +77,7 @@ var A = {
         'login.title': 'Панель адміністратора', 'login.user': 'Логін', 'login.pass': 'Пароль', 'login.signin': 'Увійти', 'login.wrong': 'Невірний логін або пароль',
         'nav.orders': 'Замовлення', 'nav.cakes': 'Торти', 'nav.sizes': 'Розміри та ціни', 'nav.flavours': 'Смаки', 'nav.certificates': 'Сертифікати', 'nav.reviews': 'Відгуки', 'nav.content': 'Контент',
         'sizes.hint': 'Ці розміри та ціни застосовуються до кожного торта автоматично. Задайте їх тут один раз. За потреби можна змінити розміри для окремого торта в його формі.', 'sizes.add': '+ Додати розмір', 'sizes.fillStandard': '+ Додати стандартні розміри (6"–12")', 'sizes.save': 'Зберегти розміри',
+        'ptable.title': 'Таблиця цін — усі торти', 'ptable.hint': 'Введіть ціну для кожного розміру по кожному торту. Залиште торт порожнім, щоб використати стандартні ціни вище. Заповніть лише деякі розміри, щоб пропонувати тільки їх.', 'ptable.cake': 'Торт', 'ptable.save': 'Зберегти всі ціни', 'ptable.needSizes': 'Спершу додайте хоча б один розмір вище та збережіть його — тоді тут зʼявиться таблиця.', 'ptable.empty': 'Тортів ще немає. Додайте торти у вкладці «Торти».', 'ptable.fixed': 'Фікс. €', 'ptable.search': 'Пошук торта…',
         'size.sizePh': 'Розмір, напр. 8"', 'size.servesPh': 'Порцій, напр. 15-18', 'size.pricePh': '€ ціна',
         'logout': 'Вийти', 'viewSite': 'Перейти на сайт →',
         'orders.searchPh': 'Пошук: ім\'я / телефон / код', 'orders.emptyTitle': 'Замовлень поки немає', 'orders.emptySub': 'Замовлення з форми на сайті з\'являться тут',
@@ -109,6 +111,7 @@ var A = {
         'login.title': 'Панель администратора', 'login.user': 'Логин', 'login.pass': 'Пароль', 'login.signin': 'Войти', 'login.wrong': 'Неверный логин или пароль',
         'nav.orders': 'Заказы', 'nav.cakes': 'Торты', 'nav.sizes': 'Размеры и цены', 'nav.flavours': 'Вкусы', 'nav.certificates': 'Сертификаты', 'nav.reviews': 'Отзывы', 'nav.content': 'Контент',
         'sizes.hint': 'Эти размеры и цены применяются ко всем тортам автоматически. Задайте их здесь один раз. При необходимости можно переопределить размеры для отдельного торта в его форме.', 'sizes.add': '+ Добавить размер', 'sizes.fillStandard': '+ Добавить стандартные размеры (6"–12")', 'sizes.save': 'Сохранить размеры',
+        'ptable.title': 'Таблица цен — все торты', 'ptable.hint': 'Впишите цену для каждого размера по каждому торту. Оставьте торт пустым, чтобы использовать стандартные цены выше. Заполните только некоторые размеры, чтобы предлагать лишь их.', 'ptable.cake': 'Торт', 'ptable.save': 'Сохранить все цены', 'ptable.needSizes': 'Сначала добавьте хотя бы один размер выше и сохраните его — тогда здесь появится таблица.', 'ptable.empty': 'Тортов пока нет. Добавьте торты во вкладке «Торты».', 'ptable.fixed': 'Фикс. €', 'ptable.search': 'Поиск торта…',
         'size.sizePh': 'Размер, напр. 8"', 'size.servesPh': 'Порций, напр. 15-18', 'size.pricePh': '€ цена',
         'logout': 'Выйти', 'viewSite': 'Открыть сайт →',
         'orders.searchPh': 'Поиск: имя / телефон / код', 'orders.emptyTitle': 'Заказов пока нет', 'orders.emptySub': 'Заказы с формы на сайте появятся здесь',
@@ -167,6 +170,8 @@ function applyAdminI18n() {
     if (typeof loadFlavours === 'function') loadFlavours();
     if (typeof loadReviews === 'function') loadReviews();
     if (typeof loadCertificates === 'function') loadCertificates();
+    if (typeof renderGlobalSizes === 'function') renderGlobalSizes();
+    if (typeof renderPriceTable === 'function') renderPriceTable();
 }
 
 function initAdminLang() {
@@ -1390,6 +1395,94 @@ function gatherGlobalSizes() {
     });
 })();
 
+// ----- Bulk price table: every cake × every global size -----
+function priceForSize(cake, sizeLabel) {
+    if (!cake || !cake.sizes) return '';
+    for (var i = 0; i < cake.sizes.length; i++) {
+        if (cake.sizes[i] && cake.sizes[i].size === sizeLabel) {
+            return cake.sizes[i].price != null ? String(cake.sizes[i].price) : '';
+        }
+    }
+    return '';
+}
+function renderPriceTable() {
+    var wrap = document.getElementById('priceTableWrap');
+    if (!wrap) return;
+    var sizes = globalSizes();
+    if (!sizes.length) { wrap.innerHTML = '<p class="price-table__msg">' + at('ptable.needSizes') + '</p>'; return; }
+    var cakes = getData('products', null) || [];
+    if (!cakes.length) { wrap.innerHTML = '<p class="price-table__msg">' + at('ptable.empty') + '</p>'; return; }
+
+    var head = '<th class="price-table__cakecol">' + at('ptable.cake') + '</th>';
+    for (var s = 0; s < sizes.length; s++) {
+        head += '<th>' + escapeHtml(sizes[s].size || '') + '</th>';
+    }
+    var rows = '';
+    for (var i = 0; i < cakes.length; i++) {
+        var c = cakes[i] || {};
+        var nameCell = '<td class="price-table__cakecol"><div class="price-table__cakeinner">' +
+            (c.photo ? '<img class="price-table__thumb" src="' + c.photo + '" alt="">' : '') +
+            '<span>' + escapeHtml(c.name || '') + '</span></div></td>';
+        var cells = '';
+        if (c.price) {
+            cells = '<td colspan="' + sizes.length + '" class="price-table__fixed">' + at('ptable.fixed') + escapeHtml(c.price) + '</td>';
+        } else {
+            for (var s2 = 0; s2 < sizes.length; s2++) {
+                cells += '<td><input type="text" inputmode="decimal" class="price-table__input" data-cake="' + i + '" data-size="' + s2 + '" value="' + escapeHtml(priceForSize(c, sizes[s2].size)) + '"></td>';
+            }
+        }
+        rows += '<tr data-row="' + i + '" data-name="' + escapeHtml((c.name || '').toLowerCase()) + '">' + nameCell + cells + '</tr>';
+    }
+    wrap.innerHTML = '<div class="price-table__scroll"><table class="price-table"><thead><tr>' + head + '</tr></thead><tbody>' + rows + '</tbody></table></div>';
+
+    // Enter / arrow-down jumps to the cell below (fast column entry)
+    wrap.querySelectorAll('.price-table__input').forEach(function(inp) {
+        inp.addEventListener('keydown', function(e) {
+            if (e.key !== 'Enter' && e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+            e.preventDefault();
+            var sz = this.getAttribute('data-size');
+            var col = wrap.querySelectorAll('.price-table__input[data-size="' + sz + '"]');
+            var idx = -1;
+            for (var k = 0; k < col.length; k++) if (col[k] === this) { idx = k; break; }
+            var next = col[idx + (e.key === 'ArrowUp' ? -1 : 1)];
+            if (next) { next.focus(); next.select(); }
+        });
+    });
+}
+function savePriceTable() {
+    var cakes = getData('products', null) || [];
+    var sizes = globalSizes();
+    if (!sizes.length || !cakes.length) return;
+    document.querySelectorAll('#priceTableWrap tbody tr').forEach(function(tr) {
+        var i = parseInt(tr.getAttribute('data-row'));
+        var c = cakes[i];
+        if (!c || c.price) return; // fixed-price cakes are left untouched
+        var newSizes = [];
+        tr.querySelectorAll('.price-table__input').forEach(function(inp) {
+            var p = inp.value.trim();
+            var sIdx = parseInt(inp.getAttribute('data-size'));
+            var gs = sizes[sIdx];
+            if (p && gs) newSizes.push({ size: gs.size, serves: gs.serves, price: p });
+        });
+        if (newSizes.length) c.sizes = newSizes;
+        else delete c.sizes;
+    });
+    setData('products', cakes);
+    var st = document.getElementById('priceTableStatus');
+    if (st) { st.textContent = at('content.saved'); setTimeout(function() { st.textContent = ''; }, 3000); }
+}
+(function() {
+    var save = document.getElementById('savePriceTableBtn');
+    if (save) save.addEventListener('click', savePriceTable);
+    var search = document.getElementById('priceTableSearch');
+    if (search) search.addEventListener('input', function() {
+        var q = this.value.trim().toLowerCase();
+        document.querySelectorAll('#priceTableWrap tbody tr').forEach(function(tr) {
+            tr.style.display = (!q || tr.getAttribute('data-name').indexOf(q) > -1) ? '' : 'none';
+        });
+    });
+})();
+
 function priceRange(sizes) {
     if (!sizes || !sizes.length) return at('priceOnRequest');
     var nums = sizes.map(function(s) { return parseFloat(s.price); }).filter(function(n) { return !isNaN(n); });
@@ -1793,8 +1886,8 @@ function loadAllData() {
         if (mcm && mcm.style.display === 'flex') renderManageCats();
     });
     listenData('orders', function() { loadOrders(); });
-    listenData('products', function() { loadCakes(); });
-    listenData('default-sizes', function() { renderGlobalSizes(); loadCakes(); });
+    listenData('products', function() { loadCakes(); renderPriceTable(); });
+    listenData('default-sizes', function() { renderGlobalSizes(); loadCakes(); renderPriceTable(); });
     listenData('gallery-cat', function() { loadGallery(); });
     listenData('certificates', function() { loadCertificates(); });
     listenData('flavours', function(val) {
