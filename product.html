@@ -50,7 +50,12 @@
 
         <div class="product__grid" id="productGrid" style="display:none;">
             <div class="product__media">
-                <img id="pImg" src="" alt="">
+                <div class="product__media-main">
+                    <img id="pImg" src="" alt="">
+                    <button type="button" class="product__media-nav product__media-nav--prev" id="pImgPrev" aria-label="Previous photo" style="display:none;">‹</button>
+                    <button type="button" class="product__media-nav product__media-nav--next" id="pImgNext" aria-label="Next photo" style="display:none;">›</button>
+                </div>
+                <div class="product__thumbs" id="pThumbs"></div>
             </div>
             <div class="product__info">
                 <h1 class="product__name" id="pName"></h1>

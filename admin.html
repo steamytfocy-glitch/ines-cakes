@@ -202,8 +202,9 @@
                         </div>
                         <div class="modal__field">
                             <label data-i18n="photo">Photo</label>
-                            <input type="file" id="cakePhoto" accept="image/*">
-                            <div id="cakePhotoPreview" style="margin-top:8px;"></div>
+                            <input type="file" id="cakePhoto" accept="image/*" multiple>
+                            <p class="content-hint" style="margin:6px 0 0;" data-i18n="photosHint">You can add several photos — the first is the main one; customers can swipe through the rest.</p>
+                            <div id="cakePhotoPreview" class="cake-photos-preview" style="margin-top:8px;"></div>
                         </div>
                         <div class="modal__field">
                             <label data-i18n="descOptional">Description (optional)</label>

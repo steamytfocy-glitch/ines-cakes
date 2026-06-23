@@ -612,6 +612,60 @@ body {
 }
 .cake-size-row__del:hover { background: var(--red); color: #fff; }
 
+/* ===== CAKE PHOTOS (multi) ===== */
+.cake-photos-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.cake-photo-thumb {
+    position: relative;
+    width: 88px;
+    height: 88px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid var(--cream-dark);
+}
+.cake-photo-thumb--main { border-color: var(--gold); }
+.cake-photo-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.cake-photo-thumb__del {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 22px;
+    height: 22px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.55);
+    color: #fff;
+    font-size: 1rem;
+    line-height: 1;
+    cursor: pointer;
+}
+.cake-photo-thumb__badge {
+    position: absolute;
+    bottom: 2px;
+    left: 2px;
+    background: var(--gold);
+    color: #fff;
+    font-size: 0.7rem;
+    padding: 1px 5px;
+    border-radius: 6px;
+}
+.cake-photo-thumb__main {
+    position: absolute;
+    bottom: 2px;
+    left: 2px;
+    border: none;
+    background: rgba(0, 0, 0, 0.45);
+    color: #fff;
+    font-size: 0.75rem;
+    padding: 1px 5px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.cake-photo-thumb__main:hover { background: var(--gold); }
+
 /* ===== BULK PRICE TABLE ===== */
 .price-table__search {
     width: 100%;

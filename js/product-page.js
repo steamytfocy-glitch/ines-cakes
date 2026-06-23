@@ -192,8 +192,43 @@ function updatePrice() {
     }
 }
 
+var _photos = [];
+var _photoIdx = 0;
+
+function showPhoto(idx) {
+    if (!_photos.length) return;
+    _photoIdx = (idx + _photos.length) % _photos.length;
+    document.getElementById('pImg').src = _photos[_photoIdx];
+    document.querySelectorAll('#pThumbs .product__thumb').forEach(function(t, i) {
+        t.classList.toggle('product__thumb--active', i === _photoIdx);
+    });
+}
+
+function renderGallery() {
+    _photos = (product.photos && product.photos.length) ? product.photos.slice() : (product.photo ? [product.photo] : []);
+    _photoIdx = 0;
+    var img = document.getElementById('pImg');
+    img.src = _photos[0] || '';
+    var multi = _photos.length > 1;
+    document.getElementById('pImgPrev').style.display = multi ? '' : 'none';
+    document.getElementById('pImgNext').style.display = multi ? '' : 'none';
+    img.classList.toggle('product__img--clickable', multi);
+
+    var thumbs = document.getElementById('pThumbs');
+    if (multi) {
+        thumbs.innerHTML = _photos.map(function(src, i) {
+            return '<button type="button" class="product__thumb' + (i === 0 ? ' product__thumb--active' : '') + '" data-i="' + i + '"><img src="' + src + '" alt=""></button>';
+        }).join('');
+        thumbs.querySelectorAll('.product__thumb').forEach(function(btn) {
+            btn.addEventListener('click', function() { showPhoto(parseInt(this.dataset.i)); });
+        });
+    } else {
+        thumbs.innerHTML = '';
+    }
+}
+
 function renderProduct() {
-    document.getElementById('pImg').src = product.photo || '';
+    renderGallery();
     document.getElementById('pName').textContent = product.name || '';
     document.getElementById('pLoc').textContent = t('prod.loc');
     var desc = document.getElementById('pDesc');
@@ -342,6 +377,11 @@ function showToast(msg) {
 
 document.getElementById('pSize').addEventListener('change', updatePrice);
 
+// Photo gallery navigation
+document.getElementById('pImgNext').addEventListener('click', function(e) { e.stopPropagation(); showPhoto(_photoIdx + 1); });
+document.getElementById('pImgPrev').addEventListener('click', function(e) { e.stopPropagation(); showPhoto(_photoIdx - 1); });
+document.getElementById('pImg').addEventListener('click', function() { if (_photos.length > 1) showPhoto(_photoIdx + 1); });
+
 function hasSizes() { return effectiveSizes().length; }
 
 document.getElementById('pAddBtn').addEventListener('click', function() {
@@ -373,7 +413,7 @@ document.getElementById('pRefBtn').addEventListener('click', function() {
     var s = currentSize();
     var ref = {
         name: product.name || '',
-        photo: product.photo || '',
+        photo: _photos[_photoIdx] || product.photo || '',
         size: s ? s.size : '',
         flavour: document.getElementById('pFlavour').value || '',
         date: selectedDate()
