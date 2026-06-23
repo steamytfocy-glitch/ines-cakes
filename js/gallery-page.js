@@ -47,6 +47,7 @@ var translations = {
 
 var currentLang = localStorage.getItem('ines-lang') || 'en';
 var _products = [];
+var _defaultSizes = [];
 var refPick = false;
 try { refPick = localStorage.getItem('ines-ref-pick') === '1'; } catch (e) {}
 
@@ -97,7 +98,7 @@ function escapeHtml(str) { if (!str) return ''; var d = document.createElement('
 
 function priceLabel(p) {
     if (p.price && parseFloat(p.price)) return '€' + p.price;
-    var sizes = p.sizes || [];
+    var sizes = (p.sizes && p.sizes.length) ? p.sizes : _defaultSizes;
     var nums = sizes.map(function(s) { return parseFloat(s.price); }).filter(function(n) { return !isNaN(n); });
     if (!nums.length) return t('gal.priceReq');
     return t('gal.from') + ' €' + Math.min.apply(null, nums);
@@ -191,6 +192,7 @@ document.getElementById('galleryBack').addEventListener('click', function() {
 function init() {
     fbGet('categories', function(cats) {
         if (cats && cats.length) CATEGORIES = cats;
+        fbGet('default-sizes', function(ds) { _defaultSizes = (ds && ds.length) ? ds : []; });
         fbGet('products', function(products) {
             _products = products || [];
             render();

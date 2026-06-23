@@ -63,6 +63,10 @@
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18"/><path d="M5 21v-8a7 7 0 0114 0v8"/><path d="M12 6V3"/><circle cx="12" cy="2.2" r="1"/></svg>
                 <span data-i18n="nav.cakes">Cakes</span>
             </button>
+            <button class="sidebar__link" data-tab="sizes">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><line x1="3.27" y1="6.96" x2="12" y2="12.01"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                <span data-i18n="nav.sizes">Sizes &amp; Prices</span>
+            </button>
             <button class="sidebar__link" data-tab="flavours">
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a7 7 0 00-7 7c0 2 1 3 1 5h12c0-2 1-3 1-5a7 7 0 00-7-7z"/><line x1="6" y1="18" x2="18" y2="18"/><line x1="7" y1="22" x2="17" y2="22"/></svg>
                 <span data-i18n="nav.flavours">Flavours</span>
@@ -268,6 +272,22 @@
                     <div class="modal__buttons">
                         <button type="button" class="btn-cancel" id="manageCatsClose" data-i18n="close">Close</button>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SIZES & PRICES TAB (global defaults) -->
+        <div class="tab-content" id="tab-sizes">
+            <div class="content-admin">
+                <div class="content-section">
+                    <p class="content-hint" style="margin:0 0 12px;" data-i18n="sizes.hint">These sizes &amp; prices apply to every cake automatically. Set them once here.</p>
+                    <div id="globalSizesList"></div>
+                    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;">
+                        <button type="button" class="btn-cancel" id="addGlobalSizeBtn" data-i18n="sizes.add">+ Add size</button>
+                        <button type="button" class="btn-cancel" id="fillStdGlobalSizesBtn" data-i18n="sizes.fillStandard">+ Add standard sizes (6"–12")</button>
+                    </div>
+                    <button class="btn-admin" id="saveGlobalSizesBtn" style="margin-top:14px;" data-i18n="sizes.save">Save sizes</button>
+                    <p class="save-status" id="globalSizesStatus"></p>
                 </div>
             </div>
         </div>
@@ -490,13 +510,6 @@
                             <span class="content-hint" data-i18n="content.numOnly35">Number only, e.g. 35</span>
                         </div>
                     </div>
-                </div>
-
-                <div class="content-section">
-                    <h3 data-i18n="content.weight">Weight prices</h3>
-                    <p class="content-hint" style="margin:0 0 10px;" data-i18n="content.weightHint">List of weights and their fixed prices — shown in the custom order form.</p>
-                    <div id="weightPricesList"></div>
-                    <button type="button" class="btn-cancel" id="addWeightBtn" style="margin-top:6px;" data-i18n="content.addWeight">+ Add weight</button>
                 </div>
 
                 <div class="content-section">

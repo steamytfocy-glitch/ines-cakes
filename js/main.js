@@ -445,6 +445,9 @@ function applyTranslations(lang) {
     if (typeof renderWorkCategories === 'function') {
         renderWorkCategories();
     }
+    if (typeof populateCustomSizes === 'function') {
+        populateCustomSizes(_customSizes);
+    }
 }
 
 function setLanguage(lang, animate) {
@@ -701,8 +704,34 @@ cakeSizeSelect.addEventListener('change', function() {
 });
 customDiameterInput.addEventListener('input', recalcTotal);
 
-var cakeWeightSelect = document.getElementById('cakeWeight');
-if (cakeWeightSelect) cakeWeightSelect.addEventListener('change', recalcTotal);
+// Size options in the custom form come from the global Sizes & Prices list.
+var _customSizes = [];
+function populateCustomSizes(list) {
+    if (!cakeSizeSelect) return;
+    var tr = translations[currentLang] || translations.en;
+    var prev = cakeSizeSelect.value;
+    _customSizes = (list || []).filter(function(s) { return s && (s.size || s.price); });
+    var html = '<option value="" disabled selected>' + (tr['order.sizePlaceholder'] || 'Select size') + '</option>';
+    if (_customSizes.length) {
+        for (var i = 0; i < _customSizes.length; i++) {
+            var s = _customSizes[i];
+            var lbl = s.size + (s.serves ? ' (' + s.serves + ')' : '') + (s.price ? ' — €' + s.price : '');
+            html += '<option value="g' + i + '">' + escapeHtml(lbl) + '</option>';
+        }
+    } else {
+        html += '<option value="mini">' + (tr['order.sizeMini'] || 'Mini — 5" (13 cm)') + '</option>';
+        html += '<option value="maxi">' + (tr['order.sizeMaxi'] || 'Maxi — 6" (15 cm)') + '</option>';
+    }
+    html += '<option value="custom">' + (tr['order.sizeCustom'] || 'Custom size') + '</option>';
+    cakeSizeSelect.innerHTML = html;
+    if (prev) { cakeSizeSelect.value = prev; }
+}
+function loadCustomSizes() {
+    fbGet('default-sizes', function(ds) {
+        populateCustomSizes(ds || []);
+        recalcTotal();
+    });
+}
 
 // ===== PRICE CALCULATOR =====
 var selectedFlavourPrice = 0;
@@ -726,6 +755,11 @@ function sizePrice() {
     if (!size) return null;
     if (size === 'mini') return basePriceMini;
     if (size === 'maxi') return basePriceMaxi;
+    if (size.charAt(0) === 'g') {
+        var gs = _customSizes[parseInt(size.slice(1))];
+        var gp = gs ? parseFloat(gs.price) : NaN;
+        return isNaN(gp) ? null : gp;
+    }
     var inch = getInches();
     if (inch === null) return null;
     return Math.round(basePriceMini + Math.max(0, inch - 5) * PRICE_PER_INCH);
@@ -736,8 +770,7 @@ function recalcTotal() {
     var hidden = document.getElementById('orderTotalHidden');
     if (!valueEl) return;
 
-    var weightPrice = (typeof selectedWeightPrice === 'function') ? selectedWeightPrice() : null;
-    var base = weightPrice !== null ? weightPrice : sizePrice();
+    var base = sizePrice();
     if (base === null) {
         var t = (translations[currentLang] && translations[currentLang]['cakes.priceAgreed']) || 'Price on request';
         valueEl.textContent = t;
@@ -879,7 +912,6 @@ orderForm.addEventListener('submit', function(e) {
             photo: photoData || (customRef && customRef.photo) || '',
             refName: (customRef && customRef.name) || '',
             size: sizeText,
-            weight: selectedWeightText(),
             flavour: document.getElementById('flavour').value || '',
             date: dateStr,
             message: document.getElementById('message').value.trim(),
@@ -1142,42 +1174,8 @@ function loadAdminContent() {
         var sFb = document.getElementById('successFacebook');
         if (sInsta && content.contactInsta) sInsta.href = content.contactInsta;
         if (sFb && content.contactFacebook) sFb.href = content.contactFacebook;
-        populateWeightOptions(content.weightPrices);
         recalcTotal();
     });
-}
-
-function populateWeightOptions(list) {
-    var sel = document.getElementById('cakeWeight');
-    var row = document.getElementById('weightRow');
-    if (!sel || !row) return;
-    list = (list || []).filter(function(w) { return w && (w.weight || w.price); });
-    if (!list.length) { row.style.display = 'none'; return; }
-    var prev = sel.value;
-    var ph = (translations[currentLang] && translations[currentLang]['order.weightChoose']) || 'Choose a weight';
-    var html = '<option value="">' + ph + '</option>';
-    for (var i = 0; i < list.length; i++) {
-        var w = list[i];
-        var label = w.weight + (w.price ? ' — €' + w.price : '');
-        html += '<option value="' + i + '" data-price="' + escapeHtml(w.price || '') + '">' + escapeHtml(label) + '</option>';
-    }
-    sel.innerHTML = html;
-    if (prev) sel.value = prev;
-    row.style.display = '';
-}
-
-function selectedWeightPrice() {
-    var sel = document.getElementById('cakeWeight');
-    if (!sel || !sel.value) return null;
-    var opt = sel.options[sel.selectedIndex];
-    var p = parseFloat(opt.getAttribute('data-price'));
-    return isNaN(p) ? null : p;
-}
-
-function selectedWeightText() {
-    var sel = document.getElementById('cakeWeight');
-    if (!sel || !sel.value) return '';
-    return sel.options[sel.selectedIndex].textContent;
 }
 
 function escapeHtml(str) {
@@ -1367,6 +1365,7 @@ document.addEventListener('DOMContentLoaded', function() {
     loadFlavoursShowcase();
     loadLatestReviews();
     loadAdminContent();
+    loadCustomSizes();
     recalcTotal();
     initCustomReference();
 });

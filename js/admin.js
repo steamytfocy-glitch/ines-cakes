@@ -41,7 +41,9 @@ function listenData(key, callback) {
 var A = {
     en: {
         'login.title': 'Admin Panel', 'login.user': 'Login', 'login.pass': 'Password', 'login.signin': 'Sign In', 'login.wrong': 'Wrong login or password',
-        'nav.orders': 'Orders', 'nav.cakes': 'Cakes', 'nav.flavours': 'Flavours', 'nav.certificates': 'Certificates', 'nav.reviews': 'Reviews', 'nav.content': 'Content',
+        'nav.orders': 'Orders', 'nav.cakes': 'Cakes', 'nav.sizes': 'Sizes & Prices', 'nav.flavours': 'Flavours', 'nav.certificates': 'Certificates', 'nav.reviews': 'Reviews', 'nav.content': 'Content',
+        'sizes.hint': 'These sizes & prices apply to every cake automatically. Set them once here. You can still override sizes for a single cake in its form.', 'sizes.add': '+ Add size', 'sizes.fillStandard': '+ Add standard sizes (6"–12")', 'sizes.save': 'Save sizes',
+        'size.sizePh': 'Size, e.g. 8"', 'size.servesPh': 'Serves, e.g. 15-18', 'size.pricePh': '€ price',
         'logout': 'Log out', 'viewSite': 'View Site →',
         'orders.searchPh': 'Search name / phone / code', 'orders.emptyTitle': 'No orders yet', 'orders.emptySub': 'Orders from the website form will appear here',
         'orders.allCaught': 'All caught up', 'orders.allCaughtSub': 'Completed orders are hidden. Click "Show completed" to see them.',
@@ -58,7 +60,7 @@ var A = {
         'priceOnRequest': 'Price on request',
         'cakeModal.addTitle': 'Add Cake', 'cakeModal.editTitle': 'Edit Cake', 'cake.name': 'Cake Name', 'cake.namePh': 'e.g. Sunset Fields Art Cake', 'category': 'Category', 'newCategory': '+ New category', 'photo': 'Photo', 'descOptional': 'Description (optional)', 'descPh': 'Short description',
         'cake.price': 'Cake price (€) — optional', 'cake.priceHint': 'One fixed price for this cake. If set, it is used instead of the per-size prices below.',
-        'sizesPrices': 'Sizes & prices', 'sizesHint': 'Add each size you offer with its price and how many it serves.', 'addSize': '+ Add size', 'addAllSizes': '+ Add all standard sizes (6"–12")', 'availableFlavours': 'Available flavours', 'chooseFlavours': 'Choose flavours', 'flavoursSuffix': 'selected', 'leadTime': 'Lead time — days notice required', 'saveCake': 'Save Cake',
+        'sizesPrices': 'Sizes & prices (optional)', 'sizesHint': 'Leave empty to use the global Sizes & Prices. Add rows only to override them for this cake.', 'addSize': '+ Add size', 'addAllSizes': '+ Add all standard sizes (6"–12")', 'availableFlavours': 'Available flavours', 'chooseFlavours': 'Choose flavours', 'flavoursSuffix': 'selected', 'leadTime': 'Lead time — days notice required', 'saveCake': 'Save Cake',
         'selectFlavours': 'Select flavours', 'flavourPickHint': 'Tap the flavours available for this cake. To add a new flavour, use the Flavours tab.', 'flavoursNoneModal': 'No flavours yet. Add them in the Flavours tab first.',
         'manageCatsHint': 'Add, rename or delete the categories used for your cakes.', 'addCategory': '+ Add Category', 'newCatPrompt': 'New category name:',
         'cert.add': 'Add Certificate', 'cert.modalTitle': 'Add Certificate', 'cert.front': 'Front photo', 'cert.back': 'Back photo (optional)', 'cert.save': 'Save Certificate', 'cert.emptyTitle': 'No certificates yet', 'cert.emptySub': 'Upload your HACCP / hygiene certificates to show on the site',
@@ -72,7 +74,9 @@ var A = {
     },
     ua: {
         'login.title': 'Панель адміністратора', 'login.user': 'Логін', 'login.pass': 'Пароль', 'login.signin': 'Увійти', 'login.wrong': 'Невірний логін або пароль',
-        'nav.orders': 'Замовлення', 'nav.cakes': 'Торти', 'nav.flavours': 'Смаки', 'nav.certificates': 'Сертифікати', 'nav.reviews': 'Відгуки', 'nav.content': 'Контент',
+        'nav.orders': 'Замовлення', 'nav.cakes': 'Торти', 'nav.sizes': 'Розміри та ціни', 'nav.flavours': 'Смаки', 'nav.certificates': 'Сертифікати', 'nav.reviews': 'Відгуки', 'nav.content': 'Контент',
+        'sizes.hint': 'Ці розміри та ціни застосовуються до кожного торта автоматично. Задайте їх тут один раз. За потреби можна змінити розміри для окремого торта в його формі.', 'sizes.add': '+ Додати розмір', 'sizes.fillStandard': '+ Додати стандартні розміри (6"–12")', 'sizes.save': 'Зберегти розміри',
+        'size.sizePh': 'Розмір, напр. 8"', 'size.servesPh': 'Порцій, напр. 15-18', 'size.pricePh': '€ ціна',
         'logout': 'Вийти', 'viewSite': 'Перейти на сайт →',
         'orders.searchPh': 'Пошук: ім\'я / телефон / код', 'orders.emptyTitle': 'Замовлень поки немає', 'orders.emptySub': 'Замовлення з форми на сайті з\'являться тут',
         'orders.allCaught': 'Усе опрацьовано', 'orders.allCaughtSub': 'Завершені замовлення приховані. Натисніть «Показати завершені», щоб побачити їх.',
@@ -89,7 +93,7 @@ var A = {
         'priceOnRequest': 'Ціна за домовленістю',
         'cakeModal.addTitle': 'Додати торт', 'cakeModal.editTitle': 'Редагувати торт', 'cake.name': 'Назва торта', 'cake.namePh': 'напр. Sunset Fields Art Cake', 'category': 'Категорія', 'newCategory': '+ Нова категорія', 'photo': 'Фото', 'descOptional': 'Опис (необов\'язково)', 'descPh': 'Короткий опис',
         'cake.price': 'Ціна торта (€) — необов\'язково', 'cake.priceHint': 'Одна фіксована ціна за цей торт. Якщо вказана, використовується замість цін за розмірами нижче.',
-        'sizesPrices': 'Розміри та ціни', 'sizesHint': 'Додайте кожен розмір з ціною та кількістю порцій.', 'addSize': '+ Додати розмір', 'addAllSizes': '+ Додати всі стандартні розміри (6"–12")', 'availableFlavours': 'Доступні смаки', 'chooseFlavours': 'Обрати смаки', 'flavoursSuffix': 'вибрано', 'leadTime': 'Термін — за скільки днів замовляти', 'saveCake': 'Зберегти торт',
+        'sizesPrices': 'Розміри та ціни (необов\'язково)', 'sizesHint': 'Залиште порожнім, щоб використовувати глобальні «Розміри та ціни». Додавайте рядки лише щоб перевизначити їх для цього торта.', 'addSize': '+ Додати розмір', 'addAllSizes': '+ Додати всі стандартні розміри (6"–12")', 'availableFlavours': 'Доступні смаки', 'chooseFlavours': 'Обрати смаки', 'flavoursSuffix': 'вибрано', 'leadTime': 'Термін — за скільки днів замовляти', 'saveCake': 'Зберегти торт',
         'selectFlavours': 'Оберіть смаки', 'flavourPickHint': 'Торкніться смаків, доступних для цього торта. Щоб додати новий смак, скористайтеся вкладкою «Смаки».', 'flavoursNoneModal': 'Смаків поки немає. Спершу додайте їх у вкладці «Смаки».',
         'manageCatsHint': 'Додавайте, перейменовуйте або видаляйте категорії тортів.', 'addCategory': '+ Додати категорію', 'newCatPrompt': 'Назва нової категорії:',
         'cert.add': 'Додати сертифікат', 'cert.modalTitle': 'Додати сертифікат', 'cert.front': 'Фото лицьового боку', 'cert.back': 'Фото зворотного боку (необов\'язково)', 'cert.save': 'Зберегти сертифікат', 'cert.emptyTitle': 'Сертифікатів поки немає', 'cert.emptySub': 'Завантажте сертифікати HACCP / гігієни для показу на сайті',
@@ -103,7 +107,9 @@ var A = {
     },
     ru: {
         'login.title': 'Панель администратора', 'login.user': 'Логин', 'login.pass': 'Пароль', 'login.signin': 'Войти', 'login.wrong': 'Неверный логин или пароль',
-        'nav.orders': 'Заказы', 'nav.cakes': 'Торты', 'nav.flavours': 'Вкусы', 'nav.certificates': 'Сертификаты', 'nav.reviews': 'Отзывы', 'nav.content': 'Контент',
+        'nav.orders': 'Заказы', 'nav.cakes': 'Торты', 'nav.sizes': 'Размеры и цены', 'nav.flavours': 'Вкусы', 'nav.certificates': 'Сертификаты', 'nav.reviews': 'Отзывы', 'nav.content': 'Контент',
+        'sizes.hint': 'Эти размеры и цены применяются ко всем тортам автоматически. Задайте их здесь один раз. При необходимости можно переопределить размеры для отдельного торта в его форме.', 'sizes.add': '+ Добавить размер', 'sizes.fillStandard': '+ Добавить стандартные размеры (6"–12")', 'sizes.save': 'Сохранить размеры',
+        'size.sizePh': 'Размер, напр. 8"', 'size.servesPh': 'Порций, напр. 15-18', 'size.pricePh': '€ цена',
         'logout': 'Выйти', 'viewSite': 'Открыть сайт →',
         'orders.searchPh': 'Поиск: имя / телефон / код', 'orders.emptyTitle': 'Заказов пока нет', 'orders.emptySub': 'Заказы с формы на сайте появятся здесь',
         'orders.allCaught': 'Всё обработано', 'orders.allCaughtSub': 'Завершённые заказы скрыты. Нажмите «Показать завершённые», чтобы увидеть их.',
@@ -120,7 +126,7 @@ var A = {
         'priceOnRequest': 'Цена по договорённости',
         'cakeModal.addTitle': 'Добавить торт', 'cakeModal.editTitle': 'Изменить торт', 'cake.name': 'Название торта', 'cake.namePh': 'напр. Sunset Fields Art Cake', 'category': 'Категория', 'newCategory': '+ Новая категория', 'photo': 'Фото', 'descOptional': 'Описание (необязательно)', 'descPh': 'Краткое описание',
         'cake.price': 'Цена торта (€) — необязательно', 'cake.priceHint': 'Одна фиксированная цена за торт. Если указана, используется вместо цен по размерам ниже.',
-        'sizesPrices': 'Размеры и цены', 'sizesHint': 'Добавьте каждый размер с ценой и количеством порций.', 'addSize': '+ Добавить размер', 'addAllSizes': '+ Добавить все стандартные размеры (6"–12")', 'availableFlavours': 'Доступные вкусы', 'chooseFlavours': 'Выбрать вкусы', 'flavoursSuffix': 'выбрано', 'leadTime': 'Срок — за сколько дней заказывать', 'saveCake': 'Сохранить торт',
+        'sizesPrices': 'Размеры и цены (необязательно)', 'sizesHint': 'Оставьте пустым, чтобы использовать глобальные «Размеры и цены». Добавляйте строки только чтобы переопределить их для этого торта.', 'addSize': '+ Добавить размер', 'addAllSizes': '+ Добавить все стандартные размеры (6"–12")', 'availableFlavours': 'Доступные вкусы', 'chooseFlavours': 'Выбрать вкусы', 'flavoursSuffix': 'выбрано', 'leadTime': 'Срок — за сколько дней заказывать', 'saveCake': 'Сохранить торт',
         'selectFlavours': 'Выберите вкусы', 'flavourPickHint': 'Нажмите вкусы, доступные для этого торта. Чтобы добавить новый вкус, используйте вкладку «Вкусы».', 'flavoursNoneModal': 'Вкусов пока нет. Сначала добавьте их во вкладке «Вкусы».',
         'manageCatsHint': 'Добавляйте, переименовывайте или удаляйте категории тортов.', 'addCategory': '+ Добавить категорию', 'newCatPrompt': 'Название новой категории:',
         'cert.add': 'Добавить сертификат', 'cert.modalTitle': 'Добавить сертификат', 'cert.front': 'Фото лицевой стороны', 'cert.back': 'Фото обратной стороны (необязательно)', 'cert.save': 'Сохранить сертификат', 'cert.emptyTitle': 'Сертификатов пока нет', 'cert.emptySub': 'Загрузите сертификаты HACCP / гигиены для показа на сайте',
@@ -228,6 +234,7 @@ var topbarTitle = document.getElementById('topbarTitle');
 var tabTitles = {
     orders: 'Orders',
     cakes: 'Cakes',
+    sizes: 'Sizes & Prices',
     gallery: 'Gallery',
     certificates: 'Certificates',
     flavours: 'Flavours',
@@ -1284,41 +1291,6 @@ function updateSiteToggle(s) {
 }
 
 // ===== CONTENT =====
-function addWeightRow(weight, price) {
-    var wrap = document.getElementById('weightPricesList');
-    if (!wrap) return;
-    var row = document.createElement('div');
-    row.className = 'weight-row';
-    row.innerHTML =
-        '<input type="text" class="wp-weight" placeholder="' + at('weight.weightPh') + '" value="' + escapeHtml(weight || '') + '">' +
-        '<input type="text" class="wp-price" placeholder="' + at('weight.pricePh') + '" value="' + escapeHtml(price != null ? String(price) : '') + '">' +
-        '<button type="button" class="cake-size-row__del" aria-label="Remove">&times;</button>';
-    row.querySelector('.cake-size-row__del').addEventListener('click', function() { row.remove(); });
-    wrap.appendChild(row);
-}
-
-function renderWeightPrices(list) {
-    var wrap = document.getElementById('weightPricesList');
-    if (!wrap) return;
-    wrap.innerHTML = '';
-    (list || []).forEach(function(w) { if (w) addWeightRow(w.weight, w.price); });
-}
-
-function gatherWeightPrices() {
-    var list = [];
-    document.querySelectorAll('#weightPricesList .weight-row').forEach(function(r) {
-        var w = r.querySelector('.wp-weight').value.trim();
-        var p = r.querySelector('.wp-price').value.trim();
-        if (w || p) list.push({ weight: w, price: p });
-    });
-    return list;
-}
-
-(function() {
-    var btn = document.getElementById('addWeightBtn');
-    if (btn) btn.addEventListener('click', function() { addWeightRow('', ''); });
-})();
-
 function loadContent() {
     var content = getData('content', null);
     if (!content) return;
@@ -1329,7 +1301,6 @@ function loadContent() {
             field.value = content[key];
         }
     });
-    renderWeightPrices(content.weightPrices);
 }
 
 document.getElementById('saveContentBtn').addEventListener('click', function() {
@@ -1337,7 +1308,6 @@ document.getElementById('saveContentBtn').addEventListener('click', function() {
     document.querySelectorAll('[data-key]').forEach(function(field) {
         content[field.dataset.key] = field.value.trim();
     });
-    content.weightPrices = gatherWeightPrices();
     setData('content', content);
     var status = document.getElementById('saveStatus');
     status.textContent = at('content.saved');
@@ -1364,9 +1334,61 @@ var STANDARD_SIZES = [
     { size: '11"', serves: '40-45' },
     { size: '12"', serves: '50-55' }
 ];
-function addAllStandardSizes() {
-    STANDARD_SIZES.forEach(function(s) { addCakeSizeRow(s.size, s.serves, ''); });
+// Global default sizes & prices, applied to every cake unless the cake overrides them.
+function globalSizes() {
+    var g = getData('default-sizes', null);
+    return (g && g.length) ? g : [];
 }
+function addAllStandardSizes() {
+    var src = globalSizes();
+    if (src.length) src.forEach(function(s) { addCakeSizeRow(s.size, s.serves, s.price); });
+    else STANDARD_SIZES.forEach(function(s) { addCakeSizeRow(s.size, s.serves, ''); });
+}
+
+// ----- Global Sizes & Prices tab -----
+function addGlobalSizeRow(size, serves, price) {
+    var wrap = document.getElementById('globalSizesList');
+    if (!wrap) return;
+    var row = document.createElement('div');
+    row.className = 'cake-size-row';
+    row.innerHTML =
+        '<input type="text" class="gs-size" placeholder="' + at('size.sizePh') + '" value="' + escapeHtml(size || '') + '">' +
+        '<input type="text" class="gs-serves" placeholder="' + at('size.servesPh') + '" value="' + escapeHtml(serves || '') + '">' +
+        '<input type="text" class="gs-price" placeholder="' + at('size.pricePh') + '" value="' + escapeHtml(price != null ? String(price) : '') + '">' +
+        '<button type="button" class="cake-size-row__del" aria-label="Remove">&times;</button>';
+    row.querySelector('.cake-size-row__del').addEventListener('click', function() { row.remove(); });
+    wrap.appendChild(row);
+}
+function renderGlobalSizes() {
+    var wrap = document.getElementById('globalSizesList');
+    if (!wrap) return;
+    wrap.innerHTML = '';
+    var list = getData('default-sizes', null);
+    if (list && list.length) list.forEach(function(s) { if (s) addGlobalSizeRow(s.size, s.serves, s.price); });
+    else STANDARD_SIZES.forEach(function(s) { addGlobalSizeRow(s.size, s.serves, ''); });
+}
+function gatherGlobalSizes() {
+    var list = [];
+    document.querySelectorAll('#globalSizesList .cake-size-row').forEach(function(r) {
+        var s = r.querySelector('.gs-size').value.trim();
+        var sv = r.querySelector('.gs-serves').value.trim();
+        var p = r.querySelector('.gs-price').value.trim();
+        if (s || p) list.push({ size: s, serves: sv, price: p });
+    });
+    return list;
+}
+(function() {
+    var add = document.getElementById('addGlobalSizeBtn');
+    if (add) add.addEventListener('click', function() { addGlobalSizeRow('', '', ''); });
+    var fill = document.getElementById('fillStdGlobalSizesBtn');
+    if (fill) fill.addEventListener('click', function() { STANDARD_SIZES.forEach(function(s) { addGlobalSizeRow(s.size, s.serves, ''); }); });
+    var save = document.getElementById('saveGlobalSizesBtn');
+    if (save) save.addEventListener('click', function() {
+        setData('default-sizes', gatherGlobalSizes());
+        var st = document.getElementById('globalSizesStatus');
+        if (st) { st.textContent = at('content.saved'); setTimeout(function() { st.textContent = ''; }, 3000); }
+    });
+})();
 
 function priceRange(sizes) {
     if (!sizes || !sizes.length) return at('priceOnRequest');
@@ -1403,7 +1425,7 @@ function loadCakes() {
             img +
             '<div class="cake-admin-card__body">' +
                 '<div class="cake-admin-card__name">' + escapeHtml(c.name) + '</div>' +
-                '<div class="cake-admin-card__meta">' + escapeHtml(catNameById(c.category)) + ' · ' + (c.price ? '€' + escapeHtml(c.price) : priceRange(c.sizes)) + '</div>' +
+                '<div class="cake-admin-card__meta">' + escapeHtml(catNameById(c.category)) + ' · ' + (c.price ? '€' + escapeHtml(c.price) : priceRange((c.sizes && c.sizes.length) ? c.sizes : globalSizes())) + '</div>' +
                 '<div class="cake-admin-card__actions">' +
                     '<button class="btn-edit" data-cake-edit="' + i + '">' + at('edit') + '</button>' +
                     '<button class="btn-delete" data-cake-del="' + i + '">' + at('delete') + '</button>' +
@@ -1589,8 +1611,8 @@ function openCakeModal(editId) {
         pendingCakePhoto = c.photo || null;
         document.getElementById('cakePhotoPreview').innerHTML = c.photo ? '<img src="' + c.photo + '" style="max-width:140px;border-radius:8px;">' : '';
         var sizes = c.sizes || [];
-        if (!sizes.length) addCakeSizeRow('', '', '');
-        else sizes.forEach(function(s) { addCakeSizeRow(s.size, s.serves, s.price); });
+        // Empty = this cake uses the global sizes. Only show rows if it overrides them.
+        sizes.forEach(function(s) { addCakeSizeRow(s.size, s.serves, s.price); });
     } else {
         document.getElementById('cakeModalTitle').textContent = at('cakeModal.addTitle');
         document.getElementById('cakeEditId').value = '';
@@ -1602,7 +1624,7 @@ function openCakeModal(editId) {
         cakeSelectedFlavours = [];
         renderCakeFlavoursSelected();
         document.getElementById('cakePhotoPreview').innerHTML = '';
-        addAllStandardSizes();
+        // Leave sizes empty so the cake uses the global Sizes & Prices automatically.
     }
     document.getElementById('cakeModal').style.display = 'flex';
 }
@@ -1772,6 +1794,7 @@ function loadAllData() {
     });
     listenData('orders', function() { loadOrders(); });
     listenData('products', function() { loadCakes(); });
+    listenData('default-sizes', function() { renderGlobalSizes(); loadCakes(); });
     listenData('gallery-cat', function() { loadGallery(); });
     listenData('certificates', function() { loadCertificates(); });
     listenData('flavours', function(val) {

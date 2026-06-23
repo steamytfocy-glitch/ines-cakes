@@ -95,6 +95,12 @@ var currentLang = localStorage.getItem('ines-lang') || 'en';
 var product = null;
 var productIndex = null;
 var selectedAllergies = [];
+var _defaultSizes = [];
+
+// A cake uses its own sizes if it has any, otherwise the global default sizes.
+function effectiveSizes() {
+    return (product && product.sizes && product.sizes.length) ? product.sizes : _defaultSizes;
+}
 
 function t(k) { var tr = translations[currentLang] || translations.en; return tr[k] || translations.en[k] || k; }
 
@@ -161,7 +167,7 @@ function selectedDate() {
 function currentSize() {
     var sel = document.getElementById('pSize');
     if (!sel || sel.value === '') return null;
-    return product.sizes[parseInt(sel.value)];
+    return effectiveSizes()[parseInt(sel.value)];
 }
 
 function updatePrice() {
@@ -174,7 +180,7 @@ function updatePrice() {
     if (s && parseFloat(s.price)) {
         el.textContent = '€ ' + parseFloat(s.price);
     } else {
-        var nums = (product.sizes || []).map(function(x) { return parseFloat(x.price); }).filter(function(n) { return !isNaN(n); });
+        var nums = effectiveSizes().map(function(x) { return parseFloat(x.price); }).filter(function(n) { return !isNaN(n); });
         var fromWord = { en: 'from', ua: 'від', ru: 'от' }[currentLang] || 'from';
         el.textContent = nums.length ? (fromWord + ' €' + Math.min.apply(null, nums)) : '';
     }
@@ -190,7 +196,7 @@ function renderProduct() {
 
     // sizes
     var sizeSel = document.getElementById('pSize');
-    var sizes = product.sizes || [];
+    var sizes = effectiveSizes();
     var html = '<option value="">' + t('prod.choose') + '</option>';
     for (var i = 0; i < sizes.length; i++) {
         var label = sizes[i].size + (sizes[i].price ? ' — €' + sizes[i].price : '');
@@ -328,7 +334,7 @@ function showToast(msg) {
 
 document.getElementById('pSize').addEventListener('change', updatePrice);
 
-function hasSizes() { return product.sizes && product.sizes.length; }
+function hasSizes() { return effectiveSizes().length; }
 
 document.getElementById('pAddBtn').addEventListener('click', function() {
     var s = currentSize();
@@ -383,8 +389,11 @@ document.querySelectorAll('.lang-btn').forEach(function(b) { b.classList.toggle(
             return;
         }
         product = products[productIndex];
-        document.getElementById('productGrid').style.display = '';
-        renderProduct();
-        fbGet('flavours', function(fl) { _flavours = (fl && fl.length) ? fl : DEFAULT_FLAVOURS; setupFlavours(); });
+        fbGet('default-sizes', function(ds) {
+            _defaultSizes = (ds && ds.length) ? ds : [];
+            document.getElementById('productGrid').style.display = '';
+            renderProduct();
+            fbGet('flavours', function(fl) { _flavours = (fl && fl.length) ? fl : DEFAULT_FLAVOURS; setupFlavours(); });
+        });
     });
 })();
