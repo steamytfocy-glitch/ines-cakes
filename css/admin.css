@@ -586,7 +586,7 @@ body {
 
 .cake-size-row {
     display: grid;
-    grid-template-columns: 1fr 1fr 64px 80px 32px;
+    grid-template-columns: 1fr 1fr 90px 32px;
     gap: 8px;
     margin-bottom: 8px;
     align-items: center;

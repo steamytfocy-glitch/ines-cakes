@@ -44,7 +44,7 @@ var A = {
         'nav.orders': 'Orders', 'nav.cakes': 'Cakes', 'nav.sizes': 'Sizes & Prices', 'nav.flavours': 'Flavours', 'nav.certificates': 'Certificates', 'nav.reviews': 'Reviews', 'nav.content': 'Content',
         'sizes.hint': 'These sizes & prices apply to every cake automatically. Set them once here. You can still override sizes for a single cake in its form.', 'sizes.add': '+ Add size', 'sizes.fillStandard': '+ Add standard sizes (6"–12")', 'sizes.save': 'Save sizes',
         'ptable.title': 'Price table — all cakes', 'ptable.hint': 'Type a price for each size, per cake. Leave a cake empty to use the default prices above. Fill only some sizes to offer just those.', 'ptable.cake': 'Cake', 'ptable.save': 'Save all prices', 'ptable.needSizes': 'Add at least one size above first, then save it — the table will appear here.', 'ptable.empty': 'No cakes yet. Add cakes in the Cakes tab.', 'ptable.fixed': 'Fixed €', 'ptable.search': 'Search cake…',
-        'size.sizePh': 'Size, e.g. 8"', 'size.servesPh': 'Serves, e.g. 15-18', 'size.weightPh': 'kg', 'size.pricePh': '€ price',
+        'size.sizePh': 'Size (inch), e.g. 8', 'size.servesPh': 'Serves, e.g. 15-18', 'size.pricePh': '€ price',
         'logout': 'Log out', 'viewSite': 'View Site →',
         'orders.searchPh': 'Search name / phone / code', 'orders.emptyTitle': 'No orders yet', 'orders.emptySub': 'Orders from the website form will appear here',
         'orders.allCaught': 'All caught up', 'orders.allCaughtSub': 'Completed orders are hidden. Click "Show completed" to see them.',
@@ -78,7 +78,7 @@ var A = {
         'nav.orders': 'Замовлення', 'nav.cakes': 'Торти', 'nav.sizes': 'Розміри та ціни', 'nav.flavours': 'Смаки', 'nav.certificates': 'Сертифікати', 'nav.reviews': 'Відгуки', 'nav.content': 'Контент',
         'sizes.hint': 'Ці розміри та ціни застосовуються до кожного торта автоматично. Задайте їх тут один раз. За потреби можна змінити розміри для окремого торта в його формі.', 'sizes.add': '+ Додати розмір', 'sizes.fillStandard': '+ Додати стандартні розміри (6"–12")', 'sizes.save': 'Зберегти розміри',
         'ptable.title': 'Таблиця цін — усі торти', 'ptable.hint': 'Введіть ціну для кожного розміру по кожному торту. Залиште торт порожнім, щоб використати стандартні ціни вище. Заповніть лише деякі розміри, щоб пропонувати тільки їх.', 'ptable.cake': 'Торт', 'ptable.save': 'Зберегти всі ціни', 'ptable.needSizes': 'Спершу додайте хоча б один розмір вище та збережіть його — тоді тут зʼявиться таблиця.', 'ptable.empty': 'Тортів ще немає. Додайте торти у вкладці «Торти».', 'ptable.fixed': 'Фікс. €', 'ptable.search': 'Пошук торта…',
-        'size.sizePh': 'Розмір, напр. 8"', 'size.servesPh': 'Порцій, напр. 15-18', 'size.weightPh': 'кг', 'size.pricePh': '€ ціна',
+        'size.sizePh': 'Розмір (inch), напр. 8', 'size.servesPh': 'Порцій, напр. 15-18', 'size.pricePh': '€ ціна',
         'logout': 'Вийти', 'viewSite': 'Перейти на сайт →',
         'orders.searchPh': 'Пошук: ім\'я / телефон / код', 'orders.emptyTitle': 'Замовлень поки немає', 'orders.emptySub': 'Замовлення з форми на сайті з\'являться тут',
         'orders.allCaught': 'Усе опрацьовано', 'orders.allCaughtSub': 'Завершені замовлення приховані. Натисніть «Показати завершені», щоб побачити їх.',
@@ -112,7 +112,7 @@ var A = {
         'nav.orders': 'Заказы', 'nav.cakes': 'Торты', 'nav.sizes': 'Размеры и цены', 'nav.flavours': 'Вкусы', 'nav.certificates': 'Сертификаты', 'nav.reviews': 'Отзывы', 'nav.content': 'Контент',
         'sizes.hint': 'Эти размеры и цены применяются ко всем тортам автоматически. Задайте их здесь один раз. При необходимости можно переопределить размеры для отдельного торта в его форме.', 'sizes.add': '+ Добавить размер', 'sizes.fillStandard': '+ Добавить стандартные размеры (6"–12")', 'sizes.save': 'Сохранить размеры',
         'ptable.title': 'Таблица цен — все торты', 'ptable.hint': 'Впишите цену для каждого размера по каждому торту. Оставьте торт пустым, чтобы использовать стандартные цены выше. Заполните только некоторые размеры, чтобы предлагать лишь их.', 'ptable.cake': 'Торт', 'ptable.save': 'Сохранить все цены', 'ptable.needSizes': 'Сначала добавьте хотя бы один размер выше и сохраните его — тогда здесь появится таблица.', 'ptable.empty': 'Тортов пока нет. Добавьте торты во вкладке «Торты».', 'ptable.fixed': 'Фикс. €', 'ptable.search': 'Поиск торта…',
-        'size.sizePh': 'Размер, напр. 8"', 'size.servesPh': 'Порций, напр. 15-18', 'size.weightPh': 'кг', 'size.pricePh': '€ цена',
+        'size.sizePh': 'Размер (inch), напр. 8', 'size.servesPh': 'Порций, напр. 15-18', 'size.pricePh': '€ цена',
         'logout': 'Выйти', 'viewSite': 'Открыть сайт →',
         'orders.searchPh': 'Поиск: имя / телефон / код', 'orders.emptyTitle': 'Заказов пока нет', 'orders.emptySub': 'Заказы с формы на сайте появятся здесь',
         'orders.allCaught': 'Всё обработано', 'orders.allCaughtSub': 'Завершённые заказы скрыты. Нажмите «Показать завершённые», чтобы увидеть их.',
@@ -1072,7 +1072,7 @@ function loadFlavours() {
             '<div class="flavour-admin-card__body">' +
                 '<div class="flavour-admin-card__name">' + escapeHtml(f.name) + '</div>' +
                 (f.desc ? '<div class="flavour-admin-card__desc">' + escapeHtml(f.desc) + '</div>' : '') +
-                (f.price ? '<div class="flavour-admin-card__price">€' + escapeHtml(f.price) + ' / kg</div>' : '') +
+                (f.price ? '<div class="flavour-admin-card__price">+ €' + escapeHtml(f.price) + '</div>' : '') +
                 '<div class="flavour-admin-card__actions">' +
                     '<button class="btn-edit" data-flavour-edit="' + i + '">' + at('edit') + '</button>' +
                     '<button class="btn-delete" data-flavour-del="' + i + '">' + at('delete') + '</button>' +
@@ -1331,13 +1331,13 @@ function escapeHtml(str) {
 var pendingCakePhoto = null;
 
 var STANDARD_SIZES = [
-    { size: '6"', serves: '6-8', weight: '1' },
-    { size: '7"', serves: '10-13', weight: '1.4' },
-    { size: '8"', serves: '15-18', weight: '2' },
-    { size: '9"', serves: '20-25', weight: '2.7' },
-    { size: '10"', serves: '30-35', weight: '3.5' },
-    { size: '11"', serves: '40-45', weight: '4.3' },
-    { size: '12"', serves: '50-55', weight: '5' }
+    { size: '6"', serves: '6-8' },
+    { size: '7"', serves: '10-13' },
+    { size: '8"', serves: '15-18' },
+    { size: '9"', serves: '20-25' },
+    { size: '10"', serves: '30-35' },
+    { size: '11"', serves: '40-45' },
+    { size: '12"', serves: '50-55' }
 ];
 // Global default sizes & prices, applied to every cake unless the cake overrides them.
 function globalSizes() {
@@ -1346,12 +1346,12 @@ function globalSizes() {
 }
 function addAllStandardSizes() {
     var src = globalSizes();
-    if (src.length) src.forEach(function(s) { addCakeSizeRow(s.size, s.serves, s.price, s.weight); });
-    else STANDARD_SIZES.forEach(function(s) { addCakeSizeRow(s.size, s.serves, '', s.weight); });
+    if (src.length) src.forEach(function(s) { addCakeSizeRow(s.size, s.serves, s.price); });
+    else STANDARD_SIZES.forEach(function(s) { addCakeSizeRow(s.size, s.serves, ''); });
 }
 
 // ----- Global Sizes & Prices tab -----
-function addGlobalSizeRow(size, serves, price, weight) {
+function addGlobalSizeRow(size, serves, price) {
     var wrap = document.getElementById('globalSizesList');
     if (!wrap) return;
     var row = document.createElement('div');
@@ -1359,7 +1359,6 @@ function addGlobalSizeRow(size, serves, price, weight) {
     row.innerHTML =
         '<input type="text" class="gs-size" placeholder="' + at('size.sizePh') + '" value="' + escapeHtml(size || '') + '">' +
         '<input type="text" class="gs-serves" placeholder="' + at('size.servesPh') + '" value="' + escapeHtml(serves || '') + '">' +
-        '<input type="text" class="gs-weight" placeholder="' + at('size.weightPh') + '" value="' + escapeHtml(weight != null ? String(weight) : '') + '">' +
         '<input type="text" class="gs-price" placeholder="' + at('size.pricePh') + '" value="' + escapeHtml(price != null ? String(price) : '') + '">' +
         '<button type="button" class="cake-size-row__del" aria-label="Remove">&times;</button>';
     row.querySelector('.cake-size-row__del').addEventListener('click', function() { row.remove(); });
@@ -1370,25 +1369,24 @@ function renderGlobalSizes() {
     if (!wrap) return;
     wrap.innerHTML = '';
     var list = getData('default-sizes', null);
-    if (list && list.length) list.forEach(function(s) { if (s) addGlobalSizeRow(s.size, s.serves, s.price, s.weight); });
-    else STANDARD_SIZES.forEach(function(s) { addGlobalSizeRow(s.size, s.serves, '', s.weight); });
+    if (list && list.length) list.forEach(function(s) { if (s) addGlobalSizeRow(s.size, s.serves, s.price); });
+    else STANDARD_SIZES.forEach(function(s) { addGlobalSizeRow(s.size, s.serves, ''); });
 }
 function gatherGlobalSizes() {
     var list = [];
     document.querySelectorAll('#globalSizesList .cake-size-row').forEach(function(r) {
         var s = r.querySelector('.gs-size').value.trim();
         var sv = r.querySelector('.gs-serves').value.trim();
-        var w = r.querySelector('.gs-weight').value.trim();
         var p = r.querySelector('.gs-price').value.trim();
-        if (s || p || w) list.push({ size: s, serves: sv, weight: w, price: p });
+        if (s || p) list.push({ size: s, serves: sv, price: p });
     });
     return list;
 }
 (function() {
     var add = document.getElementById('addGlobalSizeBtn');
-    if (add) add.addEventListener('click', function() { addGlobalSizeRow('', '', '', ''); });
+    if (add) add.addEventListener('click', function() { addGlobalSizeRow('', '', ''); });
     var fill = document.getElementById('fillStdGlobalSizesBtn');
-    if (fill) fill.addEventListener('click', function() { STANDARD_SIZES.forEach(function(s) { addGlobalSizeRow(s.size, s.serves, '', s.weight); }); });
+    if (fill) fill.addEventListener('click', function() { STANDARD_SIZES.forEach(function(s) { addGlobalSizeRow(s.size, s.serves, ''); }); });
     var save = document.getElementById('saveGlobalSizesBtn');
     if (save) save.addEventListener('click', function() {
         setData('default-sizes', gatherGlobalSizes());
@@ -1464,7 +1462,7 @@ function savePriceTable() {
             var p = inp.value.trim();
             var sIdx = parseInt(inp.getAttribute('data-size'));
             var gs = sizes[sIdx];
-            if (p && gs) newSizes.push({ size: gs.size, serves: gs.serves, weight: gs.weight, price: p });
+            if (p && gs) newSizes.push({ size: gs.size, serves: gs.serves, price: p });
         });
         if (newSizes.length) c.sizes = newSizes;
         else delete c.sizes;
@@ -1655,7 +1653,7 @@ function openCakeFlavourModal() {
                 '<div class="flavour-pick-card__check">&#10003;</div>' +
                 img +
                 '<div class="flavour-pick-card__name">' + escapeHtml(f.name) + '</div>' +
-                (f.price ? '<div class="flavour-pick-card__price">€' + escapeHtml(f.price) + ' / kg</div>' : '') +
+                (f.price ? '<div class="flavour-pick-card__price">+ €' + escapeHtml(f.price) + '</div>' : '') +
             '</div>';
         }).join('');
         grid.querySelectorAll('.flavour-pick-card').forEach(function(card) {
@@ -1674,14 +1672,13 @@ function openCakeFlavourModal() {
     document.getElementById('cakeFlavourModal').style.display = 'flex';
 }
 
-function addCakeSizeRow(size, serves, price, weight) {
+function addCakeSizeRow(size, serves, price) {
     var wrap = document.getElementById('cakeSizesRows');
     var row = document.createElement('div');
     row.className = 'cake-size-row';
     row.innerHTML =
         '<input type="text" class="cs-size" placeholder="Size (e.g. 6&quot;)" value="' + escapeHtml(size || '') + '">' +
         '<input type="text" class="cs-serves" placeholder="Serves (e.g. 6-8)" value="' + escapeHtml(serves || '') + '">' +
-        '<input type="text" class="cs-weight" placeholder="' + at('size.weightPh') + '" value="' + (weight != null ? escapeHtml(String(weight)) : '') + '">' +
         '<input type="number" class="cs-price" placeholder="€" min="0" step="0.5" value="' + (price != null ? escapeHtml(String(price)) : '') + '">' +
         '<button type="button" class="cake-size-row__del" aria-label="Remove">&times;</button>';
     row.querySelector('.cake-size-row__del').addEventListener('click', function() { row.remove(); });
@@ -1708,7 +1705,7 @@ function openCakeModal(editId) {
         document.getElementById('cakePhotoPreview').innerHTML = c.photo ? '<img src="' + c.photo + '" style="max-width:140px;border-radius:8px;">' : '';
         var sizes = c.sizes || [];
         // Empty = this cake uses the global sizes. Only show rows if it overrides them.
-        sizes.forEach(function(s) { addCakeSizeRow(s.size, s.serves, s.price, s.weight); });
+        sizes.forEach(function(s) { addCakeSizeRow(s.size, s.serves, s.price); });
     } else {
         document.getElementById('cakeModalTitle').textContent = at('cakeModal.addTitle');
         document.getElementById('cakeEditId').value = '';
@@ -1728,7 +1725,7 @@ function openCakeModal(editId) {
 document.getElementById('addCakeBtn').addEventListener('click', function() { openCakeModal(null); });
 document.getElementById('cakeCancel').addEventListener('click', function() { document.getElementById('cakeModal').style.display = 'none'; });
 document.querySelector('#cakeModal .modal__overlay').addEventListener('click', function() { document.getElementById('cakeModal').style.display = 'none'; });
-document.getElementById('addSizeRowBtn').addEventListener('click', function() { addCakeSizeRow('', '', '', ''); });
+document.getElementById('addSizeRowBtn').addEventListener('click', function() { addCakeSizeRow('', '', ''); });
 document.getElementById('addAllSizesBtn').addEventListener('click', function() { addAllStandardSizes(); });
 
 document.getElementById('cakeFlavourBtn').addEventListener('click', openCakeFlavourModal);
@@ -1763,9 +1760,8 @@ document.getElementById('cakeForm').addEventListener('submit', function(e) {
     document.querySelectorAll('#cakeSizesRows .cake-size-row').forEach(function(row) {
         var size = row.querySelector('.cs-size').value.trim();
         var serves = row.querySelector('.cs-serves').value.trim();
-        var weight = row.querySelector('.cs-weight').value.trim();
         var price = row.querySelector('.cs-price').value.trim();
-        if (size || price || weight) sizes.push({ size: size, serves: serves, weight: weight, price: price });
+        if (size || price) sizes.push({ size: size, serves: serves, price: price });
     });
     var flavours = cakeSelectedFlavours.slice();
 

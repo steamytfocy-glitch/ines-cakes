@@ -655,8 +655,8 @@ function renderFlavourGrid(flavours) {
             ? '<img src="' + f.photo + '" class="flavour-card__img" alt="' + escapeHtml(f.name) + '">'
             : '<div class="flavour-card__placeholder"><svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>';
         var priceText = f.price
-            ? '€' + escapeHtml(f.price) + ' / kg'
-            : ((translations[currentLang] && translations[currentLang]['cakes.priceAgreed']) || 'Price on request');
+            ? '+ €' + escapeHtml(f.price)
+            : '';
         html += '<div class="flavour-card" data-flavour="' + escapeHtml(f.name) + '" data-price="' + escapeHtml(f.price || '') + '">' +
             '<div class="flavour-card__imgwrap">' +
                 imgHtml +
@@ -716,13 +716,12 @@ function populateCustomSizes(list) {
     if (!cakeSizeSelect) return;
     var tr = translations[currentLang] || translations.en;
     var prev = cakeSizeSelect.value;
-    _customSizes = (list || []).filter(function(s) { return s && (s.size || s.price || s.weight); });
-    var kgLabel = (tr['order.kg'] || 'kg');
+    _customSizes = (list || []).filter(function(s) { return s && (s.size || s.price); });
     var html = '<option value="" disabled selected>' + (tr['order.sizePlaceholder'] || 'Select size') + '</option>';
     if (_customSizes.length) {
         for (var i = 0; i < _customSizes.length; i++) {
             var s = _customSizes[i];
-            var lbl = s.size + (s.weight ? ' — ' + s.weight + ' ' + kgLabel : '') + (s.serves ? ' (' + s.serves + ')' : '');
+            var lbl = s.size + (s.serves ? ' (' + s.serves + ')' : '') + (s.price ? ' — €' + s.price : '');
             html += '<option value="g' + i + '">' + escapeHtml(lbl) + '</option>';
         }
     } else {
@@ -825,26 +824,6 @@ function sizePrice() {
     return Math.round(basePriceMini + Math.max(0, inch - 5) * PRICE_PER_INCH);
 }
 
-// Rough weight from diameter (6" ≈ 1 kg, scales with area) for sizes without an explicit weight.
-function inchesToKg(inch) { return Math.round((inch * inch / 36) * 10) / 10; }
-
-function sizeWeight() {
-    var size = cakeSizeSelect.value;
-    if (!size) return 0;
-    if (size.charAt(0) === 'g') {
-        var gs = _customSizes[parseInt(size.slice(1))];
-        if (gs) {
-            var w = parseFloat(gs.weight);
-            if (!isNaN(w)) return w;
-            var sn = parseFloat(String(gs.size).replace(/[^0-9.]/g, ''));
-            if (!isNaN(sn)) return inchesToKg(sn);
-        }
-        return 0;
-    }
-    var inch = getInches();
-    return inch === null ? 0 : inchesToKg(inch);
-}
-
 function recalcTotal() {
     var valueEl = document.getElementById('orderTotalValue');
     var hidden = document.getElementById('orderTotalHidden');
@@ -852,17 +831,14 @@ function recalcTotal() {
     var box = document.getElementById('orderTotal');
     var bdEl = document.getElementById('orderTotalBreakdown');
     var tr = translations[currentLang] || translations.en;
-    var kg = tr['order.kg'] || 'kg';
     var priceReq = tr['cakes.priceAgreed'] || 'Price on request';
 
     var sizeSelected = !!cakeSizeSelect.value;
-    var base = sizePrice();                 // may be null (size without its own base price)
-    var weight = sizeWeight();              // kg (0 if unknown)
-    var flavRate = selectedFlavourPrice || 0;
-    var flavourCost = Math.round(flavRate * weight);
+    var base = sizePrice();                  // size price, may be null
+    var flavour = selectedFlavourPrice || 0; // flat flavour surcharge
     var hasBase = base !== null;
 
-    if (!sizeSelected || (!hasBase && !flavourCost)) {
+    if (!sizeSelected || (!hasBase && !flavour)) {
         valueEl.textContent = sizeSelected ? priceReq : '—';
         if (hidden) hidden.value = '';
         if (box) box.style.display = sizeSelected ? '' : 'none';
@@ -870,15 +846,15 @@ function recalcTotal() {
         return;
     }
 
-    var total = (hasBase ? base : 0) + flavourCost;
+    var total = (hasBase ? base : 0) + flavour;
     valueEl.textContent = '€' + total;
     if (hidden) hidden.value = '€' + total;
     if (box) box.style.display = '';
     if (bdEl) {
         var parts = [];
         if (hasBase) parts.push('€' + base);
-        if (flavourCost) parts.push('€' + flavRate + '/' + kg + ' × ' + weight + ' ' + kg + ' = €' + flavourCost);
-        bdEl.textContent = parts.join('  +  ');
+        if (flavour) parts.push('+ €' + flavour);
+        bdEl.textContent = parts.length > 1 ? parts.join('  ') : '';
     }
 }
 
@@ -1213,9 +1189,7 @@ function loadFlavoursShowcase() {
             var imgHtml = f.photo
                 ? '<img src="' + f.photo + '" class="flavour-card__img" alt="' + escapeHtml(f.name) + '">'
                 : '<div class="flavour-card__placeholder"><svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>';
-            var priceText = f.price
-                ? '€' + escapeHtml(f.price) + ' / kg'
-                : ((translations[currentLang] && translations[currentLang]['cakes.priceAgreed']) || 'Price on request');
+            var priceText = f.price ? '+ €' + escapeHtml(f.price) : '';
             html += '<div class="flavour-card">' +
                 '<div class="flavour-card__imgwrap">' + imgHtml +
                     '<div class="flavour-card__caption">' +

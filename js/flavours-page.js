@@ -63,7 +63,7 @@ function loadAllFlavours() {
             var imgHtml = f.photo
                 ? '<img src="' + f.photo + '" class="flavour-card__img" alt="' + escapeHtml(f.name) + '">'
                 : '<div class="flavour-card__placeholder"><svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>';
-            var priceText = f.price ? '€' + escapeHtml(f.price) + ' / kg' : requestText;
+            var priceText = f.price ? '+ €' + escapeHtml(f.price) : '';
             html += '<div class="flavour-card">' +
                 '<div class="flavour-card__imgwrap">' + imgHtml +
                     '<div class="flavour-card__caption">' +

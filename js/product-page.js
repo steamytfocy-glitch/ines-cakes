@@ -170,19 +170,22 @@ function currentSize() {
     return effectiveSizes()[parseInt(sel.value)];
 }
 
+var selectedFlavourPrice = 0;
+
 function updatePrice() {
     var el = document.getElementById('pPrice');
+    var fl = selectedFlavourPrice || 0;
     if (product.price && parseFloat(product.price)) {
-        el.textContent = '€ ' + parseFloat(product.price);
+        el.textContent = '€ ' + (parseFloat(product.price) + fl);
         return;
     }
     var s = currentSize();
     if (s && parseFloat(s.price)) {
-        el.textContent = '€ ' + parseFloat(s.price);
+        el.textContent = '€ ' + (parseFloat(s.price) + fl);
     } else {
         var nums = effectiveSizes().map(function(x) { return parseFloat(x.price); }).filter(function(n) { return !isNaN(n); });
         var fromWord = { en: 'from', ua: 'від', ru: 'от' }[currentLang] || 'from';
-        el.textContent = nums.length ? (fromWord + ' €' + Math.min.apply(null, nums)) : '';
+        el.textContent = nums.length ? (fromWord + ' €' + (Math.min.apply(null, nums) + fl)) : '';
     }
 }
 
@@ -248,8 +251,8 @@ function flavourCardHtml(f) {
     var img = f.photo
         ? '<img src="' + f.photo + '" class="flavour-card__img" alt="' + escapeHtml(f.name) + '">'
         : '<div class="flavour-card__placeholder"><svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>';
-    var price = f.price ? ('€' + escapeHtml(f.price) + ' / kg') : '';
-    return '<div class="flavour-card" data-flavour="' + escapeHtml(f.name) + '">' +
+    var price = f.price ? ('+ €' + escapeHtml(f.price)) : '';
+    return '<div class="flavour-card" data-flavour="' + escapeHtml(f.name) + '" data-price="' + escapeHtml(f.price || '') + '">' +
         '<div class="flavour-card__imgwrap">' + img +
             '<div class="flavour-card__caption">' +
                 '<div class="flavour-card__name">' + escapeHtml(f.name) + '</div>' +
@@ -281,11 +284,13 @@ function setupFlavours() {
         card.addEventListener('click', function() {
             var name = this.dataset.flavour;
             document.getElementById('pFlavour').value = name;
+            selectedFlavourPrice = parseFloat(this.dataset.price) || 0;
             var txt = document.getElementById('pFlavourText');
             txt.textContent = name;
             txt.removeAttribute('data-i18n');
             document.getElementById('pFlavourBtn').classList.add('has-value');
             document.getElementById('flavourModal').style.display = 'none';
+            updatePrice();
         });
     });
 }
@@ -342,6 +347,7 @@ document.getElementById('pAddBtn').addEventListener('click', function() {
     var date = selectedDate();
     if (!date) { showToast(t('prod.pickDate')); return; }
     var qty = parseInt(document.getElementById('pQty').value) || 1;
+    var basePrice = parseFloat(product.price) || (s ? parseFloat(s.price) : 0) || 0;
 
     addToCart({
         i: productIndex,
@@ -349,7 +355,7 @@ document.getElementById('pAddBtn').addEventListener('click', function() {
         photo: product.photo || '',
         size: s ? s.size : '',
         serves: s ? (s.serves || '') : '',
-        price: parseFloat(product.price) || (s ? parseFloat(s.price) : 0) || 0,
+        price: basePrice ? (basePrice + (selectedFlavourPrice || 0)) : 0,
         flavour: document.getElementById('pFlavour').value || '',
         date: date,
         qty: qty,
