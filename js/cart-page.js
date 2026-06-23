@@ -72,8 +72,8 @@ document.querySelectorAll('.lang-btn').forEach(function(btn) {
 
 function lineTotal(it) { return (it.qty || 1) * ((parseFloat(it.price) || 0) + (parseFloat(it.giftPrice) || 0)); }
 function priceText(it) {
-    if (it.custom || !parseFloat(it.price)) return t('cart.onRequest');
-    return '€' + lineTotal(it);
+    if (!parseFloat(it.price)) return t('cart.onRequest');
+    return (it.custom ? '≈ €' : '€') + lineTotal(it);
 }
 
 function renderCart() {
@@ -167,7 +167,7 @@ function buildSummary(cart) {
         if (it.decor) sub.push(it.decor);
         if (it.gift) sub.push('gift wrap');
         if (sub.length) parts.push('(' + sub.join(', ') + ')');
-        parts.push((it.custom || !parseFloat(it.price)) ? 'price on request' : ('€' + lineTotal(it)));
+        parts.push(!parseFloat(it.price) ? 'price on request' : ((it.custom ? '≈ €' : '€') + lineTotal(it)));
         var line = parts.join(' ');
         if (it.message) line += ' — note: ' + it.message;
         if (it.allergies) line += ' — allergies: ' + it.allergies;
