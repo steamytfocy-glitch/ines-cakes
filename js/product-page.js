@@ -285,13 +285,19 @@ var DEFAULT_FLAVOURS = [
     { name: 'Lemon', desc: 'Zesty lemon sponge with lemon curd', price: '', photo: null }
 ];
 
-function flavourCardHtml(f) {
-    var img = f.photo
-        ? '<img src="' + f.photo + '" class="flavour-card__img" alt="' + escapeHtml(f.name) + '">'
-        : '<div class="flavour-card__placeholder"><svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>';
+var ZOOM_SVG = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>';
+
+function flavourCardHtml(f, zi) {
+    var img, zoomBtn = '';
+    if (f.photo) {
+        img = '<img src="' + f.photo + '" class="flavour-card__img" alt="' + escapeHtml(f.name) + '">';
+        if (zi != null && zi > -1) zoomBtn = '<button type="button" class="flavour-card__zoom" data-zoom="' + zi + '" aria-label="Zoom">' + ZOOM_SVG + '</button>';
+    } else {
+        img = '<div class="flavour-card__placeholder"><svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>';
+    }
     var price = f.price ? ('+ €' + escapeHtml(f.price)) : '';
     return '<div class="flavour-card" data-flavour="' + escapeHtml(f.name) + '" data-price="' + escapeHtml(f.price || '') + '">' +
-        '<div class="flavour-card__imgwrap">' + img +
+        '<div class="flavour-card__imgwrap">' + img + zoomBtn +
             '<div class="flavour-card__caption">' +
                 '<div class="flavour-card__name">' + escapeHtml(f.name) + '</div>' +
                 (price ? '<div class="flavour-card__price">' + price + '</div>' : '') +
@@ -317,7 +323,16 @@ function setupFlavours() {
     // Never show an empty picker — fall back to the standard flavours
     if (!list.length) list = DEFAULT_FLAVOURS;
     var grid = document.getElementById('pFlavourGrid');
-    grid.innerHTML = list.map(flavourCardHtml).join('');
+    var lbImgs = [];
+    list.forEach(function(f) { if (f.photo) lbImgs.push({ src: f.photo, label: f.name }); });
+    var zi = 0;
+    grid.innerHTML = list.map(function(f) { return flavourCardHtml(f, f.photo ? zi++ : -1); }).join('');
+    grid.querySelectorAll('.flavour-card__zoom').forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (typeof openImageLightbox === 'function') openImageLightbox(lbImgs, parseInt(this.dataset.zoom));
+        });
+    });
     grid.querySelectorAll('.flavour-card').forEach(function(card) {
         card.addEventListener('click', function() {
             var name = this.dataset.flavour;
@@ -380,7 +395,11 @@ document.getElementById('pSize').addEventListener('change', updatePrice);
 // Photo gallery navigation
 document.getElementById('pImgNext').addEventListener('click', function(e) { e.stopPropagation(); showPhoto(_photoIdx + 1); });
 document.getElementById('pImgPrev').addEventListener('click', function(e) { e.stopPropagation(); showPhoto(_photoIdx - 1); });
-document.getElementById('pImg').addEventListener('click', function() { if (_photos.length > 1) showPhoto(_photoIdx + 1); });
+document.getElementById('pImg').addEventListener('click', function() {
+    if (typeof openImageLightbox === 'function' && _photos.length) {
+        openImageLightbox(_photos.map(function(s) { return { src: s, label: product.name || '' }; }), _photoIdx);
+    }
+});
 
 function hasSizes() { return effectiveSizes().length; }
 
