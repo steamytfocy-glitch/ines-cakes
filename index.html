@@ -292,6 +292,20 @@
                 </div>
             </div>
             <div class="form-group form-group--full">
+                <label data-i18n="order.extras">Extra options</label>
+                <div class="addon-row">
+                    <label class="addon-chip">
+                        <input type="checkbox" id="optTall">
+                        <span data-i18n="order.tall">Tall cake (+€10)</span>
+                    </label>
+                    <label class="addon-chip addon-chip--disabled" id="optGFWrap" title="" >
+                        <input type="checkbox" id="optGF" disabled>
+                        <span data-i18n="order.glutenFree">Gluten-free (+€5)</span>
+                    </label>
+                </div>
+                <p class="addon-hint" id="gfHint" data-i18n="order.gfHint" style="display:none;">Gluten-free is available only for some flavours - choose one to enable it.</p>
+            </div>
+            <div class="form-group form-group--full">
                 <label data-i18n="order.allergies">Allergies</label>
                 <div class="allergy-chips" id="allergyChips">
                     <button type="button" class="allergy-chip" data-allergy="gluten" data-i18n="order.al.gluten">Gluten</button>

@@ -23,6 +23,7 @@ var translations = {
         "prod.notice": "Time notice required:",
         "prod.days": "days",
         "prod.leadNote": "⏳ Please order at least 7 days ahead. Urgent orders only by prior arrangement.",
+        "order.extras": "Extra options", "order.tall": "Tall cake (+€10)", "order.glutenFree": "Gluten-free (+€5)", "order.gfHint": "Gluten-free is available only for some flavours - choose one to enable it.",
         "prod.pickSize": "Please choose a size.",
         "prod.pickDate": "Please choose a date.",
         "prod.allergyInfo": "*Allergy info: unless otherwise noted, products contain milk, wheat, soy and egg, and are made in a kitchen that handles nuts. Our facility is not gluten-free.",
@@ -54,6 +55,7 @@ var translations = {
         "prod.notice": "Замовляти за:",
         "prod.days": "дн.",
         "prod.leadNote": "⏳ Замовляйте щонайменше за 7 днів. Термінові замовлення - лише за попередньою домовленістю.",
+        "order.extras": "Додаткові опції", "order.tall": "Високий торт (+€10)", "order.glutenFree": "Без глютену (+€5)", "order.gfHint": "Версія без глютену доступна лише для деяких смаків - оберіть такий, щоб увімкнути.",
         "prod.pickSize": "Будь ласка, оберіть розмір.",
         "prod.pickDate": "Будь ласка, оберіть дату.",
         "prod.allergyInfo": "*Алергени: якщо не вказано інше, продукти містять молоко, пшеницю, сою та яйця і виготовляються на кухні, де є горіхи. Виробництво не є безглютеновим.",
@@ -85,6 +87,7 @@ var translations = {
         "prod.notice": "Заказывать за:",
         "prod.days": "дн.",
         "prod.leadNote": "⏳ Заказывайте минимум за 7 дней. Срочные заказы - только по предварительному согласованию.",
+        "order.extras": "Дополнительные опции", "order.tall": "Высокий торт (+€10)", "order.glutenFree": "Без глютена (+€5)", "order.gfHint": "Версия без глютена доступна только для некоторых вкусов - выберите такой, чтобы включить.",
         "prod.pickSize": "Пожалуйста, выберите размер.",
         "prod.pickDate": "Пожалуйста, выберите дату.",
         "prod.allergyInfo": "*Аллергены: если не указано иное, продукты содержат молоко, пшеницу, сою и яйца и готовятся на кухне, где есть орехи. Производство не безглютеновое.",
@@ -187,10 +190,28 @@ function currentSize() {
 }
 
 var selectedFlavourPrice = 0;
+var selectedFlavourGF = false;
+var ADDON_TALL = 10, ADDON_GF = 5;
+
+function addonTotal() {
+    var tall = document.getElementById('pTall');
+    var gf = document.getElementById('pGF');
+    return ((tall && tall.checked) ? ADDON_TALL : 0) + ((gf && gf.checked && !gf.disabled) ? ADDON_GF : 0);
+}
+function updateGFAvailability() {
+    var gf = document.getElementById('pGF');
+    var wrap = document.getElementById('pGFWrap');
+    var hint = document.getElementById('pGFHint');
+    if (!gf) return;
+    gf.disabled = !selectedFlavourGF;
+    if (wrap) wrap.classList.toggle('addon-chip--disabled', !selectedFlavourGF);
+    if (!selectedFlavourGF) gf.checked = false;
+    if (hint) hint.style.display = selectedFlavourGF ? 'none' : '';
+}
 
 function updatePrice() {
     var el = document.getElementById('pPrice');
-    var fl = selectedFlavourPrice || 0;
+    var fl = (selectedFlavourPrice || 0) + addonTotal();
     if (product.price && parseFloat(product.price)) {
         el.textContent = '€ ' + (parseFloat(product.price) + fl);
         return;
@@ -310,8 +331,9 @@ function flavourCardHtml(f, zi) {
         img = '<div class="flavour-card__placeholder"><svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>';
     }
     var price = f.price ? ('+ €' + escapeHtml(f.price)) : '';
-    return '<div class="flavour-card" data-flavour="' + escapeHtml(f.name) + '" data-price="' + escapeHtml(f.price || '') + '">' +
-        '<div class="flavour-card__imgwrap">' + img + zoomBtn +
+    var gfBadge = f.glutenFree ? '<span class="flavour-card__gf">GF</span>' : '';
+    return '<div class="flavour-card" data-flavour="' + escapeHtml(f.name) + '" data-price="' + escapeHtml(f.price || '') + '" data-gf="' + (f.glutenFree ? '1' : '0') + '">' +
+        '<div class="flavour-card__imgwrap">' + img + zoomBtn + gfBadge +
             '<div class="flavour-card__caption">' +
                 '<div class="flavour-card__name">' + escapeHtml(locName(f)) + '</div>' +
                 (price ? '<div class="flavour-card__price">' + price + '</div>' : '') +
@@ -353,6 +375,8 @@ function setupFlavours() {
             var disp = this.querySelector('.flavour-card__name');
             document.getElementById('pFlavour').value = name;
             selectedFlavourPrice = parseFloat(this.dataset.price) || 0;
+            selectedFlavourGF = this.dataset.gf === '1';
+            updateGFAvailability();
             var txt = document.getElementById('pFlavourText');
             txt.textContent = disp ? disp.textContent : name;
             txt.removeAttribute('data-i18n');
@@ -406,6 +430,12 @@ function showToast(msg) {
 }
 
 document.getElementById('pSize').addEventListener('change', updatePrice);
+(function() {
+    var tall = document.getElementById('pTall');
+    var gf = document.getElementById('pGF');
+    if (tall) tall.addEventListener('change', updatePrice);
+    if (gf) gf.addEventListener('change', updatePrice);
+})();
 
 // Photo gallery navigation
 document.getElementById('pImgNext').addEventListener('click', function(e) { e.stopPropagation(); showPhoto(_photoIdx + 1); });
@@ -425,6 +455,10 @@ document.getElementById('pAddBtn').addEventListener('click', function() {
     if (!date) { showToast(t('prod.pickDate')); return; }
     var qty = parseInt(document.getElementById('pQty').value) || 1;
     var basePrice = parseFloat(product.price) || (s ? parseFloat(s.price) : 0) || 0;
+    var tall = document.getElementById('pTall');
+    var gf = document.getElementById('pGF');
+    var tallOn = !!(tall && tall.checked);
+    var gfOn = !!(gf && gf.checked && !gf.disabled);
 
     addToCart({
         i: productIndex,
@@ -432,10 +466,12 @@ document.getElementById('pAddBtn').addEventListener('click', function() {
         photo: product.photo || '',
         size: s ? s.size : '',
         serves: s ? (s.serves || '') : '',
-        price: basePrice ? (basePrice + (selectedFlavourPrice || 0)) : 0,
+        price: basePrice ? (basePrice + (selectedFlavourPrice || 0) + addonTotal()) : 0,
         flavour: document.getElementById('pFlavour').value || '',
         date: date,
         qty: qty,
+        tall: tallOn,
+        glutenFree: gfOn,
         message: document.getElementById('pMessage').value.trim(),
         allergies: collectAllergies()
     });

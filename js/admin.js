@@ -65,7 +65,7 @@ var A = {
         'selectFlavours': 'Select flavours', 'flavourPickHint': 'Tap the flavours available for this cake. To add a new flavour, use the Flavours tab.', 'flavoursNoneModal': 'No flavours yet. Add them in the Flavours tab first.',
         'manageCatsHint': 'Add, rename or delete the categories used for your cakes.', 'addCategory': '+ Add Category', 'newCatPrompt': 'New category name:',
         'cert.add': 'Add Certificate', 'cert.modalTitle': 'Add Certificate', 'cert.front': 'Front photo', 'cert.back': 'Back photo (optional)', 'cert.save': 'Save Certificate', 'cert.emptyTitle': 'No certificates yet', 'cert.emptySub': 'Upload your HACCP / hygiene certificates to show on the site',
-        'flavour.add': 'Add Flavour', 'flavour.addTitle': 'Add Flavour', 'flavour.editTitle': 'Edit Flavour', 'flavour.name': 'Flavour Name', 'flavour.namePh': 'e.g. Chocolate', 'flavour.desc': 'Description', 'flavour.descPh': 'Short description of the flavour', 'flavour.price': 'Price per kg (€) - optional', 'flavour.pricePh': 'e.g. 30', 'flavour.photo': 'Cross-section Photo', 'flavour.save': 'Save Flavour', 'flavour.emptyTitle': 'No flavours yet', 'flavour.emptySub': 'Add flavours with cross-section photos and prices',
+        'flavour.add': 'Add Flavour', 'flavour.addTitle': 'Add Flavour', 'flavour.editTitle': 'Edit Flavour', 'flavour.name': 'Flavour Name', 'flavour.namePh': 'e.g. Chocolate', 'flavour.desc': 'Description', 'flavour.descPh': 'Short description of the flavour', 'flavour.gf': 'Gluten-free version available (+€5)', 'flavour.price': 'Price per kg (€) - optional', 'flavour.pricePh': 'e.g. 30', 'flavour.photo': 'Cross-section Photo', 'flavour.save': 'Save Flavour', 'flavour.emptyTitle': 'No flavours yet', 'flavour.emptySub': 'Add flavours with cross-section photos and prices',
         'review.add': 'Add Review', 'review.addTitle': 'Add Review', 'review.editTitle': 'Edit Review', 'review.name': 'Customer Name', 'review.rating': 'Rating', 'review.stars5': '5 Stars', 'review.stars4': '4 Stars', 'review.stars3': '3 Stars', 'review.text': 'Review Text', 'review.save': 'Save Review', 'review.emptyTitle': 'No reviews yet', 'review.emptySub': 'Add customer reviews to display on the website',
         'content.websiteStatus': 'Website status', 'siteOn': 'Website is ON', 'siteOff': 'Website is OFF', 'content.maintHint': 'When OFF, visitors see a "We\'ll be right back" maintenance screen instead of the site. Changes apply instantly.', 'content.msgOff': 'Message shown when website is OFF (optional)', 'content.msgPh': "e.g. We're on holiday until July 5th - see you soon!", 'content.saveMsg': 'Save message',
         'content.heroTitle': 'Home hero photo', 'content.heroHint': 'Shown big on the home page. Square photos look best. Leave empty for the default illustration.',
@@ -100,7 +100,7 @@ var A = {
         'selectFlavours': 'Оберіть смаки', 'flavourPickHint': 'Торкніться смаків, доступних для цього торта. Щоб додати новий смак, скористайтеся вкладкою «Смаки».', 'flavoursNoneModal': 'Смаків поки немає. Спершу додайте їх у вкладці «Смаки».',
         'manageCatsHint': 'Додавайте, перейменовуйте або видаляйте категорії тортів.', 'addCategory': '+ Додати категорію', 'newCatPrompt': 'Назва нової категорії:',
         'cert.add': 'Додати сертифікат', 'cert.modalTitle': 'Додати сертифікат', 'cert.front': 'Фото лицьового боку', 'cert.back': 'Фото зворотного боку (необов\'язково)', 'cert.save': 'Зберегти сертифікат', 'cert.emptyTitle': 'Сертифікатів поки немає', 'cert.emptySub': 'Завантажте сертифікати HACCP / гігієни для показу на сайті',
-        'flavour.add': 'Додати смак', 'flavour.addTitle': 'Додати смак', 'flavour.editTitle': 'Редагувати смак', 'flavour.name': 'Назва смаку', 'flavour.namePh': 'напр. Шоколад', 'flavour.desc': 'Опис', 'flavour.descPh': 'Короткий опис смаку', 'flavour.price': 'Ціна за кг (€) - необов\'язково', 'flavour.pricePh': 'напр. 30', 'flavour.photo': 'Фото розрізу', 'flavour.save': 'Зберегти смак', 'flavour.emptyTitle': 'Смаків поки немає', 'flavour.emptySub': 'Додайте смаки з фото розрізу та цінами',
+        'flavour.add': 'Додати смак', 'flavour.addTitle': 'Додати смак', 'flavour.editTitle': 'Редагувати смак', 'flavour.name': 'Назва смаку', 'flavour.namePh': 'напр. Шоколад', 'flavour.desc': 'Опис', 'flavour.descPh': 'Короткий опис смаку', 'flavour.gf': 'Доступна безглютенова версія (+€5)', 'flavour.price': 'Ціна за кг (€) - необов\'язково', 'flavour.pricePh': 'напр. 30', 'flavour.photo': 'Фото розрізу', 'flavour.save': 'Зберегти смак', 'flavour.emptyTitle': 'Смаків поки немає', 'flavour.emptySub': 'Додайте смаки з фото розрізу та цінами',
         'review.add': 'Додати відгук', 'review.addTitle': 'Додати відгук', 'review.editTitle': 'Редагувати відгук', 'review.name': 'Ім\'я клієнта', 'review.rating': 'Оцінка', 'review.stars5': '5 зірок', 'review.stars4': '4 зірки', 'review.stars3': '3 зірки', 'review.text': 'Текст відгуку', 'review.save': 'Зберегти відгук', 'review.emptyTitle': 'Відгуків поки немає', 'review.emptySub': 'Додайте відгуки клієнтів для показу на сайті',
         'content.websiteStatus': 'Статус сайту', 'siteOn': 'Сайт УВІМКНЕНО', 'siteOff': 'Сайт ВИМКНЕНО', 'content.maintHint': 'Коли ВИМКНЕНО, відвідувачі бачать екран «Скоро повернемося» замість сайту. Зміни застосовуються миттєво.', 'content.msgOff': 'Повідомлення, коли сайт вимкнено (необов\'язково)', 'content.msgPh': 'напр. Ми у відпустці до 5 липня - до зустрічі!', 'content.saveMsg': 'Зберегти повідомлення',
         'content.heroTitle': 'Головне фото', 'content.heroHint': 'Показується великим на головній. Найкраще квадратні фото. Залиште порожнім для стандартної ілюстрації.',
@@ -135,7 +135,7 @@ var A = {
         'selectFlavours': 'Выберите вкусы', 'flavourPickHint': 'Нажмите вкусы, доступные для этого торта. Чтобы добавить новый вкус, используйте вкладку «Вкусы».', 'flavoursNoneModal': 'Вкусов пока нет. Сначала добавьте их во вкладке «Вкусы».',
         'manageCatsHint': 'Добавляйте, переименовывайте или удаляйте категории тортов.', 'addCategory': '+ Добавить категорию', 'newCatPrompt': 'Название новой категории:',
         'cert.add': 'Добавить сертификат', 'cert.modalTitle': 'Добавить сертификат', 'cert.front': 'Фото лицевой стороны', 'cert.back': 'Фото обратной стороны (необязательно)', 'cert.save': 'Сохранить сертификат', 'cert.emptyTitle': 'Сертификатов пока нет', 'cert.emptySub': 'Загрузите сертификаты HACCP / гигиены для показа на сайте',
-        'flavour.add': 'Добавить вкус', 'flavour.addTitle': 'Добавить вкус', 'flavour.editTitle': 'Изменить вкус', 'flavour.name': 'Название вкуса', 'flavour.namePh': 'напр. Шоколад', 'flavour.desc': 'Описание', 'flavour.descPh': 'Краткое описание вкуса', 'flavour.price': 'Цена за кг (€) - необязательно', 'flavour.pricePh': 'напр. 30', 'flavour.photo': 'Фото разреза', 'flavour.save': 'Сохранить вкус', 'flavour.emptyTitle': 'Вкусов пока нет', 'flavour.emptySub': 'Добавьте вкусы с фото разреза и ценами',
+        'flavour.add': 'Добавить вкус', 'flavour.addTitle': 'Добавить вкус', 'flavour.editTitle': 'Изменить вкус', 'flavour.name': 'Название вкуса', 'flavour.namePh': 'напр. Шоколад', 'flavour.desc': 'Описание', 'flavour.descPh': 'Краткое описание вкуса', 'flavour.gf': 'Доступна безглютеновая версия (+€5)', 'flavour.price': 'Цена за кг (€) - необязательно', 'flavour.pricePh': 'напр. 30', 'flavour.photo': 'Фото разреза', 'flavour.save': 'Сохранить вкус', 'flavour.emptyTitle': 'Вкусов пока нет', 'flavour.emptySub': 'Добавьте вкусы с фото разреза и ценами',
         'review.add': 'Добавить отзыв', 'review.addTitle': 'Добавить отзыв', 'review.editTitle': 'Изменить отзыв', 'review.name': 'Имя клиента', 'review.rating': 'Оценка', 'review.stars5': '5 звёзд', 'review.stars4': '4 звезды', 'review.stars3': '3 звезды', 'review.text': 'Текст отзыва', 'review.save': 'Сохранить отзыв', 'review.emptyTitle': 'Отзывов пока нет', 'review.emptySub': 'Добавьте отзывы клиентов для показа на сайте',
         'content.websiteStatus': 'Статус сайта', 'siteOn': 'Сайт ВКЛЮЧЁН', 'siteOff': 'Сайт ВЫКЛЮЧЕН', 'content.maintHint': 'Когда ВЫКЛЮЧЕНО, посетители видят экран «Скоро вернёмся» вместо сайта. Изменения применяются мгновенно.', 'content.msgOff': 'Сообщение, когда сайт выключен (необязательно)', 'content.msgPh': 'напр. Мы в отпуске до 5 июля - до встречи!', 'content.saveMsg': 'Сохранить сообщение',
         'content.heroTitle': 'Главное фото', 'content.heroHint': 'Показывается большим на главной. Лучше всего квадратные фото. Оставьте пустым для стандартной иллюстрации.',
@@ -1108,6 +1108,7 @@ function loadFlavours() {
             document.getElementById('flavourDescUa').value = f.desc_ua || '';
             document.getElementById('flavourDescRu').value = f.desc_ru || '';
             document.getElementById('flavourPrice').value = f.price || '';
+            document.getElementById('flavourGF').checked = !!f.glutenFree;
             pendingFlavourPhoto = f.photo || null;
             document.getElementById('flavourPhotoPreview').innerHTML = f.photo ? '<img src="' + f.photo + '" style="max-width:120px;border-radius:8px;">' : '';
             document.getElementById('flavourModalTitle').textContent = at('flavour.editTitle');
@@ -1127,6 +1128,7 @@ document.getElementById('addFlavourBtn').addEventListener('click', function() {
     document.getElementById('flavourDescUa').value = '';
     document.getElementById('flavourDescRu').value = '';
     document.getElementById('flavourPrice').value = '';
+    document.getElementById('flavourGF').checked = false;
     document.getElementById('flavourPhotoPreview').innerHTML = '';
     pendingFlavourPhoto = null;
     document.getElementById('flavourModalTitle').textContent = at('flavour.addTitle');
@@ -1161,6 +1163,7 @@ document.getElementById('flavourForm').addEventListener('submit', function(e) {
         desc_ua: document.getElementById('flavourDescUa').value.trim(),
         desc_ru: document.getElementById('flavourDescRu').value.trim(),
         price: document.getElementById('flavourPrice').value.trim(),
+        glutenFree: document.getElementById('flavourGF').checked,
         photo: pendingFlavourPhoto || null
     };
 

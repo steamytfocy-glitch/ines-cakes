@@ -1964,6 +1964,19 @@ ul { list-style: none; }
     transition: var(--transition);
 }
 .flavour-card__zoom:hover { background: #fff; transform: scale(1.08); }
+.flavour-card__gf {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background: #2E8B57;
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 2px 7px;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.18);
+}
 
 .flavour-card__placeholder {
     width: 100%;
@@ -2353,6 +2366,48 @@ ul { list-style: none; }
 
 .allergy-chip--other.selected {
     border-style: solid;
+}
+
+/* ===== ADD-ON OPTIONS (Tall cake / Gluten-free) ===== */
+.addon-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 6px;
+}
+.addon-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 9px 18px;
+    border: 1.5px solid var(--gold-light);
+    border-radius: 50px;
+    background: var(--white);
+    color: var(--brown);
+    font-size: 0.88rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    user-select: none;
+}
+.addon-chip:hover { border-color: var(--gold); background: var(--cream); }
+.addon-chip input { width: 17px; height: 17px; accent-color: var(--gold); cursor: pointer; }
+.addon-chip:has(input:checked) {
+    background: var(--gold);
+    color: var(--white);
+    border-color: var(--gold);
+    box-shadow: 0 2px 8px rgba(200, 150, 62, 0.25);
+}
+.addon-chip--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    border-style: dashed;
+}
+.addon-chip--disabled input { cursor: not-allowed; }
+.addon-hint {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    margin: 0 0 10px;
 }
 
 .allergy-other-input {

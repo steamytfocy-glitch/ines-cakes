@@ -69,15 +69,25 @@ function loadAllFlavours() {
             return;
         }
         var requestText = (translations[currentLang] && translations[currentLang]['priceRequest']) || 'Price on request';
+        var ZOOM_SVG = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>';
+        var lbImgs = [];
+        flavours.forEach(function(f) { if (f.photo) lbImgs.push({ src: f.photo, label: locName(f) }); });
         var html = '';
+        var zi = 0;
         for (var i = 0; i < flavours.length; i++) {
             var f = flavours[i];
-            var imgHtml = f.photo
-                ? '<img src="' + f.photo + '" class="flavour-card__img" alt="' + escapeHtml(f.name) + '">'
-                : '<div class="flavour-card__placeholder"><svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>';
+            var imgHtml, zoomBtn = '';
+            if (f.photo) {
+                imgHtml = '<img src="' + f.photo + '" class="flavour-card__img" alt="' + escapeHtml(locName(f)) + '" style="cursor:zoom-in;" data-zoom="' + zi + '">';
+                zoomBtn = '<button type="button" class="flavour-card__zoom" data-zoom="' + zi + '" aria-label="Zoom">' + ZOOM_SVG + '</button>';
+                zi++;
+            } else {
+                imgHtml = '<div class="flavour-card__placeholder"><svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>';
+            }
             var priceText = f.price ? '+ €' + escapeHtml(f.price) : '';
+            var gfBadge = f.glutenFree ? '<span class="flavour-card__gf">GF</span>' : '';
             html += '<div class="flavour-card">' +
-                '<div class="flavour-card__imgwrap">' + imgHtml +
+                '<div class="flavour-card__imgwrap">' + imgHtml + zoomBtn + gfBadge +
                     '<div class="flavour-card__caption">' +
                         '<div class="flavour-card__name">' + escapeHtml(locName(f)) + '</div>' +
                         '<div class="flavour-card__price">' + priceText + '</div>' +
@@ -87,6 +97,12 @@ function loadAllFlavours() {
             '</div>';
         }
         grid.innerHTML = html;
+        grid.querySelectorAll('[data-zoom]').forEach(function(el) {
+            el.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (typeof openImageLightbox === 'function') openImageLightbox(lbImgs, parseInt(this.dataset.zoom));
+            });
+        });
     });
 }
 

@@ -103,6 +103,10 @@ const translations = {
         "order.decorComplex": "Complex (+€20)",
         "order.estTotal": "Estimated total",
         "order.leadNote": "⏳ Please order at least 7 days ahead. Urgent orders only by prior arrangement.",
+        "order.extras": "Extra options",
+        "order.tall": "Tall cake (+€10)",
+        "order.glutenFree": "Gluten-free (+€5)",
+        "order.gfHint": "Gluten-free is available only for some flavours - choose one to enable it.",
         "order.kg": "kg",
         "order.totalNote": "* Approximate price - final amount confirmed by our manager",
         "order.message": "Your Wishes / Description",
@@ -242,6 +246,10 @@ const translations = {
         "order.decorComplex": "Складний (+€20)",
         "order.estTotal": "Орієнтовна сума",
         "order.leadNote": "⏳ Замовляйте щонайменше за 7 днів. Термінові замовлення - лише за попередньою домовленістю.",
+        "order.extras": "Додаткові опції",
+        "order.tall": "Високий торт (+€10)",
+        "order.glutenFree": "Без глютену (+€5)",
+        "order.gfHint": "Версія без глютену доступна лише для деяких смаків - оберіть такий, щоб увімкнути.",
         "order.kg": "кг",
         "order.totalNote": "* Приблизна ціна - остаточну суму підтвердить менеджер",
         "order.message": "Ваші побажання / Опис",
@@ -381,6 +389,10 @@ const translations = {
         "order.decorComplex": "Сложный (+€20)",
         "order.estTotal": "Примерная сумма",
         "order.leadNote": "⏳ Заказывайте минимум за 7 дней. Срочные заказы - только по предварительному согласованию.",
+        "order.extras": "Дополнительные опции",
+        "order.tall": "Высокий торт (+€10)",
+        "order.glutenFree": "Без глютена (+€5)",
+        "order.gfHint": "Версия без глютена доступна только для некоторых вкусов - выберите такой, чтобы включить.",
         "order.kg": "кг",
         "order.totalNote": "* Примерная цена - итоговую сумму подтвердит менеджер",
         "order.message": "Ваши пожелания / Описание",
@@ -669,9 +681,10 @@ function renderFlavourGrid(flavours) {
             imgHtml = '<div class="flavour-card__placeholder"><svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>';
         }
         var priceText = f.price ? '+ €' + escapeHtml(f.price) : '';
-        html += '<div class="flavour-card" data-flavour="' + escapeHtml(f.name) + '" data-price="' + escapeHtml(f.price || '') + '">' +
+        var gfBadge = f.glutenFree ? '<span class="flavour-card__gf">GF</span>' : '';
+        html += '<div class="flavour-card" data-flavour="' + escapeHtml(f.name) + '" data-price="' + escapeHtml(f.price || '') + '" data-gf="' + (f.glutenFree ? '1' : '0') + '">' +
             '<div class="flavour-card__imgwrap">' +
-                imgHtml + zoomBtn +
+                imgHtml + zoomBtn + gfBadge +
                 '<div class="flavour-card__caption">' +
                     '<div class="flavour-card__name">' + escapeHtml(locName(f)) + '</div>' +
                     '<div class="flavour-card__price">' + priceText + '</div>' +
@@ -697,6 +710,8 @@ function renderFlavourGrid(flavours) {
             flavourSelectText.textContent = disp ? disp.textContent : name;
             flavourSelectBtn.classList.add('has-value');
             selectedFlavourPrice = parseFloat(this.dataset.price) || 0;
+            selectedFlavourGF = this.dataset.gf === '1';
+            updateGFAvailability();
             flavourModal.style.display = 'none';
             recalcTotal();
         });
@@ -814,9 +829,27 @@ function syncNiceSelect(sel) {
 
 // ===== PRICE CALCULATOR =====
 var selectedFlavourPrice = 0;
+var selectedFlavourGF = false;
 var basePriceMini = 30;   // price for 5"
 var basePriceMaxi = 35;   // price for 6"
 var PRICE_PER_INCH = 5;   // each extra inch beyond 5"
+var ADDON_TALL = 10;      // tall cake surcharge
+var ADDON_GF = 5;         // gluten-free surcharge
+
+var optTall = document.getElementById('optTall');
+var optGF = document.getElementById('optGF');
+var optGFWrap = document.getElementById('optGFWrap');
+var gfHint = document.getElementById('gfHint');
+
+function updateGFAvailability() {
+    if (!optGF) return;
+    optGF.disabled = !selectedFlavourGF;
+    if (optGFWrap) optGFWrap.classList.toggle('addon-chip--disabled', !selectedFlavourGF);
+    if (!selectedFlavourGF) optGF.checked = false;
+    if (gfHint) gfHint.style.display = selectedFlavourGF ? 'none' : '';
+}
+if (optTall) optTall.addEventListener('change', recalcTotal);
+if (optGF) optGF.addEventListener('change', recalcTotal);
 
 function getInches() {
     var size = cakeSizeSelect.value;
@@ -856,9 +889,12 @@ function recalcTotal() {
     var sizeSelected = !!cakeSizeSelect.value;
     var base = sizePrice();                  // size price, may be null
     var flavour = selectedFlavourPrice || 0; // flat flavour surcharge
+    var tall = (optTall && optTall.checked) ? ADDON_TALL : 0;
+    var gf = (optGF && optGF.checked && !optGF.disabled) ? ADDON_GF : 0;
+    var addons = tall + gf;
     var hasBase = base !== null;
 
-    if (!sizeSelected || (!hasBase && !flavour)) {
+    if (!sizeSelected || (!hasBase && !flavour && !addons)) {
         valueEl.textContent = sizeSelected ? priceReq : '-';
         if (hidden) hidden.value = '';
         if (box) box.style.display = sizeSelected ? '' : 'none';
@@ -866,7 +902,7 @@ function recalcTotal() {
         return;
     }
 
-    var total = (hasBase ? base : 0) + flavour;
+    var total = (hasBase ? base : 0) + flavour + addons;
     valueEl.textContent = '€' + total;
     if (hidden) hidden.value = '€' + total;
     if (box) box.style.display = '';
@@ -874,6 +910,8 @@ function recalcTotal() {
         var parts = [];
         if (hasBase) parts.push('€' + base);
         if (flavour) parts.push('+ €' + flavour);
+        if (tall) parts.push('+ €' + tall);
+        if (gf) parts.push('+ €' + gf);
         bdEl.textContent = parts.length > 1 ? parts.join('  ') : '';
     }
 }
@@ -1020,6 +1058,8 @@ orderForm.addEventListener('submit', function(e) {
             date: dateStr,
             message: document.getElementById('message').value.trim(),
             allergies: document.getElementById('allergyHidden').value || '',
+            tall: !!(optTall && optTall.checked),
+            glutenFree: !!(optGF && optGF.checked && !optGF.disabled),
             qty: 1,
             price: est
         });
@@ -1210,16 +1250,26 @@ function loadFlavoursShowcase() {
     if (!grid) return;
     fbGet('flavours', function(flavours) {
         if (!flavours || !flavours.length) flavours = DEFAULT_FLAVOURS;
+        // Lightbox swipes through ALL flavours (not just the 3 shown).
+        var lbImgs = [];
+        flavours.forEach(function(f) { if (f.photo) lbImgs.push({ src: f.photo, label: locName(f) }); });
         var first = flavours.slice(0, 3);
         var html = '';
+        var zi = 0;
         for (var i = 0; i < first.length; i++) {
             var f = first[i];
-            var imgHtml = f.photo
-                ? '<img src="' + f.photo + '" class="flavour-card__img" alt="' + escapeHtml(f.name) + '">'
-                : '<div class="flavour-card__placeholder"><svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>';
+            var zoomBtn = '';
+            var imgHtml;
+            if (f.photo) {
+                imgHtml = '<img src="' + f.photo + '" class="flavour-card__img" alt="' + escapeHtml(locName(f)) + '">';
+                zoomBtn = '<button type="button" class="flavour-card__zoom" data-zoom="' + (zi++) + '" aria-label="Zoom">' + ZOOM_SVG + '</button>';
+            } else {
+                imgHtml = '<div class="flavour-card__placeholder"><svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>';
+            }
             var priceText = f.price ? '+ €' + escapeHtml(f.price) : '';
-            html += '<div class="flavour-card">' +
-                '<div class="flavour-card__imgwrap">' + imgHtml +
+            var gfBadge = f.glutenFree ? '<span class="flavour-card__gf">GF</span>' : '';
+            html += '<div class="flavour-card flavour-card--zoomable">' +
+                '<div class="flavour-card__imgwrap">' + imgHtml + zoomBtn + gfBadge +
                     '<div class="flavour-card__caption">' +
                         '<div class="flavour-card__name">' + escapeHtml(locName(f)) + '</div>' +
                         '<div class="flavour-card__price">' + priceText + '</div>' +
@@ -1229,6 +1279,18 @@ function loadFlavoursShowcase() {
             '</div>';
         }
         grid.innerHTML = html;
+        grid.querySelectorAll('.flavour-card__zoom').forEach(function(btn) {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (typeof openImageLightbox === 'function') openImageLightbox(lbImgs, parseInt(this.dataset.zoom));
+            });
+        });
+        grid.querySelectorAll('.flavour-card--zoomable .flavour-card__img').forEach(function(img, i) {
+            img.style.cursor = 'zoom-in';
+            img.addEventListener('click', function() {
+                if (typeof openImageLightbox === 'function') openImageLightbox(lbImgs, i);
+            });
+        });
     });
 }
 
