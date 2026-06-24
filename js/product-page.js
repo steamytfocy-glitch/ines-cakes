@@ -112,6 +112,19 @@ function escapeHtml(str) {
     var d = document.createElement('div'); d.textContent = str; return d.innerHTML;
 }
 
+function locName(o) {
+    if (!o) return '';
+    if (currentLang === 'ua' && o.name_ua) return o.name_ua;
+    if (currentLang === 'ru' && o.name_ru) return o.name_ru;
+    return o.name || '';
+}
+function locDesc(o) {
+    if (!o) return '';
+    if (currentLang === 'ua' && o.desc_ua) return o.desc_ua;
+    if (currentLang === 'ru' && o.desc_ru) return o.desc_ru;
+    return o.desc || '';
+}
+
 function applyI18n() {
     document.querySelectorAll('[data-i18n]').forEach(function(el) {
         var k = el.getAttribute('data-i18n');
@@ -229,11 +242,12 @@ function renderGallery() {
 
 function renderProduct() {
     renderGallery();
-    document.getElementById('pName').textContent = product.name || '';
+    document.getElementById('pName').textContent = locName(product);
     document.getElementById('pLoc').textContent = t('prod.loc');
     var desc = document.getElementById('pDesc');
-    desc.textContent = product.desc || '';
-    desc.style.display = product.desc ? 'block' : 'none';
+    var dtext = locDesc(product);
+    desc.textContent = dtext;
+    desc.style.display = dtext ? 'block' : 'none';
 
     // sizes
     var sizeSel = document.getElementById('pSize');
@@ -299,11 +313,11 @@ function flavourCardHtml(f, zi) {
     return '<div class="flavour-card" data-flavour="' + escapeHtml(f.name) + '" data-price="' + escapeHtml(f.price || '') + '">' +
         '<div class="flavour-card__imgwrap">' + img + zoomBtn +
             '<div class="flavour-card__caption">' +
-                '<div class="flavour-card__name">' + escapeHtml(f.name) + '</div>' +
+                '<div class="flavour-card__name">' + escapeHtml(locName(f)) + '</div>' +
                 (price ? '<div class="flavour-card__price">' + price + '</div>' : '') +
             '</div>' +
         '</div>' +
-        (f.desc ? '<div class="flavour-card__desc">' + escapeHtml(f.desc) + '</div>' : '') +
+        (locDesc(f) ? '<div class="flavour-card__desc">' + escapeHtml(locDesc(f)) + '</div>' : '') +
     '</div>';
 }
 
@@ -336,10 +350,11 @@ function setupFlavours() {
     grid.querySelectorAll('.flavour-card').forEach(function(card) {
         card.addEventListener('click', function() {
             var name = this.dataset.flavour;
+            var disp = this.querySelector('.flavour-card__name');
             document.getElementById('pFlavour').value = name;
             selectedFlavourPrice = parseFloat(this.dataset.price) || 0;
             var txt = document.getElementById('pFlavourText');
-            txt.textContent = name;
+            txt.textContent = disp ? disp.textContent : name;
             txt.removeAttribute('data-i18n');
             document.getElementById('pFlavourBtn').classList.add('has-value');
             document.getElementById('flavourModal').style.display = 'none';

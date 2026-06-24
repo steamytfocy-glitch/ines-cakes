@@ -95,6 +95,12 @@ document.querySelectorAll('.lang-btn').forEach(function(btn) {
 });
 
 function escapeHtml(str) { if (!str) return ''; var d = document.createElement('div'); d.textContent = str; return d.innerHTML; }
+function locName(o) {
+    if (!o) return '';
+    if (currentLang === 'ua' && o.name_ua) return o.name_ua;
+    if (currentLang === 'ru' && o.name_ru) return o.name_ru;
+    return o.name || '';
+}
 
 function priceLabel(p) {
     if (p.price && parseFloat(p.price)) return '€' + p.price;
@@ -162,11 +168,11 @@ function openCategory(catId) {
     var html = '';
     group.items.forEach(function(it) {
         var p = it.p;
-        var img = p.photo ? '<img src="' + p.photo + '" alt="' + escapeHtml(p.name) + '">' : '<div class="catalog-card__noimg"></div>';
+        var img = p.photo ? '<img src="' + p.photo + '" alt="' + escapeHtml(locName(p)) + '">' : '<div class="catalog-card__noimg"></div>';
         html += '<a class="catalog-card" href="product?i=' + it.index + '">' +
             '<div class="catalog-card__img">' + img + '</div>' +
             '<div class="catalog-card__body">' +
-                '<div class="catalog-card__name">' + escapeHtml(p.name) + '</div>' +
+                '<div class="catalog-card__name">' + escapeHtml(locName(p)) + '</div>' +
                 '<div class="catalog-card__price">' + priceLabel(p) + '</div>' +
             '</div>' +
         '</a>';

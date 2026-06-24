@@ -612,6 +612,20 @@ body {
 }
 .cake-size-row__del:hover { background: var(--red); color: #fff; }
 
+/* Secondary-language inputs (UA / RU) in admin forms */
+.lang-extra {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1px dashed var(--cream-dark);
+    border-radius: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.88rem;
+    color: var(--text);
+    background: #fffdf8;
+    outline: none;
+}
+.lang-extra:focus { border-color: var(--gold); border-style: solid; }
+
 /* ===== CAKE PHOTOS (multi) ===== */
 .cake-photos-preview {
     display: flex;

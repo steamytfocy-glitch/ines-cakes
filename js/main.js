@@ -673,11 +673,11 @@ function renderFlavourGrid(flavours) {
             '<div class="flavour-card__imgwrap">' +
                 imgHtml + zoomBtn +
                 '<div class="flavour-card__caption">' +
-                    '<div class="flavour-card__name">' + escapeHtml(f.name) + '</div>' +
+                    '<div class="flavour-card__name">' + escapeHtml(locName(f)) + '</div>' +
                     '<div class="flavour-card__price">' + priceText + '</div>' +
                 '</div>' +
             '</div>' +
-            (f.desc ? '<div class="flavour-card__desc">' + escapeHtml(f.desc) + '</div>' : '') +
+            (locDesc(f) ? '<div class="flavour-card__desc">' + escapeHtml(locDesc(f)) + '</div>' : '') +
         '</div>';
     }
     flavourGrid.innerHTML = html;
@@ -692,8 +692,9 @@ function renderFlavourGrid(flavours) {
     flavourGrid.querySelectorAll('.flavour-card').forEach(function(card) {
         card.addEventListener('click', function() {
             var name = this.dataset.flavour;
+            var disp = this.querySelector('.flavour-card__name');
             flavourHidden.value = name;
-            flavourSelectText.textContent = name;
+            flavourSelectText.textContent = disp ? disp.textContent : name;
             flavourSelectBtn.classList.add('has-value');
             selectedFlavourPrice = parseFloat(this.dataset.price) || 0;
             flavourModal.style.display = 'none';
@@ -1220,11 +1221,11 @@ function loadFlavoursShowcase() {
             html += '<div class="flavour-card">' +
                 '<div class="flavour-card__imgwrap">' + imgHtml +
                     '<div class="flavour-card__caption">' +
-                        '<div class="flavour-card__name">' + escapeHtml(f.name) + '</div>' +
+                        '<div class="flavour-card__name">' + escapeHtml(locName(f)) + '</div>' +
                         '<div class="flavour-card__price">' + priceText + '</div>' +
                     '</div>' +
                 '</div>' +
-                (f.desc ? '<div class="flavour-card__desc">' + escapeHtml(f.desc) + '</div>' : '') +
+                (locDesc(f) ? '<div class="flavour-card__desc">' + escapeHtml(locDesc(f)) + '</div>' : '') +
             '</div>';
         }
         grid.innerHTML = html;
@@ -1294,6 +1295,20 @@ function escapeHtml(str) {
     var div = document.createElement('div');
     div.textContent = str;
     return div.innerHTML;
+}
+
+// Localized name/description for cakes & flavours (falls back to the base/English field).
+function locName(o) {
+    if (!o) return '';
+    if (currentLang === 'ua' && o.name_ua) return o.name_ua;
+    if (currentLang === 'ru' && o.name_ru) return o.name_ru;
+    return o.name || '';
+}
+function locDesc(o) {
+    if (!o) return '';
+    if (currentLang === 'ua' && o.desc_ua) return o.desc_ua;
+    if (currentLang === 'ru' && o.desc_ru) return o.desc_ru;
+    return o.desc || '';
 }
 
 function loadCategories(callback) {

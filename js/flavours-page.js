@@ -47,6 +47,18 @@ function escapeHtml(str) {
     div.textContent = str;
     return div.innerHTML;
 }
+function locName(o) {
+    if (!o) return '';
+    if (currentLang === 'ua' && o.name_ua) return o.name_ua;
+    if (currentLang === 'ru' && o.name_ru) return o.name_ru;
+    return o.name || '';
+}
+function locDesc(o) {
+    if (!o) return '';
+    if (currentLang === 'ua' && o.desc_ua) return o.desc_ua;
+    if (currentLang === 'ru' && o.desc_ru) return o.desc_ru;
+    return o.desc || '';
+}
 
 function loadAllFlavours() {
     fbGet('flavours', function(flavours) {
@@ -67,11 +79,11 @@ function loadAllFlavours() {
             html += '<div class="flavour-card">' +
                 '<div class="flavour-card__imgwrap">' + imgHtml +
                     '<div class="flavour-card__caption">' +
-                        '<div class="flavour-card__name">' + escapeHtml(f.name) + '</div>' +
+                        '<div class="flavour-card__name">' + escapeHtml(locName(f)) + '</div>' +
                         '<div class="flavour-card__price">' + priceText + '</div>' +
                     '</div>' +
                 '</div>' +
-                (f.desc ? '<div class="flavour-card__desc">' + escapeHtml(f.desc) + '</div>' : '') +
+                (locDesc(f) ? '<div class="flavour-card__desc">' + escapeHtml(locDesc(f)) + '</div>' : '') +
             '</div>';
         }
         grid.innerHTML = html;
