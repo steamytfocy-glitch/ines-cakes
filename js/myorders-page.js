@@ -1,8 +1,8 @@
 var translations = {
     en: {
         "mo.back": "← Back to Home",
-        "mo.title": "My Orders",
-        "mo.sub": "Your orders are saved on this device. On another phone, add an order by its code.",
+        "mo.title": "Track Your Order",
+        "mo.sub": "Enter your order code to see its status. Your codes are also saved on this device.",
         "mo.add": "Add order",
         "mo.notfound": "Order not found. Please check the number.",
         "mo.empty": "No orders yet on this device.",
@@ -16,8 +16,8 @@ var translations = {
     },
     ua: {
         "mo.back": "← На головну",
-        "mo.title": "Мої замовлення",
-        "mo.sub": "Замовлення зберігаються на цьому пристрої. На іншому телефоні додайте замовлення за його кодом.",
+        "mo.title": "Відстеження замовлення",
+        "mo.sub": "Введіть код замовлення, щоб побачити статус. Ваші коди також зберігаються на цьому пристрої.",
         "mo.add": "Додати замовлення",
         "mo.notfound": "Замовлення не знайдено. Перевірте номер.",
         "mo.empty": "На цьому пристрої ще немає замовлень.",
@@ -31,8 +31,8 @@ var translations = {
     },
     ru: {
         "mo.back": "← На главную",
-        "mo.title": "Мои заказы",
-        "mo.sub": "Заказы сохраняются на этом устройстве. На другом телефоне добавьте заказ по его коду.",
+        "mo.title": "Отслеживание заказа",
+        "mo.sub": "Введите код заказа, чтобы увидеть статус. Ваши коды также сохраняются на этом устройстве.",
         "mo.add": "Добавить заказ",
         "mo.notfound": "Заказ не найден. Проверьте номер.",
         "mo.empty": "На этом устройстве пока нет заказов.",
