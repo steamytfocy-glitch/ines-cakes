@@ -977,20 +977,26 @@ function initCustomReference() {
     // We arrived here from the reference flow - scroll to the order form once,
     // after async content (categories, certificates, reviews) finished rendering
     // and the page height has settled, so the jump isn't jerky.
+    // Wait (without scrolling) until the page height settles - reviews,
+    // certificates and the About section load asynchronously - then do ONE
+    // smooth scroll to the order form, leaving room for the sticky header so
+    // the reference card sits just below it. Scrolling during the wait is what
+    // made the move feel like two abrupt jumps.
     var lastH = -1, stable = 0, tries = 0;
     var iv = setInterval(function() {
-        // Keep the view pinned to the bottom (the order form sits at the end
-        // of the page) while async content above it - reviews, certificates,
-        // about - loads and shifts the layout. Otherwise a single early scroll
-        // lands on whatever section is there before the rest has rendered.
-        window.scrollTo(0, document.documentElement.scrollHeight);
         var h = document.documentElement.scrollHeight;
         if (h === lastH) stable++; else stable = 0;
         lastH = h;
         tries++;
-        if (stable >= 6 || tries > 40) {
+        if (stable >= 4 || tries > 40) {
             clearInterval(iv);
-            window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' });
+            var el = document.getElementById('order');
+            if (el) {
+                var header = document.getElementById('header');
+                var hh = header ? header.offsetHeight : 80;
+                var top = el.getBoundingClientRect().top + window.pageYOffset - hh - 16;
+                window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+            }
         }
     }, 100);
 
