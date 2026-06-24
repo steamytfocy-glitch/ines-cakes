@@ -53,7 +53,7 @@ export default async function handler(req, res) {
     // Always link to the public domain (the admin may be opened on a
     // *.vercel.app preview URL, so don't derive this from the request host).
     var site = (process.env.SITE_URL || 'https://www.inescake.com').replace(/\/+$/, '');
-    var orderUrl = code ? site + '/order?code=' + encodeURIComponent(code) : '';
+    var orderUrl = code ? site + '/myorders?code=' + encodeURIComponent(code) : '';
 
     var subject = 'I.N.E.S. - ' + T.subject + ' ' + code + ': ' + statusLabel;
 

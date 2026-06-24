@@ -977,19 +977,22 @@ function initCustomReference() {
     // We arrived here from the reference flow - scroll to the order form once,
     // after async content (categories, certificates, reviews) finished rendering
     // and the page height has settled, so the jump isn't jerky.
-    var lastH = 0, stable = 0, tries = 0;
+    var lastH = -1, stable = 0, tries = 0;
     var iv = setInterval(function() {
-        var h = document.body.scrollHeight;
+        // Keep the view pinned to the bottom (the order form sits at the end
+        // of the page) while async content above it - reviews, certificates,
+        // about - loads and shifts the layout. Otherwise a single early scroll
+        // lands on whatever section is there before the rest has rendered.
+        window.scrollTo(0, document.documentElement.scrollHeight);
+        var h = document.documentElement.scrollHeight;
         if (h === lastH) stable++; else stable = 0;
         lastH = h;
         tries++;
-        if (stable >= 2 || tries > 16) {
+        if (stable >= 6 || tries > 40) {
             clearInterval(iv);
-            // Scroll all the way to the bottom (the order form sits at the
-            // very end of the page, just above the footer).
             window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' });
         }
-    }, 150);
+    }, 100);
 
     // Prefill flavour
     if (customRef.flavour) {

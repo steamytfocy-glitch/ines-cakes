@@ -153,5 +153,20 @@ document.querySelectorAll('.lang-btn').forEach(function(b) { b.classList.toggle(
 
 fbGet('orders', function(orders) {
     _allOrders = orders || [];
+    // If we arrived from a status email (…/myorders?code=INES-XXXX), add that
+    // order to this device automatically and clean the code out of the URL.
+    try {
+        var urlCode = (new URLSearchParams(location.search).get('code') || '').trim().toUpperCase();
+        if (urlCode) {
+            if (findOrder(urlCode)) {
+                var mine = getMine();
+                if (!mine.some(function(m) { return m.code === urlCode; })) {
+                    mine.push({ code: urlCode, when: Date.now() });
+                    setMine(mine);
+                }
+            }
+            history.replaceState(null, '', 'myorders');
+        }
+    } catch (e) {}
     render();
 });
