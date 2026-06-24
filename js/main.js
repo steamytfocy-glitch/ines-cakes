@@ -977,26 +977,38 @@ function initCustomReference() {
     // We arrived here from the reference flow - scroll to the order form once,
     // after async content (categories, certificates, reviews) finished rendering
     // and the page height has settled, so the jump isn't jerky.
-    // Wait (without scrolling) until the page height settles - reviews,
-    // certificates and the About section load asynchronously - then do ONE
-    // smooth scroll to the order form, leaving room for the sticky header so
-    // the reference card sits just below it. Scrolling during the wait is what
-    // made the move feel like two abrupt jumps.
+    // Where the order form should sit: just under the sticky header.
+    function orderFormTarget() {
+        var el = document.getElementById('order');
+        if (!el) return null;
+        var header = document.getElementById('header');
+        var hh = header ? header.offsetHeight : 80;
+        return Math.max(0, el.getBoundingClientRect().top + window.pageYOffset - hh - 16);
+    }
+    // Wait (without scrolling) until the page height has stayed stable for a
+    // good while - the gallery, flavours, certificates, reviews and About
+    // sections load asynchronously and each one shifts the form further down.
+    // Polling too briefly fires during a gap between Firebase responses and
+    // lands on whatever section happens to be there (e.g. certificates).
+    // Then do ONE smooth scroll, with a quiet correction if anything still
+    // reflows afterwards (e.g. a late image).
     var lastH = -1, stable = 0, tries = 0;
     var iv = setInterval(function() {
         var h = document.documentElement.scrollHeight;
         if (h === lastH) stable++; else stable = 0;
         lastH = h;
         tries++;
-        if (stable >= 4 || tries > 40) {
+        if ((tries >= 5 && stable >= 8) || tries > 80) {
             clearInterval(iv);
-            var el = document.getElementById('order');
-            if (el) {
-                var header = document.getElementById('header');
-                var hh = header ? header.offsetHeight : 80;
-                var top = el.getBoundingClientRect().top + window.pageYOffset - hh - 16;
-                window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
-            }
+            var target = orderFormTarget();
+            if (target == null) return;
+            window.scrollTo({ top: target, behavior: 'smooth' });
+            setTimeout(function() {
+                var want = orderFormTarget();
+                if (want != null && Math.abs(want - window.pageYOffset) > 40) {
+                    window.scrollTo({ top: want, behavior: 'smooth' });
+                }
+            }, 1300);
         }
     }, 100);
 
