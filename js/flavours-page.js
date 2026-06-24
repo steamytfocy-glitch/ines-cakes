@@ -19,7 +19,7 @@ var translations = {
     }
 };
 
-var currentLang = localStorage.getItem('ines-lang') || 'en';
+var currentLang = 'en';
 
 function setLang(lang) {
     currentLang = lang;

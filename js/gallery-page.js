@@ -45,7 +45,7 @@ var translations = {
     }
 };
 
-var currentLang = localStorage.getItem('ines-lang') || 'en';
+var currentLang = 'en';
 var _products = [];
 var _defaultSizes = [];
 var refPick = false;

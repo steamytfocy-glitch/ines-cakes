@@ -145,7 +145,7 @@ var A = {
         'content.contact': 'Контактная информация', 'content.phone': 'Телефон', 'content.address': 'Адрес', 'content.insta': 'Ссылка Instagram', 'content.fb': 'Ссылка Facebook', 'content.save': 'Сохранить изменения', 'content.saved': 'Изменения сохранены!'
     }
 };
-var aLang = localStorage.getItem('ines-admin-lang') || 'en';
+var aLang = 'en';
 function at(k) { var t = A[aLang] || A.en; return (t[k] != null ? t[k] : (A.en[k] != null ? A.en[k] : k)); }
 
 function applyAdminI18n() {
@@ -1102,11 +1102,7 @@ function loadFlavours() {
             var f = flavours[idx];
             document.getElementById('flavourEditId').value = idx;
             document.getElementById('flavourName').value = f.name || '';
-            document.getElementById('flavourNameUa').value = f.name_ua || '';
-            document.getElementById('flavourNameRu').value = f.name_ru || '';
             document.getElementById('flavourDesc').value = f.desc || '';
-            document.getElementById('flavourDescUa').value = f.desc_ua || '';
-            document.getElementById('flavourDescRu').value = f.desc_ru || '';
             document.getElementById('flavourPrice').value = f.price || '';
             document.getElementById('flavourGF').checked = !!f.glutenFree;
             pendingFlavourPhoto = f.photo || null;
@@ -1122,11 +1118,7 @@ var pendingFlavourPhoto = null;
 document.getElementById('addFlavourBtn').addEventListener('click', function() {
     document.getElementById('flavourEditId').value = '';
     document.getElementById('flavourName').value = '';
-    document.getElementById('flavourNameUa').value = '';
-    document.getElementById('flavourNameRu').value = '';
     document.getElementById('flavourDesc').value = '';
-    document.getElementById('flavourDescUa').value = '';
-    document.getElementById('flavourDescRu').value = '';
     document.getElementById('flavourPrice').value = '';
     document.getElementById('flavourGF').checked = false;
     document.getElementById('flavourPhotoPreview').innerHTML = '';
@@ -1157,11 +1149,7 @@ document.getElementById('flavourForm').addEventListener('submit', function(e) {
     var editId = document.getElementById('flavourEditId').value;
     var flavour = {
         name: document.getElementById('flavourName').value.trim(),
-        name_ua: document.getElementById('flavourNameUa').value.trim(),
-        name_ru: document.getElementById('flavourNameRu').value.trim(),
         desc: document.getElementById('flavourDesc').value.trim(),
-        desc_ua: document.getElementById('flavourDescUa').value.trim(),
-        desc_ru: document.getElementById('flavourDescRu').value.trim(),
         price: document.getElementById('flavourPrice').value.trim(),
         glutenFree: document.getElementById('flavourGF').checked,
         photo: pendingFlavourPhoto || null
@@ -1759,12 +1747,8 @@ function openCakeModal(editId) {
         document.getElementById('cakeModalTitle').textContent = at('cakeModal.editTitle');
         document.getElementById('cakeEditId').value = editId;
         document.getElementById('cakeName').value = c.name || '';
-        document.getElementById('cakeNameUa').value = c.name_ua || '';
-        document.getElementById('cakeNameRu').value = c.name_ru || '';
         document.getElementById('cakePrice').value = c.price || '';
         document.getElementById('cakeDesc').value = c.desc || '';
-        document.getElementById('cakeDescUa').value = c.desc_ua || '';
-        document.getElementById('cakeDescRu').value = c.desc_ru || '';
         document.getElementById('cakeNotice').value = (c.noticeDays != null ? c.noticeDays : 7);
         populateCakeCategorySelect(c.category);
         cakeSelectedFlavours = (c.flavours || []).slice();
@@ -1778,12 +1762,8 @@ function openCakeModal(editId) {
         document.getElementById('cakeModalTitle').textContent = at('cakeModal.addTitle');
         document.getElementById('cakeEditId').value = '';
         document.getElementById('cakeName').value = '';
-        document.getElementById('cakeNameUa').value = '';
-        document.getElementById('cakeNameRu').value = '';
         document.getElementById('cakePrice').value = '';
         document.getElementById('cakeDesc').value = '';
-        document.getElementById('cakeDescUa').value = '';
-        document.getElementById('cakeDescRu').value = '';
         document.getElementById('cakeNotice').value = 7;
         populateCakeCategorySelect('');
         cakeSelectedFlavours = [];
@@ -1844,13 +1824,9 @@ document.getElementById('cakeForm').addEventListener('submit', function(e) {
 
     var cake = {
         name: document.getElementById('cakeName').value.trim(),
-        name_ua: document.getElementById('cakeNameUa').value.trim(),
-        name_ru: document.getElementById('cakeNameRu').value.trim(),
         price: document.getElementById('cakePrice').value.trim(),
         category: document.getElementById('cakeCategory').value,
         desc: document.getElementById('cakeDesc').value.trim(),
-        desc_ua: document.getElementById('cakeDescUa').value.trim(),
-        desc_ru: document.getElementById('cakeDescRu').value.trim(),
         photo: pendingCakePhotos[0] || null,
         photos: pendingCakePhotos.slice(),
         sizes: sizes,

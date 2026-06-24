@@ -52,7 +52,7 @@ var translations = {
     }
 };
 
-var currentLang = localStorage.getItem('ines-lang') || 'en';
+var currentLang = 'en';
 function t(k) { var tr = translations[currentLang] || translations.en; return tr[k] || translations.en[k] || k; }
 function escapeHtml(s) { if (!s) return ''; var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
 

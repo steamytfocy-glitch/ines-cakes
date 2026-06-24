@@ -97,7 +97,7 @@ var translations = {
     }
 };
 
-var currentLang = localStorage.getItem('ines-lang') || 'en';
+var currentLang = 'en';
 var product = null;
 var productIndex = null;
 var selectedAllergies = [];

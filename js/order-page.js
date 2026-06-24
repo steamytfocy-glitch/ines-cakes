@@ -80,7 +80,7 @@ var STATUS_COLORS = {
     declined:  { bg: '#FBEAEA', fg: '#B23A3A' }
 };
 
-var currentLang = localStorage.getItem('ines-lang') || 'en';
+var currentLang = 'en';
 var currentOrder = null;
 
 function t(key) {

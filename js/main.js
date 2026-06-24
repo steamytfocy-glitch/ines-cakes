@@ -431,7 +431,7 @@ const translations = {
 };
 
 // ===== LANGUAGE SWITCHER =====
-let currentLang = localStorage.getItem('ines-lang') || 'en';
+let currentLang = 'en';
 
 var langAnimating = false;
 
@@ -1458,9 +1458,6 @@ function renderMaintenance() {
     if (el) {
         el.querySelector('.maintenance__title').textContent = title;
         el.querySelector('.maintenance__text').textContent = text;
-        el.querySelectorAll('.lang-btn').forEach(function(b) {
-            b.classList.toggle('active', b.dataset.lang === currentLang);
-        });
         return;
     }
 
@@ -1468,11 +1465,6 @@ function renderMaintenance() {
     el.id = 'maintenanceOverlay';
     el.className = 'maintenance';
     el.innerHTML =
-        '<div class="maintenance__lang">' +
-            '<button class="lang-btn" data-lang="en">EN</button>' +
-            '<button class="lang-btn" data-lang="ua">UA</button>' +
-            '<button class="lang-btn" data-lang="ru">RU</button>' +
-        '</div>' +
         '<div class="maintenance__card">' +
             '<svg class="maintenance__logo" viewBox="0 0 60 60" width="64" height="64">' +
                 '<path d="M30 8c-3 0-5.5 2-6 5h12c-.5-3-3-5-6-5z" fill="#C8963E"/>' +
@@ -1497,10 +1489,6 @@ function renderMaintenance() {
         '</div>';
     document.body.appendChild(el);
     document.body.style.overflow = 'hidden';
-
-    el.querySelectorAll('.lang-btn').forEach(function(b) {
-        b.addEventListener('click', function() { setLanguage(this.dataset.lang); });
-    });
 
     applyMaintSocials();
     renderMaintenance();
