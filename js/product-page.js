@@ -108,6 +108,18 @@ function effectiveSizes() {
     return (product && product.sizes && product.sizes.length) ? product.sizes : _defaultSizes;
 }
 
+// Sort sizes by their numeric inch value (6, 7, 8 …) so dropdowns are in order.
+function sortSizes(arr) {
+    if (!Array.isArray(arr)) return arr;
+    return arr.slice().sort(function(a, b) {
+        var na = parseFloat(String((a && a.size) || '').replace(/[^0-9.]/g, ''));
+        var nb = parseFloat(String((b && b.size) || '').replace(/[^0-9.]/g, ''));
+        if (isNaN(na)) na = Infinity;
+        if (isNaN(nb)) nb = Infinity;
+        return na - nb;
+    });
+}
+
 function t(k) { var tr = translations[currentLang] || translations.en; return tr[k] || translations.en[k] || k; }
 
 function escapeHtml(str) {
@@ -199,14 +211,14 @@ function addonTotal() {
     return ((tall && tall.checked) ? ADDON_TALL : 0) + ((gf && gf.checked && !gf.disabled) ? ADDON_GF : 0);
 }
 function updateGFAvailability() {
+    // Gluten-free (+€5) is always selectable, for any cake/flavour.
     var gf = document.getElementById('pGF');
     var wrap = document.getElementById('pGFWrap');
     var hint = document.getElementById('pGFHint');
     if (!gf) return;
-    gf.disabled = !selectedFlavourGF;
-    if (wrap) wrap.classList.toggle('addon-chip--disabled', !selectedFlavourGF);
-    if (!selectedFlavourGF) gf.checked = false;
-    if (hint) hint.style.display = selectedFlavourGF ? 'none' : '';
+    gf.disabled = false;
+    if (wrap) wrap.classList.remove('addon-chip--disabled');
+    if (hint) hint.style.display = 'none';
 }
 
 function updatePrice() {
@@ -505,8 +517,9 @@ document.querySelectorAll('.lang-btn').forEach(function(b) { b.classList.toggle(
             return;
         }
         product = products[productIndex];
+        if (product && product.sizes) product.sizes = sortSizes(product.sizes);
         fbGet('default-sizes', function(ds) {
-            _defaultSizes = (ds && ds.length) ? ds : [];
+            _defaultSizes = (ds && ds.length) ? sortSizes(ds) : [];
             document.getElementById('productGrid').style.display = '';
             renderProduct();
             fbGet('flavours', function(fl) { _flavours = (fl && fl.length) ? fl : DEFAULT_FLAVOURS; setupFlavours(); });

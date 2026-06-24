@@ -37,6 +37,23 @@ function listenData(key, callback) {
     });
 }
 
+// One-time cleanup: the site is English-only now, so strip any leftover
+// Ukrainian/Russian fields from products & flavours in the database.
+var _langCleaned = { products: false, flavours: false };
+function cleanupLangFields(key) {
+    if (_langCleaned[key]) return;
+    var arr = getData(key, null);
+    if (!Array.isArray(arr)) return;
+    _langCleaned[key] = true;
+    var FIELDS = ['name_ua', 'name_ru', 'desc_ua', 'desc_ru'];
+    var changed = false;
+    arr.forEach(function(it) {
+        if (!it) return;
+        FIELDS.forEach(function(f) { if (f in it) { delete it[f]; changed = true; } });
+    });
+    if (changed) { setData(key, arr); console.log('Removed old UA/RU fields from ' + key); }
+}
+
 // ===== ADMIN I18N =====
 var A = {
     en: {
@@ -444,12 +461,23 @@ function loadOrders() {
     if (shown === 0) {
         html = '<div class="empty-state"><svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="#C8963E" stroke-width="1.5"><path d="M20 6L9 17l-5-5"/></svg><p>' + at('orders.allCaught') + '</p><span>' + at('orders.allCaughtSub') + '</span></div>';
     }
+    // Preserve any unsaved message drafts across the re-render.
+    var _noteDrafts = {};
+    list.querySelectorAll('.order-note-input').forEach(function(ta) { _noteDrafts[ta.dataset.noteId] = ta.value; });
     list.innerHTML = html;
+    list.querySelectorAll('.order-note-input').forEach(function(ta) {
+        if (_noteDrafts[ta.dataset.noteId] != null) ta.value = _noteDrafts[ta.dataset.noteId];
+    });
 
     list.querySelectorAll('.status-select').forEach(function(sel) {
         sel.addEventListener('change', function() {
             var idx = parseInt(this.dataset.orderId);
             var orders = getData('orders', []);
+            if (!orders[idx]) return;
+            // Keep whatever message is currently typed in this card, so it
+            // isn't lost on re-render and is included in the status email.
+            var ta = list.querySelector('[data-note-id="' + idx + '"]');
+            if (ta) orders[idx].note = ta.value;
             orders[idx].status = this.value;
             setData('orders', orders);
             notifyClientStatus(orders[idx]);
@@ -1944,7 +1972,7 @@ function loadAllData() {
         if (mcm && mcm.style.display === 'flex') renderManageCats();
     });
     listenData('orders', function() { loadOrders(); });
-    listenData('products', function() { loadCakes(); renderPriceTable(); });
+    listenData('products', function() { cleanupLangFields('products'); loadCakes(); renderPriceTable(); });
     listenData('default-sizes', function() { renderGlobalSizes(); loadCakes(); renderPriceTable(); });
     listenData('gallery-cat', function() { loadGallery(); });
     listenData('certificates', function() { loadCertificates(); });
@@ -1954,6 +1982,7 @@ function loadAllData() {
             setData('flavours', DEFAULT_FLAVOURS);
             return;
         }
+        cleanupLangFields('flavours');
         loadFlavours();
     });
     listenData('reviews', function() { loadReviews(); });

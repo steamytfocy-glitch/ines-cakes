@@ -50,8 +50,10 @@ export default async function handler(req, res) {
     var name = o.name || '';
     var note = (o.note || '').trim();
 
-    var host = req.headers['x-forwarded-host'] || req.headers.host || '';
-    var orderUrl = host ? 'https://' + host + '/order.html?code=' + encodeURIComponent(code) : '';
+    // Always link to the public domain (the admin may be opened on a
+    // *.vercel.app preview URL, so don't derive this from the request host).
+    var site = (process.env.SITE_URL || 'https://www.inescake.com').replace(/\/+$/, '');
+    var orderUrl = code ? site + '/order?code=' + encodeURIComponent(code) : '';
 
     var subject = 'I.N.E.S. - ' + T.subject + ' ' + code + ': ' + statusLabel;
 

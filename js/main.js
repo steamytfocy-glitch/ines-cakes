@@ -752,6 +752,13 @@ function populateCustomSizes(list) {
     var tr = translations[currentLang] || translations.en;
     var prev = cakeSizeSelect.value;
     _customSizes = (list || []).filter(function(s) { return s && (s.size || s.price); });
+    _customSizes.sort(function(a, b) {
+        var na = parseFloat(String(a.size || '').replace(/[^0-9.]/g, ''));
+        var nb = parseFloat(String(b.size || '').replace(/[^0-9.]/g, ''));
+        if (isNaN(na)) na = Infinity;
+        if (isNaN(nb)) nb = Infinity;
+        return na - nb;
+    });
     var html = '<option value="" disabled selected>' + (tr['order.sizePlaceholder'] || 'Select size') + '</option>';
     if (_customSizes.length) {
         for (var i = 0; i < _customSizes.length; i++) {
@@ -842,11 +849,11 @@ var optGFWrap = document.getElementById('optGFWrap');
 var gfHint = document.getElementById('gfHint');
 
 function updateGFAvailability() {
+    // Gluten-free (+€5) is always selectable, for any cake/flavour.
     if (!optGF) return;
-    optGF.disabled = !selectedFlavourGF;
-    if (optGFWrap) optGFWrap.classList.toggle('addon-chip--disabled', !selectedFlavourGF);
-    if (!selectedFlavourGF) optGF.checked = false;
-    if (gfHint) gfHint.style.display = selectedFlavourGF ? 'none' : '';
+    optGF.disabled = false;
+    if (optGFWrap) optGFWrap.classList.remove('addon-chip--disabled');
+    if (gfHint) gfHint.style.display = 'none';
 }
 if (optTall) optTall.addEventListener('change', recalcTotal);
 if (optGF) optGF.addEventListener('change', recalcTotal);
@@ -978,8 +985,9 @@ function initCustomReference() {
         tries++;
         if (stable >= 2 || tries > 16) {
             clearInterval(iv);
-            var el = document.getElementById('order');
-            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            // Scroll all the way to the bottom (the order form sits at the
+            // very end of the page, just above the footer).
+            window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' });
         }
     }, 150);
 
