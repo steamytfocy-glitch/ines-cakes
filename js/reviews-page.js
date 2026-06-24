@@ -120,7 +120,7 @@ function loadAllReviews() {
                 '<div class="review-card__stars">' + stars + '</div>' +
                 (r.photo ? '<img class="review-card__photo" src="' + r.photo + '" alt="" loading="lazy">' : '') +
                 '<p class="review-card__text">"' + escapeHtml(r.text) + '"</p>' +
-                '<p class="review-card__author">— ' + escapeHtml(r.author) + '</p>' +
+                '<p class="review-card__author">- ' + escapeHtml(r.author) + '</p>' +
             '</div>';
         }
         grid.innerHTML = html;

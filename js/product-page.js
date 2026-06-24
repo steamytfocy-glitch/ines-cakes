@@ -53,7 +53,7 @@ var translations = {
         "prod.tablePrice": "Ціна",
         "prod.notice": "Замовляти за:",
         "prod.days": "дн.",
-        "prod.leadNote": "⏳ Замовляйте щонайменше за 7 днів. Термінові замовлення — лише за попередньою домовленістю.",
+        "prod.leadNote": "⏳ Замовляйте щонайменше за 7 днів. Термінові замовлення - лише за попередньою домовленістю.",
         "prod.pickSize": "Будь ласка, оберіть розмір.",
         "prod.pickDate": "Будь ласка, оберіть дату.",
         "prod.allergyInfo": "*Алергени: якщо не вказано інше, продукти містять молоко, пшеницю, сою та яйця і виготовляються на кухні, де є горіхи. Виробництво не є безглютеновим.",
@@ -84,7 +84,7 @@ var translations = {
         "prod.tablePrice": "Цена",
         "prod.notice": "Заказывать за:",
         "prod.days": "дн.",
-        "prod.leadNote": "⏳ Заказывайте минимум за 7 дней. Срочные заказы — только по предварительному согласованию.",
+        "prod.leadNote": "⏳ Заказывайте минимум за 7 дней. Срочные заказы - только по предварительному согласованию.",
         "prod.pickSize": "Пожалуйста, выберите размер.",
         "prod.pickDate": "Пожалуйста, выберите дату.",
         "prod.allergyInfo": "*Аллергены: если не указано иное, продукты содержат молоко, пшеницу, сою и яйца и готовятся на кухне, где есть орехи. Производство не безглютеновое.",
@@ -240,7 +240,7 @@ function renderProduct() {
     var sizes = effectiveSizes();
     var html = '<option value="">' + t('prod.choose') + '</option>';
     for (var i = 0; i < sizes.length; i++) {
-        var label = sizes[i].size + (sizes[i].price ? ' — €' + sizes[i].price : '');
+        var label = sizes[i].size + (sizes[i].price ? ' - €' + sizes[i].price : '');
         html += '<option value="' + i + '">' + escapeHtml(label) + '</option>';
     }
     sizeSel.innerHTML = html;
@@ -258,7 +258,7 @@ function renderProduct() {
         var th = '<tr><th>' + t('prod.tableSize') + '</th><th>' + t('prod.tableServes') + '</th><th>' + t('prod.tablePrice') + '</th></tr>';
         var rows = '';
         for (var k = 0; k < sizes.length; k++) {
-            rows += '<tr><td>' + escapeHtml(sizes[k].size) + '</td><td>' + escapeHtml(sizes[k].serves || '—') + '</td><td>' + (sizes[k].price ? '€' + escapeHtml(sizes[k].price) : '—') + '</td></tr>';
+            rows += '<tr><td>' + escapeHtml(sizes[k].size) + '</td><td>' + escapeHtml(sizes[k].serves || '-') + '</td><td>' + (sizes[k].price ? '€' + escapeHtml(sizes[k].price) : '-') + '</td></tr>';
         }
         table.innerHTML = th + rows;
         document.getElementById('productDetails').style.display = 'block';
@@ -320,7 +320,7 @@ function setupFlavours() {
     } else {
         list = globals;
     }
-    // Never show an empty picker — fall back to the standard flavours
+    // Never show an empty picker - fall back to the standard flavours
     if (!list.length) list = DEFAULT_FLAVOURS;
     var grid = document.getElementById('pFlavourGrid');
     var lbImgs = [];
@@ -427,7 +427,7 @@ document.getElementById('pAddBtn').addEventListener('click', function() {
     showToast(t('prod.added'));
 });
 
-// "Use as reference" — save this cake (photo + name + current choices) and go to the custom order form
+// "Use as reference" - save this cake (photo + name + current choices) and go to the custom order form
 document.getElementById('pRefBtn').addEventListener('click', function() {
     var s = currentSize();
     var ref = {

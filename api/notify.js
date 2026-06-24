@@ -2,7 +2,7 @@
 //  - Telegram  : env TELEGRAM_TOKEN, TELEGRAM_CHAT (comma-separated chat IDs)
 //  - Email     : env BREVO_KEY, BREVO_SENDER (verified sender),
 //                NOTIFY_EMAILS (comma-separated recipient addresses, e.g. mum + you)
-// Both channels are optional and independent — whichever is configured will fire.
+// Both channels are optional and independent - whichever is configured will fire.
 
 function esc(s) {
     return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -10,7 +10,7 @@ function esc(s) {
 
 function buildLines(o) {
     var lines = [];
-    lines.push('🎂 New Order — I.N.E.S.');
+    lines.push('🎂 New Order - I.N.E.S.');
     if (o.code) lines.push('🔖 Order: ' + o.code);
     lines.push('');
     if (o.name) lines.push('👤 Name: ' + o.name);
@@ -63,16 +63,16 @@ function buildEmailHtml(o, adminUrl) {
     return '<div style="font-family:Arial,Helvetica,sans-serif;max-width:560px;margin:0 auto;color:#3D2E1C;">' +
         '<div style="text-align:center;padding:18px 0;"><span style="font-size:24px;font-weight:700;color:#C8963E;letter-spacing:3px;">I.N.E.S.</span></div>' +
         '<div style="background:#fff;border:1px solid #EEE5D2;border-radius:16px;padding:24px;">' +
-        '<h2 style="margin:0 0 14px;font-size:18px;color:#3D2E1C;">🎂 New order' + (o.code ? ' — ' + esc(o.code) : '') + '</h2>' +
+        '<h2 style="margin:0 0 14px;font-size:18px;color:#3D2E1C;">🎂 New order' + (o.code ? ' - ' + esc(o.code) : '') + '</h2>' +
         '<table style="border-collapse:collapse;width:100%;">' + rows + '</table>' +
         wishes + btn +
         '</div></div>';
 }
 
 var CUST = {
-    en: { subject: 'your order', greeting: 'Hi', received: "Thanks! We've received your order", track: 'Track your order status', save: 'Keep this number to check your order any time:', signoff: '— I.N.E.S. Bakery' },
-    ua: { subject: 'ваше замовлення', greeting: 'Вітаємо', received: 'Дякуємо! Ми отримали ваше замовлення', track: 'Відстежити статус замовлення', save: 'Збережіть цей номер, щоб перевіряти замовлення будь-коли:', signoff: '— Пекарня I.N.E.S.' },
-    ru: { subject: 'ваш заказ', greeting: 'Здравствуйте', received: 'Спасибо! Мы получили ваш заказ', track: 'Отследить статус заказа', save: 'Сохраните этот номер, чтобы проверять заказ в любой момент:', signoff: '— Пекарня I.N.E.S.' }
+    en: { subject: 'your order', greeting: 'Hi', received: "Thanks! We've received your order", track: 'Track your order status', save: 'Keep this number to check your order any time:', signoff: '- I.N.E.S. Bakery' },
+    ua: { subject: 'ваше замовлення', greeting: 'Вітаємо', received: 'Дякуємо! Ми отримали ваше замовлення', track: 'Відстежити статус замовлення', save: 'Збережіть цей номер, щоб перевіряти замовлення будь-коли:', signoff: '- Пекарня I.N.E.S.' },
+    ru: { subject: 'ваш заказ', greeting: 'Здравствуйте', received: 'Спасибо! Мы получили ваш заказ', track: 'Отследить статус заказа', save: 'Сохраните этот номер, чтобы проверять заказ в любой момент:', signoff: '- Пекарня I.N.E.S.' }
 };
 
 function buildCustomerHtml(o, lang, orderUrl) {
@@ -145,7 +145,7 @@ export default async function handler(req, res) {
                     body: JSON.stringify({
                         sender: { email: sender, name: process.env.BREVO_SENDER_NAME || 'I.N.E.S. Bakery' },
                         to: recipients,
-                        subject: '🎂 New order' + (o.code ? ' ' + o.code : '') + (o.name ? ' — ' + o.name : ''),
+                        subject: '🎂 New order' + (o.code ? ' ' + o.code : '') + (o.name ? ' - ' + o.name : ''),
                         htmlContent: buildEmailHtml(o, adminUrl),
                         textContent: text
                     })
@@ -168,7 +168,7 @@ export default async function handler(req, res) {
                     body: JSON.stringify({
                         sender: { email: sender, name: process.env.BREVO_SENDER_NAME || 'I.N.E.S. Bakery' },
                         to: [{ email: custEmail, name: o.name || custEmail }],
-                        subject: 'I.N.E.S. — ' + C.subject + (o.code ? ' ' + o.code : ''),
+                        subject: 'I.N.E.S. - ' + C.subject + (o.code ? ' ' + o.code : ''),
                         htmlContent: buildCustomerHtml(o, lang, orderUrl),
                         textContent: C.received + ' ' + (o.code || '') + (orderUrl ? ('\n' + C.track + ': ' + orderUrl) : '') + '\n' + C.signoff
                     })

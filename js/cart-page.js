@@ -7,7 +7,7 @@ var translations = {
         "cart.total": "Total",
         "cart.your": "Your details",
         "cart.place": "Place order",
-        "cart.note": "No online payment — we'll contact you to confirm and arrange payment.",
+        "cart.note": "No online payment - we'll contact you to confirm and arrange payment.",
         "cart.remove": "Remove",
         "cart.gift": "Gift wrap",
         "cart.size": "Size", "cart.flavour": "Flavour", "cart.date": "Date", "cart.qty": "Qty", "cart.ref": "Reference", "cart.weight": "Weight",
@@ -23,7 +23,7 @@ var translations = {
         "cart.total": "Разом",
         "cart.your": "Ваші дані",
         "cart.place": "Оформити замовлення",
-        "cart.note": "Без онлайн-оплати — ми зв'яжемося, щоб підтвердити та домовитися про оплату.",
+        "cart.note": "Без онлайн-оплати - ми зв'яжемося, щоб підтвердити та домовитися про оплату.",
         "cart.remove": "Прибрати",
         "cart.gift": "Подарункова стрічка",
         "cart.size": "Розмір", "cart.flavour": "Смак", "cart.date": "Дата", "cart.qty": "К-сть", "cart.ref": "Референс", "cart.weight": "Вага",
@@ -39,7 +39,7 @@ var translations = {
         "cart.total": "Итого",
         "cart.your": "Ваши данные",
         "cart.place": "Оформить заказ",
-        "cart.note": "Без онлайн-оплаты — мы свяжемся, чтобы подтвердить и договориться об оплате.",
+        "cart.note": "Без онлайн-оплаты - мы свяжемся, чтобы подтвердить и договориться об оплате.",
         "cart.remove": "Убрать",
         "cart.gift": "Подарочная лента",
         "cart.size": "Размер", "cart.flavour": "Вкус", "cart.date": "Дата", "cart.qty": "Кол-во", "cart.ref": "Референс", "cart.weight": "Вес",
@@ -169,8 +169,8 @@ function buildSummary(cart) {
         if (sub.length) parts.push('(' + sub.join(', ') + ')');
         parts.push(!parseFloat(it.price) ? 'price on request' : ((it.custom ? '≈ €' : '€') + lineTotal(it)));
         var line = parts.join(' ');
-        if (it.message) line += ' — note: ' + it.message;
-        if (it.allergies) line += ' — allergies: ' + it.allergies;
+        if (it.message) line += ' - note: ' + it.message;
+        if (it.allergies) line += ' - allergies: ' + it.allergies;
         return line;
     }).join('\n');
 }

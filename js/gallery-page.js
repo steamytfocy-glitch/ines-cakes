@@ -17,7 +17,7 @@ var translations = {
         "gallery.back": "Back to categories",
         "gal.from": "from",
         "gal.priceReq": "Price on request",
-        "gal.empty": "Our cakes are coming soon — check back shortly!",
+        "gal.empty": "Our cakes are coming soon - check back shortly!",
         "gal.refBanner": "📷 Tap a cake to use it as a reference for your custom order",
         "gal.refCancel": "Cancel"
     },
@@ -28,7 +28,7 @@ var translations = {
         "gallery.back": "Назад до категорій",
         "gal.from": "від",
         "gal.priceReq": "Ціна за домовленістю",
-        "gal.empty": "Наші торти вже скоро — зазирніть трохи пізніше!",
+        "gal.empty": "Наші торти вже скоро - зазирніть трохи пізніше!",
         "gal.refBanner": "📷 Торкніться торта, щоб взяти його як референс для кастомного замовлення",
         "gal.refCancel": "Скасувати"
     },
@@ -39,7 +39,7 @@ var translations = {
         "gallery.back": "Назад к категориям",
         "gal.from": "от",
         "gal.priceReq": "Цена по договорённости",
-        "gal.empty": "Наши торты уже скоро — загляните чуть позже!",
+        "gal.empty": "Наши торты уже скоро - загляните чуть позже!",
         "gal.refBanner": "📷 Нажмите на торт, чтобы взять его как референс для кастомного заказа",
         "gal.refCancel": "Отмена"
     }

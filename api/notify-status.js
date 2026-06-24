@@ -12,9 +12,9 @@ var STATUS_LABELS = {
 };
 
 var TEXTS = {
-    en: { subject: 'order', greeting: 'Hello', statusLine: 'Status of your order', noteLabel: 'Message from us', track: 'View your order status', signoff: '— I.N.E.S. Bakery' },
-    ua: { subject: 'замовлення', greeting: 'Вітаємо', statusLine: 'Статус вашого замовлення', noteLabel: 'Повідомлення від нас', track: 'Переглянути статус замовлення', signoff: '— Пекарня I.N.E.S.' },
-    ru: { subject: 'заказ', greeting: 'Здравствуйте', statusLine: 'Статус вашего заказа', noteLabel: 'Сообщение от нас', track: 'Посмотреть статус заказа', signoff: '— Пекарня I.N.E.S.' }
+    en: { subject: 'order', greeting: 'Hello', statusLine: 'Status of your order', noteLabel: 'Message from us', track: 'View your order status', signoff: '- I.N.E.S. Bakery' },
+    ua: { subject: 'замовлення', greeting: 'Вітаємо', statusLine: 'Статус вашого замовлення', noteLabel: 'Повідомлення від нас', track: 'Переглянути статус замовлення', signoff: '- Пекарня I.N.E.S.' },
+    ru: { subject: 'заказ', greeting: 'Здравствуйте', statusLine: 'Статус вашего заказа', noteLabel: 'Сообщение от нас', track: 'Посмотреть статус заказа', signoff: '- Пекарня I.N.E.S.' }
 };
 
 function esc(s) {
@@ -53,7 +53,7 @@ export default async function handler(req, res) {
     var host = req.headers['x-forwarded-host'] || req.headers.host || '';
     var orderUrl = host ? 'https://' + host + '/order.html?code=' + encodeURIComponent(code) : '';
 
-    var subject = 'I.N.E.S. — ' + T.subject + ' ' + code + ': ' + statusLabel;
+    var subject = 'I.N.E.S. - ' + T.subject + ' ' + code + ': ' + statusLabel;
 
     var noteHtml = note
         ? '<div style="background:#FBF6EC;border-left:3px solid #C8963E;border-radius:8px;padding:14px 16px;margin:18px 0;">' +

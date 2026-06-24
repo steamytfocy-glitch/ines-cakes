@@ -3,7 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>I.N.E.S. — Impeccable Naturals Exquisite Sweets</title>
+    <title>I.N.E.S. - Homemade Custom Cakes in Donegal, Ireland</title>
+    <meta name="description" content="I.N.E.S. - Impeccable Naturals Exquisite Sweets. Homemade custom cakes made from natural ingredients in Donegal, Ireland. Order birthday, celebration and bespoke cakes.">
+    <link rel="canonical" href="https://www.inescake.com/">
+    <meta name="theme-color" content="#C8963E">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="I.N.E.S. Cakes">
+    <meta property="og:title" content="I.N.E.S. - Homemade Custom Cakes in Donegal, Ireland">
+    <meta property="og:description" content="Homemade custom cakes made from natural ingredients in Donegal, Ireland.">
+    <meta property="og:url" content="https://www.inescake.com/">
+    <meta name="twitter:card" content="summary_large_image">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -69,24 +78,23 @@
     <div class="container hero__inner">
         <div class="hero__content">
             <h1 class="hero__title" data-i18n="hero.title">Homemade Cakes<br>with Love & Taste</h1>
-            <p class="hero__subtitle" data-i18n="hero.subtitle">Custom cakes for every occasion — made from natural ingredients in Donegal, Ireland</p>
+            <p class="hero__subtitle" data-i18n="hero.subtitle">Custom cakes for every occasion - made from natural ingredients in Donegal, Ireland</p>
             <div class="hero__buttons">
                 <a href="#gallery" class="btn btn--primary" data-i18n="hero.cta">Browse Cakes</a>
                 <a href="#order" class="btn btn--outline" data-i18n="hero.custom">Custom Cake</a>
             </div>
         </div>
-        <div class="hero__image">
-            <div class="hero__image-placeholder">
-                <svg viewBox="0 0 300 300" width="300" height="300">
-                    <circle cx="150" cy="150" r="140" fill="#FDF6EC" stroke="#C8963E" stroke-width="2"/>
-                    <path d="M100 200 Q110 140 150 130 Q190 140 200 200 Z" fill="#C8963E" opacity="0.3"/>
-                    <path d="M110 200 Q115 155 150 145 Q185 155 190 200 Z" fill="#C8963E" opacity="0.5"/>
+        <div class="hero__image" id="heroImage">
+            <div class="hero__image-placeholder" id="heroPlaceholder">
+                <svg viewBox="0 0 300 300" width="300" height="300" aria-hidden="true">
+                    <circle cx="150" cy="150" r="140" fill="#FDF6EC" stroke="#E8C47A" stroke-width="2"/>
+                    <path d="M100 200 Q110 140 150 130 Q190 140 200 200 Z" fill="#C8963E" opacity="0.28"/>
+                    <path d="M110 200 Q115 155 150 145 Q185 155 190 200 Z" fill="#C8963E" opacity="0.45"/>
                     <ellipse cx="150" cy="200" rx="55" ry="8" fill="#C8963E" opacity="0.2"/>
                     <path d="M120 200h60v15c0 8-13 15-30 15s-30-7-30-15v-15z" fill="#C8963E" opacity="0.4"/>
                     <circle cx="130" cy="170" r="5" fill="#E8C47A"/>
                     <circle cx="150" cy="160" r="5" fill="#E8C47A"/>
                     <circle cx="170" cy="170" r="5" fill="#E8C47A"/>
-                    <text x="150" y="270" text-anchor="middle" fill="#C8963E" font-size="14" font-family="Montserrat">Your photo here</text>
                 </svg>
             </div>
         </div>
@@ -97,10 +105,10 @@
 <section class="gallery section section--alt" id="gallery">
     <div class="container">
         <h2 class="section__title" data-i18n="gallery.title">Our Work</h2>
-        <p class="section__subtitle" data-i18n="gallery.subtitle">Browse our cakes by category — tap a category to see them all</p>
+        <p class="section__subtitle" data-i18n="gallery.subtitle">Browse our cakes by category - tap a category to see them all</p>
         <div class="gallery__categories" id="galleryCategories"></div>
         <div class="catalog-empty" id="catalogEmpty" style="display:none;">
-            <p data-i18n="cakes.empty">Our cakes are coming soon — check back shortly!</p>
+            <p data-i18n="cakes.empty">Our cakes are coming soon - check back shortly!</p>
         </div>
         <div class="gallery__more-wrap" id="galleryMoreWrap" style="display:none;">
             <a href="gallery" class="btn btn--outline" data-i18n="gallery.viewAll">View All Categories</a>
@@ -108,7 +116,7 @@
 
         <div class="custom-cta">
             <h3 class="custom-cta__title" data-i18n="custom.ctaTitle">Can't find your perfect cake?</h3>
-            <p class="custom-cta__text" data-i18n="custom.ctaText">We make custom cakes to your design — tell us your idea and attach a photo, and we'll create it.</p>
+            <p class="custom-cta__text" data-i18n="custom.ctaText">We make custom cakes to your design - tell us your idea and attach a photo, and we'll create it.</p>
             <a href="#order" class="btn btn--primary" data-i18n="custom.ctaBtn">Order a Custom Cake</a>
         </div>
     </div>
@@ -118,7 +126,7 @@
 <section class="flavours-section section" id="flavours">
     <div class="container">
         <h2 class="section__title" data-i18n="flavours.title">Our Flavours</h2>
-        <p class="section__subtitle" data-i18n="flavours.subtitle">A look inside — choose the taste you love</p>
+        <p class="section__subtitle" data-i18n="flavours.subtitle">A look inside - choose the taste you love</p>
         <div class="flavour-grid flavour-grid--showcase" id="flavoursShowcase"></div>
         <div class="reviews__more-wrap">
             <a href="flavours" class="btn btn--outline" data-i18n="flavours.viewAll">View All Flavours</a>
@@ -132,19 +140,19 @@
         <h2 class="section__title" data-i18n="shed.title">Cake Shed</h2>
         <div class="cakeshed__inner">
             <div class="cakeshed__info">
-                <p class="cakeshed__desc" data-i18n="shed.desc">Visit our cosy cake shed right next to our home! Fresh cakes and treats available for walk-in purchase — no pre-order needed.</p>
+                <p class="cakeshed__desc" data-i18n="shed.desc">Visit our cosy cake shed right next to our home! Fresh cakes and treats available for walk-in purchase - no pre-order needed.</p>
                 <div class="cakeshed__schedule">
                     <div class="schedule-day">
                         <span class="schedule-day__name" data-i18n="shed.fri">Friday</span>
-                        <span class="schedule-day__time">9:00 — 21:00</span>
+                        <span class="schedule-day__time">9:00 - 21:00</span>
                     </div>
                     <div class="schedule-day">
                         <span class="schedule-day__name" data-i18n="shed.sat">Saturday</span>
-                        <span class="schedule-day__time">9:00 — 21:00</span>
+                        <span class="schedule-day__time">9:00 - 21:00</span>
                     </div>
                     <div class="schedule-day">
                         <span class="schedule-day__name" data-i18n="shed.sun">Sunday</span>
-                        <span class="schedule-day__time">9:00 — 18:00</span>
+                        <span class="schedule-day__time">9:00 - 18:00</span>
                     </div>
                 </div>
                 <div class="cakeshed__address">
@@ -194,9 +202,9 @@
         <h2 class="section__title" data-i18n="about.title">About Us</h2>
         <div class="about__grid">
             <div class="about__text">
-                <p data-i18n="about.p1">Welcome to I.N.E.S. — a home bakery in the heart of Donegal, Ireland. Every cake we create is made with passion, using only natural and high-quality ingredients.</p>
-                <p data-i18n="about.p2">We believe that a cake is more than just a dessert — it's the centrepiece of your celebration. Whether it's a birthday, wedding, anniversary, or just a sweet Friday treat, we'll make it special.</p>
-                <p data-i18n="about.p3">All cakes are baked fresh to order. We offer a wide range of flavours and designs — from classic elegance to bold custom creations based on your ideas.</p>
+                <p data-i18n="about.p1">Welcome to I.N.E.S. - a home bakery in the heart of Donegal, Ireland. Every cake we create is made with passion, using only natural and high-quality ingredients.</p>
+                <p data-i18n="about.p2">We believe that a cake is more than just a dessert - it's the centrepiece of your celebration. Whether it's a birthday, wedding, anniversary, or just a sweet Friday treat, we'll make it special.</p>
+                <p data-i18n="about.p3">All cakes are baked fresh to order. We offer a wide range of flavours and designs - from classic elegance to bold custom creations based on your ideas.</p>
             </div>
             <div class="about__features">
                 <div class="feature">
@@ -204,21 +212,21 @@
                         <svg viewBox="0 0 48 48" width="48" height="48"><circle cx="24" cy="24" r="22" fill="none" stroke="#C8963E" stroke-width="2"/><path d="M16 24l6 6 12-12" stroke="#C8963E" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>
                     </div>
                     <h3 class="feature__title" data-i18n="about.f1.title">Natural Ingredients</h3>
-                    <p class="feature__text" data-i18n="about.f1.text">Only the finest natural products — no artificial colours or preservatives</p>
+                    <p class="feature__text" data-i18n="about.f1.text">Only the finest natural products - no artificial colours or preservatives</p>
                 </div>
                 <div class="feature">
                     <div class="feature__icon">
                         <svg viewBox="0 0 48 48" width="48" height="48"><circle cx="24" cy="24" r="22" fill="none" stroke="#C8963E" stroke-width="2"/><path d="M24 12v12l8 5" stroke="#C8963E" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>
                     </div>
                     <h3 class="feature__title" data-i18n="about.f2.title">Freshly Baked</h3>
-                    <p class="feature__text" data-i18n="about.f2.text">Every cake is made fresh — we bake to order, never in advance</p>
+                    <p class="feature__text" data-i18n="about.f2.text">Every cake is made fresh - we bake to order, never in advance</p>
                 </div>
                 <div class="feature">
                     <div class="feature__icon">
                         <svg viewBox="0 0 48 48" width="48" height="48"><circle cx="24" cy="24" r="22" fill="none" stroke="#C8963E" stroke-width="2"/><path d="M15 28c0-5 4-9 9-9s9 4 9 9" stroke="#C8963E" stroke-width="2.5" fill="none" stroke-linecap="round"/><circle cx="24" cy="22" r="4" stroke="#C8963E" stroke-width="2" fill="none"/></svg>
                     </div>
                     <h3 class="feature__title" data-i18n="about.f3.title">Your Design</h3>
-                    <p class="feature__text" data-i18n="about.f3.text">Send us your idea or photo — we'll bring it to life in cake form</p>
+                    <p class="feature__text" data-i18n="about.f3.text">Send us your idea or photo - we'll bring it to life in cake form</p>
                 </div>
             </div>
         </div>
@@ -236,7 +244,7 @@
                 <div class="order-ref__info">
                     <div class="order-ref__title" data-i18n="order.refTitle">Reference cake</div>
                     <div class="order-ref__name" id="orderRefName"></div>
-                    <p class="order-ref__hint" data-i18n="order.refHint">We'll base your cake on this one — describe the changes you'd like below.</p>
+                    <p class="order-ref__hint" data-i18n="order.refHint">We'll base your cake on this one - describe the changes you'd like below.</p>
                 </div>
                 <button type="button" class="order-ref__remove" id="orderRefRemove" data-i18n="order.removeRef">Remove</button>
             </div>
@@ -263,8 +271,8 @@
                     <label for="cakeSize" data-i18n="order.size">Cake Size</label>
                     <select id="cakeSize" name="cakeSize" required>
                         <option value="" disabled selected data-i18n="order.sizePlaceholder">Select size</option>
-                        <option value="mini" data-i18n="order.sizeMini">Mini — 5" (13 cm)</option>
-                        <option value="maxi" data-i18n="order.sizeMaxi">Maxi — 6" (15 cm)</option>
+                        <option value="mini" data-i18n="order.sizeMini">Mini - 5" (13 cm)</option>
+                        <option value="maxi" data-i18n="order.sizeMaxi">Maxi - 6" (15 cm)</option>
                         <option value="custom" data-i18n="order.sizeCustom">Custom size</option>
                     </select>
                 </div>
@@ -298,7 +306,7 @@
             </div>
             <div class="form-group form-group--full">
                 <label for="message" data-i18n="order.message">Your Wishes / Description</label>
-                <textarea id="message" name="message" rows="4" data-i18n-placeholder="order.messagePh" placeholder="Describe your ideal cake — theme, colours, text, number of tiers..."></textarea>
+                <textarea id="message" name="message" rows="4" data-i18n-placeholder="order.messagePh" placeholder="Describe your ideal cake - theme, colours, text, number of tiers..."></textarea>
             </div>
             <div class="form-group form-group--full">
                 <label for="photo" data-i18n="order.photo">Attach Reference Photo</label>
@@ -307,10 +315,10 @@
             <div class="order-total" id="orderTotal" style="display:none;">
                 <div class="order-total__row">
                     <span class="order-total__label" data-i18n="order.estTotal">Estimated total</span>
-                    <span class="order-total__value" id="orderTotalValue">—</span>
+                    <span class="order-total__value" id="orderTotalValue">-</span>
                 </div>
                 <p class="order-total__breakdown" id="orderTotalBreakdown"></p>
-                <p class="order-total__note" data-i18n="order.totalNote">* Approximate price — final amount confirmed by our manager</p>
+                <p class="order-total__note" data-i18n="order.totalNote">* Approximate price - final amount confirmed by our manager</p>
             </div>
             <input type="hidden" id="orderTotalHidden" name="total">
             <p class="order__custom-note" data-i18n="order.customNote">Price for custom cakes is confirmed by us after we see your idea.</p>
@@ -402,13 +410,18 @@
         </div>
         <div class="footer__hours">
             <h4 data-i18n="footer.shedHours">Cake Shed Hours</h4>
-            <p data-i18n="footer.schedule">Friday — Sunday</p>
+            <p data-i18n="footer.schedule">Friday - Sunday</p>
             <p class="footer__pickup" data-i18n="footer.pickup">Collection & delivery by arrangement</p>
         </div>
     </div>
     <div class="footer__bottom">
-        <div class="container">
-            <p>&copy; 2026 I.N.E.S. — Impeccable Naturals Exquisite Sweets</p>
+        <div class="container footer__bottom-inner">
+            <p>&copy; 2026 I.N.E.S. - Impeccable Naturals Exquisite Sweets</p>
+            <nav class="footer__legal">
+                <a href="privacy">Privacy Policy</a>
+                <a href="cookies">Cookie Policy</a>
+                <a href="terms">Terms &amp; Conditions</a>
+            </nav>
         </div>
     </div>
 </footer>

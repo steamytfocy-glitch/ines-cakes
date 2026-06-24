@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>I.N.E.S. — Admin Panel</title>
+    <title>I.N.E.S. - Admin Panel</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -203,7 +203,7 @@
                         <div class="modal__field">
                             <label data-i18n="photo">Photo</label>
                             <input type="file" id="cakePhoto" accept="image/*" multiple>
-                            <p class="content-hint" style="margin:6px 0 0;" data-i18n="photosHint">You can add several photos — the first is the main one; customers can swipe through the rest.</p>
+                            <p class="content-hint" style="margin:6px 0 0;" data-i18n="photosHint">You can add several photos - the first is the main one; customers can swipe through the rest.</p>
                             <div id="cakePhotoPreview" class="cake-photos-preview" style="margin-top:8px;"></div>
                         </div>
                         <div class="modal__field">
@@ -212,7 +212,7 @@
                         </div>
 
                         <div class="modal__field">
-                            <label data-i18n="cake.price">Cake price (€) — optional</label>
+                            <label data-i18n="cake.price">Cake price (€) - optional</label>
                             <input type="text" id="cakePrice" placeholder="e.g. 45" style="max-width:160px;">
                             <span class="content-hint" data-i18n="cake.priceHint">One fixed price for this cake. If set, it is used instead of the per-size prices below.</span>
                         </div>
@@ -223,7 +223,7 @@
                             <div id="cakeSizesRows"></div>
                             <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;">
                                 <button type="button" class="btn-cancel" id="addSizeRowBtn" data-i18n="addSize">+ Add size</button>
-                                <button type="button" class="btn-cancel" id="addAllSizesBtn" data-i18n="addAllSizes">+ Add all standard sizes (6"–12")</button>
+                                <button type="button" class="btn-cancel" id="addAllSizesBtn" data-i18n="addAllSizes">+ Add all standard sizes (6"-12")</button>
                             </div>
                         </div>
 
@@ -237,7 +237,7 @@
                         </div>
 
                         <div class="modal__field">
-                            <label data-i18n="leadTime">Lead time — days notice required</label>
+                            <label data-i18n="leadTime">Lead time - days notice required</label>
                             <input type="number" id="cakeNotice" min="0" value="3" style="max-width:120px;">
                         </div>
 
@@ -285,14 +285,14 @@
                     <div id="globalSizesList"></div>
                     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;">
                         <button type="button" class="btn-cancel" id="addGlobalSizeBtn" data-i18n="sizes.add">+ Add size</button>
-                        <button type="button" class="btn-cancel" id="fillStdGlobalSizesBtn" data-i18n="sizes.fillStandard">+ Add standard sizes (6"–12")</button>
+                        <button type="button" class="btn-cancel" id="fillStdGlobalSizesBtn" data-i18n="sizes.fillStandard">+ Add standard sizes (6"-12")</button>
                     </div>
                     <button class="btn-admin" id="saveGlobalSizesBtn" style="margin-top:14px;" data-i18n="sizes.save">Save sizes</button>
                     <p class="save-status" id="globalSizesStatus"></p>
                 </div>
 
                 <div class="content-section">
-                    <h3 class="content-section__title" data-i18n="ptable.title">Price table — all cakes</h3>
+                    <h3 class="content-section__title" data-i18n="ptable.title">Price table - all cakes</h3>
                     <p class="content-hint" style="margin:0 0 12px;" data-i18n="ptable.hint">Type a price for each size, per cake. Leave a cake empty to use the default prices above.</p>
                     <input type="text" id="priceTableSearch" class="price-table__search" data-i18n-placeholder="ptable.search" placeholder="Search cake…">
                     <div id="priceTableWrap"></div>
@@ -427,7 +427,7 @@
                             <textarea id="flavourDesc" rows="2" placeholder="Short description of the flavour" data-i18n-placeholder="flavour.descPh"></textarea>
                         </div>
                         <div class="modal__field">
-                            <label data-i18n="flavour.price">Price per kg (€) — optional</label>
+                            <label data-i18n="flavour.price">Price per kg (€) - optional</label>
                             <input type="text" id="flavourPrice" placeholder="e.g. 30" data-i18n-placeholder="flavour.pricePh">
                         </div>
                         <div class="modal__field">
@@ -501,9 +501,16 @@
                     <p class="content-hint" style="margin-top:6px;" data-i18n="content.maintHint">When OFF, visitors see a "We'll be right back" maintenance screen instead of the site. Changes apply instantly.</p>
                     <div class="content-field" style="margin-top:14px;">
                         <label data-i18n="content.msgOff">Message shown when website is OFF (optional)</label>
-                        <textarea id="siteMessage" rows="2" placeholder="e.g. We're on holiday until July 5th — see you soon!" data-i18n-placeholder="content.msgPh"></textarea>
+                        <textarea id="siteMessage" rows="2" placeholder="e.g. We're on holiday until July 5th - see you soon!" data-i18n-placeholder="content.msgPh"></textarea>
                         <button class="btn-admin" id="saveSiteMessage" style="margin-top:8px;" data-i18n="content.saveMsg">Save message</button>
                     </div>
+                </div>
+
+                <div class="content-section">
+                    <h3 data-i18n="content.heroTitle">Home hero photo</h3>
+                    <p class="content-hint" style="margin:0 0 10px;" data-i18n="content.heroHint">Shown big on the home page. Square photos look best. Leave empty for the default illustration.</p>
+                    <input type="file" id="heroPhotoInput" accept="image/*">
+                    <div id="heroPhotoPreview" style="margin-top:10px;"></div>
                 </div>
 
                 <div class="content-section">
@@ -531,7 +538,7 @@
                         </div>
                         <div class="content-field">
                             <label data-i18n="content.openHours">Opening hours</label>
-                            <input type="text" id="shedHours" value="" data-key="shedHours" placeholder="e.g. 10:00 — 17:00" data-i18n-placeholder="content.hoursPh">
+                            <input type="text" id="shedHours" value="" data-key="shedHours" placeholder="e.g. 10:00 - 17:00" data-i18n-placeholder="content.hoursPh">
                         </div>
                     </div>
                 </div>

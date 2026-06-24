@@ -1,5 +1,5 @@
 // Standalone maintenance guard for sub-pages (cart, product, gallery, my orders, order, thank you).
-// The main page (index.html) handles this inside main.js — do NOT load this there too.
+// The main page (index.html) handles this inside main.js - do NOT load this there too.
 (function () {
     var MG_TEXT = {
         en: { title: "We'll be right back", text: "Our website is temporarily closed for orders. Please check back soon!" },

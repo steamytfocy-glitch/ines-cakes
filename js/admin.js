@@ -42,8 +42,8 @@ var A = {
     en: {
         'login.title': 'Admin Panel', 'login.user': 'Login', 'login.pass': 'Password', 'login.signin': 'Sign In', 'login.wrong': 'Wrong login or password',
         'nav.orders': 'Orders', 'nav.cakes': 'Cakes', 'nav.sizes': 'Sizes & Prices', 'nav.flavours': 'Flavours', 'nav.certificates': 'Certificates', 'nav.reviews': 'Reviews', 'nav.content': 'Content',
-        'sizes.hint': 'These sizes & prices apply to every cake automatically. Set them once here. You can still override sizes for a single cake in its form.', 'sizes.add': '+ Add size', 'sizes.fillStandard': '+ Add standard sizes (6"–12")', 'sizes.save': 'Save sizes',
-        'ptable.title': 'Price table — all cakes', 'ptable.hint': 'Type a price for each size, per cake. Leave a cake empty to use the default prices above. Fill only some sizes to offer just those.', 'ptable.cake': 'Cake', 'ptable.save': 'Save all prices', 'ptable.needSizes': 'Add at least one size above first, then save it — the table will appear here.', 'ptable.empty': 'No cakes yet. Add cakes in the Cakes tab.', 'ptable.fixed': 'Fixed €', 'ptable.search': 'Search cake…',
+        'sizes.hint': 'These sizes & prices apply to every cake automatically. Set them once here. You can still override sizes for a single cake in its form.', 'sizes.add': '+ Add size', 'sizes.fillStandard': '+ Add standard sizes (6"-12")', 'sizes.save': 'Save sizes',
+        'ptable.title': 'Price table - all cakes', 'ptable.hint': 'Type a price for each size, per cake. Leave a cake empty to use the default prices above. Fill only some sizes to offer just those.', 'ptable.cake': 'Cake', 'ptable.save': 'Save all prices', 'ptable.needSizes': 'Add at least one size above first, then save it - the table will appear here.', 'ptable.empty': 'No cakes yet. Add cakes in the Cakes tab.', 'ptable.fixed': 'Fixed €', 'ptable.search': 'Search cake…',
         'size.sizePh': 'Size (inch), e.g. 8', 'size.servesPh': 'Serves, e.g. 15-18', 'size.pricePh': '€ price',
         'logout': 'Log out', 'viewSite': 'View Site →',
         'orders.searchPh': 'Search name / phone / code', 'orders.emptyTitle': 'No orders yet', 'orders.emptySub': 'Orders from the website form will appear here',
@@ -57,27 +57,28 @@ var A = {
         'confirm.order': 'Delete this order?', 'confirm.cake': 'Delete this cake?', 'confirm.flavour': 'Delete this flavour?', 'confirm.review': 'Delete this review?', 'confirm.cert': 'Delete this certificate?', 'confirm.cat': 'Delete this category? Its photos will move to "Other".',
         'alert.selectCakes': 'Select cakes first.', 'alert.noCakesSort': 'No cakes to sort. Add some first!', 'alert.certFront': 'Please choose a front photo',
         'confirm.delCakesPre': 'Delete ', 'confirm.delCakesPost': ' selected cake(s)?',
-        'cakes.add': 'Add Cake', 'sortByCategory': 'Sort by Category', 'selectToDelete': 'Select to delete', 'manageCategories': 'Manage Categories', 'cakes.sortHint': 'Select cakes, then assign a category', 'doneSorting': 'Done Sorting', 'assignTo': 'Assign to:', 'cakes.emptyTitle': 'No cakes yet', 'cakes.emptySub': 'Add cakes with photo, sizes & prices — they appear on the site for ordering',
+        'cakes.add': 'Add Cake', 'sortByCategory': 'Sort by Category', 'selectToDelete': 'Select to delete', 'manageCategories': 'Manage Categories', 'cakes.sortHint': 'Select cakes, then assign a category', 'doneSorting': 'Done Sorting', 'assignTo': 'Assign to:', 'cakes.emptyTitle': 'No cakes yet', 'cakes.emptySub': 'Add cakes with photo, sizes & prices - they appear on the site for ordering',
         'priceOnRequest': 'Price on request',
-        'cakeModal.addTitle': 'Add Cake', 'cakeModal.editTitle': 'Edit Cake', 'cake.name': 'Cake Name', 'cake.namePh': 'e.g. Sunset Fields Art Cake', 'category': 'Category', 'newCategory': '+ New category', 'photo': 'Photo', 'photosHint': 'You can add several photos — the first is the main one (★); customers can swipe through the rest.', 'descOptional': 'Description (optional)', 'descPh': 'Short description',
-        'cake.price': 'Cake price (€) — optional', 'cake.priceHint': 'One fixed price for this cake. If set, it is used instead of the per-size prices below.',
-        'sizesPrices': 'Sizes & prices (optional)', 'sizesHint': 'Leave empty to use the global Sizes & Prices. Add rows only to override them for this cake.', 'addSize': '+ Add size', 'addAllSizes': '+ Add all standard sizes (6"–12")', 'availableFlavours': 'Available flavours', 'chooseFlavours': 'Choose flavours', 'flavoursSuffix': 'selected', 'leadTime': 'Lead time — days notice required', 'saveCake': 'Save Cake',
+        'cakeModal.addTitle': 'Add Cake', 'cakeModal.editTitle': 'Edit Cake', 'cake.name': 'Cake Name', 'cake.namePh': 'e.g. Sunset Fields Art Cake', 'category': 'Category', 'newCategory': '+ New category', 'photo': 'Photo', 'photosHint': 'You can add several photos - the first is the main one (★); customers can swipe through the rest.', 'descOptional': 'Description (optional)', 'descPh': 'Short description',
+        'cake.price': 'Cake price (€) - optional', 'cake.priceHint': 'One fixed price for this cake. If set, it is used instead of the per-size prices below.',
+        'sizesPrices': 'Sizes & prices (optional)', 'sizesHint': 'Leave empty to use the global Sizes & Prices. Add rows only to override them for this cake.', 'addSize': '+ Add size', 'addAllSizes': '+ Add all standard sizes (6"-12")', 'availableFlavours': 'Available flavours', 'chooseFlavours': 'Choose flavours', 'flavoursSuffix': 'selected', 'leadTime': 'Lead time - days notice required', 'saveCake': 'Save Cake',
         'selectFlavours': 'Select flavours', 'flavourPickHint': 'Tap the flavours available for this cake. To add a new flavour, use the Flavours tab.', 'flavoursNoneModal': 'No flavours yet. Add them in the Flavours tab first.',
         'manageCatsHint': 'Add, rename or delete the categories used for your cakes.', 'addCategory': '+ Add Category', 'newCatPrompt': 'New category name:',
         'cert.add': 'Add Certificate', 'cert.modalTitle': 'Add Certificate', 'cert.front': 'Front photo', 'cert.back': 'Back photo (optional)', 'cert.save': 'Save Certificate', 'cert.emptyTitle': 'No certificates yet', 'cert.emptySub': 'Upload your HACCP / hygiene certificates to show on the site',
-        'flavour.add': 'Add Flavour', 'flavour.addTitle': 'Add Flavour', 'flavour.editTitle': 'Edit Flavour', 'flavour.name': 'Flavour Name', 'flavour.namePh': 'e.g. Chocolate', 'flavour.desc': 'Description', 'flavour.descPh': 'Short description of the flavour', 'flavour.price': 'Price per kg (€) — optional', 'flavour.pricePh': 'e.g. 30', 'flavour.photo': 'Cross-section Photo', 'flavour.save': 'Save Flavour', 'flavour.emptyTitle': 'No flavours yet', 'flavour.emptySub': 'Add flavours with cross-section photos and prices',
+        'flavour.add': 'Add Flavour', 'flavour.addTitle': 'Add Flavour', 'flavour.editTitle': 'Edit Flavour', 'flavour.name': 'Flavour Name', 'flavour.namePh': 'e.g. Chocolate', 'flavour.desc': 'Description', 'flavour.descPh': 'Short description of the flavour', 'flavour.price': 'Price per kg (€) - optional', 'flavour.pricePh': 'e.g. 30', 'flavour.photo': 'Cross-section Photo', 'flavour.save': 'Save Flavour', 'flavour.emptyTitle': 'No flavours yet', 'flavour.emptySub': 'Add flavours with cross-section photos and prices',
         'review.add': 'Add Review', 'review.addTitle': 'Add Review', 'review.editTitle': 'Edit Review', 'review.name': 'Customer Name', 'review.rating': 'Rating', 'review.stars5': '5 Stars', 'review.stars4': '4 Stars', 'review.stars3': '3 Stars', 'review.text': 'Review Text', 'review.save': 'Save Review', 'review.emptyTitle': 'No reviews yet', 'review.emptySub': 'Add customer reviews to display on the website',
-        'content.websiteStatus': 'Website status', 'siteOn': 'Website is ON', 'siteOff': 'Website is OFF', 'content.maintHint': 'When OFF, visitors see a "We\'ll be right back" maintenance screen instead of the site. Changes apply instantly.', 'content.msgOff': 'Message shown when website is OFF (optional)', 'content.msgPh': "e.g. We're on holiday until July 5th — see you soon!", 'content.saveMsg': 'Save message',
+        'content.websiteStatus': 'Website status', 'siteOn': 'Website is ON', 'siteOff': 'Website is OFF', 'content.maintHint': 'When OFF, visitors see a "We\'ll be right back" maintenance screen instead of the site. Changes apply instantly.', 'content.msgOff': 'Message shown when website is OFF (optional)', 'content.msgPh': "e.g. We're on holiday until July 5th - see you soon!", 'content.saveMsg': 'Save message',
+        'content.heroTitle': 'Home hero photo', 'content.heroHint': 'Shown big on the home page. Square photos look best. Leave empty for the default illustration.',
         'content.prices': 'Cake Prices', 'content.mini': 'Mini 5" (13 cm) price', 'content.maxi': 'Maxi 6" (15 cm) price', 'content.numOnly30': 'Number only, e.g. 30', 'content.numOnly35': 'Number only, e.g. 35',
-        'content.weight': 'Weight prices', 'content.weightHint': 'List of weights and their fixed prices — shown in the custom order form.', 'content.addWeight': '+ Add weight', 'weight.weightPh': 'Weight, e.g. 1 kg', 'weight.pricePh': '€ price',
-        'content.shed': 'Cake Shed Schedule', 'content.openDays': 'Open days', 'content.openHours': 'Opening hours', 'content.hoursPh': 'e.g. 10:00 — 17:00',
+        'content.weight': 'Weight prices', 'content.weightHint': 'List of weights and their fixed prices - shown in the custom order form.', 'content.addWeight': '+ Add weight', 'weight.weightPh': 'Weight, e.g. 1 kg', 'weight.pricePh': '€ price',
+        'content.shed': 'Cake Shed Schedule', 'content.openDays': 'Open days', 'content.openHours': 'Opening hours', 'content.hoursPh': 'e.g. 10:00 - 17:00',
         'content.contact': 'Contact Info', 'content.phone': 'Phone', 'content.address': 'Address', 'content.insta': 'Instagram link', 'content.fb': 'Facebook link', 'content.save': 'Save Changes', 'content.saved': 'Changes saved!'
     },
     ua: {
         'login.title': 'Панель адміністратора', 'login.user': 'Логін', 'login.pass': 'Пароль', 'login.signin': 'Увійти', 'login.wrong': 'Невірний логін або пароль',
         'nav.orders': 'Замовлення', 'nav.cakes': 'Торти', 'nav.sizes': 'Розміри та ціни', 'nav.flavours': 'Смаки', 'nav.certificates': 'Сертифікати', 'nav.reviews': 'Відгуки', 'nav.content': 'Контент',
-        'sizes.hint': 'Ці розміри та ціни застосовуються до кожного торта автоматично. Задайте їх тут один раз. За потреби можна змінити розміри для окремого торта в його формі.', 'sizes.add': '+ Додати розмір', 'sizes.fillStandard': '+ Додати стандартні розміри (6"–12")', 'sizes.save': 'Зберегти розміри',
-        'ptable.title': 'Таблиця цін — усі торти', 'ptable.hint': 'Введіть ціну для кожного розміру по кожному торту. Залиште торт порожнім, щоб використати стандартні ціни вище. Заповніть лише деякі розміри, щоб пропонувати тільки їх.', 'ptable.cake': 'Торт', 'ptable.save': 'Зберегти всі ціни', 'ptable.needSizes': 'Спершу додайте хоча б один розмір вище та збережіть його — тоді тут зʼявиться таблиця.', 'ptable.empty': 'Тортів ще немає. Додайте торти у вкладці «Торти».', 'ptable.fixed': 'Фікс. €', 'ptable.search': 'Пошук торта…',
+        'sizes.hint': 'Ці розміри та ціни застосовуються до кожного торта автоматично. Задайте їх тут один раз. За потреби можна змінити розміри для окремого торта в його формі.', 'sizes.add': '+ Додати розмір', 'sizes.fillStandard': '+ Додати стандартні розміри (6"-12")', 'sizes.save': 'Зберегти розміри',
+        'ptable.title': 'Таблиця цін - усі торти', 'ptable.hint': 'Введіть ціну для кожного розміру по кожному торту. Залиште торт порожнім, щоб використати стандартні ціни вище. Заповніть лише деякі розміри, щоб пропонувати тільки їх.', 'ptable.cake': 'Торт', 'ptable.save': 'Зберегти всі ціни', 'ptable.needSizes': 'Спершу додайте хоча б один розмір вище та збережіть його - тоді тут зʼявиться таблиця.', 'ptable.empty': 'Тортів ще немає. Додайте торти у вкладці «Торти».', 'ptable.fixed': 'Фікс. €', 'ptable.search': 'Пошук торта…',
         'size.sizePh': 'Розмір (inch), напр. 8', 'size.servesPh': 'Порцій, напр. 15-18', 'size.pricePh': '€ ціна',
         'logout': 'Вийти', 'viewSite': 'Перейти на сайт →',
         'orders.searchPh': 'Пошук: ім\'я / телефон / код', 'orders.emptyTitle': 'Замовлень поки немає', 'orders.emptySub': 'Замовлення з форми на сайті з\'являться тут',
@@ -91,27 +92,28 @@ var A = {
         'confirm.order': 'Видалити це замовлення?', 'confirm.cake': 'Видалити цей торт?', 'confirm.flavour': 'Видалити цей смак?', 'confirm.review': 'Видалити цей відгук?', 'confirm.cert': 'Видалити цей сертифікат?', 'confirm.cat': 'Видалити цю категорію? Її фото перейдуть у «Інше».',
         'alert.selectCakes': 'Спочатку виберіть торти.', 'alert.noCakesSort': 'Немає тортів для сортування. Спочатку додайте.', 'alert.certFront': 'Будь ласка, оберіть фото лицьового боку',
         'confirm.delCakesPre': 'Видалити ', 'confirm.delCakesPost': ' вибраних тортів?',
-        'cakes.add': 'Додати торт', 'sortByCategory': 'Сортувати за категорією', 'selectToDelete': 'Вибрати для видалення', 'manageCategories': 'Керування категоріями', 'cakes.sortHint': 'Виберіть торти, потім призначте категорію', 'doneSorting': 'Готово', 'assignTo': 'Призначити до:', 'cakes.emptyTitle': 'Тортів поки немає', 'cakes.emptySub': 'Додайте торти з фото, розмірами та цінами — вони з\'являться на сайті для замовлення',
+        'cakes.add': 'Додати торт', 'sortByCategory': 'Сортувати за категорією', 'selectToDelete': 'Вибрати для видалення', 'manageCategories': 'Керування категоріями', 'cakes.sortHint': 'Виберіть торти, потім призначте категорію', 'doneSorting': 'Готово', 'assignTo': 'Призначити до:', 'cakes.emptyTitle': 'Тортів поки немає', 'cakes.emptySub': 'Додайте торти з фото, розмірами та цінами - вони з\'являться на сайті для замовлення',
         'priceOnRequest': 'Ціна за домовленістю',
-        'cakeModal.addTitle': 'Додати торт', 'cakeModal.editTitle': 'Редагувати торт', 'cake.name': 'Назва торта', 'cake.namePh': 'напр. Sunset Fields Art Cake', 'category': 'Категорія', 'newCategory': '+ Нова категорія', 'photo': 'Фото', 'photosHint': 'Можна додати кілька фото — перше головне (★); клієнти можуть гортати решту.', 'descOptional': 'Опис (необов\'язково)', 'descPh': 'Короткий опис',
-        'cake.price': 'Ціна торта (€) — необов\'язково', 'cake.priceHint': 'Одна фіксована ціна за цей торт. Якщо вказана, використовується замість цін за розмірами нижче.',
-        'sizesPrices': 'Розміри та ціни (необов\'язково)', 'sizesHint': 'Залиште порожнім, щоб використовувати глобальні «Розміри та ціни». Додавайте рядки лише щоб перевизначити їх для цього торта.', 'addSize': '+ Додати розмір', 'addAllSizes': '+ Додати всі стандартні розміри (6"–12")', 'availableFlavours': 'Доступні смаки', 'chooseFlavours': 'Обрати смаки', 'flavoursSuffix': 'вибрано', 'leadTime': 'Термін — за скільки днів замовляти', 'saveCake': 'Зберегти торт',
+        'cakeModal.addTitle': 'Додати торт', 'cakeModal.editTitle': 'Редагувати торт', 'cake.name': 'Назва торта', 'cake.namePh': 'напр. Sunset Fields Art Cake', 'category': 'Категорія', 'newCategory': '+ Нова категорія', 'photo': 'Фото', 'photosHint': 'Можна додати кілька фото - перше головне (★); клієнти можуть гортати решту.', 'descOptional': 'Опис (необов\'язково)', 'descPh': 'Короткий опис',
+        'cake.price': 'Ціна торта (€) - необов\'язково', 'cake.priceHint': 'Одна фіксована ціна за цей торт. Якщо вказана, використовується замість цін за розмірами нижче.',
+        'sizesPrices': 'Розміри та ціни (необов\'язково)', 'sizesHint': 'Залиште порожнім, щоб використовувати глобальні «Розміри та ціни». Додавайте рядки лише щоб перевизначити їх для цього торта.', 'addSize': '+ Додати розмір', 'addAllSizes': '+ Додати всі стандартні розміри (6"-12")', 'availableFlavours': 'Доступні смаки', 'chooseFlavours': 'Обрати смаки', 'flavoursSuffix': 'вибрано', 'leadTime': 'Термін - за скільки днів замовляти', 'saveCake': 'Зберегти торт',
         'selectFlavours': 'Оберіть смаки', 'flavourPickHint': 'Торкніться смаків, доступних для цього торта. Щоб додати новий смак, скористайтеся вкладкою «Смаки».', 'flavoursNoneModal': 'Смаків поки немає. Спершу додайте їх у вкладці «Смаки».',
         'manageCatsHint': 'Додавайте, перейменовуйте або видаляйте категорії тортів.', 'addCategory': '+ Додати категорію', 'newCatPrompt': 'Назва нової категорії:',
         'cert.add': 'Додати сертифікат', 'cert.modalTitle': 'Додати сертифікат', 'cert.front': 'Фото лицьового боку', 'cert.back': 'Фото зворотного боку (необов\'язково)', 'cert.save': 'Зберегти сертифікат', 'cert.emptyTitle': 'Сертифікатів поки немає', 'cert.emptySub': 'Завантажте сертифікати HACCP / гігієни для показу на сайті',
-        'flavour.add': 'Додати смак', 'flavour.addTitle': 'Додати смак', 'flavour.editTitle': 'Редагувати смак', 'flavour.name': 'Назва смаку', 'flavour.namePh': 'напр. Шоколад', 'flavour.desc': 'Опис', 'flavour.descPh': 'Короткий опис смаку', 'flavour.price': 'Ціна за кг (€) — необов\'язково', 'flavour.pricePh': 'напр. 30', 'flavour.photo': 'Фото розрізу', 'flavour.save': 'Зберегти смак', 'flavour.emptyTitle': 'Смаків поки немає', 'flavour.emptySub': 'Додайте смаки з фото розрізу та цінами',
+        'flavour.add': 'Додати смак', 'flavour.addTitle': 'Додати смак', 'flavour.editTitle': 'Редагувати смак', 'flavour.name': 'Назва смаку', 'flavour.namePh': 'напр. Шоколад', 'flavour.desc': 'Опис', 'flavour.descPh': 'Короткий опис смаку', 'flavour.price': 'Ціна за кг (€) - необов\'язково', 'flavour.pricePh': 'напр. 30', 'flavour.photo': 'Фото розрізу', 'flavour.save': 'Зберегти смак', 'flavour.emptyTitle': 'Смаків поки немає', 'flavour.emptySub': 'Додайте смаки з фото розрізу та цінами',
         'review.add': 'Додати відгук', 'review.addTitle': 'Додати відгук', 'review.editTitle': 'Редагувати відгук', 'review.name': 'Ім\'я клієнта', 'review.rating': 'Оцінка', 'review.stars5': '5 зірок', 'review.stars4': '4 зірки', 'review.stars3': '3 зірки', 'review.text': 'Текст відгуку', 'review.save': 'Зберегти відгук', 'review.emptyTitle': 'Відгуків поки немає', 'review.emptySub': 'Додайте відгуки клієнтів для показу на сайті',
-        'content.websiteStatus': 'Статус сайту', 'siteOn': 'Сайт УВІМКНЕНО', 'siteOff': 'Сайт ВИМКНЕНО', 'content.maintHint': 'Коли ВИМКНЕНО, відвідувачі бачать екран «Скоро повернемося» замість сайту. Зміни застосовуються миттєво.', 'content.msgOff': 'Повідомлення, коли сайт вимкнено (необов\'язково)', 'content.msgPh': 'напр. Ми у відпустці до 5 липня — до зустрічі!', 'content.saveMsg': 'Зберегти повідомлення',
+        'content.websiteStatus': 'Статус сайту', 'siteOn': 'Сайт УВІМКНЕНО', 'siteOff': 'Сайт ВИМКНЕНО', 'content.maintHint': 'Коли ВИМКНЕНО, відвідувачі бачать екран «Скоро повернемося» замість сайту. Зміни застосовуються миттєво.', 'content.msgOff': 'Повідомлення, коли сайт вимкнено (необов\'язково)', 'content.msgPh': 'напр. Ми у відпустці до 5 липня - до зустрічі!', 'content.saveMsg': 'Зберегти повідомлення',
+        'content.heroTitle': 'Головне фото', 'content.heroHint': 'Показується великим на головній. Найкраще квадратні фото. Залиште порожнім для стандартної ілюстрації.',
         'content.prices': 'Ціни на торти', 'content.mini': 'Ціна Mini 5" (13 см)', 'content.maxi': 'Ціна Maxi 6" (15 см)', 'content.numOnly30': 'Лише число, напр. 30', 'content.numOnly35': 'Лише число, напр. 35',
-        'content.weight': 'Ціни за вагою', 'content.weightHint': 'Список ваг та їх фіксованих цін — показується у формі кастомного замовлення.', 'content.addWeight': '+ Додати вагу', 'weight.weightPh': 'Вага, напр. 1 кг', 'weight.pricePh': '€ ціна',
-        'content.shed': 'Розклад Cake Shed', 'content.openDays': 'Дні роботи', 'content.openHours': 'Години роботи', 'content.hoursPh': 'напр. 10:00 — 17:00',
+        'content.weight': 'Ціни за вагою', 'content.weightHint': 'Список ваг та їх фіксованих цін - показується у формі кастомного замовлення.', 'content.addWeight': '+ Додати вагу', 'weight.weightPh': 'Вага, напр. 1 кг', 'weight.pricePh': '€ ціна',
+        'content.shed': 'Розклад Cake Shed', 'content.openDays': 'Дні роботи', 'content.openHours': 'Години роботи', 'content.hoursPh': 'напр. 10:00 - 17:00',
         'content.contact': 'Контактна інформація', 'content.phone': 'Телефон', 'content.address': 'Адреса', 'content.insta': 'Посилання Instagram', 'content.fb': 'Посилання Facebook', 'content.save': 'Зберегти зміни', 'content.saved': 'Зміни збережено!'
     },
     ru: {
         'login.title': 'Панель администратора', 'login.user': 'Логин', 'login.pass': 'Пароль', 'login.signin': 'Войти', 'login.wrong': 'Неверный логин или пароль',
         'nav.orders': 'Заказы', 'nav.cakes': 'Торты', 'nav.sizes': 'Размеры и цены', 'nav.flavours': 'Вкусы', 'nav.certificates': 'Сертификаты', 'nav.reviews': 'Отзывы', 'nav.content': 'Контент',
-        'sizes.hint': 'Эти размеры и цены применяются ко всем тортам автоматически. Задайте их здесь один раз. При необходимости можно переопределить размеры для отдельного торта в его форме.', 'sizes.add': '+ Добавить размер', 'sizes.fillStandard': '+ Добавить стандартные размеры (6"–12")', 'sizes.save': 'Сохранить размеры',
-        'ptable.title': 'Таблица цен — все торты', 'ptable.hint': 'Впишите цену для каждого размера по каждому торту. Оставьте торт пустым, чтобы использовать стандартные цены выше. Заполните только некоторые размеры, чтобы предлагать лишь их.', 'ptable.cake': 'Торт', 'ptable.save': 'Сохранить все цены', 'ptable.needSizes': 'Сначала добавьте хотя бы один размер выше и сохраните его — тогда здесь появится таблица.', 'ptable.empty': 'Тортов пока нет. Добавьте торты во вкладке «Торты».', 'ptable.fixed': 'Фикс. €', 'ptable.search': 'Поиск торта…',
+        'sizes.hint': 'Эти размеры и цены применяются ко всем тортам автоматически. Задайте их здесь один раз. При необходимости можно переопределить размеры для отдельного торта в его форме.', 'sizes.add': '+ Добавить размер', 'sizes.fillStandard': '+ Добавить стандартные размеры (6"-12")', 'sizes.save': 'Сохранить размеры',
+        'ptable.title': 'Таблица цен - все торты', 'ptable.hint': 'Впишите цену для каждого размера по каждому торту. Оставьте торт пустым, чтобы использовать стандартные цены выше. Заполните только некоторые размеры, чтобы предлагать лишь их.', 'ptable.cake': 'Торт', 'ptable.save': 'Сохранить все цены', 'ptable.needSizes': 'Сначала добавьте хотя бы один размер выше и сохраните его - тогда здесь появится таблица.', 'ptable.empty': 'Тортов пока нет. Добавьте торты во вкладке «Торты».', 'ptable.fixed': 'Фикс. €', 'ptable.search': 'Поиск торта…',
         'size.sizePh': 'Размер (inch), напр. 8', 'size.servesPh': 'Порций, напр. 15-18', 'size.pricePh': '€ цена',
         'logout': 'Выйти', 'viewSite': 'Открыть сайт →',
         'orders.searchPh': 'Поиск: имя / телефон / код', 'orders.emptyTitle': 'Заказов пока нет', 'orders.emptySub': 'Заказы с формы на сайте появятся здесь',
@@ -125,20 +127,21 @@ var A = {
         'confirm.order': 'Удалить этот заказ?', 'confirm.cake': 'Удалить этот торт?', 'confirm.flavour': 'Удалить этот вкус?', 'confirm.review': 'Удалить этот отзыв?', 'confirm.cert': 'Удалить этот сертификат?', 'confirm.cat': 'Удалить эту категорию? Её фото перейдут в «Другое».',
         'alert.selectCakes': 'Сначала выберите торты.', 'alert.noCakesSort': 'Нет тортов для сортировки. Сначала добавьте.', 'alert.certFront': 'Пожалуйста, выберите фото лицевой стороны',
         'confirm.delCakesPre': 'Удалить ', 'confirm.delCakesPost': ' выбранных тортов?',
-        'cakes.add': 'Добавить торт', 'sortByCategory': 'Сортировать по категории', 'selectToDelete': 'Выбрать для удаления', 'manageCategories': 'Управление категориями', 'cakes.sortHint': 'Выберите торты, затем назначьте категорию', 'doneSorting': 'Готово', 'assignTo': 'Назначить в:', 'cakes.emptyTitle': 'Тортов пока нет', 'cakes.emptySub': 'Добавьте торты с фото, размерами и ценами — они появятся на сайте для заказа',
+        'cakes.add': 'Добавить торт', 'sortByCategory': 'Сортировать по категории', 'selectToDelete': 'Выбрать для удаления', 'manageCategories': 'Управление категориями', 'cakes.sortHint': 'Выберите торты, затем назначьте категорию', 'doneSorting': 'Готово', 'assignTo': 'Назначить в:', 'cakes.emptyTitle': 'Тортов пока нет', 'cakes.emptySub': 'Добавьте торты с фото, размерами и ценами - они появятся на сайте для заказа',
         'priceOnRequest': 'Цена по договорённости',
-        'cakeModal.addTitle': 'Добавить торт', 'cakeModal.editTitle': 'Изменить торт', 'cake.name': 'Название торта', 'cake.namePh': 'напр. Sunset Fields Art Cake', 'category': 'Категория', 'newCategory': '+ Новая категория', 'photo': 'Фото', 'photosHint': 'Можно добавить несколько фото — первое главное (★); клиенты могут листать остальные.', 'descOptional': 'Описание (необязательно)', 'descPh': 'Краткое описание',
-        'cake.price': 'Цена торта (€) — необязательно', 'cake.priceHint': 'Одна фиксированная цена за торт. Если указана, используется вместо цен по размерам ниже.',
-        'sizesPrices': 'Размеры и цены (необязательно)', 'sizesHint': 'Оставьте пустым, чтобы использовать глобальные «Размеры и цены». Добавляйте строки только чтобы переопределить их для этого торта.', 'addSize': '+ Добавить размер', 'addAllSizes': '+ Добавить все стандартные размеры (6"–12")', 'availableFlavours': 'Доступные вкусы', 'chooseFlavours': 'Выбрать вкусы', 'flavoursSuffix': 'выбрано', 'leadTime': 'Срок — за сколько дней заказывать', 'saveCake': 'Сохранить торт',
+        'cakeModal.addTitle': 'Добавить торт', 'cakeModal.editTitle': 'Изменить торт', 'cake.name': 'Название торта', 'cake.namePh': 'напр. Sunset Fields Art Cake', 'category': 'Категория', 'newCategory': '+ Новая категория', 'photo': 'Фото', 'photosHint': 'Можно добавить несколько фото - первое главное (★); клиенты могут листать остальные.', 'descOptional': 'Описание (необязательно)', 'descPh': 'Краткое описание',
+        'cake.price': 'Цена торта (€) - необязательно', 'cake.priceHint': 'Одна фиксированная цена за торт. Если указана, используется вместо цен по размерам ниже.',
+        'sizesPrices': 'Размеры и цены (необязательно)', 'sizesHint': 'Оставьте пустым, чтобы использовать глобальные «Размеры и цены». Добавляйте строки только чтобы переопределить их для этого торта.', 'addSize': '+ Добавить размер', 'addAllSizes': '+ Добавить все стандартные размеры (6"-12")', 'availableFlavours': 'Доступные вкусы', 'chooseFlavours': 'Выбрать вкусы', 'flavoursSuffix': 'выбрано', 'leadTime': 'Срок - за сколько дней заказывать', 'saveCake': 'Сохранить торт',
         'selectFlavours': 'Выберите вкусы', 'flavourPickHint': 'Нажмите вкусы, доступные для этого торта. Чтобы добавить новый вкус, используйте вкладку «Вкусы».', 'flavoursNoneModal': 'Вкусов пока нет. Сначала добавьте их во вкладке «Вкусы».',
         'manageCatsHint': 'Добавляйте, переименовывайте или удаляйте категории тортов.', 'addCategory': '+ Добавить категорию', 'newCatPrompt': 'Название новой категории:',
         'cert.add': 'Добавить сертификат', 'cert.modalTitle': 'Добавить сертификат', 'cert.front': 'Фото лицевой стороны', 'cert.back': 'Фото обратной стороны (необязательно)', 'cert.save': 'Сохранить сертификат', 'cert.emptyTitle': 'Сертификатов пока нет', 'cert.emptySub': 'Загрузите сертификаты HACCP / гигиены для показа на сайте',
-        'flavour.add': 'Добавить вкус', 'flavour.addTitle': 'Добавить вкус', 'flavour.editTitle': 'Изменить вкус', 'flavour.name': 'Название вкуса', 'flavour.namePh': 'напр. Шоколад', 'flavour.desc': 'Описание', 'flavour.descPh': 'Краткое описание вкуса', 'flavour.price': 'Цена за кг (€) — необязательно', 'flavour.pricePh': 'напр. 30', 'flavour.photo': 'Фото разреза', 'flavour.save': 'Сохранить вкус', 'flavour.emptyTitle': 'Вкусов пока нет', 'flavour.emptySub': 'Добавьте вкусы с фото разреза и ценами',
+        'flavour.add': 'Добавить вкус', 'flavour.addTitle': 'Добавить вкус', 'flavour.editTitle': 'Изменить вкус', 'flavour.name': 'Название вкуса', 'flavour.namePh': 'напр. Шоколад', 'flavour.desc': 'Описание', 'flavour.descPh': 'Краткое описание вкуса', 'flavour.price': 'Цена за кг (€) - необязательно', 'flavour.pricePh': 'напр. 30', 'flavour.photo': 'Фото разреза', 'flavour.save': 'Сохранить вкус', 'flavour.emptyTitle': 'Вкусов пока нет', 'flavour.emptySub': 'Добавьте вкусы с фото разреза и ценами',
         'review.add': 'Добавить отзыв', 'review.addTitle': 'Добавить отзыв', 'review.editTitle': 'Изменить отзыв', 'review.name': 'Имя клиента', 'review.rating': 'Оценка', 'review.stars5': '5 звёзд', 'review.stars4': '4 звезды', 'review.stars3': '3 звезды', 'review.text': 'Текст отзыва', 'review.save': 'Сохранить отзыв', 'review.emptyTitle': 'Отзывов пока нет', 'review.emptySub': 'Добавьте отзывы клиентов для показа на сайте',
-        'content.websiteStatus': 'Статус сайта', 'siteOn': 'Сайт ВКЛЮЧЁН', 'siteOff': 'Сайт ВЫКЛЮЧЕН', 'content.maintHint': 'Когда ВЫКЛЮЧЕНО, посетители видят экран «Скоро вернёмся» вместо сайта. Изменения применяются мгновенно.', 'content.msgOff': 'Сообщение, когда сайт выключен (необязательно)', 'content.msgPh': 'напр. Мы в отпуске до 5 июля — до встречи!', 'content.saveMsg': 'Сохранить сообщение',
+        'content.websiteStatus': 'Статус сайта', 'siteOn': 'Сайт ВКЛЮЧЁН', 'siteOff': 'Сайт ВЫКЛЮЧЕН', 'content.maintHint': 'Когда ВЫКЛЮЧЕНО, посетители видят экран «Скоро вернёмся» вместо сайта. Изменения применяются мгновенно.', 'content.msgOff': 'Сообщение, когда сайт выключен (необязательно)', 'content.msgPh': 'напр. Мы в отпуске до 5 июля - до встречи!', 'content.saveMsg': 'Сохранить сообщение',
+        'content.heroTitle': 'Главное фото', 'content.heroHint': 'Показывается большим на главной. Лучше всего квадратные фото. Оставьте пустым для стандартной иллюстрации.',
         'content.prices': 'Цены на торты', 'content.mini': 'Цена Mini 5" (13 см)', 'content.maxi': 'Цена Maxi 6" (15 см)', 'content.numOnly30': 'Только число, напр. 30', 'content.numOnly35': 'Только число, напр. 35',
-        'content.weight': 'Цены за вес', 'content.weightHint': 'Список весов и их фиксированных цен — показывается в форме кастомного заказа.', 'content.addWeight': '+ Добавить вес', 'weight.weightPh': 'Вес, напр. 1 кг', 'weight.pricePh': '€ цена',
-        'content.shed': 'Расписание Cake Shed', 'content.openDays': 'Рабочие дни', 'content.openHours': 'Часы работы', 'content.hoursPh': 'напр. 10:00 — 17:00',
+        'content.weight': 'Цены за вес', 'content.weightHint': 'Список весов и их фиксированных цен - показывается в форме кастомного заказа.', 'content.addWeight': '+ Добавить вес', 'weight.weightPh': 'Вес, напр. 1 кг', 'weight.pricePh': '€ цена',
+        'content.shed': 'Расписание Cake Shed', 'content.openDays': 'Рабочие дни', 'content.openHours': 'Часы работы', 'content.hoursPh': 'напр. 10:00 - 17:00',
         'content.contact': 'Контактная информация', 'content.phone': 'Телефон', 'content.address': 'Адрес', 'content.insta': 'Ссылка Instagram', 'content.fb': 'Ссылка Facebook', 'content.save': 'Сохранить изменения', 'content.saved': 'Изменения сохранены!'
     }
 };
@@ -1181,7 +1184,7 @@ function loadReviews() {
             '<div class="review-admin-card__content">' +
                 '<div class="review-admin-card__stars">' + stars + '</div>' +
                 '<p class="review-admin-card__text">"' + escapeHtml(r.text) + '"</p>' +
-                '<p class="review-admin-card__author">— ' + escapeHtml(r.author) + '</p>' +
+                '<p class="review-admin-card__author">- ' + escapeHtml(r.author) + '</p>' +
             '</div>' +
             '<div class="review-admin-card__actions">' +
                 '<button class="btn-edit" data-review-edit="' + i + '">' + at('edit') + '</button>' +
@@ -1296,6 +1299,26 @@ function updateSiteToggle(s) {
 }
 
 // ===== CONTENT =====
+var pendingHeroPhoto = null;
+function renderHeroPhotoPreview() {
+    var wrap = document.getElementById('heroPhotoPreview');
+    if (!wrap) return;
+    wrap.innerHTML = pendingHeroPhoto
+        ? '<div class="cake-photo-thumb cake-photo-thumb--main"><img src="' + pendingHeroPhoto + '" alt=""><button type="button" class="cake-photo-thumb__del" id="heroPhotoDel" aria-label="Remove">&times;</button></div>'
+        : '';
+    var del = document.getElementById('heroPhotoDel');
+    if (del) del.addEventListener('click', function() { pendingHeroPhoto = null; renderHeroPhotoPreview(); });
+}
+(function() {
+    var inp = document.getElementById('heroPhotoInput');
+    if (inp) inp.addEventListener('change', function(e) {
+        var file = e.target.files[0];
+        if (!file) return;
+        compressImage(file, 800, 0.8, function(dataUrl) { pendingHeroPhoto = dataUrl; renderHeroPhotoPreview(); });
+        e.target.value = '';
+    });
+})();
+
 function loadContent() {
     var content = getData('content', null);
     if (!content) return;
@@ -1306,6 +1329,8 @@ function loadContent() {
             field.value = content[key];
         }
     });
+    pendingHeroPhoto = content.heroPhoto || null;
+    renderHeroPhotoPreview();
 }
 
 document.getElementById('saveContentBtn').addEventListener('click', function() {
@@ -1313,6 +1338,7 @@ document.getElementById('saveContentBtn').addEventListener('click', function() {
     document.querySelectorAll('[data-key]').forEach(function(field) {
         content[field.dataset.key] = field.value.trim();
     });
+    if (pendingHeroPhoto) content.heroPhoto = pendingHeroPhoto;
     setData('content', content);
     var status = document.getElementById('saveStatus');
     status.textContent = at('content.saved');
@@ -1512,7 +1538,7 @@ function priceRange(sizes) {
     if (!nums.length) return at('priceOnRequest');
     var min = Math.min.apply(null, nums);
     var max = Math.max.apply(null, nums);
-    return min === max ? ('€' + min) : ('€' + min + ' – €' + max);
+    return min === max ? ('€' + min) : ('€' + min + ' - €' + max);
 }
 
 function catNameById(id) {

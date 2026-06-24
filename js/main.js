@@ -11,27 +11,27 @@ const translations = {
         "nav.order": "Order Now",
 
         "hero.title": "Homemade Cakes<br>with Love & Taste",
-        "hero.subtitle": "Custom cakes for every occasion — made from natural ingredients in Donegal, Ireland",
+        "hero.subtitle": "Custom cakes for every occasion - made from natural ingredients in Donegal, Ireland",
         "hero.cta": "Browse Cakes",
         "hero.custom": "Custom Cake",
         "hero.gallery": "View Our Work",
         "custom.ctaTitle": "Can't find your perfect cake?",
-        "custom.ctaText": "We make custom cakes to your design — tell us your idea and attach a photo, and we'll create it.",
+        "custom.ctaText": "We make custom cakes to your design - tell us your idea and attach a photo, and we'll create it.",
         "custom.ctaBtn": "Order a Custom Cake",
 
         "about.title": "About Us",
         "about.p1": "Welcome to I.N.E.S. Every cake we create is made with passion, using only natural and high-quality ingredients.",
-        "about.p2": "We believe that a cake is more than just a dessert — it's the centrepiece of your celebration. Whether it's a birthday, wedding, anniversary, or just a sweet Friday treat, we'll make it special.",
-        "about.p3": "All cakes are baked fresh to order. We offer a wide range of flavours and designs — from classic elegance to bold custom creations based on your ideas.",
+        "about.p2": "We believe that a cake is more than just a dessert - it's the centrepiece of your celebration. Whether it's a birthday, wedding, anniversary, or just a sweet Friday treat, we'll make it special.",
+        "about.p3": "All cakes are baked fresh to order. We offer a wide range of flavours and designs - from classic elegance to bold custom creations based on your ideas.",
         "about.f1.title": "Natural Ingredients",
-        "about.f1.text": "Only the finest natural products — no artificial colours or preservatives",
+        "about.f1.text": "Only the finest natural products - no artificial colours or preservatives",
         "about.f2.title": "Freshly Baked",
-        "about.f2.text": "Every cake is made fresh — we bake to order, never in advance",
+        "about.f2.text": "Every cake is made fresh - we bake to order, never in advance",
         "about.f3.title": "Your Design",
-        "about.f3.text": "Send us your idea or photo — we'll bring it to life in cake form",
+        "about.f3.text": "Send us your idea or photo - we'll bring it to life in cake form",
 
         "cakes.title": "Cakes to Order",
-        "cakes.subtitle": "Choose your size, flavour and design — we'll create the perfect cake for your occasion",
+        "cakes.subtitle": "Choose your size, flavour and design - we'll create the perfect cake for your occasion",
         "cakes.serves6": "Serves 6 people",
         "cakes.from30": "from €30",
         "cakes.serves8": "Serves 8 people",
@@ -40,7 +40,7 @@ const translations = {
         "cakes.serves12": "Any size & weight you need",
         "cakes.priceAgreed": "Price on request",
         "cakes.from": "from",
-        "cakes.empty": "Our cakes are coming soon — check back shortly!",
+        "cakes.empty": "Our cakes are coming soon - check back shortly!",
         "cakes.flavoursTitle": "Popular Flavours",
         "cakes.fl1": "Vanilla",
         "cakes.fl2": "Chocolate",
@@ -50,26 +50,26 @@ const translations = {
         "cakes.fl6": "Cheesecake",
         "cakes.fl7": "Napoleon",
         "cakes.fl8": "Bento Cake",
-        "cakes.note": "Cream options: white or milk chocolate ganache. Complex fillings and custom designs — discussed individually.",
+        "cakes.note": "Cream options: white or milk chocolate ganache. Complex fillings and custom designs - discussed individually.",
         "cakes.cta": "Order Your Cake",
 
         "shed.title": "Cake Shed",
-        "shed.desc": "Visit our cosy cake shed right next to our home! Fresh cakes and treats available for walk-in purchase — no pre-order needed.",
+        "shed.desc": "Visit our cosy cake shed right next to our home! Fresh cakes and treats available for walk-in purchase - no pre-order needed.",
         "shed.fri": "Friday",
         "shed.sat": "Saturday",
         "shed.sun": "Sunday",
 
         "gallery.title": "Our Work",
-        "gallery.subtitle": "A selection of our recent cakes — each one unique and made with care",
+        "gallery.subtitle": "A selection of our recent cakes - each one unique and made with care",
         "gallery.back": "Back to categories",
 
         "reviews.title": "Customer Reviews",
         "reviews.r1.text": "\"The cake was absolutely stunning and tasted even better than it looked. Everyone at the party was amazed!\"",
-        "reviews.r1.author": "— Sarah M.",
-        "reviews.r2.text": "\"Ordered a custom birthday cake — it was perfect! Fresh, delicious, and beautifully decorated. Will definitely order again.\"",
-        "reviews.r2.author": "— Olena K.",
+        "reviews.r1.author": "- Sarah M.",
+        "reviews.r2.text": "\"Ordered a custom birthday cake - it was perfect! Fresh, delicious, and beautifully decorated. Will definitely order again.\"",
+        "reviews.r2.author": "- Olena K.",
         "reviews.r3.text": "\"Best bento cake in Donegal! Love the attention to detail and the natural taste. Highly recommend I.N.E.S.\"",
-        "reviews.r3.author": "— Michael D.",
+        "reviews.r3.author": "- Michael D.",
         "reviews.viewAll": "View All Reviews",
         "reviews.cta": "Enjoyed your cake? We'd love to hear from you!",
         "reviews.writeBtn": "Write a Review",
@@ -79,19 +79,19 @@ const translations = {
         "cert.flip": "Flip",
         "cert.twoSides": "Front & back",
         "flavours.title": "Our Flavours",
-        "flavours.subtitle": "A look inside — choose the taste you love",
+        "flavours.subtitle": "A look inside - choose the taste you love",
         "flavours.viewAll": "View All Flavours",
 
         "order.title": "Order a Custom Cake",
-        "order.subtitle": "Have a specific design in mind? Describe it and attach a reference photo — we'll get back to you to discuss the details.",
+        "order.subtitle": "Have a specific design in mind? Describe it and attach a reference photo - we'll get back to you to discuss the details.",
         "order.name": "Your Name",
         "order.phone": "Phone Number",
         "order.email": "Email",
         "order.date": "Date Needed",
         "order.size": "Cake Size",
         "order.sizePlaceholder": "Select size",
-        "order.sizeMini": "Mini — 5\" (13 cm)",
-        "order.sizeMaxi": "Maxi — 6\" (15 cm)",
+        "order.sizeMini": "Mini - 5\" (13 cm)",
+        "order.sizeMaxi": "Maxi - 6\" (15 cm)",
         "order.sizeCustom": "Custom size",
         "order.diameter": "Diameter (inch)",
         "order.flavour": "Preferred Flavour",
@@ -104,9 +104,9 @@ const translations = {
         "order.estTotal": "Estimated total",
         "order.leadNote": "⏳ Please order at least 7 days ahead. Urgent orders only by prior arrangement.",
         "order.kg": "kg",
-        "order.totalNote": "* Approximate price — final amount confirmed by our manager",
+        "order.totalNote": "* Approximate price - final amount confirmed by our manager",
         "order.message": "Your Wishes / Description",
-        "order.messagePh": "Describe your ideal cake — theme, colours, text, number of tiers...",
+        "order.messagePh": "Describe your ideal cake - theme, colours, text, number of tiers...",
         "order.allergies": "Allergies",
         "order.al.gluten": "Gluten",
         "order.al.nuts": "Nuts",
@@ -123,7 +123,7 @@ const translations = {
         "order.weightChoose": "Choose a weight",
         "order.chooseRef": "📷 Pick a cake as a reference",
         "order.refTitle": "Reference cake",
-        "order.refHint": "We'll base your cake on this one — describe the changes you'd like below.",
+        "order.refHint": "We'll base your cake on this one - describe the changes you'd like below.",
         "order.removeRef": "Remove",
         "order.successTitle": "Thank you!",
         "order.successText": "Your order has been received. We'll contact you soon to discuss the details.",
@@ -132,7 +132,7 @@ const translations = {
         "footer.contacts": "Contacts",
         "footer.track": "My orders",
         "footer.shedHours": "Cake Shed Hours",
-        "footer.schedule": "Fri–Sat 9:00–21:00, Sun 9:00–18:00",
+        "footer.schedule": "Fri-Sat 9:00-21:00, Sun 9:00-18:00",
         "footer.pickup": "Collection & delivery by arrangement",
 
         "maint.title": "We'll be right back",
@@ -150,27 +150,27 @@ const translations = {
         "nav.order": "Замовити",
 
         "hero.title": "Домашні торти<br>з любов'ю та смаком",
-        "hero.subtitle": "Торти на замовлення для будь-якої нагоди — з натуральних інгредієнтів у Донеголі, Ірландія",
+        "hero.subtitle": "Торти на замовлення для будь-якої нагоди - з натуральних інгредієнтів у Донеголі, Ірландія",
         "hero.cta": "Переглянути торти",
         "hero.custom": "Індивідуальний торт",
         "hero.gallery": "Наші роботи",
         "custom.ctaTitle": "Не знайшли свій ідеальний торт?",
-        "custom.ctaText": "Робимо торти за вашим дизайном — опишіть ідею та додайте фото, і ми її втілимо.",
+        "custom.ctaText": "Робимо торти за вашим дизайном - опишіть ідею та додайте фото, і ми її втілимо.",
         "custom.ctaBtn": "Замовити індивідуальний торт",
 
         "about.title": "Про нас",
         "about.p1": "Ласкаво просимо до I.N.E.S. Кожен торт ми створюємо з любов'ю, використовуючи тільки натуральні та якісні інгредієнти.",
-        "about.p2": "Ми віримо, що торт — це більше ніж десерт — це окраса вашого свята. День народження, весілля, річниця чи просто солодка п'ятниця — ми зробимо це особливим.",
-        "about.p3": "Усі торти випікаються свіжими на замовлення. Ми пропонуємо широкий вибір смаків та дизайнів — від класичної елегантності до сміливих авторських створень за вашою ідеєю.",
+        "about.p2": "Ми віримо, що торт - це більше ніж десерт - це окраса вашого свята. День народження, весілля, річниця чи просто солодка п'ятниця - ми зробимо це особливим.",
+        "about.p3": "Усі торти випікаються свіжими на замовлення. Ми пропонуємо широкий вибір смаків та дизайнів - від класичної елегантності до сміливих авторських створень за вашою ідеєю.",
         "about.f1.title": "Натуральні інгредієнти",
-        "about.f1.text": "Тільки найкращі натуральні продукти — без штучних барвників та консервантів",
+        "about.f1.text": "Тільки найкращі натуральні продукти - без штучних барвників та консервантів",
         "about.f2.title": "Свіжа випічка",
-        "about.f2.text": "Кожен торт готується свіжим — ми випікаємо на замовлення, ніколи заздалегідь",
+        "about.f2.text": "Кожен торт готується свіжим - ми випікаємо на замовлення, ніколи заздалегідь",
         "about.f3.title": "Ваш дизайн",
-        "about.f3.text": "Надішліть нам свою ідею чи фото — ми втілимо її у тортовому вигляді",
+        "about.f3.text": "Надішліть нам свою ідею чи фото - ми втілимо її у тортовому вигляді",
 
         "cakes.title": "Торти на замовлення",
-        "cakes.subtitle": "Оберіть розмір, смак та дизайн — ми створимо ідеальний торт для вашої нагоди",
+        "cakes.subtitle": "Оберіть розмір, смак та дизайн - ми створимо ідеальний торт для вашої нагоди",
         "cakes.serves6": "На 6 осіб",
         "cakes.from30": "від €30",
         "cakes.serves8": "На 8 осіб",
@@ -179,7 +179,7 @@ const translations = {
         "cakes.serves12": "Будь-який розмір та вага",
         "cakes.priceAgreed": "Ціна за домовленістю",
         "cakes.from": "від",
-        "cakes.empty": "Наші торти вже скоро — зазирніть трохи пізніше!",
+        "cakes.empty": "Наші торти вже скоро - зазирніть трохи пізніше!",
         "cakes.flavoursTitle": "Популярні смаки",
         "cakes.fl1": "Ваніль",
         "cakes.fl2": "Шоколад",
@@ -189,7 +189,7 @@ const translations = {
         "cakes.fl6": "Чізкейк",
         "cakes.fl7": "Наполеон",
         "cakes.fl8": "Бенто торт",
-        "cakes.note": "Крем: білий або молочний шоколадний ганаш. Складні начинки та індивідуальний дизайн — обговорюються окремо.",
+        "cakes.note": "Крем: білий або молочний шоколадний ганаш. Складні начинки та індивідуальний дизайн - обговорюються окремо.",
         "cakes.cta": "Замовити торт",
 
         "shed.title": "Кейк Шед",
@@ -199,16 +199,16 @@ const translations = {
         "shed.sun": "Неділя",
 
         "gallery.title": "Наші роботи",
-        "gallery.subtitle": "Добірка наших нещодавніх тортів — кожен унікальний та зроблений з турботою",
+        "gallery.subtitle": "Добірка наших нещодавніх тортів - кожен унікальний та зроблений з турботою",
         "gallery.back": "Назад до категорій",
 
         "reviews.title": "Відгуки клієнтів",
         "reviews.r1.text": "\"Торт був абсолютно приголомшливий і на смак ще кращий, ніж виглядав. Усі на вечірці були в захваті!\"",
-        "reviews.r1.author": "— Сара М.",
-        "reviews.r2.text": "\"Замовила торт на день народження — він був ідеальний! Свіжий, смачний і гарно оздоблений. Обов'язково замовлю знову.\"",
-        "reviews.r2.author": "— Олена К.",
+        "reviews.r1.author": "- Сара М.",
+        "reviews.r2.text": "\"Замовила торт на день народження - він був ідеальний! Свіжий, смачний і гарно оздоблений. Обов'язково замовлю знову.\"",
+        "reviews.r2.author": "- Олена К.",
         "reviews.r3.text": "\"Найкращий бенто торт у Донеголі! Люблю увагу до деталей та натуральний смак. Дуже рекомендую I.N.E.S.\"",
-        "reviews.r3.author": "— Майкл Д.",
+        "reviews.r3.author": "- Майкл Д.",
         "reviews.viewAll": "Переглянути всі відгуки",
         "reviews.cta": "Сподобався торт? Будемо раді вашому відгуку!",
         "reviews.writeBtn": "Написати відгук",
@@ -218,19 +218,19 @@ const translations = {
         "cert.flip": "Перевернути",
         "cert.twoSides": "Лице та зворот",
         "flavours.title": "Наші смаки",
-        "flavours.subtitle": "Загляньте всередину — оберіть свій улюблений смак",
+        "flavours.subtitle": "Загляньте всередину - оберіть свій улюблений смак",
         "flavours.viewAll": "Усі смаки",
 
         "order.title": "Замовити індивідуальний торт",
-        "order.subtitle": "Маєте свій дизайн? Опишіть його та додайте фото-референс — ми зв'яжемося з вами для обговорення деталей.",
+        "order.subtitle": "Маєте свій дизайн? Опишіть його та додайте фото-референс - ми зв'яжемося з вами для обговорення деталей.",
         "order.name": "Ваше ім'я",
         "order.phone": "Номер телефону",
         "order.email": "Електронна пошта",
         "order.date": "Потрібна дата",
         "order.size": "Розмір торта",
         "order.sizePlaceholder": "Оберіть розмір",
-        "order.sizeMini": "Міні — 5\" (13 см)",
-        "order.sizeMaxi": "Максі — 6\" (15 см)",
+        "order.sizeMini": "Міні - 5\" (13 см)",
+        "order.sizeMaxi": "Максі - 6\" (15 см)",
         "order.sizeCustom": "Індивідуальний розмір",
         "order.diameter": "Діаметр (дюйми)",
         "order.flavour": "Бажаний смак",
@@ -241,11 +241,11 @@ const translations = {
         "order.decorMedium": "Середній (+€10)",
         "order.decorComplex": "Складний (+€20)",
         "order.estTotal": "Орієнтовна сума",
-        "order.leadNote": "⏳ Замовляйте щонайменше за 7 днів. Термінові замовлення — лише за попередньою домовленістю.",
+        "order.leadNote": "⏳ Замовляйте щонайменше за 7 днів. Термінові замовлення - лише за попередньою домовленістю.",
         "order.kg": "кг",
-        "order.totalNote": "* Приблизна ціна — остаточну суму підтвердить менеджер",
+        "order.totalNote": "* Приблизна ціна - остаточну суму підтвердить менеджер",
         "order.message": "Ваші побажання / Опис",
-        "order.messagePh": "Опишіть ваш ідеальний торт — тема, кольори, напис, кількість ярусів...",
+        "order.messagePh": "Опишіть ваш ідеальний торт - тема, кольори, напис, кількість ярусів...",
         "order.allergies": "Алергії",
         "order.al.gluten": "Глютен",
         "order.al.nuts": "Горіхи",
@@ -262,7 +262,7 @@ const translations = {
         "order.weightChoose": "Оберіть вагу",
         "order.chooseRef": "📷 Обрати торт як референс",
         "order.refTitle": "Торт-референс",
-        "order.refHint": "Зробимо ваш торт на основі цього — опишіть бажані зміни нижче.",
+        "order.refHint": "Зробимо ваш торт на основі цього - опишіть бажані зміни нижче.",
         "order.removeRef": "Прибрати",
         "order.successTitle": "Дякуємо!",
         "order.successText": "Ваше замовлення отримано. Ми зв'яжемося з вами найближчим часом для обговорення деталей.",
@@ -271,7 +271,7 @@ const translations = {
         "footer.contacts": "Контакти",
         "footer.track": "Мої замовлення",
         "footer.shedHours": "Графік Кейк Шед",
-        "footer.schedule": "Пт–Сб 9:00–21:00, Нд 9:00–18:00",
+        "footer.schedule": "Пт-Сб 9:00-21:00, Нд 9:00-18:00",
         "footer.pickup": "Самовивіз та доставка за домовленістю",
 
         "maint.title": "Скоро повернемося",
@@ -289,27 +289,27 @@ const translations = {
         "nav.order": "Заказать",
 
         "hero.title": "Домашние торты<br>с любовью и вкусом",
-        "hero.subtitle": "Торты на заказ для любого повода — из натуральных ингредиентов в Донеголе, Ирландия",
+        "hero.subtitle": "Торты на заказ для любого повода - из натуральных ингредиентов в Донеголе, Ирландия",
         "hero.cta": "Смотреть торты",
         "hero.custom": "Индивидуальный торт",
         "hero.gallery": "Наши работы",
         "custom.ctaTitle": "Не нашли свой идеальный торт?",
-        "custom.ctaText": "Делаем торты по вашему дизайну — опишите идею и прикрепите фото, и мы её воплотим.",
+        "custom.ctaText": "Делаем торты по вашему дизайну - опишите идею и прикрепите фото, и мы её воплотим.",
         "custom.ctaBtn": "Заказать индивидуальный торт",
 
         "about.title": "О нас",
         "about.p1": "Добро пожаловать в I.N.E.S. Каждый торт мы создаём с любовью, используя только натуральные и качественные ингредиенты.",
-        "about.p2": "Мы верим, что торт — это больше чем десерт — это украшение вашего праздника. День рождения, свадьба, годовщина или просто сладкая пятница — мы сделаем это особенным.",
-        "about.p3": "Все торты выпекаются свежими на заказ. Мы предлагаем широкий выбор вкусов и дизайнов — от классической элегантности до смелых авторских творений по вашей идее.",
+        "about.p2": "Мы верим, что торт - это больше чем десерт - это украшение вашего праздника. День рождения, свадьба, годовщина или просто сладкая пятница - мы сделаем это особенным.",
+        "about.p3": "Все торты выпекаются свежими на заказ. Мы предлагаем широкий выбор вкусов и дизайнов - от классической элегантности до смелых авторских творений по вашей идее.",
         "about.f1.title": "Натуральные ингредиенты",
-        "about.f1.text": "Только лучшие натуральные продукты — без искусственных красителей и консервантов",
+        "about.f1.text": "Только лучшие натуральные продукты - без искусственных красителей и консервантов",
         "about.f2.title": "Свежая выпечка",
-        "about.f2.text": "Каждый торт готовится свежим — мы печём на заказ, никогда заранее",
+        "about.f2.text": "Каждый торт готовится свежим - мы печём на заказ, никогда заранее",
         "about.f3.title": "Ваш дизайн",
-        "about.f3.text": "Пришлите нам свою идею или фото — мы воплотим её в торте",
+        "about.f3.text": "Пришлите нам свою идею или фото - мы воплотим её в торте",
 
         "cakes.title": "Торты на заказ",
-        "cakes.subtitle": "Выберите размер, вкус и дизайн — мы создадим идеальный торт для вашего повода",
+        "cakes.subtitle": "Выберите размер, вкус и дизайн - мы создадим идеальный торт для вашего повода",
         "cakes.serves6": "На 6 человек",
         "cakes.from30": "от €30",
         "cakes.serves8": "На 8 человек",
@@ -318,7 +318,7 @@ const translations = {
         "cakes.serves12": "Любой размер и вес",
         "cakes.priceAgreed": "Цена по договорённости",
         "cakes.from": "от",
-        "cakes.empty": "Наши торты уже скоро — загляните чуть позже!",
+        "cakes.empty": "Наши торты уже скоро - загляните чуть позже!",
         "cakes.flavoursTitle": "Популярные вкусы",
         "cakes.fl1": "Ваниль",
         "cakes.fl2": "Шоколад",
@@ -328,7 +328,7 @@ const translations = {
         "cakes.fl6": "Чизкейк",
         "cakes.fl7": "Наполеон",
         "cakes.fl8": "Бенто торт",
-        "cakes.note": "Крем: белый или молочный шоколадный ганаш. Сложные начинки и индивидуальный дизайн — обсуждаются отдельно.",
+        "cakes.note": "Крем: белый или молочный шоколадный ганаш. Сложные начинки и индивидуальный дизайн - обсуждаются отдельно.",
         "cakes.cta": "Заказать торт",
 
         "shed.title": "Кейк Шед",
@@ -338,16 +338,16 @@ const translations = {
         "shed.sun": "Воскресенье",
 
         "gallery.title": "Наши работы",
-        "gallery.subtitle": "Подборка наших недавних тортов — каждый уникален и сделан с заботой",
+        "gallery.subtitle": "Подборка наших недавних тортов - каждый уникален и сделан с заботой",
         "gallery.back": "Назад к категориям",
 
         "reviews.title": "Отзывы клиентов",
         "reviews.r1.text": "\"Торт был невероятно красивым и на вкус ещё лучше, чем выглядел. Все на вечеринке были в восторге!\"",
-        "reviews.r1.author": "— Сара М.",
-        "reviews.r2.text": "\"Заказала торт на день рождения — он был идеальным! Свежий, вкусный и красиво оформленный. Обязательно закажу снова.\"",
-        "reviews.r2.author": "— Олена К.",
+        "reviews.r1.author": "- Сара М.",
+        "reviews.r2.text": "\"Заказала торт на день рождения - он был идеальным! Свежий, вкусный и красиво оформленный. Обязательно закажу снова.\"",
+        "reviews.r2.author": "- Олена К.",
         "reviews.r3.text": "\"Лучший бенто торт в Донеголе! Люблю внимание к деталям и натуральный вкус. Очень рекомендую I.N.E.S.\"",
-        "reviews.r3.author": "— Майкл Д.",
+        "reviews.r3.author": "- Майкл Д.",
         "reviews.viewAll": "Смотреть все отзывы",
         "reviews.cta": "Понравился торт? Будем рады вашему отзыву!",
         "reviews.writeBtn": "Написать отзыв",
@@ -357,19 +357,19 @@ const translations = {
         "cert.flip": "Перевернуть",
         "cert.twoSides": "Лицо и оборот",
         "flavours.title": "Наши вкусы",
-        "flavours.subtitle": "Загляните внутрь — выберите любимый вкус",
+        "flavours.subtitle": "Загляните внутрь - выберите любимый вкус",
         "flavours.viewAll": "Все вкусы",
 
         "order.title": "Заказать индивидуальный торт",
-        "order.subtitle": "Есть свой дизайн? Опишите его и прикрепите фото-референс — мы свяжемся с вами для обсуждения деталей.",
+        "order.subtitle": "Есть свой дизайн? Опишите его и прикрепите фото-референс - мы свяжемся с вами для обсуждения деталей.",
         "order.name": "Ваше имя",
         "order.phone": "Номер телефона",
         "order.email": "Электронная почта",
         "order.date": "Нужная дата",
         "order.size": "Размер торта",
         "order.sizePlaceholder": "Выберите размер",
-        "order.sizeMini": "Мини — 5\" (13 см)",
-        "order.sizeMaxi": "Макси — 6\" (15 см)",
+        "order.sizeMini": "Мини - 5\" (13 см)",
+        "order.sizeMaxi": "Макси - 6\" (15 см)",
         "order.sizeCustom": "Индивидуальный размер",
         "order.diameter": "Диаметр (дюймы)",
         "order.flavour": "Желаемый вкус",
@@ -380,11 +380,11 @@ const translations = {
         "order.decorMedium": "Средний (+€10)",
         "order.decorComplex": "Сложный (+€20)",
         "order.estTotal": "Примерная сумма",
-        "order.leadNote": "⏳ Заказывайте минимум за 7 дней. Срочные заказы — только по предварительному согласованию.",
+        "order.leadNote": "⏳ Заказывайте минимум за 7 дней. Срочные заказы - только по предварительному согласованию.",
         "order.kg": "кг",
-        "order.totalNote": "* Примерная цена — итоговую сумму подтвердит менеджер",
+        "order.totalNote": "* Примерная цена - итоговую сумму подтвердит менеджер",
         "order.message": "Ваши пожелания / Описание",
-        "order.messagePh": "Опишите ваш идеальный торт — тема, цвета, надпись, количество ярусов...",
+        "order.messagePh": "Опишите ваш идеальный торт - тема, цвета, надпись, количество ярусов...",
         "order.allergies": "Аллергии",
         "order.al.gluten": "Глютен",
         "order.al.nuts": "Орехи",
@@ -401,7 +401,7 @@ const translations = {
         "order.weightChoose": "Выберите вес",
         "order.chooseRef": "📷 Выбрать торт как референс",
         "order.refTitle": "Торт-референс",
-        "order.refHint": "Сделаем ваш торт на основе этого — опишите желаемые изменения ниже.",
+        "order.refHint": "Сделаем ваш торт на основе этого - опишите желаемые изменения ниже.",
         "order.removeRef": "Убрать",
         "order.successTitle": "Спасибо!",
         "order.successText": "Ваш заказ получен. Мы свяжемся с вами в ближайшее время для обсуждения деталей.",
@@ -410,7 +410,7 @@ const translations = {
         "footer.contacts": "Контакты",
         "footer.track": "Мои заказы",
         "footer.shedHours": "График Кейк Шед",
-        "footer.schedule": "Пт–Сб 9:00–21:00, Вс 9:00–18:00",
+        "footer.schedule": "Пт-Сб 9:00-21:00, Вс 9:00-18:00",
         "footer.pickup": "Самовывоз и доставка по договорённости",
 
         "maint.title": "Скоро вернёмся",
@@ -740,12 +740,12 @@ function populateCustomSizes(list) {
     if (_customSizes.length) {
         for (var i = 0; i < _customSizes.length; i++) {
             var s = _customSizes[i];
-            var lbl = s.size + (s.serves ? ' (' + s.serves + ')' : '') + (s.price ? ' — €' + s.price : '');
+            var lbl = s.size + (s.serves ? ' (' + s.serves + ')' : '') + (s.price ? ' - €' + s.price : '');
             html += '<option value="g' + i + '">' + escapeHtml(lbl) + '</option>';
         }
     } else {
-        html += '<option value="mini">' + (tr['order.sizeMini'] || 'Mini — 5" (13 cm)') + '</option>';
-        html += '<option value="maxi">' + (tr['order.sizeMaxi'] || 'Maxi — 6" (15 cm)') + '</option>';
+        html += '<option value="mini">' + (tr['order.sizeMini'] || 'Mini - 5" (13 cm)') + '</option>';
+        html += '<option value="maxi">' + (tr['order.sizeMaxi'] || 'Maxi - 6" (15 cm)') + '</option>';
     }
     html += '<option value="custom">' + (tr['order.sizeCustom'] || 'Custom size') + '</option>';
     cakeSizeSelect.innerHTML = html;
@@ -858,7 +858,7 @@ function recalcTotal() {
     var hasBase = base !== null;
 
     if (!sizeSelected || (!hasBase && !flavour)) {
-        valueEl.textContent = sizeSelected ? priceReq : '—';
+        valueEl.textContent = sizeSelected ? priceReq : '-';
         if (hidden) hidden.value = '';
         if (box) box.style.display = sizeSelected ? '' : 'none';
         if (bdEl) bdEl.textContent = '';
@@ -924,11 +924,11 @@ function initCustomReference() {
     refBox.style.display = 'flex';
     if (pickWrap) pickWrap.style.display = 'none';
 
-    // Keep the reference only for this visit — drop it so a page refresh clears it
+    // Keep the reference only for this visit - drop it so a page refresh clears it
     // (it stays in memory for placing the order).
     try { localStorage.removeItem('ines-ref-cake'); } catch (e) {}
 
-    // We arrived here from the reference flow — scroll to the order form once,
+    // We arrived here from the reference flow - scroll to the order form once,
     // after async content (categories, certificates, reviews) finished rendering
     // and the page height has settled, so the jump isn't jerky.
     var lastH = 0, stable = 0, tries = 0;
@@ -1248,7 +1248,7 @@ function loadLatestReviews() {
                 '<div class="review-card__stars">' + stars + '</div>' +
                 (r.photo ? '<img class="review-card__photo" src="' + r.photo + '" alt="" loading="lazy">' : '') +
                 '<p class="review-card__text">"' + escapeHtml(r.text) + '"</p>' +
-                '<p class="review-card__author">— ' + escapeHtml(r.author) + '</p>' +
+                '<p class="review-card__author">- ' + escapeHtml(r.author) + '</p>' +
             '</div>';
         }
         grid.innerHTML = html;
@@ -1258,6 +1258,10 @@ function loadLatestReviews() {
 function loadAdminContent() {
     fbGet('content', function(content) {
         if (!content) return;
+        var heroImg = document.getElementById('heroImage');
+        if (heroImg && content.heroPhoto) {
+            heroImg.innerHTML = '<img class="hero__photo" src="' + content.heroPhoto + '" alt="I.N.E.S. cakes">';
+        }
         if (content.priceMini) {
             basePriceMini = parseFloat(content.priceMini) || basePriceMini;
             document.querySelectorAll('[data-i18n="cakes.from30"]').forEach(function(el) {
@@ -1299,7 +1303,7 @@ function loadCategories(callback) {
     });
 }
 
-// ===== OUR WORK — CAKE CATEGORIES (storefront) =====
+// ===== OUR WORK - CAKE CATEGORIES (storefront) =====
 var _workProducts = null;
 
 function workCountWord(n) {
