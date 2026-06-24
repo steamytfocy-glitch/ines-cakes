@@ -974,10 +974,11 @@ function initCustomReference() {
     // (it stays in memory for placing the order).
     try { localStorage.removeItem('ines-ref-cake'); } catch (e) {}
 
-    // We arrived here from the reference flow - scroll to the order form once,
-    // after async content (categories, certificates, reviews) finished rendering
-    // and the page height has settled, so the jump isn't jerky.
-    // Where the order form should sit: just under the sticky header.
+    // We arrived here from the reference flow - scroll to the order form once
+    // ALL the page's data has loaded (gallery, flavours, certificates, reviews
+    // and About all load from Firebase and each shifts the form down). We key
+    // off the actual reads finishing (fbOnIdle) rather than a timer, so we
+    // never scroll mid-load and land on the wrong section.
     function orderFormTarget() {
         var el = document.getElementById('order');
         if (!el) return null;
@@ -985,32 +986,27 @@ function initCustomReference() {
         var hh = header ? header.offsetHeight : 80;
         return Math.max(0, el.getBoundingClientRect().top + window.pageYOffset - hh - 16);
     }
-    // Wait (without scrolling) until the page height has stayed stable for a
-    // good while - the gallery, flavours, certificates, reviews and About
-    // sections load asynchronously and each one shifts the form further down.
-    // Polling too briefly fires during a gap between Firebase responses and
-    // lands on whatever section happens to be there (e.g. certificates).
-    // Then do ONE smooth scroll, with a quiet correction if anything still
-    // reflows afterwards (e.g. a late image).
-    var lastH = -1, stable = 0, tries = 0;
-    var iv = setInterval(function() {
-        var h = document.documentElement.scrollHeight;
-        if (h === lastH) stable++; else stable = 0;
-        lastH = h;
-        tries++;
-        if ((tries >= 5 && stable >= 8) || tries > 80) {
-            clearInterval(iv);
+    var didRefScroll = false;
+    function refScrollToForm() {
+        if (didRefScroll) return;
+        didRefScroll = true;
+        // Two frames so the just-rendered sections are laid out before we measure.
+        requestAnimationFrame(function() { requestAnimationFrame(function() {
             var target = orderFormTarget();
             if (target == null) return;
             window.scrollTo({ top: target, behavior: 'smooth' });
+            // Quiet correction if a late image still nudges the layout.
             setTimeout(function() {
                 var want = orderFormTarget();
                 if (want != null && Math.abs(want - window.pageYOffset) > 40) {
                     window.scrollTo({ top: want, behavior: 'smooth' });
                 }
             }, 1300);
-        }
-    }, 100);
+        }); });
+    }
+    if (typeof fbOnIdle === 'function') fbOnIdle(refScrollToForm);
+    else setTimeout(refScrollToForm, 1500);
+    setTimeout(refScrollToForm, 6000); // safety net if a read never resolves
 
     // Prefill flavour
     if (customRef.flavour) {

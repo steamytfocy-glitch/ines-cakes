@@ -11,9 +11,29 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 var db = firebase.database();
 
+// Track in-flight initial reads so callers can act once all data has loaded.
+var _fbPending = 0;
+var _fbIdleCbs = [];
+function fbOnIdle(cb) {
+    if (_fbPending <= 0) { cb(); return; }
+    _fbIdleCbs.push(cb);
+}
+function _fbCheckIdle() {
+    if (_fbPending <= 0 && _fbIdleCbs.length) {
+        var cbs = _fbIdleCbs;
+        _fbIdleCbs = [];
+        cbs.forEach(function(c) { c(); });
+    }
+}
+
 function fbGet(path, callback) {
+    var counted = true;
+    _fbPending++;
     db.ref(path).on('value', function(snapshot) {
+        // Run the caller first - it may start nested reads - then settle the
+        // counter, so it never momentarily hits zero between chained reads.
         callback(snapshot.val());
+        if (counted) { counted = false; _fbPending--; _fbCheckIdle(); }
     });
 }
 
