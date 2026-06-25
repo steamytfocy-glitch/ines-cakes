@@ -19,6 +19,35 @@
             transition: 0.3s ease;
         }
         .gallery-page__back:hover { color: var(--gold-dark); transform: translateX(-4px); }
+
+        /* Filter chips */
+        .gallery-filters {
+            display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;
+            margin: 28px 0 32px;
+        }
+        .gallery-chip {
+            border: 1px solid #E0CFA8; background: var(--white); color: var(--brown);
+            padding: 9px 18px; border-radius: 999px; font-size: 0.92rem; font-weight: 600;
+            cursor: pointer; transition: var(--transition); font-family: inherit;
+            white-space: nowrap;
+        }
+        .gallery-chip:hover { border-color: var(--gold); color: var(--gold-dark); }
+        .gallery-chip--active { background: var(--gold); border-color: var(--gold); color: #fff; }
+        .gallery-chip__count { opacity: 0.7; font-weight: 500; margin-left: 4px; }
+
+        /* Zoom button on cards */
+        .catalog-card__img { position: relative; }
+        .catalog-card__zoom {
+            position: absolute; top: 10px; right: 10px; z-index: 2;
+            width: 36px; height: 36px; border-radius: 50%; border: none;
+            background: rgba(255,255,255,0.92); color: var(--brown);
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            opacity: 0; transition: var(--transition);
+        }
+        .catalog-card:hover .catalog-card__zoom { opacity: 1; }
+        .catalog-card__zoom:hover { background: #fff; color: var(--gold-dark); }
+        @media (hover: none) { .catalog-card__zoom { opacity: 1; } }
     </style>
 </head>
 <body>
@@ -58,18 +87,13 @@
             <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
             <span data-i18n="galpage.back">Back to Home</span>
         </a>
-        <h2 class="section__title" data-i18n="galpage.title">All Categories</h2>
-        <p class="section__subtitle" data-i18n="galpage.subtitle">Browse all our cake categories</p>
+        <h2 class="section__title">Our Cakes</h2>
+        <p class="section__subtitle">Browse our cakes - filter by category</p>
 
-        <div class="gallery__categories" id="allGalleryCategories"></div>
-
-        <div class="gallery__expanded" id="galleryExpanded" style="display:none;">
-            <button class="gallery__back" id="galleryBack">
-                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
-                <span data-i18n="gallery.back">Back to categories</span>
-            </button>
-            <h3 class="gallery__cat-title" id="galleryCatTitle"></h3>
-            <div class="catalog-grid" id="galleryCatGrid"></div>
+        <div class="gallery-filters" id="galleryFilters"></div>
+        <div class="catalog-grid" id="galleryGrid"></div>
+        <div class="catalog-empty" id="galleryEmpty" style="display:none;">
+            <p>Our cakes are coming soon - check back shortly!</p>
         </div>
     </div>
 </section>
