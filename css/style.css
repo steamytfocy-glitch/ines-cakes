@@ -484,6 +484,14 @@ ul { list-style: none; }
 .product__loc { color: #2E8B57; font-weight: 600; margin-bottom: 14px; }
 .product__price { font-size: 1.8rem; font-weight: 700; color: var(--brown); margin-bottom: 14px; }
 .product__desc { color: var(--text-light); line-height: 1.6; margin-bottom: 18px; }
+.product__socials { display: flex; gap: 10px; margin: -4px 0 20px; }
+.product__social {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 40px; height: 40px; border-radius: 50%;
+    border: 1px solid #E0CFA8; color: var(--gold-dark); background: var(--white);
+    transition: var(--transition);
+}
+.product__social:hover { background: var(--gold); border-color: var(--gold); color: #fff; transform: translateY(-2px); }
 
 .product__opts {
     display: grid;

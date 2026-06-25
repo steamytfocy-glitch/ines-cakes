@@ -273,6 +273,27 @@ function renderGallery() {
     }
 }
 
+function safeUrl(u) {
+    u = (u || '').trim();
+    if (!u) return '';
+    if (!/^https?:\/\//i.test(u)) u = 'https://' + u;
+    return u;
+}
+
+function renderProductSocials() {
+    var soc = document.getElementById('pSocials');
+    if (!soc) return;
+    var IG = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg>';
+    var FB = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>';
+    var html = '';
+    var ig = safeUrl(product.instaUrl);
+    var fb = safeUrl(product.fbUrl);
+    if (ig) html += '<a href="' + escapeHtml(ig) + '" target="_blank" rel="noopener" class="product__social" aria-label="See on Instagram">' + IG + '</a>';
+    if (fb) html += '<a href="' + escapeHtml(fb) + '" target="_blank" rel="noopener" class="product__social" aria-label="See on Facebook">' + FB + '</a>';
+    soc.innerHTML = html;
+    soc.style.display = html ? 'flex' : 'none';
+}
+
 function renderProduct() {
     renderGallery();
     document.getElementById('pName').textContent = locName(product);
@@ -281,6 +302,8 @@ function renderProduct() {
     var dtext = locDesc(product);
     desc.textContent = dtext;
     desc.style.display = dtext ? 'block' : 'none';
+
+    renderProductSocials();
 
     // sizes
     var sizeSel = document.getElementById('pSize');

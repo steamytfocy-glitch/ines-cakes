@@ -1777,6 +1777,8 @@ function openCakeModal(editId) {
         document.getElementById('cakeName').value = c.name || '';
         document.getElementById('cakePrice').value = c.price || '';
         document.getElementById('cakeDesc').value = c.desc || '';
+        document.getElementById('cakeInsta').value = c.instaUrl || '';
+        document.getElementById('cakeFacebook').value = c.fbUrl || '';
         document.getElementById('cakeNotice').value = (c.noticeDays != null ? c.noticeDays : 7);
         populateCakeCategorySelect(c.category);
         cakeSelectedFlavours = (c.flavours || []).slice();
@@ -1792,6 +1794,8 @@ function openCakeModal(editId) {
         document.getElementById('cakeName').value = '';
         document.getElementById('cakePrice').value = '';
         document.getElementById('cakeDesc').value = '';
+        document.getElementById('cakeInsta').value = '';
+        document.getElementById('cakeFacebook').value = '';
         document.getElementById('cakeNotice').value = 7;
         populateCakeCategorySelect('');
         cakeSelectedFlavours = [];
@@ -1855,6 +1859,8 @@ document.getElementById('cakeForm').addEventListener('submit', function(e) {
         price: document.getElementById('cakePrice').value.trim(),
         category: document.getElementById('cakeCategory').value,
         desc: document.getElementById('cakeDesc').value.trim(),
+        instaUrl: document.getElementById('cakeInsta').value.trim(),
+        fbUrl: document.getElementById('cakeFacebook').value.trim(),
         photo: pendingCakePhotos[0] || null,
         photos: pendingCakePhotos.slice(),
         sizes: sizes,
