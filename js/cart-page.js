@@ -109,7 +109,7 @@ function renderCart() {
         if (it.allergies) extras.push('⚠️ ' + escapeHtml(it.allergies));
 
         html += '<div class="cart-item">' +
-            '<div class="cart-item__img">' + (it.photo ? '<img src="' + it.photo + '" alt="">' : '') + '</div>' +
+            '<div class="cart-item__img">' + (it.photo ? '<img loading="lazy" decoding="async" src="' + it.photo + '" alt="">' : '') + '</div>' +
             '<div class="cart-item__info">' +
                 '<div class="cart-item__name">' + escapeHtml(it.name) + '</div>' +
                 '<div class="cart-item__meta">' + meta.join(' · ') + '</div>' +

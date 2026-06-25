@@ -674,7 +674,7 @@ function renderFlavourGrid(flavours) {
         var zoomBtn = '';
         var imgHtml;
         if (f.photo) {
-            imgHtml = '<img src="' + f.photo + '" class="flavour-card__img" alt="' + escapeHtml(f.name) + '">';
+            imgHtml = '<img loading="lazy" decoding="async" src="' + f.photo + '" class="flavour-card__img" alt="' + escapeHtml(f.name) + '">';
             zoomBtn = '<button type="button" class="flavour-card__zoom" data-zoom="' + zi + '" aria-label="Zoom">' + ZOOM_SVG + '</button>';
             zi++;
         } else {
@@ -1181,7 +1181,7 @@ function loadAdminGallery() {
             var cat = mainCats[i];
             var photos = gallery[cat.id] || [];
             html += '<div class="gallery__cat-card" onclick="location.href=\'gallery\'">' +
-                '<img src="' + photos[0] + '" alt="' + escapeHtml(getCatName(cat)) + '">' +
+                '<img loading="lazy" decoding="async" src="' + photos[0] + '" alt="' + escapeHtml(getCatName(cat)) + '">' +
                 '<div class="gallery__cat-overlay">' +
                     '<div class="gallery__cat-name">' + escapeHtml(getCatName(cat)) + '</div>' +
                     '<div class="gallery__cat-count">' + photos.length + ' photos</div>' +
@@ -1258,7 +1258,7 @@ function loadCertificates() {
         var html = '';
         for (var i = 0; i < certs.length; i++) {
             var twoSides = certBack(certs[i]) ? '<span class="certificates__badge" data-i18n="cert.twoSides">Front & back</span>' : '';
-            html += '<div class="certificates__item" data-cert="' + i + '"><img src="' + certFront(certs[i]) + '" alt="Certificate">' + twoSides + '</div>';
+            html += '<div class="certificates__item" data-cert="' + i + '"><img loading="lazy" decoding="async" src="' + certFront(certs[i]) + '" alt="Certificate">' + twoSides + '</div>';
         }
         grid.innerHTML = html;
         applyTranslations(currentLang);
@@ -1286,7 +1286,7 @@ function loadFlavoursShowcase() {
             var zoomBtn = '';
             var imgHtml;
             if (f.photo) {
-                imgHtml = '<img src="' + f.photo + '" class="flavour-card__img" alt="' + escapeHtml(locName(f)) + '">';
+                imgHtml = '<img loading="lazy" decoding="async" src="' + f.photo + '" class="flavour-card__img" alt="' + escapeHtml(locName(f)) + '">';
                 zoomBtn = '<button type="button" class="flavour-card__zoom" data-zoom="' + (zi++) + '" aria-label="Zoom">' + ZOOM_SVG + '</button>';
             } else {
                 imgHtml = '<div class="flavour-card__placeholder"><svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>';
@@ -1348,7 +1348,7 @@ function loadAdminContent() {
         if (!content) return;
         var heroImg = document.getElementById('heroImage');
         if (heroImg && content.heroPhoto) {
-            heroImg.innerHTML = '<img class="hero__photo" src="' + content.heroPhoto + '" alt="I.N.E.S. cakes">';
+            heroImg.innerHTML = '<img class="hero__photo" decoding="async" fetchpriority="high" src="' + content.heroPhoto + '" alt="I.N.E.S. cakes">';
         }
         if (content.priceMini) {
             basePriceMini = parseFloat(content.priceMini) || basePriceMini;
@@ -1455,7 +1455,7 @@ function renderWorkCategories() {
         show.forEach(function(a) {
             var photo = a.items[0].photo || '';
             var img = photo
-                ? '<img src="' + photo + '" alt="' + escapeHtml(getCatName(a.cat)) + '">'
+                ? '<img loading="lazy" decoding="async" src="' + photo + '" alt="' + escapeHtml(getCatName(a.cat)) + '">'
                 : '<div class="gallery__cat-noimg"></div>';
             var word = workCountWord(a.items.length);
             html += '<a class="gallery__cat-card" href="gallery?cat=' + a.cat.id + '">' +

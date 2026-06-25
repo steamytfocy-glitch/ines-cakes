@@ -136,7 +136,7 @@ function render() {
     var html = '';
     active.forEach(function(a) {
         var photo = a.items[0].p.photo || '';
-        var img = photo ? '<img src="' + photo + '" alt="' + escapeHtml(getCatName(a.cat)) + '">' : '<div class="gallery__cat-noimg"></div>';
+        var img = photo ? '<img loading="lazy" decoding="async" src="' + photo + '" alt="' + escapeHtml(getCatName(a.cat)) + '">' : '<div class="gallery__cat-noimg"></div>';
         var word = (currentLang === 'ua') ? (a.items.length === 1 ? 'торт' : 'торти')
                  : (currentLang === 'ru') ? (a.items.length === 1 ? 'торт' : 'торта')
                  : (a.items.length === 1 ? 'cake' : 'cakes');
@@ -168,7 +168,7 @@ function openCategory(catId) {
     var html = '';
     group.items.forEach(function(it) {
         var p = it.p;
-        var img = p.photo ? '<img src="' + p.photo + '" alt="' + escapeHtml(locName(p)) + '">' : '<div class="catalog-card__noimg"></div>';
+        var img = p.photo ? '<img loading="lazy" decoding="async" src="' + p.photo + '" alt="' + escapeHtml(locName(p)) + '">' : '<div class="catalog-card__noimg"></div>';
         html += '<a class="catalog-card" href="product?i=' + it.index + '">' +
             '<div class="catalog-card__img">' + img + '</div>' +
             '<div class="catalog-card__body">' +

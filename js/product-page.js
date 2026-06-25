@@ -263,7 +263,7 @@ function renderGallery() {
     var thumbs = document.getElementById('pThumbs');
     if (multi) {
         thumbs.innerHTML = _photos.map(function(src, i) {
-            return '<button type="button" class="product__thumb' + (i === 0 ? ' product__thumb--active' : '') + '" data-i="' + i + '"><img src="' + src + '" alt=""></button>';
+            return '<button type="button" class="product__thumb' + (i === 0 ? ' product__thumb--active' : '') + '" data-i="' + i + '"><img loading="lazy" decoding="async" src="' + src + '" alt=""></button>';
         }).join('');
         thumbs.querySelectorAll('.product__thumb').forEach(function(btn) {
             btn.addEventListener('click', function() { showPhoto(parseInt(this.dataset.i)); });
@@ -337,7 +337,7 @@ var ZOOM_SVG = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stro
 function flavourCardHtml(f, zi) {
     var img, zoomBtn = '';
     if (f.photo) {
-        img = '<img src="' + f.photo + '" class="flavour-card__img" alt="' + escapeHtml(f.name) + '">';
+        img = '<img loading="lazy" decoding="async" src="' + f.photo + '" class="flavour-card__img" alt="' + escapeHtml(f.name) + '">';
         if (zi != null && zi > -1) zoomBtn = '<button type="button" class="flavour-card__zoom" data-zoom="' + zi + '" aria-label="Zoom">' + ZOOM_SVG + '</button>';
     } else {
         img = '<div class="flavour-card__placeholder"><svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>';

@@ -78,7 +78,7 @@ function loadAllFlavours() {
             var f = flavours[i];
             var imgHtml, zoomBtn = '';
             if (f.photo) {
-                imgHtml = '<img src="' + f.photo + '" class="flavour-card__img" alt="' + escapeHtml(locName(f)) + '" style="cursor:zoom-in;" data-zoom="' + zi + '">';
+                imgHtml = '<img loading="lazy" decoding="async" src="' + f.photo + '" class="flavour-card__img" alt="' + escapeHtml(locName(f)) + '" style="cursor:zoom-in;" data-zoom="' + zi + '">';
                 zoomBtn = '<button type="button" class="flavour-card__zoom" data-zoom="' + zi + '" aria-label="Zoom">' + ZOOM_SVG + '</button>';
                 zi++;
             } else {
