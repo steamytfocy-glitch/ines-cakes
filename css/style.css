@@ -2595,6 +2595,12 @@ ul { list-style: none; }
         gap: 12px;
     }
 
+    /* Cake catalogue (gallery page) stays 2-up on phones instead of 1 */
+    .catalog-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
     .reviews__grid,
     .reviews__all-grid {
         grid-template-columns: 1fr;

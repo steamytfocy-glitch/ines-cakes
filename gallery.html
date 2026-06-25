@@ -34,6 +34,17 @@
         .gallery-chip:hover { border-color: var(--gold); color: var(--gold-dark); }
         .gallery-chip--active { background: var(--gold); border-color: var(--gold); color: #fff; }
         .gallery-chip__count { opacity: 0.7; font-weight: 500; margin-left: 4px; }
+        @media (max-width: 600px) {
+            /* Swipeable filter strip instead of many wrapped rows */
+            .gallery-filters {
+                flex-wrap: nowrap; justify-content: flex-start;
+                overflow-x: auto; -webkit-overflow-scrolling: touch;
+                margin-left: -16px; margin-right: -16px; padding: 0 16px 6px;
+                scrollbar-width: none;
+            }
+            .gallery-filters::-webkit-scrollbar { display: none; }
+            .gallery-chip { flex: 0 0 auto; padding: 8px 14px; font-size: 0.85rem; }
+        }
 
         /* Zoom button on cards */
         .catalog-card__img { position: relative; }
