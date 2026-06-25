@@ -1,8 +1,4 @@
-// ===== ADMIN CREDENTIALS =====
-var ADMINS = [
-    { login: 'admin', password: 'ines2026' },
-    { login: 'admin2', password: 'ines2026' }
-];
+// Admin sign-in is handled by Firebase Authentication (see the AUTH section).
 
 // ===== CATEGORIES =====
 var DEFAULT_CATEGORIES = [
@@ -204,51 +200,52 @@ function initAdminLang() {
     });
 }
 
-// ===== AUTH =====
+// ===== AUTH (Firebase Authentication) =====
 var loginScreen = document.getElementById('loginScreen');
 var adminPanel = document.getElementById('adminPanel');
 var loginForm = document.getElementById('loginForm');
 var loginError = document.getElementById('loginError');
 var sidebarUser = document.getElementById('sidebarUser');
+var _adminDataLoaded = false;
 
+function showAdmin(user) {
+    loginScreen.style.display = 'none';
+    adminPanel.style.display = 'flex';
+    if (sidebarUser) sidebarUser.textContent = (user && user.email) || 'Admin';
+    if (!_adminDataLoaded) { _adminDataLoaded = true; loadAllData(); }
+    applyAdminI18n();
+}
+
+function showLogin() {
+    loginScreen.style.display = '';
+    adminPanel.style.display = 'none';
+}
+
+// Reacts to sign-in / sign-out. Fires on page load with the current session.
 function checkAuth() {
-    var session = null;
-    try { session = JSON.parse(localStorage.getItem('ines-session')); } catch(e) {}
-    if (session) {
-        loginScreen.style.display = 'none';
-        adminPanel.style.display = 'flex';
-        sidebarUser.textContent = session.login;
-        loadAllData();
-        applyAdminI18n();
+    if (typeof firebase === 'undefined' || !firebase.auth) {
+        loginError.textContent = 'Auth unavailable. Please reload.';
+        return;
     }
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) showAdmin(user); else showLogin();
+    });
 }
 initAdminLang();
 
 loginForm.addEventListener('submit', function(e) {
     e.preventDefault();
-    var user = document.getElementById('loginUser').value.trim();
+    var email = document.getElementById('loginUser').value.trim();
     var pass = document.getElementById('loginPass').value;
-
-    var found = false;
-    for (var i = 0; i < ADMINS.length; i++) {
-        if (ADMINS[i].login === user && ADMINS[i].password === pass) {
-            found = true;
-            break;
-        }
-    }
-
-    if (found) {
-        localStorage.setItem('ines-session', JSON.stringify({ login: user, time: Date.now() }));
-        loginError.textContent = '';
-        checkAuth();
-    } else {
+    loginError.textContent = '';
+    firebase.auth().signInWithEmailAndPassword(email, pass).catch(function(err) {
         loginError.textContent = at('login.wrong');
-    }
+        console.warn('Sign-in failed:', err && err.code);
+    });
 });
 
 document.getElementById('logoutBtn').addEventListener('click', function() {
-    localStorage.removeItem('ines-session');
-    location.reload();
+    firebase.auth().signOut().then(function() { location.reload(); });
 });
 
 // ===== TABS =====

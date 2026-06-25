@@ -1,0 +1,18 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+
+    "products":      { ".read": true, ".write": "auth != null" },
+    "flavours":      { ".read": true, ".write": "auth != null" },
+    "content":       { ".read": true, ".write": "auth != null" },
+    "default-sizes": { ".read": true, ".write": "auth != null" },
+    "categories":    { ".read": true, ".write": "auth != null" },
+    "certificates":  { ".read": true, ".write": "auth != null" },
+    "gallery-cat":   { ".read": true, ".write": "auth != null" },
+    "site-status":   { ".read": true, ".write": "auth != null" },
+
+    "orders":        { ".read": true, ".write": true },
+    "reviews":       { ".read": true, ".write": true }
+  }
+}
