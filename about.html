@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="preconnect" href="https://www.gstatic.com">
+    <link rel="preconnect" href="https://ines-cakes-default-rtdb.europe-west1.firebasedatabase.app">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I.N.E.S. - About Us</title>
+    <meta name="description" content="I.N.E.S. - a home bakery in Donegal, Ireland. Natural ingredients, freshly baked cakes made to your design. See our food-safety certificates.">
+    <link rel="canonical" href="https://www.inescake.com/about">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .about-page { padding: 110px 0 40px; }
+        .about-page .about { padding-top: 24px; }
+        .back-link {
+            display: inline-flex; align-items: center; gap: 6px;
+            color: var(--gold); font-weight: 600; font-size: 0.95rem;
+            margin-bottom: 8px; cursor: pointer; text-decoration: none;
+            transition: 0.3s ease;
+        }
+        .back-link:hover { color: var(--gold-dark); transform: translateX(-4px); }
+    </style>
+</head>
+<body>
+
+<header class="header" id="header">
+    <div class="container header__inner">
+        <a href="/" class="logo">
+            <svg class="logo__icon" viewBox="0 0 60 60" width="42" height="42">
+                <path d="M30 8c-3 0-5.5 2-6 5h12c-.5-3-3-5-6-5z" fill="#C8963E"/>
+                <rect x="20" y="13" width="20" height="3" rx="1.5" fill="#C8963E"/>
+                <path d="M18 16c0 0-2 4-2 10s2 12 4 14h20c2-2 4-8 4-14s-2-10-2-10H18z" fill="#C8963E" opacity="0.85"/>
+                <path d="M22 40h16v4c0 2-3 4-8 4s-8-2-8-4v-4z" fill="#C8963E"/>
+                <ellipse cx="30" cy="16" rx="10" ry="2" fill="#E8C47A" opacity="0.5"/>
+                <path d="M28 5c0-2 1-3 2-3s2 1 2 3" stroke="#C8963E" stroke-width="1.5" fill="none"/>
+            </svg>
+            <div class="logo__text">
+                <span class="logo__name">I.N.E.S.</span>
+                <span class="logo__tagline">IMPECCABLE NATURALS<br>EXQUISITE SWEETS</span>
+            </div>
+        </a>
+        <div class="header__right">
+            <a href="/" class="header__cart" aria-label="Home" title="Home">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </a>
+        </div>
+    </div>
+</header>
+
+<section class="about-page section">
+    <div class="container">
+        <a href="/" class="back-link">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+            <span>Back to Home</span>
+        </a>
+
+        <!-- About -->
+        <section class="about" id="about">
+            <h1 class="section__title">About Us</h1>
+            <div class="about__grid">
+                <div class="about__text">
+                    <p>Welcome to I.N.E.S. - a home bakery in the heart of Donegal, Ireland. Every cake we create is made with passion, using only natural and high-quality ingredients.</p>
+                    <p>We believe that a cake is more than just a dessert - it's the centrepiece of your celebration. Whether it's a birthday, wedding, anniversary, or just a sweet Friday treat, we'll make it special.</p>
+                    <p>All cakes are baked fresh to order. We offer a wide range of flavours and designs - from classic elegance to bold custom creations based on your ideas.</p>
+                </div>
+                <div class="about__features">
+                    <div class="feature">
+                        <div class="feature__icon">
+                            <svg viewBox="0 0 48 48" width="48" height="48"><circle cx="24" cy="24" r="22" fill="none" stroke="#C8963E" stroke-width="2"/><path d="M16 24l6 6 12-12" stroke="#C8963E" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>
+                        </div>
+                        <h3 class="feature__title">Natural Ingredients</h3>
+                        <p class="feature__text">Only the finest natural products - no artificial colours or preservatives</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature__icon">
+                            <svg viewBox="0 0 48 48" width="48" height="48"><circle cx="24" cy="24" r="22" fill="none" stroke="#C8963E" stroke-width="2"/><path d="M24 12v12l8 5" stroke="#C8963E" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>
+                        </div>
+                        <h3 class="feature__title">Freshly Baked</h3>
+                        <p class="feature__text">Every cake is made fresh - we bake to order, never in advance</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature__icon">
+                            <svg viewBox="0 0 48 48" width="48" height="48"><circle cx="24" cy="24" r="22" fill="none" stroke="#C8963E" stroke-width="2"/><path d="M15 28c0-5 4-9 9-9s9 4 9 9" stroke="#C8963E" stroke-width="2.5" fill="none" stroke-linecap="round"/><circle cx="24" cy="22" r="4" stroke="#C8963E" stroke-width="2" fill="none"/></svg>
+                        </div>
+                        <h3 class="feature__title">Your Design</h3>
+                        <p class="feature__text">Send us your idea or photo - we'll bring it to life in cake form</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Certificates -->
+        <section class="certificates" id="certificates" style="display:none; margin-top:48px;">
+            <h2 class="section__title">Certificates</h2>
+            <p class="section__subtitle">Quality and safety you can trust</p>
+            <div class="certificates__grid" id="certificatesGrid"></div>
+        </section>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer" id="contact">
+    <div class="container footer__inner">
+        <div class="footer__brand">
+            <div class="logo logo--footer">
+                <svg class="logo__icon" viewBox="0 0 60 60" width="36" height="36">
+                    <path d="M30 8c-3 0-5.5 2-6 5h12c-.5-3-3-5-6-5z" fill="#E8C47A"/>
+                    <rect x="20" y="13" width="20" height="3" rx="1.5" fill="#E8C47A"/>
+                    <path d="M18 16c0 0-2 4-2 10s2 12 4 14h20c2-2 4-8 4-14s-2-10-2-10H18z" fill="#E8C47A" opacity="0.85"/>
+                    <path d="M22 40h16v4c0 2-3 4-8 4s-8-2-8-4v-4z" fill="#E8C47A"/>
+                </svg>
+                <div class="logo__text">
+                    <span class="logo__name" style="color:#fff">I.N.E.S.</span>
+                </div>
+            </div>
+            <p class="footer__tagline">Impeccable Naturals Exquisite Sweets</p>
+            <div class="footer__socials">
+                <a href="#" id="socialInsta" class="footer__social" target="_blank" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg>
+                </a>
+                <a href="#" id="socialFacebook" class="footer__social" target="_blank" aria-label="Facebook">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+                </a>
+                <a href="https://wa.me/353874917435" class="footer__social" target="_blank" aria-label="WhatsApp">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M17.6 6.3A7.85 7.85 0 0012 4a7.94 7.94 0 00-6.9 11.9L4 20l4.2-1.1A7.94 7.94 0 0012 19.9a7.94 7.94 0 005.6-13.6zM12 18.5a6.6 6.6 0 01-3.4-.9l-.24-.15-2.5.65.67-2.43-.16-.25A6.59 6.59 0 1118.6 12 6.6 6.6 0 0112 18.5z"/></svg>
+                </a>
+            </div>
+        </div>
+        <div class="footer__contacts">
+            <h4>Contacts</h4>
+            <a href="tel:+353874917435" class="footer__link">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+                087 491 7435
+            </a>
+            <a href="https://maps.google.com/?q=Mullaghdaff+Scotch,+Kincasslagh,+Co.+Donegal,+F94+C2D7" target="_blank" rel="noopener" class="footer__link">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+                Mullaghdaff Scotch, Kincasslagh,<br>Co. Donegal, F94 C2D7
+            </a>
+            <a href="myorders" class="footer__link">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+                <span>My orders</span>
+            </a>
+        </div>
+        <div class="footer__hours">
+            <h4>Cake Shed Hours</h4>
+            <p>Friday - Sunday</p>
+            <p class="footer__pickup">Collection &amp; delivery by arrangement</p>
+        </div>
+    </div>
+    <div class="footer__bottom">
+        <div class="container footer__bottom-inner">
+            <p>&copy; 2026 I.N.E.S. - Impeccable Naturals Exquisite Sweets</p>
+            <nav class="footer__legal">
+                <a href="privacy">Privacy Policy</a>
+                <a href="cookies">Cookie Policy</a>
+                <a href="terms">Terms &amp; Conditions</a>
+            </nav>
+        </div>
+    </div>
+</footer>
+
+<script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+<script defer src="js/firebase-init.js"></script>
+<script defer src="js/maintenance-guard.js"></script>
+<script defer src="js/about-page.js"></script>
+</body>
+</html>
