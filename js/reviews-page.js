@@ -115,8 +115,7 @@ function loadAllReviews() {
             var r = reviews[i];
             var stars = '';
             for (var s = 0; s < (r.rating || 5); s++) stars += '★';
-            html += '<div class="review-card review-card--deletable">' +
-                '<button class="review-card__delete" data-rev-del="' + i + '" title="Delete">&times;</button>' +
+            html += '<div class="review-card">' +
                 '<div class="review-card__stars">' + stars + '</div>' +
                 (r.photo ? '<img class="review-card__photo" src="' + r.photo + '" alt="" loading="lazy">' : '') +
                 '<p class="review-card__text">"' + escapeHtml(r.text) + '"</p>' +
@@ -124,18 +123,8 @@ function loadAllReviews() {
             '</div>';
         }
         grid.innerHTML = html;
-
-        grid.querySelectorAll('[data-rev-del]').forEach(function(btn) {
-            btn.addEventListener('click', function() {
-                if (!confirm('Delete this review?')) return;
-                var idx = parseInt(this.dataset.revDel);
-                fbGetOnce('reviews', function(reviews) {
-                    if (!reviews) reviews = [];
-                    reviews.splice(idx, 1);
-                    fbSet('reviews', reviews);
-                });
-            });
-        });
+        // Review deletion lives in the admin panel only (behind login) - the
+        // public page must not be able to write to the reviews list.
     });
 }
 
