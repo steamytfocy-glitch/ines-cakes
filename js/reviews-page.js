@@ -206,8 +206,34 @@ document.getElementById('clientReviewForm').addEventListener('submit', function(
     }, 3000);
 });
 
+function safeUrl(u) {
+    u = (u || '').trim();
+    if (!u) return '';
+    if (!/^https?:\/\//i.test(u)) u = 'https://' + u;
+    return u;
+}
+
+// Google reviews call-to-action - appears once the admin adds the Google links.
+function loadGoogleReviews() {
+    var box = document.getElementById('googleReviews');
+    if (!box) return;
+    fbGet('content', function(content) {
+        var review = safeUrl(content && content.googleReviewUrl);
+        var profile = safeUrl(content && content.googleProfileUrl);
+        if (!review && !profile) { box.style.display = 'none'; return; }
+        var html = '<div class="google-cta__head"><span class="google-cta__stars">★★★★★</span><span>Reviews on Google</span></div>' +
+            '<div class="google-cta__btns">';
+        if (review) html += '<a class="btn btn--primary" href="' + escapeHtml(review) + '" target="_blank" rel="noopener">⭐ Review us on Google</a>';
+        if (profile) html += '<a class="btn btn--outline" href="' + escapeHtml(profile) + '" target="_blank" rel="noopener">Read our Google reviews</a>';
+        html += '</div>';
+        box.innerHTML = html;
+        box.style.display = 'block';
+    });
+}
+
 setLang(currentLang);
 loadAllReviews();
+loadGoogleReviews();
 
 // Auto-open the review form when arriving from the "Write a Review" button
 (function() {

@@ -29,6 +29,19 @@
         }
         @media (max-width: 992px) { .reviews-page__grid { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 600px) { .reviews-page__grid { grid-template-columns: 1fr; } }
+
+        .google-cta {
+            background: var(--white); border: 1px solid #E8D9BC; border-radius: 16px;
+            box-shadow: var(--shadow); padding: 22px 24px; margin: 0 auto 28px; max-width: 560px;
+            text-align: center;
+        }
+        .google-cta__head {
+            display: inline-flex; align-items: center; gap: 8px;
+            font-family: 'Playfair Display', serif; font-size: 1.25rem; color: var(--brown);
+            margin-bottom: 14px;
+        }
+        .google-cta__stars { color: #FBBC05; letter-spacing: 2px; }
+        .google-cta__btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
     </style>
 </head>
 <body>
@@ -63,6 +76,7 @@
         </a>
         <h2 class="section__title" data-i18n="revpage.title">All Reviews</h2>
         <p class="section__subtitle" data-i18n="revpage.subtitle">What our customers say about us</p>
+        <div class="google-cta" id="googleReviews" style="display:none;"></div>
         <div class="reviews-page__grid" id="allReviewsGrid"></div>
 
         <div class="reviews__write" style="margin-top:40px;">
