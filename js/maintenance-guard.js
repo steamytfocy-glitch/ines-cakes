@@ -3,11 +3,12 @@
 (function () {
     var MG_TEXT = {
         en: { title: "We'll be right back", text: "Our website is temporarily closed for orders. Please check back soon!" },
+        ga: { title: "Beimid ar ais gan mhoill", text: "Tá ár suíomh dúnta go sealadach d'orduithe. Seiceáil ar ais go luath le do thoil!" },
         ua: { title: "Скоро повернемося", text: "Наш сайт тимчасово закритий для замовлень. Завітайте трохи пізніше!" },
         ru: { title: "Скоро вернёмся", text: "Наш сайт временно закрыт для заказов. Загляните чуть позже!" }
     };
 
-    function mgLang() { return 'en'; }
+    function mgLang() { return (localStorage.getItem('ines-lang') === 'ga') ? 'ga' : 'en'; }
     var mgCustom = '';
     var mgInsta = '';
     var mgFacebook = '';

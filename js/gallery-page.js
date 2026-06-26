@@ -9,12 +9,53 @@ var CATEGORIES = [
     { id: 'other', en: 'Other' }
 ];
 
-var currentLang = 'en';
+var currentLang = (localStorage.getItem('ines-lang') === 'ga') ? 'ga' : 'en';
 var _products = [];
 var _defaultSizes = [];
 var _filter = 'all';
 var refPick = false;
 try { refPick = localStorage.getItem('ines-ref-pick') === '1'; } catch (e) {}
+
+var translations = {
+    ga: {
+        "galpage.back": "Ar ais Abhaile",
+        "gal.title": "Ár gCácaí",
+        "gal.subtitle": "Brabhsáil ár gcácaí - scag de réir catagóire",
+        "gal.empty": "Tá ár gcácaí ag teacht go luath - seiceáil ar ais go gairid!",
+        "gal.all": "Uile",
+        "gal.from": "ó",
+        "gal.priceReq": "Praghas ar iarratas",
+        "gal.refBanner": "📷 Tapáil cáca chun é a úsáid mar thagairt do d'ordú saincheaptha",
+        "gal.refCancel": "Cealaigh"
+    },
+    en: {
+        "galpage.back": "Back to Home",
+        "gal.title": "Our Cakes",
+        "gal.subtitle": "Browse our cakes - filter by category",
+        "gal.empty": "Our cakes are coming soon - check back shortly!",
+        "gal.all": "All",
+        "gal.from": "from",
+        "gal.priceReq": "Price on request",
+        "gal.refBanner": "📷 Tap a cake to use it as a reference for your custom order",
+        "gal.refCancel": "Cancel"
+    }
+};
+function t(k) { var tr = translations[currentLang] || translations.en; return tr[k] || translations.en[k] || k; }
+function applyI18n() {
+    document.querySelectorAll('[data-i18n]').forEach(function(el) {
+        var v = t(el.getAttribute('data-i18n')); if (v) el.innerHTML = v;
+    });
+    document.querySelectorAll('.lang-btn').forEach(function(b) { b.classList.toggle('active', b.dataset.lang === currentLang); });
+}
+function setLang(lang) {
+    currentLang = lang;
+    localStorage.setItem('ines-lang', lang);
+    applyI18n();
+    render();
+}
+document.querySelectorAll('.lang-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() { setLang(this.dataset.lang); });
+});
 
 var ZOOM_SVG = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>';
 
@@ -26,8 +67,8 @@ function priceLabel(p) {
     if (p.price && parseFloat(p.price)) return '€' + p.price;
     var sizes = (p.sizes && p.sizes.length) ? p.sizes : _defaultSizes;
     var nums = sizes.map(function(s) { return parseFloat(s.price); }).filter(function(n) { return !isNaN(n); });
-    if (!nums.length) return 'Price on request';
-    return 'from €' + Math.min.apply(null, nums);
+    if (!nums.length) return t('gal.priceReq');
+    return t('gal.from') + ' €' + Math.min.apply(null, nums);
 }
 
 function selectAsRef(p) {
@@ -45,8 +86,8 @@ function showRefBanner() {
     var bar = document.createElement('div');
     bar.id = 'galRefBanner';
     bar.className = 'gal-ref-banner';
-    bar.innerHTML = '<span>📷 Tap a cake to use it as a reference for your custom order</span>' +
-        '<button type="button" id="galRefCancel">Cancel</button>';
+    bar.innerHTML = '<span>' + t('gal.refBanner') + '</span>' +
+        '<button type="button" id="galRefCancel">' + t('gal.refCancel') + '</button>';
     var anchor = document.getElementById('galleryFilters');
     if (anchor && anchor.parentNode) anchor.parentNode.insertBefore(bar, anchor);
     else document.body.insertBefore(bar, document.body.firstChild);
@@ -74,7 +115,7 @@ function buildData() {
 function renderFilters(data) {
     var wrap = document.getElementById('galleryFilters');
     var html = '<button class="gallery-chip' + (_filter === 'all' ? ' gallery-chip--active' : '') +
-        '" data-filter="all">All<span class="gallery-chip__count">' + data.all.length + '</span></button>';
+        '" data-filter="all">' + t('gal.all') + '<span class="gallery-chip__count">' + data.all.length + '</span></button>';
     data.activeCats.forEach(function(c) {
         html += '<button class="gallery-chip' + (_filter === c.id ? ' gallery-chip--active' : '') +
             '" data-filter="' + c.id + '">' + escapeHtml(getCatName(c)) +
@@ -164,6 +205,7 @@ function init() {
             var cat = new URLSearchParams(window.location.search).get('cat');
             if (cat) _filter = cat;
             render();
+            applyI18n();
             showRefBanner();
         });
     });

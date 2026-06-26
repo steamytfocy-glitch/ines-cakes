@@ -1,5 +1,41 @@
 // About page: loads the food-safety certificates and the footer social links.
 
+var currentLang = (localStorage.getItem('ines-lang') === 'ga') ? 'ga' : 'en';
+var translations = {
+    ga: {
+        "ab.back": "Ar ais Abhaile",
+        "ab.title": "Fúinn",
+        "ab.p1": "Fáilte go I.N.E.S. - bácús baile i gcroílár Dhún na nGall, Éire. Déantar gach cáca a chruthaímid le paisean, ag úsáid comhábhair nádúrtha ardchaighdeáin amháin.",
+        "ab.p2": "Creidimid gur mó ná milseog é cáca - is é croílár do cheiliúrtha é. Lá breithe, bainis, comóradh, nó díreach féirín milis Dé hAoine - déanfaimid speisialta é.",
+        "ab.p3": "Bácáiltear gach cáca úr ar ordú. Cuirimid raon leathan blasanna agus dearaí ar fáil - ó ghalántacht chlasaiceach go cruthúcháin shaincheaptha bunaithe ar do smaointe.",
+        "ab.f1t": "Comhábhair Nádúrtha", "ab.f1x": "Na táirgí nádúrtha is fearr amháin - gan dathúcháin ná leasaithigh shaorga",
+        "ab.f2t": "Bácáilte Úr", "ab.f2x": "Déantar gach cáca úr - bácáilimid ar ordú, riamh roimh ré",
+        "ab.f3t": "Do Dhearadh", "ab.f3x": "Seol chugainn do smaoineamh nó do ghrianghraf - tabharfaimid beo é i bhfoirm cáca",
+        "ab.certTitle": "Teastais", "ab.certSub": "Cáilíocht agus sábháilteacht ar féidir muinín a bheith agat astu",
+        "ftr.contacts": "Teagmháil", "ftr.hours": "Uaireanta Bhothán na gCácaí", "ftr.schedule": "Aoine - Domhnach",
+        "ftr.pickup": "Bailiú & seachadadh trí shocrú", "ftr.track": "Mo orduithe"
+    },
+    en: {
+        "ab.back": "Back to Home", "ab.title": "About Us",
+        "ab.p1": "Welcome to I.N.E.S. - a home bakery in the heart of Donegal, Ireland. Every cake we create is made with passion, using only natural and high-quality ingredients.",
+        "ab.p2": "We believe that a cake is more than just a dessert - it's the centrepiece of your celebration. Whether it's a birthday, wedding, anniversary, or just a sweet Friday treat, we'll make it special.",
+        "ab.p3": "All cakes are baked fresh to order. We offer a wide range of flavours and designs - from classic elegance to bold custom creations based on your ideas.",
+        "ab.f1t": "Natural Ingredients", "ab.f1x": "Only the finest natural products - no artificial colours or preservatives",
+        "ab.f2t": "Freshly Baked", "ab.f2x": "Every cake is made fresh - we bake to order, never in advance",
+        "ab.f3t": "Your Design", "ab.f3x": "Send us your idea or photo - we'll bring it to life in cake form",
+        "ab.certTitle": "Certificates", "ab.certSub": "Quality and safety you can trust",
+        "ftr.contacts": "Contacts", "ftr.hours": "Cake Shed Hours", "ftr.schedule": "Friday - Sunday",
+        "ftr.pickup": "Collection & delivery by arrangement", "ftr.track": "My orders"
+    }
+};
+function t(k) { var tr = translations[currentLang] || translations.en; return tr[k] || translations.en[k] || k; }
+function applyI18n() {
+    document.querySelectorAll('[data-i18n]').forEach(function(el) { var v = t(el.getAttribute('data-i18n')); if (v) el.innerHTML = v; });
+    document.querySelectorAll('.lang-btn').forEach(function(b) { b.classList.toggle('active', b.dataset.lang === currentLang); });
+}
+function setLang(lang) { currentLang = lang; localStorage.setItem('ines-lang', lang); applyI18n(); }
+document.querySelectorAll('.lang-btn').forEach(function(btn) { btn.addEventListener('click', function() { setLang(this.dataset.lang); }); });
+
 function certFront(c) { return (typeof c === 'string') ? c : (c && c.front); }
 function certBack(c) { return (typeof c === 'string') ? null : (c && c.back); }
 
@@ -77,5 +113,6 @@ function loadFooterSocials() {
     });
 }
 
+applyI18n();
 loadCertificates();
 loadFooterSocials();

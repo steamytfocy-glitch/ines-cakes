@@ -1,4 +1,19 @@
 var translations = {
+    ga: {
+        "mo.back": "← Ar ais Abhaile",
+        "mo.title": "Rianaigh d'Ordú",
+        "mo.sub": "Cuir isteach cód d'ordaithe chun an stádas a fheiceáil. Sábháiltear do chóid ar an ngléas seo freisin.",
+        "mo.add": "Cuir ordú leis",
+        "mo.notfound": "Ordú gan aimsiú. Seiceáil an uimhir le do thoil.",
+        "mo.empty": "Níl aon ordú ar an ngléas seo fós.",
+        "mo.browse": "Brabhsáil cácaí",
+        "mo.view": "Féach ar an stádas",
+        "mo.remove": "Bain",
+        "mo.date": "Dáta",
+        "mo.total": "Iomlán",
+        "st.new": "Ordú faighte", "st.confirmed": "Deimhnithe", "st.progress": "Á dhéanamh",
+        "st.ready": "Réidh le bailiú", "st.done": "Críochnaithe", "st.declined": "Diúltaithe"
+    },
     en: {
         "mo.back": "← Back to Home",
         "mo.title": "Track Your Order",
@@ -52,7 +67,7 @@ var STATUS_COLORS = {
     done: { bg: '#EAF7EE', fg: '#2E8B57' }, declined: { bg: '#FBEAEA', fg: '#B23A3A' }
 };
 
-var currentLang = 'en';
+var currentLang = (localStorage.getItem('ines-lang') === 'ga') ? 'ga' : 'en';
 var _allOrders = [];
 
 function t(k) { var tr = translations[currentLang] || translations.en; return tr[k] || translations.en[k] || k; }

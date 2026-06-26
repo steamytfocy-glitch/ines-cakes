@@ -1,4 +1,10 @@
 var translations = {
+    ga: {
+        "flpage.back": "Ar ais Abhaile",
+        "flpage.title": "Gach Blas",
+        "flpage.subtitle": "Féach isteach i ngach cáca a dhéanaimid",
+        "priceRequest": "Praghas ar iarratas"
+    },
     en: {
         "flpage.back": "Back to Home",
         "flpage.title": "All Flavours",
@@ -19,7 +25,7 @@ var translations = {
     }
 };
 
-var currentLang = 'en';
+var currentLang = (localStorage.getItem('ines-lang') === 'ga') ? 'ga' : 'en';
 
 function setLang(lang) {
     currentLang = lang;

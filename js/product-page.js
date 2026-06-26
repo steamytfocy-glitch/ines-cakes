@@ -1,4 +1,36 @@
 var translations = {
+    ga: {
+        "prod.back": "← Ar ais go dtí na cácaí",
+        "prod.notfound": "Cáca gan aimsiú.",
+        "prod.date": "Roghnaigh dáta",
+        "prod.size": "Méid",
+        "prod.flavour": "Blas",
+        "prod.qty": "Cainníocht",
+        "prod.message": "Teachtaireacht ar an gcáca",
+        "prod.messagePh": "(m.sh. Lá breithe sona, Áine!)",
+        "prod.allergies": "Ailléirgí",
+        "prod.gift": "Ceangailte le ribín & clib bhronntanais phearsantaithe (+€3)",
+        "prod.add": "Cuir sa chiseán",
+        "prod.added": "Curtha sa chiseán ✓",
+        "prod.useRef": "Úsáid mar thagairt do cháca saincheaptha",
+        "prod.details": "Sonraí",
+        "prod.loc": "Ar fáil i gContae Dhún na nGall",
+        "prod.choose": "Roghnaigh",
+        "prod.serves": "Freastalaíonn ar",
+        "prod.tableSize": "Méid an Cháca",
+        "prod.tableServes": "Freastalaíonn ar",
+        "prod.tablePrice": "Praghas",
+        "prod.notice": "Réamhfhógra riachtanach:",
+        "prod.days": "lá",
+        "prod.leadNote": "⏳ Ordaigh 7 lá ar a laghad roimh ré le do thoil. Orduithe práinneacha ach amháin trí réamhshocrú.",
+        "order.extras": "Roghanna breise", "order.tall": "Cáca ard (+€10)", "order.glutenFree": "Saor ó ghlútan (+€5)", "order.gfHint": "Tá saor ó ghlútan ar fáil do bhlasanna áirithe amháin - roghnaigh ceann chun é a chumasú.",
+        "prod.pickSize": "Roghnaigh méid le do thoil.",
+        "prod.pickDate": "Roghnaigh dáta le do thoil.",
+        "prod.allergyInfo": "*Eolas ailléirge: mura luaitear a mhalairt, tá bainne, cruithneacht, soighe agus ubh sna táirgí, agus déantar iad i gcistin a láimhseálann cnónna. Níl ár n-áis saor ó ghlútan.",
+        "order.al.gluten": "Glútan", "order.al.nuts": "Cnónna", "order.al.dairy": "Déiríocht",
+        "order.al.eggs": "Uibheacha", "order.al.soy": "Soighe", "order.al.other": "Eile",
+        "order.al.otherPh": "Sonraigh d'ailléirge..."
+    },
     en: {
         "prod.back": "← Back to cakes",
         "prod.notfound": "Cake not found.",
@@ -97,7 +129,7 @@ var translations = {
     }
 };
 
-var currentLang = 'en';
+var currentLang = (localStorage.getItem('ines-lang') === 'ga') ? 'ga' : 'en';
 var product = null;
 var productIndex = null;
 var selectedAllergies = [];

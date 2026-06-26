@@ -45,6 +45,10 @@
             </div>
         </a>
         <div class="header__right">
+                <div class="lang-switcher">
+                    <button class="lang-btn active" data-lang="en">EN</button>
+                    <button class="lang-btn" data-lang="ga">GA</button>
+                </div>
             <a href="/" class="header__cart" aria-label="Home" title="Home">
                 <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
             </a>
@@ -56,39 +60,39 @@
     <div class="container">
         <a href="/" class="back-link">
             <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
-            <span>Back to Home</span>
+            <span data-i18n="ab.back">Back to Home</span>
         </a>
 
         <!-- About -->
         <section class="about" id="about">
-            <h1 class="section__title">About Us</h1>
+            <h1 class="section__title" data-i18n="ab.title">About Us</h1>
             <div class="about__grid">
                 <div class="about__text">
-                    <p>Welcome to I.N.E.S. - a home bakery in the heart of Donegal, Ireland. Every cake we create is made with passion, using only natural and high-quality ingredients.</p>
-                    <p>We believe that a cake is more than just a dessert - it's the centrepiece of your celebration. Whether it's a birthday, wedding, anniversary, or just a sweet Friday treat, we'll make it special.</p>
-                    <p>All cakes are baked fresh to order. We offer a wide range of flavours and designs - from classic elegance to bold custom creations based on your ideas.</p>
+                    <p data-i18n="ab.p1">Welcome to I.N.E.S. - a home bakery in the heart of Donegal, Ireland. Every cake we create is made with passion, using only natural and high-quality ingredients.</p>
+                    <p data-i18n="ab.p2">We believe that a cake is more than just a dessert - it's the centrepiece of your celebration. Whether it's a birthday, wedding, anniversary, or just a sweet Friday treat, we'll make it special.</p>
+                    <p data-i18n="ab.p3">All cakes are baked fresh to order. We offer a wide range of flavours and designs - from classic elegance to bold custom creations based on your ideas.</p>
                 </div>
                 <div class="about__features">
                     <div class="feature">
                         <div class="feature__icon">
                             <svg viewBox="0 0 48 48" width="48" height="48"><circle cx="24" cy="24" r="22" fill="none" stroke="#C8963E" stroke-width="2"/><path d="M16 24l6 6 12-12" stroke="#C8963E" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>
                         </div>
-                        <h3 class="feature__title">Natural Ingredients</h3>
-                        <p class="feature__text">Only the finest natural products - no artificial colours or preservatives</p>
+                        <h3 class="feature__title" data-i18n="ab.f1t">Natural Ingredients</h3>
+                        <p class="feature__text" data-i18n="ab.f1x">Only the finest natural products - no artificial colours or preservatives</p>
                     </div>
                     <div class="feature">
                         <div class="feature__icon">
                             <svg viewBox="0 0 48 48" width="48" height="48"><circle cx="24" cy="24" r="22" fill="none" stroke="#C8963E" stroke-width="2"/><path d="M24 12v12l8 5" stroke="#C8963E" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>
                         </div>
-                        <h3 class="feature__title">Freshly Baked</h3>
-                        <p class="feature__text">Every cake is made fresh - we bake to order, never in advance</p>
+                        <h3 class="feature__title" data-i18n="ab.f2t">Freshly Baked</h3>
+                        <p class="feature__text" data-i18n="ab.f2x">Every cake is made fresh - we bake to order, never in advance</p>
                     </div>
                     <div class="feature">
                         <div class="feature__icon">
                             <svg viewBox="0 0 48 48" width="48" height="48"><circle cx="24" cy="24" r="22" fill="none" stroke="#C8963E" stroke-width="2"/><path d="M15 28c0-5 4-9 9-9s9 4 9 9" stroke="#C8963E" stroke-width="2.5" fill="none" stroke-linecap="round"/><circle cx="24" cy="22" r="4" stroke="#C8963E" stroke-width="2" fill="none"/></svg>
                         </div>
-                        <h3 class="feature__title">Your Design</h3>
-                        <p class="feature__text">Send us your idea or photo - we'll bring it to life in cake form</p>
+                        <h3 class="feature__title" data-i18n="ab.f3t">Your Design</h3>
+                        <p class="feature__text" data-i18n="ab.f3x">Send us your idea or photo - we'll bring it to life in cake form</p>
                     </div>
                 </div>
             </div>
@@ -96,8 +100,8 @@
 
         <!-- Certificates -->
         <section class="certificates" id="certificates" style="display:none; margin-top:48px;">
-            <h2 class="section__title">Certificates</h2>
-            <p class="section__subtitle">Quality and safety you can trust</p>
+            <h2 class="section__title" data-i18n="ab.certTitle">Certificates</h2>
+            <p class="section__subtitle" data-i18n="ab.certSub">Quality and safety you can trust</p>
             <div class="certificates__grid" id="certificatesGrid"></div>
         </section>
     </div>
@@ -132,7 +136,7 @@
             </div>
         </div>
         <div class="footer__contacts">
-            <h4>Contacts</h4>
+            <h4 data-i18n="ftr.contacts">Contacts</h4>
             <a href="tel:+353874917435" class="footer__link">
                 <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
                 087 491 7435
@@ -143,13 +147,13 @@
             </a>
             <a href="myorders" class="footer__link">
                 <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
-                <span>My orders</span>
+                <span data-i18n="ftr.track">My orders</span>
             </a>
         </div>
         <div class="footer__hours">
-            <h4>Cake Shed Hours</h4>
-            <p>Friday - Sunday</p>
-            <p class="footer__pickup">Collection &amp; delivery by arrangement</p>
+            <h4 data-i18n="ftr.hours">Cake Shed Hours</h4>
+            <p data-i18n="ftr.schedule">Friday - Sunday</p>
+            <p class="footer__pickup" data-i18n="ftr.pickup">Collection &amp; delivery by arrangement</p>
         </div>
     </div>
     <div class="footer__bottom">

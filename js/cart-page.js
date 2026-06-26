@@ -1,4 +1,21 @@
 var translations = {
+    ga: {
+        "cart.back": "← Lean ort ag siopadóireacht",
+        "cart.title": "Do chiseán",
+        "cart.empty": "Tá do chiseán folamh.",
+        "cart.browse": "Brabhsáil cácaí",
+        "cart.total": "Iomlán",
+        "cart.your": "Do shonraí",
+        "cart.place": "Cuir an t-ordú",
+        "cart.note": "Gan íocaíocht ar líne - déanfaimid teagmháil leat chun deimhniú agus íocaíocht a shocrú.",
+        "cart.remove": "Bain",
+        "cart.gift": "Fillteán bronntanais",
+        "cart.size": "Méid", "cart.flavour": "Blas", "cart.date": "Dáta", "cart.qty": "Cainníocht", "cart.ref": "Tagairt", "cart.weight": "Meáchan",
+        "cart.tall": "Cáca ard", "cart.gf": "Saor ó ghlútan",
+        "order.name": "D'Ainm", "order.phone": "Uimhir Fóin", "order.email": "Ríomhphost",
+        "cart.fill": "Cuir isteach d'ainm agus d'uimhir fóin le do thoil.",
+        "cart.onRequest": "Praghas ar iarratas"
+    },
     en: {
         "cart.back": "← Continue shopping",
         "cart.title": "Your cart",
@@ -52,7 +69,7 @@ var translations = {
     }
 };
 
-var currentLang = 'en';
+var currentLang = (localStorage.getItem('ines-lang') === 'ga') ? 'ga' : 'en';
 function t(k) { var tr = translations[currentLang] || translations.en; return tr[k] || translations.en[k] || k; }
 function escapeHtml(s) { if (!s) return ''; var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
 

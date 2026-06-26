@@ -1,4 +1,18 @@
 var translations = {
+    ga: {
+        "revpage.back": "Ar ais Abhaile",
+        "revpage.title": "Gach Léirmheas",
+        "revpage.subtitle": "A ndeir ár gcustaiméirí fúinn",
+        "reviews.write": "Scríobh Léirmheas",
+        "reviews.formTitle": "Fág do Léirmheas",
+        "reviews.yourName": "D'Ainm",
+        "reviews.rating": "Rátáil",
+        "reviews.yourReview": "Do Léirmheas",
+        "reviews.reviewPh": "Inis dúinn faoi do thaithí...",
+        "reviews.submit": "Seol Léirmheas",
+        "reviews.thanks": "Go raibh maith agat! Cuireadh do léirmheas isteach.",
+        "reviews.photo": "Cuir grianghraf leis (roghnach)"
+    },
     en: {
         "revpage.back": "Back to Home",
         "revpage.title": "All Reviews",
@@ -43,7 +57,7 @@ var translations = {
     }
 };
 
-var currentLang = 'en';
+var currentLang = (localStorage.getItem('ines-lang') === 'ga') ? 'ga' : 'en';
 
 function setLang(lang) {
     currentLang = lang;
@@ -102,6 +116,7 @@ function loadAllReviews() {
 
         if (reviews.length === 0) {
             var emptyTexts = {
+                ga: 'Níl aon léirmheas fós. Bí ar an gcéad duine!',
                 en: 'No reviews yet. Be the first!',
                 ua: 'Відгуків поки немає. Будьте першими!',
                 ru: 'Отзывов пока нет. Будьте первыми!'

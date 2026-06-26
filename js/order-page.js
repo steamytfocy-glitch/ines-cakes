@@ -2,6 +2,28 @@
 var BAKER_WA = '353874917435';
 
 var translations = {
+    ga: {
+        "os.title": "Rianaigh d'Ordú",
+        "os.sub": "Cuir isteach uimhir d'ordaithe chun an stádas a fheiceáil",
+        "os.enterCode": "Uimhir an ordaithe",
+        "os.check": "Seiceáil an stádas",
+        "os.notFound": "Ordú gan aimsiú. Seiceáil an uimhir le do thoil.",
+        "os.codeLabel": "Uimhir an ordaithe",
+        "os.noteLabel": "Teachtaireacht ón mbácús",
+        "os.message": "Seol teachtaireacht chugainn ar WhatsApp",
+        "os.home": "Ar ais Abhaile",
+        "os.declinedMsg": "Ar an drochuair, níorbh fhéidir glacadh leis an ordú seo. Déan teagmháil linn le do thoil.",
+        "st.new": "Ordú faighte",
+        "st.confirmed": "Deimhnithe",
+        "st.progress": "Á dhéanamh",
+        "st.ready": "Réidh le bailiú",
+        "st.done": "Críochnaithe",
+        "sum.date": "Dáta a theastaíonn",
+        "sum.size": "Méid",
+        "sum.flavour": "Blas",
+        "sum.total": "Iomlán measta",
+        "wa.msg": "Dia duit! Tá ceist agam faoi m'ordú "
+    },
     en: {
         "os.title": "Track Your Order",
         "os.sub": "Enter your order number to see its status",
@@ -80,7 +102,7 @@ var STATUS_COLORS = {
     declined:  { bg: '#FBEAEA', fg: '#B23A3A' }
 };
 
-var currentLang = 'en';
+var currentLang = (localStorage.getItem('ines-lang') === 'ga') ? 'ga' : 'en';
 var currentOrder = null;
 
 function t(key) {

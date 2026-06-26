@@ -1,4 +1,14 @@
 var translations = {
+    ga: {
+        "ty.title": "Go raibh maith agat!",
+        "ty.text": "Fuarthas d'ordú. Déanfaimid teagmháil leat go luath chun na sonraí a phlé.",
+        "ty.or": "Nó déan teagmháil linn go díreach:",
+        "ty.home": "Ar ais Abhaile",
+        "ty.codeLabel": "Uimhir d'ordaithe",
+        "ty.codeHint": "Coinnigh an uimhir seo. Úsáid í chun stádas d'ordaithe a sheiceáil am ar bith.",
+        "ty.track": "Rianaigh m'ordú",
+        "ty.spam": "📧 Má thug tú do ríomhphost, sheolamar deimhniú. Gan é a fheiceáil? Seiceáil d'fhillteán Turscair."
+    },
     en: {
         "ty.title": "Thank you!",
         "ty.text": "Your order has been received. We'll contact you soon to discuss all the details.",
@@ -31,7 +41,7 @@ var translations = {
     }
 };
 
-var currentLang = 'en';
+var currentLang = (localStorage.getItem('ines-lang') === 'ga') ? 'ga' : 'en';
 
 function setLang(lang) {
     currentLang = lang;

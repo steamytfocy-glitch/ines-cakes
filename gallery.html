@@ -81,6 +81,10 @@
             </div>
         </a>
         <div class="header__right">
+                <div class="lang-switcher">
+                    <button class="lang-btn active" data-lang="en">EN</button>
+                    <button class="lang-btn" data-lang="ga">GA</button>
+                </div>
             <a href="myorders" class="header__cart" aria-label="Track order" title="Track order">
                 <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 14l2 2 4-4"/></svg>
             </a>
@@ -98,13 +102,13 @@
             <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
             <span data-i18n="galpage.back">Back to Home</span>
         </a>
-        <h2 class="section__title">Our Cakes</h2>
-        <p class="section__subtitle">Browse our cakes - filter by category</p>
+        <h2 class="section__title" data-i18n="gal.title">Our Cakes</h2>
+        <p class="section__subtitle" data-i18n="gal.subtitle">Browse our cakes - filter by category</p>
 
         <div class="gallery-filters" id="galleryFilters"></div>
         <div class="catalog-grid" id="galleryGrid"></div>
         <div class="catalog-empty" id="galleryEmpty" style="display:none;">
-            <p>Our cakes are coming soon - check back shortly!</p>
+            <p data-i18n="gal.empty">Our cakes are coming soon - check back shortly!</p>
         </div>
     </div>
 </section>
