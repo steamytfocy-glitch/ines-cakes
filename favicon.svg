@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="14" fill="#C8963E"/>
+  <!-- frosting -->
+  <path d="M19 33 C15 33 13 28 16.5 25 C15.5 20 21 16.5 25 19 C26.5 14.5 37.5 14.5 39 19 C43 16.5 48.5 20 47.5 25 C51 28 49 33 45 33 Z" fill="#FFF7EC"/>
+  <!-- cherry -->
+  <circle cx="32" cy="14.5" r="3.6" fill="#B5462F"/>
+  <!-- cup -->
+  <path d="M18 33 L46 33 L41.3 55 A2.4 2.4 0 0 1 39 56.9 L25 56.9 A2.4 2.4 0 0 1 22.7 55 Z" fill="#3D2E1C"/>
+</svg>
