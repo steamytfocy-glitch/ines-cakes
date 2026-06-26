@@ -574,7 +574,7 @@ const translations = {
 };
 
 // ===== LANGUAGE SWITCHER =====
-let currentLang = (localStorage.getItem('ines-lang') === 'ga') ? 'ga' : 'en';
+let currentLang = (function(l){ return (l === 'ga' || l === 'ua' || l === 'ru') ? l : 'en'; })(localStorage.getItem('ines-lang'));
 
 var langAnimating = false;
 

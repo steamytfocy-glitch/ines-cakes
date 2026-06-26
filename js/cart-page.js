@@ -69,7 +69,7 @@ var translations = {
     }
 };
 
-var currentLang = (localStorage.getItem('ines-lang') === 'ga') ? 'ga' : 'en';
+var currentLang = (function(l){ return (l === 'ga' || l === 'ua' || l === 'ru') ? l : 'en'; })(localStorage.getItem('ines-lang'));
 function t(k) { var tr = translations[currentLang] || translations.en; return tr[k] || translations.en[k] || k; }
 function escapeHtml(s) { if (!s) return ''; var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
 

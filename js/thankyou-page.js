@@ -41,7 +41,7 @@ var translations = {
     }
 };
 
-var currentLang = (localStorage.getItem('ines-lang') === 'ga') ? 'ga' : 'en';
+var currentLang = (function(l){ return (l === 'ga' || l === 'ua' || l === 'ru') ? l : 'en'; })(localStorage.getItem('ines-lang'));
 
 function setLang(lang) {
     currentLang = lang;

@@ -67,7 +67,7 @@ var STATUS_COLORS = {
     done: { bg: '#EAF7EE', fg: '#2E8B57' }, declined: { bg: '#FBEAEA', fg: '#B23A3A' }
 };
 
-var currentLang = (localStorage.getItem('ines-lang') === 'ga') ? 'ga' : 'en';
+var currentLang = (function(l){ return (l === 'ga' || l === 'ua' || l === 'ru') ? l : 'en'; })(localStorage.getItem('ines-lang'));
 var _allOrders = [];
 
 function t(k) { var tr = translations[currentLang] || translations.en; return tr[k] || translations.en[k] || k; }

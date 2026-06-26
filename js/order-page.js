@@ -102,7 +102,7 @@ var STATUS_COLORS = {
     declined:  { bg: '#FBEAEA', fg: '#B23A3A' }
 };
 
-var currentLang = (localStorage.getItem('ines-lang') === 'ga') ? 'ga' : 'en';
+var currentLang = (function(l){ return (l === 'ga' || l === 'ua' || l === 'ru') ? l : 'en'; })(localStorage.getItem('ines-lang'));
 var currentOrder = null;
 
 function t(key) {

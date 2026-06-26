@@ -9,7 +9,7 @@ var CATEGORIES = [
     { id: 'other', en: 'Other' }
 ];
 
-var currentLang = (localStorage.getItem('ines-lang') === 'ga') ? 'ga' : 'en';
+var currentLang = (function(l){ return (l === 'ga' || l === 'ua' || l === 'ru') ? l : 'en'; })(localStorage.getItem('ines-lang'));
 var _products = [];
 var _defaultSizes = [];
 var _filter = 'all';
@@ -38,6 +38,28 @@ var translations = {
         "gal.priceReq": "Price on request",
         "gal.refBanner": "📷 Tap a cake to use it as a reference for your custom order",
         "gal.refCancel": "Cancel"
+    },
+    ua: {
+        "galpage.back": "На головну",
+        "gal.title": "Наші торти",
+        "gal.subtitle": "Перегляньте наші торти - фільтр за категоріями",
+        "gal.empty": "Наші торти скоро з'являться - завітайте пізніше!",
+        "gal.all": "Усі",
+        "gal.from": "від",
+        "gal.priceReq": "Ціна за домовленістю",
+        "gal.refBanner": "📷 Натисніть на торт, щоб взяти його як референс для індивідуального замовлення",
+        "gal.refCancel": "Скасувати"
+    },
+    ru: {
+        "galpage.back": "На главную",
+        "gal.title": "Наши торты",
+        "gal.subtitle": "Просмотрите наши торты - фильтр по категориям",
+        "gal.empty": "Наши торты скоро появятся - загляните позже!",
+        "gal.all": "Все",
+        "gal.from": "от",
+        "gal.priceReq": "Цена по договорённости",
+        "gal.refBanner": "📷 Нажмите на торт, чтобы взять его как референс для индивидуального заказа",
+        "gal.refCancel": "Отмена"
     }
 };
 function t(k) { var tr = translations[currentLang] || translations.en; return tr[k] || translations.en[k] || k; }

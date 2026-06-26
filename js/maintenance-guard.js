@@ -8,7 +8,7 @@
         ru: { title: "Скоро вернёмся", text: "Наш сайт временно закрыт для заказов. Загляните чуть позже!" }
     };
 
-    function mgLang() { return (localStorage.getItem('ines-lang') === 'ga') ? 'ga' : 'en'; }
+    function mgLang() { var l = localStorage.getItem('ines-lang'); return (l === 'ga' || l === 'ua' || l === 'ru') ? l : 'en'; }
     var mgCustom = '';
     var mgInsta = '';
     var mgFacebook = '';
