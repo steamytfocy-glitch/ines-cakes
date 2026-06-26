@@ -375,21 +375,61 @@ function notifyClientStatus(order) {
     } catch (e) { console.warn('Status email error', e); }
 }
 
+// Orders are stored as push-keyed children (older ones may still be an array).
+// Normalise either shape to a list of { key, o }.
+function ordersToEntries(raw) {
+    var entries = [];
+    if (!raw) return entries;
+    if (Array.isArray(raw)) {
+        raw.forEach(function(o, i) { if (o) entries.push({ key: String(i), o: o }); });
+    } else {
+        Object.keys(raw).forEach(function(k) { if (raw[k]) entries.push({ key: k, o: raw[k] }); });
+    }
+    return entries;
+}
+
+// Non-personal fields mirrored to the public order-status node (for tracking).
+function orderStatusSubset(o) {
+    return {
+        status: o.status || 'new',
+        note: o.note || '',
+        date: o.date || '',
+        cakeSize: o.cakeSize || '',
+        flavour: o.flavour || '',
+        total: o.total || '',
+        submitted: o.submitted || ''
+    };
+}
+
+// One-time: ensure every existing order has a public status record so it can
+// be tracked. New orders create theirs on submit; this covers older ones.
+var _orderStatusBackfilled = false;
+function backfillOrderStatus(entries) {
+    if (_orderStatusBackfilled) return;
+    _orderStatusBackfilled = true;
+    entries.forEach(function(e) {
+        if (e.o && e.o.code) fbUpdate('order-status/' + e.o.code, orderStatusSubset(e.o));
+    });
+}
+
 function loadOrders() {
-    var orders = getData('orders', null);
-    if (!orders) orders = [];
+    var entries = ordersToEntries(getData('orders', null));
+    backfillOrderStatus(entries);
+    var byKey = {};
+    entries.forEach(function(e) { byKey[e.key] = e.o; });
+
     var list = document.getElementById('ordersList');
     var stats = document.getElementById('orderStats');
 
-    if (orders.length === 0) {
+    if (!entries.length) {
         list.innerHTML = '<div class="empty-state"><svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="#C8963E" stroke-width="1.5"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg><p>' + at('orders.emptyTitle') + '</p><span>' + at('orders.emptySub') + '</span></div>';
         stats.innerHTML = '';
         return;
     }
 
     var counts = { new: 0, active: 0, done: 0 };
-    orders.forEach(function(o) {
-        var s = o.status || 'new';
+    entries.forEach(function(e) {
+        var s = e.o.status || 'new';
         if (s === 'new') counts.new++;
         else if (s === 'done' || s === 'declined') counts.done++;
         else counts.active++;
@@ -402,8 +442,9 @@ function loadOrders() {
 
     var html = '';
     var shown = 0;
-    for (var i = orders.length - 1; i >= 0; i--) {
-        var o = orders[i];
+    for (var i = entries.length - 1; i >= 0; i--) {
+        var key = entries[i].key;
+        var o = entries[i].o;
         if (hideCompleted && isCompleted(o)) continue;
         if (!orderMatchesSearch(o)) continue;
         shown++;
@@ -445,13 +486,13 @@ function loadOrders() {
             '</div>' +
             '<div class="order-card__note">' +
                 '<label>' + at('order.noteLabel') + '</label>' +
-                '<textarea class="order-note-input" data-note-id="' + i + '" rows="2" placeholder="' + at('order.notePh') + '">' + escapeHtml(o.note || '') + '</textarea>' +
-                '<button class="btn-admin order-note-save" data-note-save="' + i + '">' + at('order.saveMsg') + '</button>' +
-                '<span class="order-note-status" data-note-status="' + i + '"></span>' +
+                '<textarea class="order-note-input" data-note-id="' + key + '" rows="2" placeholder="' + at('order.notePh') + '">' + escapeHtml(o.note || '') + '</textarea>' +
+                '<button class="btn-admin order-note-save" data-note-save="' + key + '">' + at('order.saveMsg') + '</button>' +
+                '<span class="order-note-status" data-note-status="' + key + '"></span>' +
             '</div>' +
             '<div class="order-card__actions">' +
-                '<select class="status-select" data-order-id="' + i + '">' + statusOptions + '</select>' +
-                '<button class="btn-delete" data-order-del="' + i + '">' + at('delete') + '</button>' +
+                '<select class="status-select" data-order-key="' + key + '">' + statusOptions + '</select>' +
+                '<button class="btn-delete" data-order-del="' + key + '">' + at('delete') + '</button>' +
             '</div>' +
         '</div>';
     }
@@ -468,29 +509,30 @@ function loadOrders() {
 
     list.querySelectorAll('.status-select').forEach(function(sel) {
         sel.addEventListener('change', function() {
-            var idx = parseInt(this.dataset.orderId);
-            var orders = getData('orders', []);
-            if (!orders[idx]) return;
-            // Keep whatever message is currently typed in this card, so it
-            // isn't lost on re-render and is included in the status email.
-            var ta = list.querySelector('[data-note-id="' + idx + '"]');
-            if (ta) orders[idx].note = ta.value;
-            orders[idx].status = this.value;
-            setData('orders', orders);
-            notifyClientStatus(orders[idx]);
-            loadOrders();
+            var key = this.dataset.orderKey;
+            var o = byKey[key];
+            if (!o) return;
+            // Keep whatever message is currently typed in this card.
+            var ta = list.querySelector('[data-note-id="' + key + '"]');
+            if (ta) o.note = ta.value;
+            o.status = this.value;
+            fbUpdate('orders/' + key, { status: o.status, note: o.note });
+            if (o.code) fbUpdate('order-status/' + o.code, { status: o.status, note: o.note });
+            notifyClientStatus(o);
+            // The orders listener re-renders once the write propagates.
         });
     });
 
     list.querySelectorAll('[data-note-save]').forEach(function(btn) {
         btn.addEventListener('click', function() {
-            var idx = parseInt(this.dataset.noteSave);
-            var ta = list.querySelector('[data-note-id="' + idx + '"]');
-            var orders = getData('orders', []);
-            if (!orders[idx]) return;
-            orders[idx].note = ta.value;
-            setData('orders', orders);
-            var statusEl = list.querySelector('[data-note-status="' + idx + '"]');
+            var key = this.dataset.noteSave;
+            var o = byKey[key];
+            if (!o) return;
+            var ta = list.querySelector('[data-note-id="' + key + '"]');
+            o.note = ta ? ta.value : (o.note || '');
+            fbUpdate('orders/' + key, { note: o.note });
+            if (o.code) fbUpdate('order-status/' + o.code, { note: o.note });
+            var statusEl = list.querySelector('[data-note-status="' + key + '"]');
             if (statusEl) {
                 statusEl.textContent = at('saved');
                 setTimeout(function() { statusEl.textContent = ''; }, 2500);
@@ -501,11 +543,10 @@ function loadOrders() {
     list.querySelectorAll('[data-order-del]').forEach(function(btn) {
         btn.addEventListener('click', function() {
             if (!confirm(at('confirm.order'))) return;
-            var idx = parseInt(this.dataset.orderDel);
-            var orders = getData('orders', []);
-            orders.splice(idx, 1);
-            setData('orders', orders);
-            loadOrders();
+            var key = this.dataset.orderDel;
+            var o = byKey[key];
+            fbRemove('orders/' + key);
+            if (o && o.code) fbRemove('order-status/' + o.code);
         });
     });
 }

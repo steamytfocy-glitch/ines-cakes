@@ -95,9 +95,23 @@ document.querySelectorAll('.lang-btn').forEach(function(btn) {
     btn.addEventListener('click', function() { setLang(this.dataset.lang); });
 });
 
-function findOrder(code) {
-    for (var i = 0; i < _allOrders.length; i++) if (_allOrders[i] && _allOrders[i].code === code) return _allOrders[i];
-    return null;
+var _statuses = {};
+function findOrder(code) { return _statuses[code] || null; }
+
+// Read the public status record for each code, then call done().
+function fetchStatuses(codes, done) {
+    var remaining = codes.length;
+    if (!remaining) { done(); return; }
+    codes.forEach(function(code) {
+        fbGetOnce('order-status/' + code, function(s) {
+            if (s) { s.code = code; _statuses[code] = s; } else { delete _statuses[code]; }
+            if (--remaining <= 0) done();
+        });
+    });
+}
+
+function loadAndRender() {
+    fetchStatuses(getMine().map(function(m) { return m.code; }), render);
 }
 
 function render() {
@@ -153,11 +167,14 @@ document.getElementById('moAddBtn').addEventListener('click', function() {
     if (code && code.indexOf('INES') === 0 && code.indexOf('INES-') !== 0) code = 'INES-' + code.slice(4);
     document.getElementById('moError').style.display = 'none';
     if (!code) return;
-    if (!findOrder(code)) { document.getElementById('moError').style.display = 'block'; return; }
-    var mine = getMine();
-    if (!mine.some(function(m) { return m.code === code; })) { mine.push({ code: code, when: Date.now() }); setMine(mine); }
-    input.value = '';
-    render();
+    fbGetOnce('order-status/' + code, function(s) {
+        if (!s) { document.getElementById('moError').style.display = 'block'; return; }
+        s.code = code; _statuses[code] = s;
+        var mine = getMine();
+        if (!mine.some(function(m) { return m.code === code; })) { mine.push({ code: code, when: Date.now() }); setMine(mine); }
+        input.value = '';
+        render();
+    });
 });
 document.getElementById('moCodeInput').addEventListener('keydown', function(e) {
     if (e.key === 'Enter') document.getElementById('moAddBtn').click();
@@ -166,22 +183,20 @@ document.getElementById('moCodeInput').addEventListener('keydown', function(e) {
 applyI18n();
 document.querySelectorAll('.lang-btn').forEach(function(b) { b.classList.toggle('active', b.dataset.lang === currentLang); });
 
-fbGet('orders', function(orders) {
-    _allOrders = orders || [];
-    // If we arrived from a status email (…/myorders?code=INES-XXXX), add that
-    // order to this device automatically and clean the code out of the URL.
-    try {
-        var urlCode = (new URLSearchParams(location.search).get('code') || '').trim().toUpperCase();
-        if (urlCode) {
-            if (findOrder(urlCode)) {
-                var mine = getMine();
-                if (!mine.some(function(m) { return m.code === urlCode; })) {
-                    mine.push({ code: urlCode, when: Date.now() });
-                    setMine(mine);
-                }
+// If we arrived from a status email (…/myorders?code=INES-XXXX), add that
+// order to this device automatically and clean the code out of the URL.
+(function init() {
+    var urlCode = (new URLSearchParams(location.search).get('code') || '').trim().toUpperCase();
+    if (!urlCode) { loadAndRender(); return; }
+    fbGetOnce('order-status/' + urlCode, function(s) {
+        if (s) {
+            var mine = getMine();
+            if (!mine.some(function(m) { return m.code === urlCode; })) {
+                mine.push({ code: urlCode, when: Date.now() });
+                setMine(mine);
             }
-            history.replaceState(null, '', 'myorders');
         }
-    } catch (e) {}
-    render();
-});
+        history.replaceState(null, '', 'myorders');
+        loadAndRender();
+    });
+})();

@@ -207,15 +207,12 @@ function lookup(code) {
     if (code.indexOf('INES-') !== 0 && code.indexOf('INES') === 0) {
         code = 'INES-' + code.slice(4);
     }
-    fbGet('orders', function(orders) {
-        if (!orders) orders = [];
-        var found = null;
-        for (var i = 0; i < orders.length; i++) {
-            if (orders[i] && orders[i].code === code) { found = orders[i]; break; }
-        }
-        if (found) {
+    // Read the public status record (no personal data) - not the full order.
+    fbGetOnce('order-status/' + code, function(status) {
+        if (status) {
+            status.code = code;
             history.replaceState(null, '', 'order?code=' + encodeURIComponent(code));
-            renderOrder(found);
+            renderOrder(status);
         } else {
             document.getElementById('osError').style.display = 'block';
         }

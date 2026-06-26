@@ -177,6 +177,20 @@ function genOrderCode(existing) {
     return code;
 }
 
+// Non-personal fields shown on the public order-tracking page. No name/phone/
+// email/address/items here - those stay in the admin-only "orders" record.
+function orderStatusSubset(o) {
+    return {
+        status: o.status || 'new',
+        note: o.note || '',
+        date: o.date || '',
+        cakeSize: o.cakeSize || '',
+        flavour: o.flavour || '',
+        total: o.total || '',
+        submitted: o.submitted || ''
+    };
+}
+
 function buildSummary(cart) {
     return cart.map(function(it) {
         var parts = [(it.qty || 1) + '× ' + it.name];
@@ -236,21 +250,27 @@ document.getElementById('checkoutForm').addEventListener('submit', function(e) {
         window.location.href = 'thankyou' + (code ? '?code=' + encodeURIComponent(code) : '');
     }
 
-    fbGetOnce('orders', function(orders) {
-        if (!orders) orders = [];
-        var codes = orders.map(function(o) { return o && o.code; });
-        var code = genOrderCode(codes);
+    function submitOrder(code) {
         order.code = code;
-
+        // Notify the bakery (full order minus the cart items array).
         var notifyData = {};
         for (var k in order) { if (k !== 'items') notifyData[k] = order[k]; }
         try {
             var blob = new Blob([JSON.stringify(notifyData)], { type: 'application/json' });
             navigator.sendBeacon('/api/notify', blob);
         } catch (e) {}
+        // Public, non-personal status record (drives order tracking).
+        fbSet('order-status/' + code, orderStatusSubset(order));
+        // Full order as its own record (admin-only; create-only for the public).
+        fbPush('orders', order, function() { done(code); });
+    }
 
-        orders.push(order);
-        fbSet('orders', orders, function() { done(code); });
+    // Pick a code and make sure its public status slot is free (one retry).
+    var code = genOrderCode([]);
+    order.code = code;
+    fbGetOnce('order-status/' + code, function(existing) {
+        if (existing) { code = genOrderCode([]); order.code = code; }
+        submitOrder(code);
     });
     setTimeout(function() { done(order.code); }, 4000);
 });

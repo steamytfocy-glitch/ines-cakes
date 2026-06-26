@@ -12,7 +12,16 @@
     "gallery-cat":   { ".read": true, ".write": "auth != null" },
     "site-status":   { ".read": true, ".write": "auth != null" },
 
-    "orders":        { ".read": true, ".write": true },
-    "reviews":       { ".read": true, ".write": true }
+    "reviews":       { ".read": true, ".write": true },
+
+    "orders": {
+      ".read": "auth != null",
+      "$id": { ".write": "!data.exists() || auth != null" }
+    },
+
+    "order-status": {
+      ".read": true,
+      "$code": { ".write": "!data.exists() || auth != null" }
+    }
   }
 }

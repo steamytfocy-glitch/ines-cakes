@@ -49,17 +49,47 @@ new login.
 - **Orders and reviews stay open** (read + write) so customers can place an
   order and leave a review without logging in. See Phase 2.
 
-## Phase 2 (still open — tell me when you want it)
-With the current code, orders and reviews are stored as one big list that the
-app rewrites on each submit, so the rules have to leave them open. That means:
-- anyone could technically read the full orders list (customer names/phones) —
-  a privacy concern;
-- anyone could overwrite the orders/reviews list.
+## Phase 2 — order privacy (DONE in code on branch `phase2-privacy`)
+Orders now protect customer data:
+- Each order is its own record under `orders/{id}`. The public **can create**
+  an order but **cannot read or edit** anyone's orders — only a signed-in
+  admin can read them. So customer names/phones/emails are no longer exposed.
+- Order **tracking** reads a separate `order-status/{code}` record that holds
+  only non-personal fields (status, note, date, size, flavour, total). No
+  names/phones/emails are ever served to the public.
 
-Fixing this properly needs a small data-model change (store each order/review
-as its own record with `push()`, allow "create only", and serve order
-tracking through a limited path). That's a separate, careful change to the
-ordering flow — ask me to do Phase 2 when you're ready.
+**Reviews** are still left open for now (they're public anyway). Locking
+reviews to "create-only" is a small future step.
+
+### Phase 2 deploy runbook (do code + rules together)
+Because the new code needs the new rules and vice-versa, deploy them in one
+go, at a quiet time, and test immediately:
+
+1. **Publish the updated rules** (Realtime Database → Rules → paste
+   [`database.rules.json`](database.rules.json) → Publish). It now contains the
+   `orders` / `order-status` sections.
+2. **Merge the branch** so the new code goes live:
+   ```
+   git checkout main
+   git merge phase2-privacy
+   git push
+   ```
+3. **Test right away** (hard-refresh, Ctrl+F5):
+   - Place a **test order** on the live site → you should reach the Thank-you
+     page with a code.
+   - Open `/admin` (logged in) → the test order appears; change its status.
+   - Open `/order?code=INES-XXXX` and `/myorders` → the status shows. No
+     customer name/phone is shown on those public pages.
+4. **If anything breaks**, roll back fast:
+   ```
+   git revert --no-edit HEAD   # or: git reset --hard <previous>; git push --force-with-lease
+   git push
+   ```
+   and re-publish the previous rules (orders/reviews `read:true, write:true`).
+
+Existing (old) orders are picked up automatically — when you open the admin
+Orders tab once, each old order gets its public `order-status` record created
+so it can still be tracked.
 
 ## Adding/removing admins later
 Do it in **Authentication → Users** (add user / delete user). No code change.

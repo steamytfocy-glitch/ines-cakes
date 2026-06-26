@@ -52,3 +52,35 @@ function fbSet(path, data, callback) {
         if (callback) callback(false);
     });
 }
+
+// Append a new child under path (auto-generated key). Returns the new key.
+function fbPush(path, data, callback) {
+    var ref = db.ref(path).push();
+    ref.set(data).then(function() {
+        if (callback) callback(ref.key);
+    }).catch(function(err) {
+        console.error('Firebase push error:', err);
+        if (callback) callback(null);
+    });
+    return ref.key;
+}
+
+// Update only the given fields at path (does not overwrite siblings).
+function fbUpdate(path, data, callback) {
+    db.ref(path).update(data).then(function() {
+        if (callback) callback(true);
+    }).catch(function(err) {
+        console.error('Firebase update error:', err);
+        if (callback) callback(false);
+    });
+}
+
+// Delete the node at path.
+function fbRemove(path, callback) {
+    db.ref(path).remove().then(function() {
+        if (callback) callback(true);
+    }).catch(function(err) {
+        console.error('Firebase remove error:', err);
+        if (callback) callback(false);
+    });
+}
