@@ -82,10 +82,16 @@
         </a>
         <div class="header__right">
                 <div class="lang-switcher">
-                    <button class="lang-btn active" data-lang="en">EN</button>
-                    <button class="lang-btn" data-lang="ga">GA</button>
-                    <button class="lang-btn" data-lang="ua">UA</button>
-                    <button class="lang-btn" data-lang="ru">RU</button>
+                    <button type="button" class="lang-trigger" aria-haspopup="listbox" aria-expanded="false">
+                        <span class="lang-trigger__label">EN</span>
+                        <svg class="lang-trigger__chev" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                    </button>
+                    <div class="lang-menu" role="listbox">
+                        <button class="lang-btn active" data-lang="en">English</button>
+                        <button class="lang-btn" data-lang="ga">Gaeilge</button>
+                        <button class="lang-btn" data-lang="ua">Українська</button>
+                        <button class="lang-btn" data-lang="ru">Русский</button>
+                    </div>
                 </div>
             <a href="myorders" class="header__cart" aria-label="Track order" title="Track order">
                 <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 14l2 2 4-4"/></svg>
@@ -118,6 +124,7 @@
 <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
 <script defer src="js/firebase-init.js"></script>
+<script defer src="js/lang-switcher.js"></script>
 <script defer src="js/maintenance-guard.js"></script>
 <script defer src="js/cart.js"></script>
 <script defer src="js/gallery-page.js"></script>
