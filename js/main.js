@@ -137,7 +137,7 @@ const translations = {
         "footer.track": "Rianaigh ordú",
         "footer.shedHours": "Uaireanta Bhothán na gCácaí",
         "footer.schedule": "Aoine-Satharn 9:00-21:00, Domhnach 9:00-18:00",
-        "footer.pickup": "Bailiú & seachadadh trí shocrú",
+        "footer.pickup": "Bailiú trí shocrú",
 
         "maint.title": "Beimid ar ais gan mhoill",
         "maint.text": "Tá ár suíomh dúnta go sealadach d'orduithe. Seiceáil ar ais go luath le do thoil!"
@@ -280,7 +280,7 @@ const translations = {
         "footer.track": "Track order",
         "footer.shedHours": "Cake Shed Hours",
         "footer.schedule": "Fri-Sat 9:00-21:00, Sun 9:00-18:00",
-        "footer.pickup": "Collection & delivery by arrangement",
+        "footer.pickup": "Collection by arrangement",
 
         "maint.title": "We'll be right back",
         "maint.text": "Our website is temporarily closed for orders. Please check back soon!"
@@ -423,7 +423,7 @@ const translations = {
         "footer.track": "Відстежити замовлення",
         "footer.shedHours": "Графік Кейк Шед",
         "footer.schedule": "Пт-Сб 9:00-21:00, Нд 9:00-18:00",
-        "footer.pickup": "Самовивіз та доставка за домовленістю",
+        "footer.pickup": "Самовивіз за домовленістю",
 
         "maint.title": "Скоро повернемося",
         "maint.text": "Наш сайт тимчасово закритий для замовлень. Завітайте трохи пізніше!"
@@ -566,7 +566,7 @@ const translations = {
         "footer.track": "Отследить заказ",
         "footer.shedHours": "График Кейк Шед",
         "footer.schedule": "Пт-Сб 9:00-21:00, Вс 9:00-18:00",
-        "footer.pickup": "Самовывоз и доставка по договорённости",
+        "footer.pickup": "Самовывоз по договорённости",
 
         "maint.title": "Скоро вернёмся",
         "maint.text": "Наш сайт временно закрыт для заказов. Загляните чуть позже!"

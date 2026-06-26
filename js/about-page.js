@@ -13,7 +13,7 @@ var translations = {
         "ab.f3t": "Do Dhearadh", "ab.f3x": "Seol chugainn do smaoineamh nó do ghrianghraf - tabharfaimid beo é i bhfoirm cáca",
         "ab.certTitle": "Teastais", "ab.certSub": "Cáilíocht agus sábháilteacht ar féidir muinín a bheith agat astu",
         "ftr.contacts": "Teagmháil", "ftr.hours": "Uaireanta Bhothán na gCácaí", "ftr.schedule": "Aoine - Domhnach",
-        "ftr.pickup": "Bailiú & seachadadh trí shocrú", "ftr.track": "Mo orduithe"
+        "ftr.pickup": "Bailiú trí shocrú", "ftr.track": "Mo orduithe"
     },
     en: {
         "ab.back": "Back to Home", "ab.title": "About Us",
@@ -25,7 +25,7 @@ var translations = {
         "ab.f3t": "Your Design", "ab.f3x": "Send us your idea or photo - we'll bring it to life in cake form",
         "ab.certTitle": "Certificates", "ab.certSub": "Quality and safety you can trust",
         "ftr.contacts": "Contacts", "ftr.hours": "Cake Shed Hours", "ftr.schedule": "Friday - Sunday",
-        "ftr.pickup": "Collection & delivery by arrangement", "ftr.track": "My orders"
+        "ftr.pickup": "Collection by arrangement", "ftr.track": "My orders"
     },
     ua: {
         "ab.back": "На головну",
@@ -38,7 +38,7 @@ var translations = {
         "ab.f3t": "Ваш дизайн", "ab.f3x": "Надішліть вашу ідею чи фото - втілимо її в торті",
         "ab.certTitle": "Сертифікати", "ab.certSub": "Якість та безпека, яким можна довіряти",
         "ftr.contacts": "Контакти", "ftr.hours": "Години роботи Cake Shed", "ftr.schedule": "П'ятниця - Неділя",
-        "ftr.pickup": "Самовивіз та доставка за домовленістю", "ftr.track": "Мої замовлення"
+        "ftr.pickup": "Самовивіз за домовленістю", "ftr.track": "Мої замовлення"
     },
     ru: {
         "ab.back": "На главную",
@@ -51,7 +51,7 @@ var translations = {
         "ab.f3t": "Ваш дизайн", "ab.f3x": "Пришлите вашу идею или фото - воплотим её в торте",
         "ab.certTitle": "Сертификаты", "ab.certSub": "Качество и безопасность, которым можно доверять",
         "ftr.contacts": "Контакты", "ftr.hours": "Часы работы Cake Shed", "ftr.schedule": "Пятница - Воскресенье",
-        "ftr.pickup": "Самовывоз и доставка по договорённости", "ftr.track": "Мои заказы"
+        "ftr.pickup": "Самовывоз по договорённости", "ftr.track": "Мои заказы"
     }
 };
 function t(k) { var tr = translations[currentLang] || translations.en; return tr[k] || translations.en[k] || k; }
