@@ -2011,8 +2011,7 @@ ul { list-style: none; }
 
 .flavour-card__img {
     width: 100%;
-    aspect-ratio: 3 / 4;   /* uniform portrait box */
-    object-fit: contain;   /* show the whole photo, never cropped */
+    height: auto;          /* whole photo, like the lightbox but card-width - never cropped */
     display: block;
     background: var(--cream);
 }
@@ -2048,23 +2047,6 @@ ul { list-style: none; }
     box-shadow: 0 2px 6px rgba(0,0,0,0.18);
 }
 
-.flavour-card__pricebadge {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(to top, rgba(61, 46, 28, 0.96) 45%, rgba(61, 46, 28, 0));
-    color: #fff;
-    font-size: 1.05rem;
-    font-weight: 700;
-    letter-spacing: 0.3px;
-    text-align: center;
-    padding: 26px 12px 11px;
-}
-.flavour-card__pricebadge.is-inc {
-    color: #fff;
-    opacity: 0.96;
-}
 
 .flavour-card__placeholder {
     width: 100%;
@@ -2096,14 +2078,14 @@ ul { list-style: none; }
 }
 
 .flavour-card__price {
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-weight: 700;
     color: var(--gold-dark);
     white-space: nowrap;
 }
 
 .flavour-card__price--inc {
-    color: var(--text-light);
+    color: #8a7558;
     font-weight: 600;
 }
 
