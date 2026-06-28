@@ -22,7 +22,7 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
     <link rel="apple-touch-icon" href="/favicon-192.png">
-    <link rel="stylesheet" href="css/style.css?v=6">
+    <link rel="stylesheet" href="css/style.css?v=7">
     <style>
         .flavours-page { padding: 100px 0 60px; min-height: 100vh; }
         .flavours-page__back {
@@ -34,8 +34,9 @@
         .flavours-page__back:hover { color: var(--gold-dark); transform: translateX(-4px); }
         .flavours-page__grid {
             display: grid; grid-template-columns: repeat(3, 1fr);
-            gap: 24px; margin-top: 32px;
+            gap: 24px; margin: 32px auto 0; max-width: 1000px;
         }
+        .flavour-card--selectable { cursor: pointer; }
         @media (max-width: 900px) { .flavours-page__grid { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 560px) { .flavours-page__grid { grid-template-columns: 1fr; } }
     </style>
@@ -93,6 +94,6 @@
 <script defer src="js/lang-switcher.js"></script>
 <script defer src="js/maintenance-guard.js"></script>
 <script defer src="js/cart.js"></script>
-<script defer src="js/flavours-page.js"></script>
+<script defer src="js/flavours-page.js?v=2"></script>
 </body>
 </html>

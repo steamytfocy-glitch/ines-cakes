@@ -3,29 +3,39 @@ var translations = {
         "flpage.back": "Ar ais Abhaile",
         "flpage.title": "Gach Blas",
         "flpage.subtitle": "Féach isteach i ngach cáca a dhéanaimid",
+        "flpage.choose": "Tapáil blas chun é a roghnú",
         "priceRequest": "Praghas ar iarratas"
     },
     en: {
         "flpage.back": "Back to Home",
         "flpage.title": "All Flavours",
         "flpage.subtitle": "A look inside every cake we make",
+        "flpage.choose": "Tap a flavour to choose it",
         "priceRequest": "Price on request"
     },
     ua: {
         "flpage.back": "На головну",
         "flpage.title": "Усі смаки",
         "flpage.subtitle": "Загляньте всередину кожного нашого торта",
+        "flpage.choose": "Натисніть на смак, щоб обрати його",
         "priceRequest": "Ціна за домовленістю"
     },
     ru: {
         "flpage.back": "На главную",
         "flpage.title": "Все вкусы",
         "flpage.subtitle": "Загляните внутрь каждого нашего торта",
+        "flpage.choose": "Нажмите на вкус, чтобы выбрать его",
         "priceRequest": "Цена по договорённости"
     }
 };
 
 var currentLang = (function(l){ return (l === 'ga' || l === 'ua' || l === 'ru') ? l : 'en'; })(localStorage.getItem('ines-lang'));
+
+// Selection mode: opened from a product's "choose flavour" button.
+var SELECT_MODE = new URLSearchParams(location.search).get('select') === '1';
+function flavourReturnUrl() {
+    try { return localStorage.getItem('ines-flavour-return') || 'product'; } catch (e) { return 'product'; }
+}
 
 function setLang(lang) {
     currentLang = lang;
@@ -39,6 +49,12 @@ function setLang(lang) {
             var key = el.getAttribute('data-i18n');
             if (t[key]) el.innerHTML = t[key];
         });
+        if (SELECT_MODE) {
+            var sub = document.querySelector('.section__subtitle');
+            if (sub && t['flpage.choose']) sub.textContent = t['flpage.choose'];
+            var back = document.querySelector('.flavours-page__back');
+            if (back) back.setAttribute('href', flavourReturnUrl());
+        }
     }
     loadAllFlavours();
 }
@@ -92,7 +108,11 @@ function loadAllFlavours() {
             }
             var priceText = f.price ? '+ €' + escapeHtml(f.price) : '';
             var gfBadge = f.glutenFree ? '<span class="flavour-card__gf">GF</span>' : '';
-            html += '<div class="flavour-card">' +
+            html += '<div class="flavour-card' + (SELECT_MODE ? ' flavour-card--selectable' : '') + '"' +
+                ' data-name="' + escapeHtml(f.name) + '"' +
+                ' data-display="' + escapeHtml(locName(f)) + '"' +
+                ' data-price="' + escapeHtml(f.price || '') + '"' +
+                ' data-gf="' + (f.glutenFree ? '1' : '0') + '">' +
                 '<div class="flavour-card__imgwrap">' + imgHtml + zoomBtn + gfBadge +
                     '<div class="flavour-card__caption">' +
                         '<div class="flavour-card__name">' + escapeHtml(locName(f)) + '</div>' +
@@ -103,12 +123,29 @@ function loadAllFlavours() {
             '</div>';
         }
         grid.innerHTML = html;
-        grid.querySelectorAll('[data-zoom]').forEach(function(el) {
+        // In select mode only the magnifier button opens the lightbox, so a
+        // click on the photo selects the flavour. Otherwise the photo zooms too.
+        var zoomEls = SELECT_MODE ? grid.querySelectorAll('.flavour-card__zoom') : grid.querySelectorAll('[data-zoom]');
+        zoomEls.forEach(function(el) {
             el.addEventListener('click', function(e) {
                 e.stopPropagation();
                 if (typeof openImageLightbox === 'function') openImageLightbox(lbImgs, parseInt(this.dataset.zoom));
             });
         });
+        if (SELECT_MODE) {
+            grid.querySelectorAll('.flavour-card').forEach(function(card) {
+                card.addEventListener('click', function() {
+                    var pick = {
+                        name: this.dataset.name,
+                        display: this.dataset.display,
+                        price: this.dataset.price,
+                        gf: this.dataset.gf === '1'
+                    };
+                    try { localStorage.setItem('ines-flavour-pick', JSON.stringify(pick)); } catch (e) {}
+                    window.location.href = flavourReturnUrl();
+                });
+            });
+        }
     });
 }
 

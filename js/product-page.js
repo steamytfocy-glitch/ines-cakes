@@ -418,6 +418,8 @@ function flavourCardHtml(f, zi) {
 }
 
 function setupFlavours() {
+    // The in-page flavour modal was replaced by the full Flavours page.
+    if (!document.getElementById('pFlavourGrid')) return;
     var globals = (_flavours || []).filter(function(f) { return f && f.name; });
     var names = (product.flavours && product.flavours.length) ? product.flavours : null;
     var list;
@@ -461,15 +463,32 @@ function setupFlavours() {
     });
 }
 
+// Choosing a flavour opens the full Flavours page in selection mode and
+// returns here with the chosen flavour applied (see applyPickedFlavour).
 document.getElementById('pFlavourBtn').addEventListener('click', function() {
-    document.getElementById('flavourModal').style.display = 'flex';
+    try { localStorage.setItem('ines-flavour-return', 'product' + window.location.search); } catch (e) {}
+    window.location.href = 'flavours?select=1';
 });
-document.getElementById('flavourModalClose').addEventListener('click', function() {
-    document.getElementById('flavourModal').style.display = 'none';
-});
-document.getElementById('flavourModalOverlay').addEventListener('click', function() {
-    document.getElementById('flavourModal').style.display = 'none';
-});
+
+// Apply a flavour picked on the Flavours page (stored in localStorage).
+function applyPickedFlavour() {
+    var raw = null;
+    try { raw = localStorage.getItem('ines-flavour-pick'); } catch (e) {}
+    if (!raw) return;
+    try { localStorage.removeItem('ines-flavour-pick'); } catch (e) {}
+    var pick;
+    try { pick = JSON.parse(raw); } catch (e) { return; }
+    if (!pick || !pick.name) return;
+    document.getElementById('pFlavour').value = pick.name;
+    selectedFlavourPrice = parseFloat(pick.price) || 0;
+    selectedFlavourGF = pick.gf === true || pick.gf === '1' || pick.gf === 1;
+    var txt = document.getElementById('pFlavourText');
+    txt.textContent = pick.display || pick.name;
+    txt.removeAttribute('data-i18n');
+    document.getElementById('pFlavourBtn').classList.add('has-value');
+    updateGFAvailability();
+    updatePrice();
+}
 
 // allergies
 document.querySelectorAll('#pAllergyChips .allergy-chip:not(.allergy-chip--other)').forEach(function(chip) {
@@ -584,6 +603,7 @@ document.querySelectorAll('.lang-btn').forEach(function(b) { b.classList.toggle(
             _defaultSizes = (ds && ds.length) ? sortSizes(ds) : [];
             document.getElementById('productGrid').style.display = '';
             renderProduct();
+            applyPickedFlavour();
             fbGet('flavours', function(fl) { _flavours = (fl && fl.length) ? fl : DEFAULT_FLAVOURS; setupFlavours(); });
         });
     });
