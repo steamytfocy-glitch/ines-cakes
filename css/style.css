@@ -2018,7 +2018,7 @@ ul { list-style: none; }
 }
 .flavour-card__zoom {
     position: absolute;
-    bottom: 8px;
+    top: 8px;
     right: 8px;
     width: 32px;
     height: 32px;
@@ -2037,7 +2037,7 @@ ul { list-style: none; }
 .flavour-card__gf {
     position: absolute;
     top: 8px;
-    right: 8px;
+    left: 8px;
     background: #2E8B57;
     color: #fff;
     font-size: 0.7rem;
@@ -2050,20 +2050,20 @@ ul { list-style: none; }
 
 .flavour-card__pricebadge {
     position: absolute;
-    bottom: 10px;
-    left: 10px;
-    background: var(--gold-dark);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to top, rgba(61, 46, 28, 0.96) 45%, rgba(61, 46, 28, 0));
     color: #fff;
-    font-size: 0.98rem;
+    font-size: 1.05rem;
     font-weight: 700;
-    padding: 6px 15px;
-    border-radius: 50px;
-    letter-spacing: 0.2px;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.32);
+    letter-spacing: 0.3px;
+    text-align: center;
+    padding: 26px 12px 11px;
 }
 .flavour-card__pricebadge.is-inc {
-    background: var(--brown);
     color: #fff;
+    opacity: 0.96;
 }
 
 .flavour-card__placeholder {
