@@ -2004,7 +2004,7 @@ ul { list-style: none; }
 }
 .flavour-card__zoom {
     position: absolute;
-    top: 8px;
+    bottom: 8px;
     right: 8px;
     width: 32px;
     height: 32px;
@@ -2022,7 +2022,7 @@ ul { list-style: none; }
 .flavour-card__zoom:hover { background: #fff; transform: scale(1.08); }
 .flavour-card__gf {
     position: absolute;
-    top: 8px;
+    bottom: 8px;
     left: 8px;
     background: #2E8B57;
     color: #fff;
