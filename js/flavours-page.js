@@ -83,7 +83,7 @@ function locDesc(o) {
 }
 
 function loadAllFlavours() {
-    fbGet('flavours', function(flavours) {
+    fbGetCached('flavours', function(flavours) {
         if (!flavours) flavours = [];
         var grid = document.getElementById('allFlavoursGrid');
         if (flavours.length === 0) {

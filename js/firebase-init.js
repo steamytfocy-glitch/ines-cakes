@@ -43,6 +43,21 @@ function fbGetOnce(path, callback) {
     });
 }
 
+// Instant render: serve the last value from localStorage immediately (so the
+// page paints with no network wait), then refresh from Firebase. The callback
+// must be safe to run more than once (idempotent re-render).
+function fbGetCached(path, callback) {
+    var key = 'ines-cache-' + path;
+    try {
+        var cached = localStorage.getItem(key);
+        if (cached) callback(JSON.parse(cached));
+    } catch (e) {}
+    fbGet(path, function(data) {
+        try { localStorage.setItem(key, JSON.stringify(data)); } catch (e) {}
+        callback(data);
+    });
+}
+
 function fbSet(path, data, callback) {
     db.ref(path).set(data).then(function() {
         if (callback) callback(true);

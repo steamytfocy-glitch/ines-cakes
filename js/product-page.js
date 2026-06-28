@@ -609,6 +609,6 @@ document.querySelectorAll('.lang-btn').forEach(function(b) { b.classList.toggle(
         renderProduct();
         applyPickedFlavour();
     }
-    fbGet('products', function(products) { _products = products; gotProducts = true; tryRender(); });
-    fbGet('default-sizes', function(ds) { _defaultSizes = (ds && ds.length) ? sortSizes(ds) : []; gotSizes = true; tryRender(); });
+    fbGetCached('products', function(products) { _products = products; gotProducts = true; tryRender(); });
+    fbGetCached('default-sizes', function(ds) { _defaultSizes = (ds && ds.length) ? sortSizes(ds) : []; gotSizes = true; tryRender(); });
 })();
