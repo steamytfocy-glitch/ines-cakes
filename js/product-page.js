@@ -592,19 +592,23 @@ document.querySelectorAll('.lang-btn').forEach(function(b) { b.classList.toggle(
 (function() {
     var params = new URLSearchParams(window.location.search);
     productIndex = parseInt(params.get('i'));
-    fbGet('products', function(products) {
-        if (!products || isNaN(productIndex) || !products[productIndex]) {
+
+    // Fetch products and default-sizes in parallel (instead of a waterfall),
+    // and render as soon as both are in. Flavours are no longer fetched here -
+    // the flavour picker lives on its own page now.
+    var _products = null, gotProducts = false, gotSizes = false;
+    function tryRender() {
+        if (!gotProducts || !gotSizes) return;
+        if (!_products || isNaN(productIndex) || !_products[productIndex]) {
             document.getElementById('productNotFound').style.display = 'block';
             return;
         }
-        product = products[productIndex];
+        product = _products[productIndex];
         if (product && product.sizes) product.sizes = sortSizes(product.sizes);
-        fbGet('default-sizes', function(ds) {
-            _defaultSizes = (ds && ds.length) ? sortSizes(ds) : [];
-            document.getElementById('productGrid').style.display = '';
-            renderProduct();
-            applyPickedFlavour();
-            fbGet('flavours', function(fl) { _flavours = (fl && fl.length) ? fl : DEFAULT_FLAVOURS; setupFlavours(); });
-        });
-    });
+        document.getElementById('productGrid').style.display = '';
+        renderProduct();
+        applyPickedFlavour();
+    }
+    fbGet('products', function(products) { _products = products; gotProducts = true; tryRender(); });
+    fbGet('default-sizes', function(ds) { _defaultSizes = (ds && ds.length) ? sortSizes(ds) : []; gotSizes = true; tryRender(); });
 })();
