@@ -1739,6 +1739,7 @@ ul { list-style: none; }
     justify-content: space-between;
     padding: 24px 28px;
     border-bottom: 1px solid var(--cream-dark);
+    flex-shrink: 0;          /* header stays put while the list scrolls */
 }
 
 .flavour-modal__header h3 {
@@ -1767,6 +1768,13 @@ ul { list-style: none; }
     gap: 16px;
     padding: 24px 28px;
     overflow-y: auto;
+}
+
+/* Let the flavour list scroll inside the modal (flex child needs min-height:0). */
+.flavour-modal__card .flavour-grid {
+    flex: 1 1 auto;
+    min-height: 0;
+    -webkit-overflow-scrolling: touch;
 }
 
 .flavour-card {
