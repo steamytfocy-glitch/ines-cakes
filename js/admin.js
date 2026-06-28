@@ -228,7 +228,15 @@ function checkAuth() {
         return;
     }
     firebase.auth().onAuthStateChanged(function(user) {
-        if (user) showAdmin(user); else showLogin();
+        if (user) {
+            // Mark this browser as admin so the public site lets us through
+            // even when it's switched OFF (see inesIsAdmin in firebase-init.js).
+            try { localStorage.setItem('ines-admin', '1'); } catch (e) {}
+            showAdmin(user);
+        } else {
+            try { localStorage.removeItem('ines-admin'); } catch (e) {}
+            showLogin();
+        }
     });
 }
 initAdminLang();

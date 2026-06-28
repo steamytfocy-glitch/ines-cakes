@@ -1688,8 +1688,16 @@ function loadSiteStatus() {
     fbGet('site-status', function(s) {
         var enabled = !s || s.enabled !== false; // default: site is ON
         maintCustom = (s && s.message) || '';
-        if (enabled) hideMaintenance();
-        else renderMaintenance();
+        if (enabled) {
+            hideMaintenance();
+            inesAdminBanner(false);
+        } else if (inesIsAdmin()) {
+            hideMaintenance();        // admins still see the site
+            inesAdminBanner(true);    // ...with a reminder it's off for visitors
+        } else {
+            inesAdminBanner(false);
+            renderMaintenance();
+        }
     });
 }
 

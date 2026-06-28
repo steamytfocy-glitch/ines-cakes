@@ -81,8 +81,17 @@
         fbGet('site-status', function (s) {
             var enabled = !s || s.enabled !== false; // default: site is ON
             mgCustom = (s && s.message) || '';
-            if (enabled) mgHide();
-            else mgRender();
+            var isAdmin = (typeof inesIsAdmin === 'function') && inesIsAdmin();
+            if (enabled) {
+                mgHide();
+                if (typeof inesAdminBanner === 'function') inesAdminBanner(false);
+            } else if (isAdmin) {
+                mgHide();                                   // admins still see the site
+                if (typeof inesAdminBanner === 'function') inesAdminBanner(true);
+            } else {
+                if (typeof inesAdminBanner === 'function') inesAdminBanner(false);
+                mgRender();
+            }
         });
     }
 

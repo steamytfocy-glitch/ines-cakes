@@ -84,3 +84,35 @@ function fbRemove(path, callback) {
         if (callback) callback(false);
     });
 }
+
+// --- Admin preview bypass ---------------------------------------------------
+// When the site is switched OFF, the maintenance screen hides it from the
+// public. An admin who has signed in to /admin in this browser keeps a local
+// flag (set in admin.js), so they can still browse the live site to check it.
+// This is a convenience flag, not a security boundary - all data stays
+// protected by the Firebase security rules regardless.
+function inesIsAdmin() {
+    try { return localStorage.getItem('ines-admin') === '1'; } catch (e) { return false; }
+}
+
+// Small fixed bar shown to an admin who is viewing the site while it is OFF.
+function inesAdminBanner(show) {
+    var id = 'inesAdminBanner';
+    var el = document.getElementById(id);
+    if (!show) { if (el) el.remove(); return; }
+    if (el) return;
+    var l = localStorage.getItem('ines-lang');
+    l = (l === 'ga' || l === 'ua' || l === 'ru') ? l : 'en';
+    var T = {
+        en: 'Site is OFF for visitors — you are viewing it as admin',
+        ga: 'Tá an suíomh DÚNTA do chuairteoirí — tá tú á fheiceáil mar riarthóir',
+        ua: 'Сайт ВИМКНЕНО для відвідувачів — ви переглядаєте його як адмін',
+        ru: 'Сайт ВЫКЛЮЧЕН для посетителей — вы смотрите как админ'
+    };
+    el = document.createElement('div');
+    el.id = id;
+    el.textContent = T[l] || T.en;
+    el.style.cssText = 'position:fixed;left:0;right:0;bottom:0;z-index:99999;background:#3D2E1C;color:#fff;' +
+        'font:600 13px Montserrat,system-ui,sans-serif;text-align:center;padding:8px 12px;letter-spacing:.3px;';
+    document.body.appendChild(el);
+}
