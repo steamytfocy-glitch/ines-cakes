@@ -1998,7 +1998,7 @@ ul { list-style: none; }
 
 .flavour-card__img {
     width: 100%;
-    aspect-ratio: 4/3;
+    aspect-ratio: 3/4;
     object-fit: contain;
     background: var(--cream);
     display: block;
@@ -2037,7 +2037,7 @@ ul { list-style: none; }
 
 .flavour-card__placeholder {
     width: 100%;
-    aspect-ratio: 4/3;
+    aspect-ratio: 3/4;
     background: linear-gradient(135deg, var(--cream-dark), var(--cream));
     display: flex;
     align-items: center;
@@ -2049,6 +2049,11 @@ ul { list-style: none; }
     padding: 10px 12px;
     background: var(--white);
     border-top: 1px solid var(--cream-dark);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 2px 8px;
 }
 
 .flavour-card__name {
@@ -2060,10 +2065,15 @@ ul { list-style: none; }
 }
 
 .flavour-card__price {
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     font-weight: 700;
     color: var(--gold-dark);
-    margin-top: 2px;
+    white-space: nowrap;
+}
+
+.flavour-card__price--inc {
+    color: var(--text-light);
+    font-weight: 600;
 }
 
 .flavour-card__desc {

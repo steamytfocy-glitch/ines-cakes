@@ -397,14 +397,15 @@ function flavourCardHtml(f, zi) {
     } else {
         img = '<div class="flavour-card__placeholder"><svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>';
     }
-    var price = f.price ? ('+ €' + escapeHtml(f.price)) : '';
+    var hasSur = f.price && parseFloat(f.price);
+    var INC = { en: 'Included', ga: 'San áireamh', ua: 'Включено', ru: 'Включено' };
+    var priceLabel = hasSur ? ('+ €' + escapeHtml(f.price)) : (INC[currentLang] || INC.en);
     var gfBadge = f.glutenFree ? '<span class="flavour-card__gf">GF</span>' : '';
     return '<div class="flavour-card" data-flavour="' + escapeHtml(f.name) + '" data-price="' + escapeHtml(f.price || '') + '" data-gf="' + (f.glutenFree ? '1' : '0') + '">' +
-        '<div class="flavour-card__imgwrap">' + img + zoomBtn + gfBadge +
-            '<div class="flavour-card__caption">' +
-                '<div class="flavour-card__name">' + escapeHtml(locName(f)) + '</div>' +
-                (price ? '<div class="flavour-card__price">' + price + '</div>' : '') +
-            '</div>' +
+        '<div class="flavour-card__imgwrap">' + img + zoomBtn + gfBadge + '</div>' +
+        '<div class="flavour-card__caption">' +
+            '<div class="flavour-card__name">' + escapeHtml(locName(f)) + '</div>' +
+            '<div class="flavour-card__price' + (hasSur ? '' : ' flavour-card__price--inc') + '">' + priceLabel + '</div>' +
         '</div>' +
         (locDesc(f) ? '<div class="flavour-card__desc">' + escapeHtml(locDesc(f)) + '</div>' : '') +
     '</div>';
