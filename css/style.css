@@ -1986,6 +1986,19 @@ ul { list-style: none; }
     cursor: default;
 }
 
+/* Showcase ("Our Flavours") photos are big composition images - cap their
+   height so the cards stay compact (still full image, never cropped). */
+.flavour-grid--showcase .flavour-card__img {
+    height: 440px;
+    object-fit: contain;
+}
+
+@media (max-width: 700px) {
+    .flavour-grid--showcase .flavour-card__img {
+        height: 360px;
+    }
+}
+
 @media (max-width: 700px) {
     .flavour-grid--showcase {
         grid-template-columns: 1fr;
@@ -1998,7 +2011,8 @@ ul { list-style: none; }
 
 .flavour-card__img {
     width: 100%;
-    height: auto;          /* show the whole photo at its natural shape - never cropped */
+    aspect-ratio: 3 / 4;   /* uniform portrait box */
+    object-fit: contain;   /* show the whole photo, never cropped */
     display: block;
     background: var(--cream);
 }
