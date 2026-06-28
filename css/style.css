@@ -1998,10 +1998,9 @@ ul { list-style: none; }
 
 .flavour-card__img {
     width: 100%;
-    aspect-ratio: 3/4;
-    object-fit: contain;
-    background: var(--cream);
+    height: auto;          /* show the whole photo at its natural shape - never cropped */
     display: block;
+    background: var(--cream);
 }
 .flavour-card__zoom {
     position: absolute;
