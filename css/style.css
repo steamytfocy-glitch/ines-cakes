@@ -2036,15 +2036,16 @@ ul { list-style: none; }
 
 .flavour-card__pricebadge {
     position: absolute;
-    bottom: 8px;
-    left: 8px;
+    bottom: 10px;
+    left: 10px;
     background: var(--gold-dark);
     color: #fff;
-    font-size: 0.82rem;
+    font-size: 0.98rem;
     font-weight: 700;
-    padding: 3px 11px;
+    padding: 6px 15px;
     border-radius: 50px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    letter-spacing: 0.2px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.32);
 }
 .flavour-card__pricebadge.is-inc {
     background: var(--brown);
