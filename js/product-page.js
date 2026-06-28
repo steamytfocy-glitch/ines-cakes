@@ -263,10 +263,16 @@ function updatePrice() {
     var s = currentSize();
     if (s && parseFloat(s.price)) {
         el.textContent = '€ ' + (parseFloat(s.price) + fl);
+        return;
+    }
+    var nums = effectiveSizes().map(function(x) { return parseFloat(x.price); }).filter(function(n) { return !isNaN(n); });
+    if (nums.length) {
+        var fromWord = { en: 'from', ga: 'ó', ua: 'від', ru: 'от' }[currentLang] || 'from';
+        el.textContent = fromWord + ' €' + (Math.min.apply(null, nums) + fl);
     } else {
-        var nums = effectiveSizes().map(function(x) { return parseFloat(x.price); }).filter(function(n) { return !isNaN(n); });
-        var fromWord = { en: 'from', ua: 'від', ru: 'от' }[currentLang] || 'from';
-        el.textContent = nums.length ? (fromWord + ' €' + (Math.min.apply(null, nums) + fl)) : '';
+        // No prices configured anywhere - don't leave it blank.
+        var PR = { en: 'Price on request', ga: 'Praghas ar iarratas', ua: 'Ціна за домовленістю', ru: 'Цена по договорённости' };
+        el.textContent = PR[currentLang] || PR.en;
     }
 }
 
