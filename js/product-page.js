@@ -401,11 +401,11 @@ function flavourCardHtml(f, zi) {
     var INC = { en: 'Included', ga: 'San áireamh', ua: 'Включено', ru: 'Включено' };
     var priceLabel = hasSur ? ('+ €' + escapeHtml(f.price)) : (INC[currentLang] || INC.en);
     var gfBadge = f.glutenFree ? '<span class="flavour-card__gf">GF</span>' : '';
+    var priceBadge = '<span class="flavour-card__pricebadge' + (hasSur ? '' : ' is-inc') + '">' + priceLabel + '</span>';
     return '<div class="flavour-card" data-flavour="' + escapeHtml(f.name) + '" data-price="' + escapeHtml(f.price || '') + '" data-gf="' + (f.glutenFree ? '1' : '0') + '">' +
-        '<div class="flavour-card__imgwrap">' + img + zoomBtn + gfBadge + '</div>' +
+        '<div class="flavour-card__imgwrap">' + img + zoomBtn + gfBadge + priceBadge + '</div>' +
         '<div class="flavour-card__caption">' +
             '<div class="flavour-card__name">' + escapeHtml(locName(f)) + '</div>' +
-            '<div class="flavour-card__price' + (hasSur ? '' : ' flavour-card__price--inc') + '">' + priceLabel + '</div>' +
         '</div>' +
         (locDesc(f) ? '<div class="flavour-card__desc">' + escapeHtml(locDesc(f)) + '</div>' : '') +
     '</div>';
