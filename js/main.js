@@ -919,7 +919,7 @@ function populateCustomSizes(list) {
     if (cakeSizeSelect._enhanced) syncNiceSelect(cakeSizeSelect);
 }
 function loadCustomSizes() {
-    fbGet('default-sizes', function(ds) {
+    fbGetCached('default-sizes', function(ds) {
         populateCustomSizes(ds || []);
         recalcTotal();
     });
@@ -1392,7 +1392,7 @@ function loadCertificates() {
     var section = document.getElementById('certificates');
     var grid = document.getElementById('certificatesGrid');
     if (!grid) return;
-    fbGet('certificates', function(certs) {
+    fbGetCached('certificates', function(certs) {
         if (!certs || !certs.length) {
             section.style.display = 'none';
             return;
@@ -1416,7 +1416,7 @@ function loadCertificates() {
 function loadFlavoursShowcase() {
     var grid = document.getElementById('flavoursShowcase');
     if (!grid) return;
-    fbGet('flavours', function(flavours) {
+    fbGetCached('flavours', function(flavours) {
         if (!flavours || !flavours.length) flavours = DEFAULT_FLAVOURS;
         // Lightbox swipes through ALL flavours (not just the 3 shown).
         var lbImgs = [];
@@ -1463,7 +1463,7 @@ function loadFlavoursShowcase() {
 }
 
 function loadLatestReviews() {
-    fbGet('reviews', function(reviews) {
+    fbGetCached('reviews', function(reviews) {
         if (!reviews) reviews = [];
         var grid = document.getElementById('latestReviews');
         if (!grid) return;
@@ -1487,7 +1487,7 @@ function loadLatestReviews() {
 }
 
 function loadAdminContent() {
-    fbGet('content', function(content) {
+    fbGetCached('content', function(content) {
         if (!content) return;
         var heroImg = document.getElementById('heroImage');
         if (heroImg && content.heroPhoto) {
@@ -1542,7 +1542,7 @@ function locDesc(o) {
 }
 
 function loadCategories(callback) {
-    fbGet('categories', function(cats) {
+    fbGetCached('categories', function(cats) {
         if (cats && cats.length) CATEGORIES = cats;
         if (callback) callback();
     });
@@ -1557,8 +1557,14 @@ function workCountWord(n) {
     return n === 1 ? 'cake' : 'cakes';
 }
 
+// Cached reads fire their callback twice (instant cache value, then the live
+// value). loadCategories runs this on each fire, so guard the products
+// subscription to a single Firebase listener - later calls just re-render.
+var _productsSubscribed = false;
 function loadWorkCategories() {
-    fbGet('products', function(products) {
+    if (_productsSubscribed) { renderWorkCategories(); return; }
+    _productsSubscribed = true;
+    fbGetCached('products', function(products) {
         _workProducts = products || [];
         renderWorkCategories();
     });
