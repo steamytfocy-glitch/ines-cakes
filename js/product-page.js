@@ -593,22 +593,28 @@ document.querySelectorAll('.lang-btn').forEach(function(b) { b.classList.toggle(
     var params = new URLSearchParams(window.location.search);
     productIndex = parseInt(params.get('i'));
 
-    // Fetch products and default-sizes in parallel (instead of a waterfall),
-    // and render as soon as both are in. Flavours are no longer fetched here -
-    // the flavour picker lives on its own page now.
-    var _products = null, gotProducts = false, gotSizes = false;
+    if (isNaN(productIndex)) {
+        document.getElementById('productNotFound').style.display = 'block';
+        return;
+    }
+
+    // Read ONLY this cake (products/{i}) rather than the whole products node -
+    // the full catalogue is ~12 MB of photos, a single cake is ~200 KB. Fetch
+    // it in parallel with the (tiny) default-sizes list and render once both
+    // are in. The flavour picker lives on its own page now.
+    var _product = null, gotProduct = false, gotSizes = false;
     function tryRender() {
-        if (!gotProducts || !gotSizes) return;
-        if (!_products || isNaN(productIndex) || !_products[productIndex]) {
+        if (!gotProduct || !gotSizes) return;
+        if (!_product) {
             document.getElementById('productNotFound').style.display = 'block';
             return;
         }
-        product = _products[productIndex];
+        product = _product;
         if (product && product.sizes) product.sizes = sortSizes(product.sizes);
         document.getElementById('productGrid').style.display = '';
         renderProduct();
         applyPickedFlavour();
     }
-    fbGetCached('products', function(products) { _products = products; gotProducts = true; tryRender(); });
+    fbGetCached('products/' + productIndex, function(p) { _product = p; gotProduct = true; tryRender(); });
     fbGetCached('default-sizes', function(ds) { _defaultSizes = (ds && ds.length) ? sortSizes(ds) : []; gotSizes = true; tryRender(); });
 })();

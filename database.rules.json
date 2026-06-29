@@ -4,6 +4,7 @@
     ".write": false,
 
     "products":      { ".read": true, ".write": "auth != null" },
+    "catalog":       { ".read": true, ".write": "auth != null" },
     "flavours":      { ".read": true, ".write": "auth != null" },
     "content":       { ".read": true, ".write": "auth != null" },
     "default-sizes": { ".read": true, ".write": "auth != null" },

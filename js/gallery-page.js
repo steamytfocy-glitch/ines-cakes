@@ -94,7 +94,7 @@ function priceLabel(p) {
 }
 
 function selectAsRef(p) {
-    var ref = { name: p.name || '', photo: p.photo || '', size: '', flavour: '', date: '' };
+    var ref = { name: p.name || '', photo: p.thumb || p.photo || '', size: '', flavour: '', date: '' };
     try {
         localStorage.setItem('ines-ref-cake', JSON.stringify(ref));
         localStorage.removeItem('ines-ref-pick');
@@ -165,17 +165,15 @@ function renderGrid(data) {
     }
     empty.style.display = 'none';
 
-    var lbImgs = [];
     var html = '';
     items.forEach(function(it) {
         var p = it.p;
         var zoomBtn = '';
         var img;
-        if (p.photo) {
-            var zi = lbImgs.length;
-            lbImgs.push({ src: p.photo, label: locName(p) });
-            img = '<img loading="lazy" decoding="async" src="' + p.photo + '" alt="' + escapeHtml(locName(p)) + '">';
-            zoomBtn = '<button type="button" class="catalog-card__zoom" data-zoom="' + zi + '" aria-label="Zoom">' + ZOOM_SVG + '</button>';
+        var cover = p.thumb || p.photo;
+        if (cover) {
+            img = '<img loading="lazy" decoding="async" src="' + cover + '" alt="' + escapeHtml(locName(p)) + '">';
+            zoomBtn = '<button type="button" class="catalog-card__zoom" data-zoom-index="' + it.index + '" data-zoom-label="' + escapeHtml(locName(p)) + '" aria-label="Zoom">' + ZOOM_SVG + '</button>';
         } else {
             img = '<div class="catalog-card__noimg"></div>';
         }
@@ -190,11 +188,25 @@ function renderGrid(data) {
     grid.innerHTML = html;
 
     // Zoom buttons open the lightbox without navigating to the product page.
+    // The grid only holds small thumbnails, so fetch the full-size cover for
+    // just this cake on demand.
     grid.querySelectorAll('.catalog-card__zoom').forEach(function(btn) {
         btn.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
-            if (typeof openImageLightbox === 'function') openImageLightbox(lbImgs, parseInt(this.dataset.zoom));
+            if (typeof openImageLightbox !== 'function') return;
+            var idx = parseInt(this.dataset.zoomIndex);
+            var label = this.getAttribute('data-zoom-label') || '';
+            var thumb = (_products[idx] && (_products[idx].thumb || _products[idx].photo)) || '';
+            // Fetch the full-size cover for just this cake, then open the
+            // lightbox once. Fall back to the thumbnail if the fetch fails.
+            db.ref('products/' + idx).once('value').then(function(snap) {
+                var pp = snap.val() || {};
+                var src = (pp.photos && pp.photos[0]) || pp.photo || thumb;
+                if (src) openImageLightbox([{ src: src, label: label }], 0);
+            }).catch(function() {
+                if (thumb) openImageLightbox([{ src: thumb, label: label }], 0);
+            });
         });
     });
 
@@ -222,7 +234,9 @@ function init() {
     fbGet('categories', function(cats) {
         if (cats && cats.length) CATEGORIES = cats;
         fbGet('default-sizes', function(ds) { _defaultSizes = (ds && ds.length) ? ds : []; });
-        fbGet('products', function(products) {
+        // Lightweight catalog (names + thumbnails) instead of the full ~12 MB
+        // products node. Full-size photos are loaded on demand (zoom / product page).
+        fbGetCatalog(function(products) {
             _products = products || [];
             var cat = new URLSearchParams(window.location.search).get('cat');
             if (cat) _filter = cat;

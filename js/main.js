@@ -1557,14 +1557,15 @@ function workCountWord(n) {
     return n === 1 ? 'cake' : 'cakes';
 }
 
-// Cached reads fire their callback twice (instant cache value, then the live
-// value). loadCategories runs this on each fire, so guard the products
-// subscription to a single Firebase listener - later calls just re-render.
-var _productsSubscribed = false;
+// Cached reads fire their callback more than once (cache, then live).
+// loadCategories runs this on each fire, so guard the catalog subscription to
+// a single listener - later calls just re-render. The homepage only needs the
+// lightweight catalog (names + thumbnails), not the full ~12 MB products node.
+var _catalogSubscribed = false;
 function loadWorkCategories() {
-    if (_productsSubscribed) { renderWorkCategories(); return; }
-    _productsSubscribed = true;
-    fbGetCached('products', function(products) {
+    if (_catalogSubscribed) { renderWorkCategories(); return; }
+    _catalogSubscribed = true;
+    fbGetCatalog(function(products) {
         _workProducts = products || [];
         renderWorkCategories();
     });
@@ -1602,7 +1603,7 @@ function renderWorkCategories() {
         var show = active.slice(0, 6);
         var html = '';
         show.forEach(function(a) {
-            var photo = a.items[0].photo || '';
+            var photo = a.items[0].thumb || a.items[0].photo || '';
             var img = photo
                 ? '<img loading="lazy" decoding="async" src="' + photo + '" alt="' + escapeHtml(getCatName(a.cat)) + '">'
                 : '<div class="gallery__cat-noimg"></div>';

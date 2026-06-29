@@ -58,6 +58,30 @@ function fbGetCached(path, callback) {
     });
 }
 
+// Read the lightweight 'catalog' (listing data + small thumbnails) for fast,
+// low-bandwidth grids on the home and gallery pages. Serves a cached copy
+// first for instant paint, then live. Falls back to the full 'products' node
+// if the catalog hasn't been built yet or can't be read (e.g. rules not
+// published), so listings always work.
+function fbGetCatalog(callback) {
+    var key = 'ines-cache-catalog';
+    try {
+        var cached = localStorage.getItem(key);
+        if (cached) callback(JSON.parse(cached));
+    } catch (e) {}
+    function fallback() { fbGet('products', function(p) { callback(p || []); }); }
+    db.ref('catalog').on('value', function(snapshot) {
+        var v = snapshot.val();
+        var has = v && (v.length || (typeof v === 'object' && Object.keys(v).length));
+        if (has) {
+            try { localStorage.setItem(key, JSON.stringify(v)); } catch (e) {}
+            callback(v);
+        } else {
+            fallback();
+        }
+    }, function() { fallback(); });
+}
+
 function fbSet(path, data, callback) {
     db.ref(path).set(data).then(function() {
         if (callback) callback(true);

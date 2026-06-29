@@ -47,7 +47,11 @@ function cleanupLangFields(key) {
         if (!it) return;
         FIELDS.forEach(function(f) { if (f in it) { delete it[f]; changed = true; } });
     });
-    if (changed) { setData(key, arr); console.log('Removed old UA/RU fields from ' + key); }
+    if (changed) {
+        setData(key, arr);
+        if (key === 'products') writeCatalog(arr);
+        console.log('Removed old UA/RU fields from ' + key);
+    }
 }
 
 // ===== ADMIN I18N =====
@@ -723,6 +727,97 @@ function compressImage(file, maxSize, quality, callback) {
     };
     reader.onerror = function() { alert('Could not read file: ' + file.name); };
     reader.readAsDataURL(file);
+}
+
+// ===== LIGHTWEIGHT CATALOGUE =====
+// The public home & gallery pages read a small 'catalog' node (names, prices,
+// categories + a small thumbnail) instead of the full ~12 MB products node.
+// Each product keeps a small `thumb`; the catalog is a cheap projection of it.
+function coverOf(c) {
+    if (!c) return null;
+    return (c.photos && c.photos.length && c.photos[0]) || c.photo || null;
+}
+
+// Downscale an existing data-URL (not a File) to a small JPEG thumbnail.
+function makeThumb(dataUrl, maxSize, quality, cb) {
+    if (!dataUrl) { cb(null); return; }
+    var img = new Image();
+    img.onload = function() {
+        var w = img.width, h = img.height;
+        if (w > maxSize || h > maxSize) {
+            if (w > h) { h = Math.round(h * maxSize / w); w = maxSize; }
+            else { w = Math.round(w * maxSize / h); h = maxSize; }
+        }
+        var canvas = document.createElement('canvas');
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        try { cb(canvas.toDataURL('image/jpeg', quality)); }
+        catch (e) { cb(dataUrl); }
+    };
+    img.onerror = function() { cb(dataUrl); };
+    img.src = dataUrl;
+}
+
+function buildCatalog(cakes) {
+    return (cakes || []).map(function(c) {
+        if (!c) return null;
+        return {
+            name: c.name || '',
+            category: c.category || 'other',
+            price: c.price || '',
+            sizes: c.sizes || [],
+            noticeDays: c.noticeDays != null ? c.noticeDays : 0,
+            flavours: c.flavours || [],
+            instaUrl: c.instaUrl || '',
+            fbUrl: c.fbUrl || '',
+            thumb: c.thumb || coverOf(c) || null
+        };
+    });
+}
+
+// Write the catalog without the usual error alert: if the 'catalog' security
+// rule isn't published yet, skip quietly (public pages fall back to products).
+function writeCatalog(cakes) {
+    var cat = buildCatalog(cakes);
+    _cache['catalog'] = cat;
+    try {
+        db.ref('catalog').set(cat).catch(function(err) {
+            console.warn('catalog write skipped:', err && err.message);
+        });
+    } catch (e) {}
+}
+
+// Save products and refresh the derived catalog together.
+function saveProducts(cakes, callback) {
+    setData('products', cakes, callback);
+    writeCatalog(cakes);
+}
+
+// One-time: ensure every cake has a small thumb and the catalog exists. Runs
+// once after products first load in the admin (the only place with write
+// access). Generates any missing thumbnails, then writes products + catalog.
+var _catalogEnsured = false;
+function ensureCatalog() {
+    if (_catalogEnsured) return;
+    var cakes = getData('products', null);
+    if (!Array.isArray(cakes)) return; // products not loaded yet
+    _catalogEnsured = true;
+
+    var pending = 0, addedThumb = false;
+    function done() {
+        if (addedThumb) setData('products', cakes); // persist newly made thumbs
+        writeCatalog(cakes);
+        console.log('Catalog ready:', cakes.length, 'items');
+    }
+    cakes.forEach(function(c) {
+        if (!c || c.thumb || !coverOf(c)) return;
+        pending++;
+        makeThumb(coverOf(c), 400, 0.6, function(th) {
+            if (th) { c.thumb = th; addedThumb = true; }
+            if (--pending === 0) done();
+        });
+    });
+    if (pending === 0) done();
 }
 
 function addCategory(callback) {
@@ -1593,7 +1688,7 @@ function savePriceTable() {
         if (newSizes.length) c.sizes = newSizes;
         else delete c.sizes;
     });
-    setData('products', cakes);
+    saveProducts(cakes);
     var st = document.getElementById('priceTableStatus');
     if (st) { st.textContent = at('content.saved'); setTimeout(function() { st.textContent = ''; }, 3000); }
 }
@@ -1676,7 +1771,7 @@ function loadCakes() {
                 if (!confirm(at('confirm.cake'))) return;
                 var cakes = getData('products', []) || [];
                 cakes.splice(parseInt(this.dataset.cakeDel), 1);
-                setData('products', cakes);
+                saveProducts(cakes);
             });
         });
     }
@@ -1727,7 +1822,7 @@ function exitCakesDeleteMode() {
         if (!confirm(at('confirm.delCakesPre') + keys.length + at('confirm.delCakesPost'))) return;
         var cakes = getData('products', []) || [];
         keys.sort(function(a, b) { return b - a; }).forEach(function(idx) { cakes.splice(idx, 1); });
-        setData('products', cakes);
+        saveProducts(cakes);
         exitCakesDeleteMode();
     });
 })();
@@ -1914,12 +2009,17 @@ document.getElementById('cakeForm').addEventListener('submit', function(e) {
         noticeDays: parseInt(document.getElementById('cakeNotice').value) || 0
     };
 
-    var cakes = getData('products', []) || [];
-    var editId = document.getElementById('cakeEditId').value;
-    if (editId !== '') cakes[parseInt(editId)] = cake;
-    else cakes.push(cake);
-    setData('products', cakes);
-    document.getElementById('cakeModal').style.display = 'none';
+    // Generate the small listing thumbnail from the cover, then save products
+    // and the derived catalog together.
+    makeThumb(cake.photo, 400, 0.6, function(thumb) {
+        cake.thumb = thumb || null;
+        var cakes = getData('products', []) || [];
+        var editId = document.getElementById('cakeEditId').value;
+        if (editId !== '') cakes[parseInt(editId)] = cake;
+        else cakes.push(cake);
+        saveProducts(cakes);
+        document.getElementById('cakeModal').style.display = 'none';
+    });
 });
 
 // ===== CAKES SORT BY CATEGORY =====
@@ -2002,7 +2102,7 @@ document.getElementById('cakesSortSelectAll').addEventListener('click', function
 });
 
 document.getElementById('cakesSortDone').addEventListener('click', function() {
-    setData('products', window._cakeSortItems || []);
+    saveProducts(window._cakeSortItems || []);
     document.getElementById('cakesSortPanel').style.display = 'none';
     document.getElementById('cakesAdmin').style.display = '';
     document.querySelector('#tab-cakes .tab-header').style.display = '';
@@ -2024,7 +2124,7 @@ function loadAllData() {
         if (mcm && mcm.style.display === 'flex') renderManageCats();
     });
     listenData('orders', function() { loadOrders(); });
-    listenData('products', function() { cleanupLangFields('products'); loadCakes(); renderPriceTable(); });
+    listenData('products', function() { cleanupLangFields('products'); loadCakes(); renderPriceTable(); ensureCatalog(); });
     listenData('default-sizes', function() { renderGlobalSizes(); loadCakes(); renderPriceTable(); });
     listenData('gallery-cat', function() { loadGallery(); });
     listenData('certificates', function() { loadCertificates(); });
