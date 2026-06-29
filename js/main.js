@@ -861,6 +861,9 @@ function renderFlavourGrid(flavours) {
     });
 }
 
+// Choosing a flavour opens the full Flavours page in selection mode and
+// returns to the order form with the chosen flavour applied. (The old in-page
+// modal is no longer used - kept here only as a harmless no-op.)
 function openFlavourModal() {
     fbGet('flavours', function(flavours) {
         if (!flavours || !flavours.length) flavours = DEFAULT_FLAVOURS;
@@ -869,13 +872,34 @@ function openFlavourModal() {
     flavourModal.style.display = 'flex';
 }
 
-flavourSelectBtn.addEventListener('click', openFlavourModal);
-document.getElementById('flavourModalClose').addEventListener('click', function() {
-    flavourModal.style.display = 'none';
+flavourSelectBtn.addEventListener('click', function() {
+    try { localStorage.setItem('ines-flavour-return', '/#order'); } catch (e) {}
+    window.location.href = 'flavours?select=1';
 });
-document.getElementById('flavourModalOverlay').addEventListener('click', function() {
-    flavourModal.style.display = 'none';
-});
+var _flavourModalClose = document.getElementById('flavourModalClose');
+if (_flavourModalClose) _flavourModalClose.addEventListener('click', function() { flavourModal.style.display = 'none'; });
+var _flavourModalOverlay = document.getElementById('flavourModalOverlay');
+if (_flavourModalOverlay) _flavourModalOverlay.addEventListener('click', function() { flavourModal.style.display = 'none'; });
+
+// Apply a flavour picked on the Flavours page (stored in localStorage) to the
+// custom order form.
+function applyPickedFlavourHome() {
+    var raw = null;
+    try { raw = localStorage.getItem('ines-flavour-pick'); } catch (e) {}
+    if (!raw) return;
+    try { localStorage.removeItem('ines-flavour-pick'); } catch (e) {}
+    var pick;
+    try { pick = JSON.parse(raw); } catch (e) { return; }
+    if (!pick || !pick.name) return;
+    flavourHidden.value = pick.name;
+    flavourSelectText.textContent = pick.display || pick.name;
+    flavourSelectText.removeAttribute('data-i18n');
+    flavourSelectBtn.classList.add('has-value');
+    selectedFlavourPrice = parseFloat(pick.price) || 0;
+    selectedFlavourGF = pick.gf === true || pick.gf === '1' || pick.gf === 1;
+    updateGFAvailability();
+    recalcTotal();
+}
 
 // ===== CUSTOM SIZE TOGGLE =====
 var cakeSizeSelect = document.getElementById('cakeSize');
@@ -1258,6 +1282,23 @@ orderForm.addEventListener('submit', function(e) {
         finish('');
     }
 });
+
+// Show a preview of the attached reference photo so the user can see it.
+(function() {
+    var photoInput = document.getElementById('photo');
+    var preview = document.getElementById('photoPreview');
+    if (!photoInput || !preview) return;
+    photoInput.addEventListener('change', function() {
+        var f = this.files && this.files[0];
+        if (!f) { preview.style.display = 'none'; preview.innerHTML = ''; return; }
+        var reader = new FileReader();
+        reader.onload = function(ev) {
+            preview.innerHTML = '<img src="' + ev.target.result + '" alt="" style="max-width:180px;max-height:180px;border-radius:10px;border:1px solid #EEE5D2;">';
+            preview.style.display = 'block';
+        };
+        reader.readAsDataURL(f);
+    });
+})();
 
 // ===== SMOOTH SCROLL FOR ANCHOR LINKS =====
 document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
@@ -1729,6 +1770,7 @@ document.addEventListener('DOMContentLoaded', function() {
     loadCustomSizes();
     recalcTotal();
     initCustomReference();
+    applyPickedFlavourHome();
 });
 
 setLanguage(currentLang);

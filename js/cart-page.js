@@ -192,8 +192,7 @@ function orderStatusSubset(o) {
 }
 
 function buildSummary(cart) {
-    return cart.map(function(it) {
-        var parts = [(it.qty || 1) + '× ' + it.name];
+    return cart.map(function(it, i) {
         var sub = [];
         if (it.refName) sub.push('ref: ' + it.refName);
         if (it.weight) sub.push(it.weight);
@@ -204,13 +203,16 @@ function buildSummary(cart) {
         if (it.glutenFree) sub.push('gluten-free');
         if (it.decor) sub.push(it.decor);
         if (it.gift) sub.push('gift wrap');
-        if (sub.length) parts.push('(' + sub.join(', ') + ')');
-        parts.push(!parseFloat(it.price) ? 'price on request' : ((it.custom ? '≈ €' : '€') + lineTotal(it)));
-        var line = parts.join(' ');
-        if (it.message) line += ' - note: ' + it.message;
-        if (it.allergies) line += ' - allergies: ' + it.allergies;
-        return line;
-    }).join('\n');
+        // Each cake on its own block with its price clearly shown. Custom /
+        // reference cakes are quoted later, so they read "price on request".
+        var price = !parseFloat(it.price) ? 'on request' : ((it.custom ? '≈ €' : '€') + lineTotal(it));
+        var lines = [(i + 1) + '. ' + (it.qty || 1) + '× ' + it.name];
+        if (sub.length) lines.push('   • ' + sub.join(', '));
+        lines.push('   💶 Price: ' + price);
+        if (it.message) lines.push('   ✍️ ' + it.message);
+        if (it.allergies) lines.push('   ⚠️ ' + it.allergies);
+        return lines.join('\n');
+    }).join('\n\n');
 }
 
 document.getElementById('checkoutForm').addEventListener('submit', function(e) {
@@ -226,6 +228,12 @@ document.getElementById('checkoutForm').addEventListener('submit', function(e) {
     btn.disabled = true;
 
     var dates = cart.map(function(it) { return it.date; }).filter(Boolean).sort();
+    // Total covers the priced cakes; custom/reference cakes are quoted later.
+    var priced = cartTotal();
+    var hasOnRequest = cart.some(function(it) { return !parseFloat(it.price); });
+    var totalStr = priced > 0
+        ? ('€' + priced + (hasOnRequest ? ' + custom (on request)' : ''))
+        : 'on request';
     var order = {
         name: name,
         phone: phone,
@@ -234,7 +242,7 @@ document.getElementById('checkoutForm').addEventListener('submit', function(e) {
         cakeSize: cart.length === 1 ? (cart[0].size || '') : (cart.length + ' items'),
         flavour: cart.length === 1 ? (cart[0].flavour || '') : '',
         message: buildSummary(cart),
-        total: '€' + cartTotal(),
+        total: totalStr,
         items: cart,
         status: 'new',
         note: '',
