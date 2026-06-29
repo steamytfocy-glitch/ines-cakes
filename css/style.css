@@ -925,8 +925,9 @@ ul { list-style: none; }
 }
 .hero__photo {
     width: 340px;
-    height: 340px;
     max-width: 42vw;
+    aspect-ratio: 1 / 1;   /* always square -> stays a perfect circle on mobile */
+    height: auto;
     border-radius: 50%;
     object-fit: cover;
     object-position: center;
