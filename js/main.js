@@ -58,6 +58,7 @@ const translations = {
         "shed.fri": "Aoine",
         "shed.sat": "Satharn",
         "shed.sun": "Domhnach",
+        "shed.directions": "Faigh Treoracha",
 
         "gallery.title": "Ár nObair",
         "gallery.subtitle": "Rogha dár gcácaí le déanaí - gach ceann uathúil agus déanta le cúram",
@@ -201,6 +202,7 @@ const translations = {
         "shed.fri": "Friday",
         "shed.sat": "Saturday",
         "shed.sun": "Sunday",
+        "shed.directions": "Get directions",
 
         "gallery.title": "Our Work",
         "gallery.subtitle": "A selection of our recent cakes - each one unique and made with care",
@@ -344,6 +346,7 @@ const translations = {
         "shed.fri": "П'ятниця",
         "shed.sat": "Субота",
         "shed.sun": "Неділя",
+        "shed.directions": "Прокласти маршрут",
 
         "gallery.title": "Наші роботи",
         "gallery.subtitle": "Добірка наших нещодавніх тортів - кожен унікальний та зроблений з турботою",
@@ -487,6 +490,7 @@ const translations = {
         "shed.fri": "Пятница",
         "shed.sat": "Суббота",
         "shed.sun": "Воскресенье",
+        "shed.directions": "Проложить маршрут",
 
         "gallery.title": "Наши работы",
         "gallery.subtitle": "Подборка наших недавних тортов - каждый уникален и сделан с заботой",
