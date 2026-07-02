@@ -43,6 +43,16 @@
         @media (max-width: 992px) { .reviews-page__grid { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 600px) { .reviews-page__grid { grid-template-columns: 1fr; } }
 
+        .reviews-page__grid .review-card { position: relative; }
+        .review-card__del {
+            position: absolute; top: 10px; right: 10px;
+            display: inline-flex; align-items: center; gap: 4px;
+            background: none; border: 0; cursor: pointer;
+            color: #b9a58c; font: 600 12px 'Montserrat', sans-serif;
+            padding: 4px 7px; border-radius: 7px; transition: .2s ease;
+        }
+        .review-card__del:hover { color: #c0392b; background: rgba(192,57,43,0.08); }
+
         .google-cta {
             background: var(--white); border: 1px solid #E8D9BC; border-radius: 16px;
             box-shadow: var(--shadow); padding: 22px 24px; margin: 0 auto 28px; max-width: 560px;
@@ -144,6 +154,6 @@
 <script defer src="js/firebase-init.js"></script>
 <script defer src="js/lang-switcher.js"></script>
 <script defer src="js/maintenance-guard.js"></script>
-<script defer src="js/reviews-page.js"></script>
+<script defer src="js/reviews-page.js?v=2"></script>
 </body>
 </html>

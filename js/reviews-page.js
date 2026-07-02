@@ -11,7 +11,9 @@ var translations = {
         "reviews.reviewPh": "Inis dúinn faoi do thaithí...",
         "reviews.submit": "Seol Léirmheas",
         "reviews.thanks": "Go raibh maith agat! Cuireadh do léirmheas isteach.",
-        "reviews.photo": "Cuir grianghraf leis (roghnach)"
+        "reviews.photo": "Cuir grianghraf leis (roghnach)",
+        "reviews.delete": "Scrios",
+        "reviews.confirmDelete": "Scrios do léirmheas?"
     },
     en: {
         "revpage.back": "Back to Home",
@@ -25,7 +27,9 @@ var translations = {
         "reviews.reviewPh": "Tell us about your experience...",
         "reviews.submit": "Send Review",
         "reviews.thanks": "Thank you! Your review has been submitted.",
-        "reviews.photo": "Add a photo (optional)"
+        "reviews.photo": "Add a photo (optional)",
+        "reviews.delete": "Delete",
+        "reviews.confirmDelete": "Delete your review?"
     },
     ua: {
         "revpage.back": "На головну",
@@ -39,7 +43,9 @@ var translations = {
         "reviews.reviewPh": "Розкажіть про ваш досвід...",
         "reviews.submit": "Надіслати відгук",
         "reviews.thanks": "Дякуємо! Ваш відгук надіслано.",
-        "reviews.photo": "Додати фото (необов'язково)"
+        "reviews.photo": "Додати фото (необов'язково)",
+        "reviews.delete": "Видалити",
+        "reviews.confirmDelete": "Видалити ваш відгук?"
     },
     ru: {
         "revpage.back": "На главную",
@@ -53,7 +59,9 @@ var translations = {
         "reviews.reviewPh": "Расскажите о вашем опыте...",
         "reviews.submit": "Отправить отзыв",
         "reviews.thanks": "Спасибо! Ваш отзыв отправлен.",
-        "reviews.photo": "Добавить фото (необязательно)"
+        "reviews.photo": "Добавить фото (необязательно)",
+        "reviews.delete": "Удалить",
+        "reviews.confirmDelete": "Удалить ваш отзыв?"
     }
 };
 
@@ -86,6 +94,28 @@ function escapeHtml(str) {
     var div = document.createElement('div');
     div.textContent = str;
     return div.innerHTML;
+}
+
+function revT(k) {
+    var t = translations[currentLang] || translations.en;
+    return t[k] || translations.en[k] || k;
+}
+
+// IDs of the reviews written from THIS browser - only these can be deleted here.
+function myReviewIds() {
+    try { return JSON.parse(localStorage.getItem('ines-my-reviews') || '[]'); } catch (e) { return []; }
+}
+function rememberMyReview(id) {
+    try {
+        var mine = myReviewIds();
+        mine.push(id);
+        localStorage.setItem('ines-my-reviews', JSON.stringify(mine));
+    } catch (e) {}
+}
+function forgetMyReview(id) {
+    try {
+        localStorage.setItem('ines-my-reviews', JSON.stringify(myReviewIds().filter(function(x) { return x !== id; })));
+    } catch (e) {}
 }
 
 // Compress an image file to a base64 data URL via canvas
@@ -125,12 +155,19 @@ function loadAllReviews() {
             return;
         }
 
+        var mine = myReviewIds();
+        var TRASH = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>';
         var html = '';
         for (var i = reviews.length - 1; i >= 0; i--) {
             var r = reviews[i];
             var stars = '';
             for (var s = 0; s < (r.rating || 5); s++) stars += '★';
+            var owned = r && r.id && mine.indexOf(r.id) > -1;
+            var delBtn = owned
+                ? '<button type="button" class="review-card__del" data-del-review="' + escapeHtml(r.id) + '" title="' + escapeHtml(revT('reviews.delete')) + '">' + TRASH + '<span>' + escapeHtml(revT('reviews.delete')) + '</span></button>'
+                : '';
             html += '<div class="review-card">' +
+                delBtn +
                 '<div class="review-card__stars">' + stars + '</div>' +
                 (r.photo ? '<img class="review-card__photo" src="' + r.photo + '" alt="" loading="lazy">' : '') +
                 '<p class="review-card__text">"' + escapeHtml(r.text) + '"</p>' +
@@ -138,8 +175,23 @@ function loadAllReviews() {
             '</div>';
         }
         grid.innerHTML = html;
-        // Review deletion lives in the admin panel only (behind login) - the
-        // public page must not be able to write to the reviews list.
+
+        // Only reviews written from this browser show a delete button. Deleting
+        // filters that review out and rewrites the list (reviews are publicly
+        // writable, same as adding one).
+        grid.querySelectorAll('[data-del-review]').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var id = this.getAttribute('data-del-review');
+                if (!confirm(revT('reviews.confirmDelete'))) return;
+                fbGetOnce('reviews', function(list) {
+                    list = (list || []).filter(function(x) { return !(x && x.id === id); });
+                    fbSet('reviews', list, function() {
+                        forgetMyReview(id);
+                        loadAllReviews();
+                    });
+                });
+            });
+        });
     });
 }
 
@@ -182,6 +234,7 @@ document.getElementById('revPhoto').addEventListener('change', function(e) {
 document.getElementById('clientReviewForm').addEventListener('submit', function(e) {
     e.preventDefault();
     var review = {
+        id: 'r' + Date.now() + Math.random().toString(36).slice(2, 7),
         author: document.getElementById('revName').value.trim(),
         rating: parseInt(revRating.value),
         text: document.getElementById('revText').value.trim(),
@@ -193,6 +246,8 @@ document.getElementById('clientReviewForm').addEventListener('submit', function(
         reviews.push(review);
         fbSet('reviews', reviews);
     });
+    // Remember it as ours so this browser can delete it later.
+    rememberMyReview(review.id);
 
     this.style.display = 'none';
     document.getElementById('reviewSuccess').style.display = 'block';
