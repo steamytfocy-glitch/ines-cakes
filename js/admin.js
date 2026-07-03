@@ -1491,6 +1491,27 @@ function renderHeroPhotoPreview() {
     });
 })();
 
+// Cake Shed weekly menu image (kept a bit larger/sharper so its text stays readable).
+var pendingShedMenu = null;
+function renderShedMenuPreview() {
+    var wrap = document.getElementById('shedMenuPreview');
+    if (!wrap) return;
+    wrap.innerHTML = pendingShedMenu
+        ? '<div class="cake-photo-thumb cake-photo-thumb--main"><img src="' + pendingShedMenu + '" alt=""><button type="button" class="cake-photo-thumb__del" id="shedMenuDel" aria-label="Remove">&times;</button></div>'
+        : '';
+    var del = document.getElementById('shedMenuDel');
+    if (del) del.addEventListener('click', function() { pendingShedMenu = null; renderShedMenuPreview(); });
+}
+(function() {
+    var inp = document.getElementById('shedMenuInput');
+    if (inp) inp.addEventListener('change', function(e) {
+        var file = e.target.files[0];
+        if (!file) return;
+        compressImage(file, 1200, 0.85, function(dataUrl) { pendingShedMenu = dataUrl; renderShedMenuPreview(); });
+        e.target.value = '';
+    });
+})();
+
 function loadContent() {
     var content = getData('content', null);
     if (!content) return;
@@ -1503,6 +1524,8 @@ function loadContent() {
     });
     pendingHeroPhoto = content.heroPhoto || null;
     renderHeroPhotoPreview();
+    pendingShedMenu = content.shedMenu || null;
+    renderShedMenuPreview();
 }
 
 document.getElementById('saveContentBtn').addEventListener('click', function() {
@@ -1511,6 +1534,7 @@ document.getElementById('saveContentBtn').addEventListener('click', function() {
         content[field.dataset.key] = field.value.trim();
     });
     if (pendingHeroPhoto) content.heroPhoto = pendingHeroPhoto;
+    if (pendingShedMenu) content.shedMenu = pendingShedMenu;
     setData('content', content);
     var status = document.getElementById('saveStatus');
     status.textContent = at('content.saved');

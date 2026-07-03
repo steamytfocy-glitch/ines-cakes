@@ -59,6 +59,7 @@ const translations = {
         "shed.sat": "Satharn",
         "shed.sun": "Domhnach",
         "shed.directions": "Faigh Treoracha",
+        "shed.menuTitle": "Biachlár na seachtaine seo",
 
         "gallery.title": "Ár nObair",
         "gallery.subtitle": "Rogha dár gcácaí le déanaí - gach ceann uathúil agus déanta le cúram",
@@ -203,6 +204,7 @@ const translations = {
         "shed.sat": "Saturday",
         "shed.sun": "Sunday",
         "shed.directions": "Get directions",
+        "shed.menuTitle": "This week's menu",
 
         "gallery.title": "Our Work",
         "gallery.subtitle": "A selection of our recent cakes - each one unique and made with care",
@@ -347,6 +349,7 @@ const translations = {
         "shed.sat": "Субота",
         "shed.sun": "Неділя",
         "shed.directions": "Прокласти маршрут",
+        "shed.menuTitle": "Меню цього тижня",
 
         "gallery.title": "Наші роботи",
         "gallery.subtitle": "Добірка наших нещодавніх тортів - кожен унікальний та зроблений з турботою",
@@ -491,6 +494,7 @@ const translations = {
         "shed.sat": "Суббота",
         "shed.sun": "Воскресенье",
         "shed.directions": "Проложить маршрут",
+        "shed.menuTitle": "Меню этой недели",
 
         "gallery.title": "Наши работы",
         "gallery.subtitle": "Подборка наших недавних тортов - каждый уникален и сделан с заботой",
@@ -1550,6 +1554,16 @@ function loadAdminContent() {
                 el.textContent = 'from €' + content.priceMaxi;
             });
         }
+        var shedMenuWrap = document.getElementById('cakeshedMenu');
+        var shedMenuImg = document.getElementById('cakeshedMenuImg');
+        if (shedMenuWrap && shedMenuImg) {
+            if (content.shedMenu) {
+                shedMenuImg.src = content.shedMenu;
+                shedMenuWrap.style.display = '';
+            } else {
+                shedMenuWrap.style.display = 'none';
+            }
+        }
         var insta = document.getElementById('socialInsta');
         var fb = document.getElementById('socialFacebook');
         if (insta && content.contactInsta) insta.href = content.contactInsta;
@@ -1775,6 +1789,12 @@ document.addEventListener('DOMContentLoaded', function() {
     recalcTotal();
     initCustomReference();
     applyPickedFlavourHome();
+    var shedMenuImg = document.getElementById('cakeshedMenuImg');
+    if (shedMenuImg) shedMenuImg.addEventListener('click', function() {
+        if (typeof openImageLightbox === 'function' && shedMenuImg.src) {
+            openImageLightbox([{ src: shedMenuImg.src, label: '' }], 0);
+        }
+    });
 });
 
 setLanguage(currentLang);

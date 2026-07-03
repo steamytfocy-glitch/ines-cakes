@@ -1208,6 +1208,26 @@ ul { list-style: none; }
     .cakeshed__map { height: 260px; }
 }
 
+.cakeshed__menu {
+    margin-top: 56px;
+    text-align: center;
+}
+.cakeshed__menu-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    color: var(--brown);
+    margin-bottom: 22px;
+}
+.cakeshed__menu-img {
+    max-width: 380px;
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--gold-light);
+    cursor: zoom-in;
+}
+
 /* ===== GALLERY ===== */
 .gallery__categories {
     display: grid;
