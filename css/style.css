@@ -1231,20 +1231,6 @@ ul { list-style: none; }
     overflow: hidden;
     background: var(--cream);
 }
-.shed-card__badge {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.92);
-    color: var(--gold-dark);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
-}
 .shed-card__img img {
     width: 100%;
     height: 100%;
