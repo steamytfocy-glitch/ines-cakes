@@ -84,6 +84,10 @@
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
                 <span data-i18n="nav.reviews">Reviews</span>
             </button>
+            <button class="sidebar__link" data-tab="cakeshed">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18"/><path d="M4 21V10l8-5 8 5v11"/><path d="M9 21v-6h6v6"/></svg>
+                <span data-i18n="nav.cakeshed">Cake Shed</span>
+            </button>
             <button class="sidebar__link" data-tab="content">
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                 <span data-i18n="nav.content">Content</span>
@@ -500,6 +504,30 @@
         </div>
 
         <!-- CONTENT TAB -->
+        <div class="tab-content" id="tab-cakeshed">
+            <div class="content-admin">
+                <p class="content-hint" style="margin:0 0 6px;">These show in the <strong>Cake Shed</strong> section on the home page as two cards. Changes here save automatically.</p>
+
+                <div class="content-section">
+                    <h3>Menu card</h3>
+                    <p class="content-hint" style="margin:0 0 10px;">Cover image for the left "This week's menu" card (the picture you make). Tapping it opens the full menu. Replace it each week; remove it to hide the card.</p>
+                    <input type="file" id="shedMenuInput" accept="image/*">
+                    <div id="shedMenuPreview" style="margin-top:10px;"></div>
+                </div>
+
+                <div class="content-section">
+                    <h3>Assortment card</h3>
+                    <p class="content-hint" style="margin:0 0 10px;">Cover image for the right "Our assortment" card, then the pastry photos shown when someone taps it. Remove the cover to hide the card.</p>
+                    <label class="content-hint" style="display:block;margin:0 0 6px;font-weight:600;">Cover image</label>
+                    <input type="file" id="shedAssortCoverInput" accept="image/*">
+                    <div id="shedAssortCoverPreview" style="margin:10px 0 16px;"></div>
+                    <label class="content-hint" style="display:block;margin:0 0 6px;font-weight:600;">Pastry photos</label>
+                    <input type="file" id="shedAssortAddInput" accept="image/*" multiple>
+                    <div id="shedAssortItems" style="margin-top:12px;"></div>
+                </div>
+            </div>
+        </div>
+
         <div class="tab-content" id="tab-content">
             <div class="content-admin">
                 <div class="content-section">
@@ -524,24 +552,6 @@
                     <p class="content-hint" style="margin:0 0 10px;" data-i18n="content.heroHint">Shown big on the home page. Square photos look best. Leave empty for the default illustration.</p>
                     <input type="file" id="heroPhotoInput" accept="image/*">
                     <div id="heroPhotoPreview" style="margin-top:10px;"></div>
-                </div>
-
-                <div class="content-section">
-                    <h3>Cake Shed — Menu card</h3>
-                    <p class="content-hint" style="margin:0 0 10px;">Cover image for the left "This week's menu" card (the picture you make). Tapping it opens the full menu. Replace it each week; remove it to hide the card.</p>
-                    <input type="file" id="shedMenuInput" accept="image/*">
-                    <div id="shedMenuPreview" style="margin-top:10px;"></div>
-                </div>
-
-                <div class="content-section">
-                    <h3>Cake Shed — Assortment card</h3>
-                    <p class="content-hint" style="margin:0 0 10px;">Cover image for the right "Our assortment" card, then the pastry photos shown when someone taps it. Remove the cover to hide the card.</p>
-                    <label class="content-hint" style="display:block;margin:0 0 6px;font-weight:600;">Cover image</label>
-                    <input type="file" id="shedAssortCoverInput" accept="image/*">
-                    <div id="shedAssortCoverPreview" style="margin:10px 0 16px;"></div>
-                    <label class="content-hint" style="display:block;margin:0 0 6px;font-weight:600;">Pastry photos (saved instantly)</label>
-                    <input type="file" id="shedAssortAddInput" accept="image/*" multiple>
-                    <div id="shedAssortItems" style="margin-top:12px;"></div>
                 </div>
 
                 <div class="content-section">
@@ -620,6 +630,6 @@
 <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
 <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script defer src="js/firebase-init.js?v=3"></script>
-<script defer src="js/admin.js?v=4"></script>
+<script defer src="js/admin.js?v=5"></script>
 </body>
 </html>

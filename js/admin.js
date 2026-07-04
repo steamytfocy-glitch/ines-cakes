@@ -58,7 +58,7 @@ function cleanupLangFields(key) {
 var A = {
     en: {
         'login.title': 'Admin Panel', 'login.user': 'Login', 'login.pass': 'Password', 'login.signin': 'Sign In', 'login.wrong': 'Wrong login or password',
-        'nav.orders': 'Orders', 'nav.cakes': 'Cakes', 'nav.sizes': 'Sizes & Prices', 'nav.flavours': 'Flavours', 'nav.certificates': 'Certificates', 'nav.reviews': 'Reviews', 'nav.content': 'Content',
+        'nav.orders': 'Orders', 'nav.cakes': 'Cakes', 'nav.sizes': 'Sizes & Prices', 'nav.flavours': 'Flavours', 'nav.certificates': 'Certificates', 'nav.reviews': 'Reviews', 'nav.cakeshed': 'Cake Shed', 'nav.content': 'Content',
         'sizes.hint': 'These sizes & prices apply to every cake automatically. Set them once here. You can still override sizes for a single cake in its form.', 'sizes.add': '+ Add size', 'sizes.fillStandard': '+ Add standard sizes (6"-12")', 'sizes.save': 'Save sizes',
         'ptable.title': 'Price table - all cakes', 'ptable.hint': 'Type a price for each size, per cake. Leave a cake empty to use the default prices above. Fill only some sizes to offer just those.', 'ptable.cake': 'Cake', 'ptable.save': 'Save all prices', 'ptable.needSizes': 'Add at least one size above first, then save it - the table will appear here.', 'ptable.empty': 'No cakes yet. Add cakes in the Cakes tab.', 'ptable.fixed': 'Fixed €', 'ptable.search': 'Search cake…',
         'size.sizePh': 'Size (inch), e.g. 8', 'size.servesPh': 'Serves, e.g. 15-18', 'size.pricePh': '€ price',
@@ -93,7 +93,7 @@ var A = {
     },
     ua: {
         'login.title': 'Панель адміністратора', 'login.user': 'Логін', 'login.pass': 'Пароль', 'login.signin': 'Увійти', 'login.wrong': 'Невірний логін або пароль',
-        'nav.orders': 'Замовлення', 'nav.cakes': 'Торти', 'nav.sizes': 'Розміри та ціни', 'nav.flavours': 'Смаки', 'nav.certificates': 'Сертифікати', 'nav.reviews': 'Відгуки', 'nav.content': 'Контент',
+        'nav.orders': 'Замовлення', 'nav.cakes': 'Торти', 'nav.sizes': 'Розміри та ціни', 'nav.flavours': 'Смаки', 'nav.certificates': 'Сертифікати', 'nav.reviews': 'Відгуки', 'nav.cakeshed': 'Кейк Шед', 'nav.content': 'Контент',
         'sizes.hint': 'Ці розміри та ціни застосовуються до кожного торта автоматично. Задайте їх тут один раз. За потреби можна змінити розміри для окремого торта в його формі.', 'sizes.add': '+ Додати розмір', 'sizes.fillStandard': '+ Додати стандартні розміри (6"-12")', 'sizes.save': 'Зберегти розміри',
         'ptable.title': 'Таблиця цін - усі торти', 'ptable.hint': 'Введіть ціну для кожного розміру по кожному торту. Залиште торт порожнім, щоб використати стандартні ціни вище. Заповніть лише деякі розміри, щоб пропонувати тільки їх.', 'ptable.cake': 'Торт', 'ptable.save': 'Зберегти всі ціни', 'ptable.needSizes': 'Спершу додайте хоча б один розмір вище та збережіть його - тоді тут зʼявиться таблиця.', 'ptable.empty': 'Тортів ще немає. Додайте торти у вкладці «Торти».', 'ptable.fixed': 'Фікс. €', 'ptable.search': 'Пошук торта…',
         'size.sizePh': 'Розмір (inch), напр. 8', 'size.servesPh': 'Порцій, напр. 15-18', 'size.pricePh': '€ ціна',
@@ -128,7 +128,7 @@ var A = {
     },
     ru: {
         'login.title': 'Панель администратора', 'login.user': 'Логин', 'login.pass': 'Пароль', 'login.signin': 'Войти', 'login.wrong': 'Неверный логин или пароль',
-        'nav.orders': 'Заказы', 'nav.cakes': 'Торты', 'nav.sizes': 'Размеры и цены', 'nav.flavours': 'Вкусы', 'nav.certificates': 'Сертификаты', 'nav.reviews': 'Отзывы', 'nav.content': 'Контент',
+        'nav.orders': 'Заказы', 'nav.cakes': 'Торты', 'nav.sizes': 'Размеры и цены', 'nav.flavours': 'Вкусы', 'nav.certificates': 'Сертификаты', 'nav.reviews': 'Отзывы', 'nav.cakeshed': 'Кейк Шед', 'nav.content': 'Контент',
         'sizes.hint': 'Эти размеры и цены применяются ко всем тортам автоматически. Задайте их здесь один раз. При необходимости можно переопределить размеры для отдельного торта в его форме.', 'sizes.add': '+ Добавить размер', 'sizes.fillStandard': '+ Добавить стандартные размеры (6"-12")', 'sizes.save': 'Сохранить размеры',
         'ptable.title': 'Таблица цен - все торты', 'ptable.hint': 'Впишите цену для каждого размера по каждому торту. Оставьте торт пустым, чтобы использовать стандартные цены выше. Заполните только некоторые размеры, чтобы предлагать лишь их.', 'ptable.cake': 'Торт', 'ptable.save': 'Сохранить все цены', 'ptable.needSizes': 'Сначала добавьте хотя бы один размер выше и сохраните его - тогда здесь появится таблица.', 'ptable.empty': 'Тортов пока нет. Добавьте торты во вкладке «Торты».', 'ptable.fixed': 'Фикс. €', 'ptable.search': 'Поиск торта…',
         'size.sizePh': 'Размер (inch), напр. 8', 'size.servesPh': 'Порций, напр. 15-18', 'size.pricePh': '€ цена',
@@ -273,6 +273,7 @@ var tabTitles = {
     certificates: 'Certificates',
     flavours: 'Flavours',
     reviews: 'Reviews',
+    cakeshed: 'Cake Shed',
     content: 'Content'
 };
 
@@ -1491,6 +1492,15 @@ function renderHeroPhotoPreview() {
     });
 })();
 
+// Update a single field on the shared 'content' node without touching the
+// others (used by the Cake Shed tab, which auto-saves instead of using the
+// Content tab's Save button).
+function setContentField(key, value) {
+    var c = Object.assign({}, getData('content', {}) || {});
+    if (value == null || value === '') delete c[key]; else c[key] = value;
+    setData('content', c);
+}
+
 // Cake Shed weekly menu image (kept a bit larger/sharper so its text stays readable).
 var pendingShedMenu = null;
 function renderShedMenuPreview() {
@@ -1500,14 +1510,14 @@ function renderShedMenuPreview() {
         ? '<div class="cake-photo-thumb cake-photo-thumb--main"><img src="' + pendingShedMenu + '" alt=""><button type="button" class="cake-photo-thumb__del" id="shedMenuDel" aria-label="Remove">&times;</button></div>'
         : '';
     var del = document.getElementById('shedMenuDel');
-    if (del) del.addEventListener('click', function() { pendingShedMenu = null; renderShedMenuPreview(); });
+    if (del) del.addEventListener('click', function() { pendingShedMenu = null; setContentField('shedMenu', null); renderShedMenuPreview(); });
 }
 (function() {
     var inp = document.getElementById('shedMenuInput');
     if (inp) inp.addEventListener('change', function(e) {
         var file = e.target.files[0];
         if (!file) return;
-        compressImage(file, 1200, 0.85, function(dataUrl) { pendingShedMenu = dataUrl; renderShedMenuPreview(); });
+        compressImage(file, 1200, 0.85, function(dataUrl) { pendingShedMenu = dataUrl; setContentField('shedMenu', dataUrl); renderShedMenuPreview(); });
         e.target.value = '';
     });
 })();
@@ -1521,14 +1531,14 @@ function renderShedAssortCoverPreview() {
         ? '<div class="cake-photo-thumb cake-photo-thumb--main"><img src="' + pendingShedAssortCover + '" alt=""><button type="button" class="cake-photo-thumb__del" id="shedAssortCoverDel" aria-label="Remove">&times;</button></div>'
         : '';
     var del = document.getElementById('shedAssortCoverDel');
-    if (del) del.addEventListener('click', function() { pendingShedAssortCover = null; renderShedAssortCoverPreview(); });
+    if (del) del.addEventListener('click', function() { pendingShedAssortCover = null; setContentField('shedAssortCover', null); renderShedAssortCoverPreview(); });
 }
 (function() {
     var inp = document.getElementById('shedAssortCoverInput');
     if (inp) inp.addEventListener('change', function(e) {
         var file = e.target.files[0];
         if (!file) return;
-        compressImage(file, 800, 0.8, function(dataUrl) { pendingShedAssortCover = dataUrl; renderShedAssortCoverPreview(); });
+        compressImage(file, 800, 0.8, function(dataUrl) { pendingShedAssortCover = dataUrl; setContentField('shedAssortCover', dataUrl); renderShedAssortCoverPreview(); });
         e.target.value = '';
     });
 })();
@@ -1591,13 +1601,14 @@ function loadContent() {
 }
 
 document.getElementById('saveContentBtn').addEventListener('click', function() {
-    var content = {};
+    // Start from the existing content so fields managed elsewhere (the Cake
+    // Shed tab's shedMenu / shedAssortCover) are preserved, then overlay the
+    // Content-tab fields.
+    var content = Object.assign({}, getData('content', {}) || {});
     document.querySelectorAll('[data-key]').forEach(function(field) {
         content[field.dataset.key] = field.value.trim();
     });
-    if (pendingHeroPhoto) content.heroPhoto = pendingHeroPhoto;
-    if (pendingShedMenu) content.shedMenu = pendingShedMenu;
-    if (pendingShedAssortCover) content.shedAssortCover = pendingShedAssortCover;
+    if (pendingHeroPhoto) content.heroPhoto = pendingHeroPhoto; else delete content.heroPhoto;
     setData('content', content);
     var status = document.getElementById('saveStatus');
     status.textContent = at('content.saved');
