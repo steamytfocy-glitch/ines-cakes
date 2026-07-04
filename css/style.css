@@ -1178,16 +1178,6 @@ ul { list-style: none; }
     margin-top: 2px;
 }
 
-.cakeshed__placeholder {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--cream);
-    border-radius: var(--radius);
-    padding: 40px;
-    border: 2px dashed var(--gold-light);
-}
-
 .cakeshed__dir {
     display: inline-flex;
     align-items: center;
@@ -1209,13 +1199,16 @@ ul { list-style: none; }
 }
 
 .shed-cards {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 24px;
     margin: 56px auto 0;
     max-width: 720px;
 }
 .shed-card {
+    flex: 1 1 300px;
+    max-width: 340px;
     display: flex;
     flex-direction: column;
     gap: 14px;
@@ -1250,7 +1243,7 @@ ul { list-style: none; }
     color: var(--brown);
     text-align: center;
 }
-@media (max-width: 560px) { .shed-cards { grid-template-columns: 1fr; max-width: 340px; } }
+@media (max-width: 560px) { .shed-cards { max-width: 340px; } }
 
 /* ===== GALLERY ===== */
 .gallery__categories {

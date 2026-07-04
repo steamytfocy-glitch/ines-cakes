@@ -1544,26 +1544,57 @@ function renderShedAssortCoverPreview() {
 })();
 
 // Cake Shed - assortment pastry photos (own node, saved instantly on add/delete).
+// Tap photos to select, then "Delete selected" to remove several at once.
 var shedAssortItems = [];
+var shedAssortSel = {};
 function renderShedAssortItems() {
     var wrap = document.getElementById('shedAssortItems');
     if (!wrap) return;
-    var html = '';
+    if (!shedAssortItems.length) {
+        wrap.innerHTML = '<span style="color:#9a8a72;font-size:13px;">No pastry photos yet.</span>';
+        return;
+    }
+    var n = Object.keys(shedAssortSel).length;
+    var toolbar = '<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:12px;">' +
+        '<span style="color:#9a8a72;font-size:12px;margin-right:2px;">Tap photos to select</span>' +
+        '<button type="button" id="shedAssortSelAll" style="padding:7px 12px;border-radius:8px;border:1.5px solid #C8963E;background:#fff;color:#7a5c2e;font:600 13px sans-serif;cursor:pointer;">Select all</button>' +
+        '<button type="button" id="shedAssortDelSel"' + (n ? '' : ' disabled') + ' style="padding:7px 12px;border-radius:8px;border:0;background:' + (n ? '#c0392b' : '#e0cdc0') + ';color:#fff;font:600 13px sans-serif;cursor:' + (n ? 'pointer' : 'default') + ';">Delete selected (' + n + ')</button>' +
+        '</div>';
+    var grid = '';
     for (var i = 0; i < shedAssortItems.length; i++) {
         var it = shedAssortItems[i];
         if (!it || !it.photo) continue;
-        html += '<div style="position:relative;display:inline-block;margin:0 8px 8px 0;">' +
-            '<img src="' + it.photo + '" alt="" style="width:82px;height:82px;object-fit:cover;border-radius:8px;border:1px solid #e6ddcb;">' +
-            '<button type="button" data-del-assort="' + i + '" aria-label="Remove" style="position:absolute;top:-7px;right:-7px;width:22px;height:22px;border-radius:50%;border:0;background:#c0392b;color:#fff;cursor:pointer;font:700 14px sans-serif;line-height:1;">&times;</button>' +
+        var sel = !!shedAssortSel[i];
+        grid += '<div data-assort-idx="' + i + '" style="position:relative;display:inline-block;margin:0 8px 8px 0;cursor:pointer;border:3px solid ' + (sel ? '#C8963E' : 'transparent') + ';border-radius:11px;">' +
+            '<img src="' + it.photo + '" alt="" style="width:82px;height:82px;object-fit:cover;border-radius:8px;display:block;' + (sel ? 'opacity:.7;' : '') + '">' +
+            (sel ? '<div style="position:absolute;top:4px;right:4px;width:20px;height:20px;border-radius:50%;background:#C8963E;color:#fff;display:flex;align-items:center;justify-content:center;font:700 12px sans-serif;">&#10003;</div>' : '') +
         '</div>';
     }
-    wrap.innerHTML = html || '<span style="color:#9a8a72;font-size:13px;">No pastry photos yet.</span>';
-    wrap.querySelectorAll('[data-del-assort]').forEach(function(btn) {
-        btn.addEventListener('click', function() {
-            shedAssortItems.splice(parseInt(this.dataset.delAssort), 1);
-            setData('shed-assortment', shedAssortItems);
+    wrap.innerHTML = toolbar + '<div>' + grid + '</div>';
+
+    wrap.querySelectorAll('[data-assort-idx]').forEach(function(el) {
+        el.addEventListener('click', function() {
+            var i = this.dataset.assortIdx;
+            if (shedAssortSel[i]) delete shedAssortSel[i]; else shedAssortSel[i] = true;
             renderShedAssortItems();
         });
+    });
+    var selAll = document.getElementById('shedAssortSelAll');
+    if (selAll) selAll.addEventListener('click', function() {
+        var allSel = Object.keys(shedAssortSel).length === shedAssortItems.length;
+        shedAssortSel = {};
+        if (!allSel) for (var i = 0; i < shedAssortItems.length; i++) shedAssortSel[i] = true;
+        renderShedAssortItems();
+    });
+    var delSel = document.getElementById('shedAssortDelSel');
+    if (delSel) delSel.addEventListener('click', function() {
+        var idxs = Object.keys(shedAssortSel).map(Number);
+        if (!idxs.length) return;
+        if (!confirm('Delete ' + idxs.length + ' photo' + (idxs.length > 1 ? 's' : '') + '?')) return;
+        idxs.sort(function(a, b) { return b - a; }).forEach(function(i) { shedAssortItems.splice(i, 1); });
+        shedAssortSel = {};
+        setData('shed-assortment', shedAssortItems);
+        renderShedAssortItems();
     });
 }
 (function() {
@@ -2237,7 +2268,7 @@ function loadAllData() {
     });
     listenData('reviews', function() { loadReviews(); });
     listenData('content', function() { loadContent(); });
-    listenData('shed-assortment', function(v) { shedAssortItems = v || []; renderShedAssortItems(); });
+    listenData('shed-assortment', function(v) { shedAssortItems = v || []; shedAssortSel = {}; renderShedAssortItems(); });
     listenData('site-status', function(s) { updateSiteToggle(s); });
 }
 
