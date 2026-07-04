@@ -1512,6 +1512,66 @@ function renderShedMenuPreview() {
     });
 })();
 
+// Cake Shed - "Our assortment" card cover (saved with the other content fields).
+var pendingShedAssortCover = null;
+function renderShedAssortCoverPreview() {
+    var wrap = document.getElementById('shedAssortCoverPreview');
+    if (!wrap) return;
+    wrap.innerHTML = pendingShedAssortCover
+        ? '<div class="cake-photo-thumb cake-photo-thumb--main"><img src="' + pendingShedAssortCover + '" alt=""><button type="button" class="cake-photo-thumb__del" id="shedAssortCoverDel" aria-label="Remove">&times;</button></div>'
+        : '';
+    var del = document.getElementById('shedAssortCoverDel');
+    if (del) del.addEventListener('click', function() { pendingShedAssortCover = null; renderShedAssortCoverPreview(); });
+}
+(function() {
+    var inp = document.getElementById('shedAssortCoverInput');
+    if (inp) inp.addEventListener('change', function(e) {
+        var file = e.target.files[0];
+        if (!file) return;
+        compressImage(file, 800, 0.8, function(dataUrl) { pendingShedAssortCover = dataUrl; renderShedAssortCoverPreview(); });
+        e.target.value = '';
+    });
+})();
+
+// Cake Shed - assortment pastry photos (own node, saved instantly on add/delete).
+var shedAssortItems = [];
+function renderShedAssortItems() {
+    var wrap = document.getElementById('shedAssortItems');
+    if (!wrap) return;
+    var html = '';
+    for (var i = 0; i < shedAssortItems.length; i++) {
+        var it = shedAssortItems[i];
+        if (!it || !it.photo) continue;
+        html += '<div style="position:relative;display:inline-block;margin:0 8px 8px 0;">' +
+            '<img src="' + it.photo + '" alt="" style="width:82px;height:82px;object-fit:cover;border-radius:8px;border:1px solid #e6ddcb;">' +
+            '<button type="button" data-del-assort="' + i + '" aria-label="Remove" style="position:absolute;top:-7px;right:-7px;width:22px;height:22px;border-radius:50%;border:0;background:#c0392b;color:#fff;cursor:pointer;font:700 14px sans-serif;line-height:1;">&times;</button>' +
+        '</div>';
+    }
+    wrap.innerHTML = html || '<span style="color:#9a8a72;font-size:13px;">No pastry photos yet.</span>';
+    wrap.querySelectorAll('[data-del-assort]').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            shedAssortItems.splice(parseInt(this.dataset.delAssort), 1);
+            setData('shed-assortment', shedAssortItems);
+            renderShedAssortItems();
+        });
+    });
+}
+(function() {
+    var inp = document.getElementById('shedAssortAddInput');
+    if (inp) inp.addEventListener('change', function(e) {
+        var files = Array.prototype.slice.call(e.target.files || []);
+        if (!files.length) return;
+        var remaining = files.length;
+        files.forEach(function(file) {
+            compressImage(file, 800, 0.75, function(dataUrl) {
+                shedAssortItems.push({ photo: dataUrl });
+                if (--remaining <= 0) { setData('shed-assortment', shedAssortItems); renderShedAssortItems(); }
+            });
+        });
+        e.target.value = '';
+    });
+})();
+
 function loadContent() {
     var content = getData('content', null);
     if (!content) return;
@@ -1526,6 +1586,8 @@ function loadContent() {
     renderHeroPhotoPreview();
     pendingShedMenu = content.shedMenu || null;
     renderShedMenuPreview();
+    pendingShedAssortCover = content.shedAssortCover || null;
+    renderShedAssortCoverPreview();
 }
 
 document.getElementById('saveContentBtn').addEventListener('click', function() {
@@ -1535,6 +1597,7 @@ document.getElementById('saveContentBtn').addEventListener('click', function() {
     });
     if (pendingHeroPhoto) content.heroPhoto = pendingHeroPhoto;
     if (pendingShedMenu) content.shedMenu = pendingShedMenu;
+    if (pendingShedAssortCover) content.shedAssortCover = pendingShedAssortCover;
     setData('content', content);
     var status = document.getElementById('saveStatus');
     status.textContent = at('content.saved');
@@ -2163,6 +2226,7 @@ function loadAllData() {
     });
     listenData('reviews', function() { loadReviews(); });
     listenData('content', function() { loadContent(); });
+    listenData('shed-assortment', function(v) { shedAssortItems = v || []; renderShedAssortItems(); });
     listenData('site-status', function(s) { updateSiteToggle(s); });
 }
 

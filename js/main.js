@@ -60,6 +60,7 @@ const translations = {
         "shed.sun": "Domhnach",
         "shed.directions": "Faigh Treoracha",
         "shed.menuTitle": "Biachlár na seachtaine seo",
+        "shed.assortCard": "Ár rogha",
 
         "gallery.title": "Ár nObair",
         "gallery.subtitle": "Rogha dár gcácaí le déanaí - gach ceann uathúil agus déanta le cúram",
@@ -205,6 +206,7 @@ const translations = {
         "shed.sun": "Sunday",
         "shed.directions": "Get directions",
         "shed.menuTitle": "This week's menu",
+        "shed.assortCard": "Our assortment",
 
         "gallery.title": "Our Work",
         "gallery.subtitle": "A selection of our recent cakes - each one unique and made with care",
@@ -350,6 +352,7 @@ const translations = {
         "shed.sun": "Неділя",
         "shed.directions": "Прокласти маршрут",
         "shed.menuTitle": "Меню цього тижня",
+        "shed.assortCard": "Наш асортимент",
 
         "gallery.title": "Наші роботи",
         "gallery.subtitle": "Добірка наших нещодавніх тортів - кожен унікальний та зроблений з турботою",
@@ -495,6 +498,7 @@ const translations = {
         "shed.sun": "Воскресенье",
         "shed.directions": "Проложить маршрут",
         "shed.menuTitle": "Меню этой недели",
+        "shed.assortCard": "Наш ассортимент",
 
         "gallery.title": "Наши работы",
         "gallery.subtitle": "Подборка наших недавних тортов - каждый уникален и сделан с заботой",
@@ -1554,15 +1558,17 @@ function loadAdminContent() {
                 el.textContent = 'from €' + content.priceMaxi;
             });
         }
-        var shedMenuWrap = document.getElementById('cakeshedMenu');
-        var shedMenuImg = document.getElementById('cakeshedMenuImg');
-        if (shedMenuWrap && shedMenuImg) {
-            if (content.shedMenu) {
-                shedMenuImg.src = content.shedMenu;
-                shedMenuWrap.style.display = '';
-            } else {
-                shedMenuWrap.style.display = 'none';
-            }
+        var shedMenuCard = document.getElementById('shedMenuCard');
+        var shedMenuCover = document.getElementById('shedMenuCover');
+        if (shedMenuCard && shedMenuCover) {
+            if (content.shedMenu) { shedMenuCover.src = content.shedMenu; shedMenuCard.style.display = ''; }
+            else { shedMenuCard.style.display = 'none'; }
+        }
+        var shedAssortCard = document.getElementById('shedAssortCard');
+        var shedAssortCover = document.getElementById('shedAssortCover');
+        if (shedAssortCard && shedAssortCover) {
+            if (content.shedAssortCover) { shedAssortCover.src = content.shedAssortCover; shedAssortCard.style.display = ''; }
+            else { shedAssortCard.style.display = 'none'; }
         }
         var insta = document.getElementById('socialInsta');
         var fb = document.getElementById('socialFacebook');
@@ -1789,11 +1795,18 @@ document.addEventListener('DOMContentLoaded', function() {
     recalcTotal();
     initCustomReference();
     applyPickedFlavourHome();
-    var shedMenuImg = document.getElementById('cakeshedMenuImg');
-    if (shedMenuImg) shedMenuImg.addEventListener('click', function() {
-        if (typeof openImageLightbox === 'function' && shedMenuImg.src) {
-            openImageLightbox([{ src: shedMenuImg.src, label: '' }], 0);
-        }
+    var shedMenuCard = document.getElementById('shedMenuCard');
+    if (shedMenuCard) shedMenuCard.addEventListener('click', function() {
+        var src = document.getElementById('shedMenuCover').src;
+        if (typeof openImageLightbox === 'function' && src) openImageLightbox([{ src: src, label: '' }], 0);
+    });
+    var shedAssortCard = document.getElementById('shedAssortCard');
+    if (shedAssortCard) shedAssortCard.addEventListener('click', function() {
+        fbGetOnce('shed-assortment', function(items) {
+            items = (items || []).filter(function(it) { return it && it.photo; });
+            if (!items.length || typeof openImageLightbox !== 'function') return;
+            openImageLightbox(items.map(function(it) { return { src: it.photo, label: it.name || '' }; }), 0);
+        });
     });
 });
 

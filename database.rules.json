@@ -11,6 +11,7 @@
     "categories":    { ".read": true, ".write": "auth != null" },
     "certificates":  { ".read": true, ".write": "auth != null" },
     "gallery-cat":   { ".read": true, ".write": "auth != null" },
+    "shed-assortment": { ".read": true, ".write": "auth != null" },
     "site-status":   { ".read": true, ".write": "auth != null" },
 
     "reviews":       { ".read": true, ".write": true },
