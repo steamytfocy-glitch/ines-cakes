@@ -1802,11 +1802,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     var shedAssortCard = document.getElementById('shedAssortCard');
     if (shedAssortCard) shedAssortCard.addEventListener('click', function() {
-        fbGetOnce('shed-assortment', function(items) {
-            items = (items || []).filter(function(it) { return it && it.photo; });
-            if (!items.length || typeof openImageLightbox !== 'function') return;
-            openImageLightbox(items.map(function(it) { return { src: it.photo, label: it.name || '' }; }), 0);
-        });
+        window.location.href = 'assortment';
     });
 });
 

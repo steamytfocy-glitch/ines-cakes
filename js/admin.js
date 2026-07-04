@@ -1565,9 +1565,13 @@ function renderShedAssortItems() {
         var it = shedAssortItems[i];
         if (!it || !it.photo) continue;
         var sel = !!shedAssortSel[i];
-        grid += '<div data-assort-idx="' + i + '" style="position:relative;display:inline-block;margin:0 8px 8px 0;cursor:pointer;border:3px solid ' + (sel ? '#C8963E' : 'transparent') + ';border-radius:11px;">' +
-            '<img src="' + it.photo + '" alt="" style="width:82px;height:82px;object-fit:cover;border-radius:8px;display:block;' + (sel ? 'opacity:.7;' : '') + '">' +
-            (sel ? '<div style="position:absolute;top:4px;right:4px;width:20px;height:20px;border-radius:50%;background:#C8963E;color:#fff;display:flex;align-items:center;justify-content:center;font:700 12px sans-serif;">&#10003;</div>' : '') +
+        var nameAttr = (it.name || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+        grid += '<div style="display:inline-flex;flex-direction:column;gap:5px;margin:0 8px 12px 0;vertical-align:top;">' +
+            '<div data-assort-idx="' + i + '" style="position:relative;cursor:pointer;line-height:0;border:3px solid ' + (sel ? '#C8963E' : 'transparent') + ';border-radius:11px;">' +
+                '<img src="' + it.photo + '" alt="" style="width:82px;height:82px;object-fit:cover;border-radius:8px;display:block;' + (sel ? 'opacity:.7;' : '') + '">' +
+                (sel ? '<div style="position:absolute;top:4px;right:4px;width:20px;height:20px;border-radius:50%;background:#C8963E;color:#fff;display:flex;align-items:center;justify-content:center;font:700 12px sans-serif;">&#10003;</div>' : '') +
+            '</div>' +
+            '<input type="text" data-name-idx="' + i + '" value="' + nameAttr + '" placeholder="Name" style="width:88px;font:400 11px Montserrat,sans-serif;padding:4px 6px;border:1px solid #e6ddcb;border-radius:6px;box-sizing:border-box;">' +
         '</div>';
     }
     wrap.innerHTML = toolbar + '<div>' + grid + '</div>';
@@ -1577,6 +1581,12 @@ function renderShedAssortItems() {
             var i = this.dataset.assortIdx;
             if (shedAssortSel[i]) delete shedAssortSel[i]; else shedAssortSel[i] = true;
             renderShedAssortItems();
+        });
+    });
+    wrap.querySelectorAll('[data-name-idx]').forEach(function(inp) {
+        inp.addEventListener('change', function() {
+            var i = parseInt(this.dataset.nameIdx);
+            if (shedAssortItems[i]) { shedAssortItems[i].name = this.value.trim(); setData('shed-assortment', shedAssortItems); }
         });
     });
     var selAll = document.getElementById('shedAssortSelAll');
