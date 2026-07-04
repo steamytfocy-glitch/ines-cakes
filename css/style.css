@@ -1223,12 +1223,27 @@ ul { list-style: none; }
 }
 .shed-card:hover { transform: translateY(-4px); box-shadow: 0 14px 34px rgba(61,46,28,0.14); }
 .shed-card__img {
+    position: relative;
     display: block;
     width: 100%;
     aspect-ratio: 1 / 1;
     border-radius: 12px;
     overflow: hidden;
     background: var(--cream);
+}
+.shed-card__badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.92);
+    color: var(--gold-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
 }
 .shed-card__img img {
     width: 100%;
@@ -1243,6 +1258,19 @@ ul { list-style: none; }
     color: var(--brown);
     text-align: center;
 }
+.shed-card__cta {
+    align-self: center;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--gold);
+    color: #fff;
+    font: 600 0.92rem 'Montserrat', sans-serif;
+    padding: 9px 20px;
+    border-radius: 999px;
+    transition: background 0.2s ease;
+}
+.shed-card:hover .shed-card__cta { background: var(--gold-dark); }
 @media (max-width: 560px) { .shed-cards { max-width: 340px; } }
 
 /* ===== GALLERY ===== */

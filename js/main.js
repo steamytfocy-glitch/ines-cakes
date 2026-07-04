@@ -61,6 +61,8 @@ const translations = {
         "shed.directions": "Faigh Treoracha",
         "shed.menuTitle": "Biachlár na seachtaine seo",
         "shed.assortCard": "Ár rogha",
+        "shed.viewMenu": "Féach ar an mbiachlár",
+        "shed.viewAssort": "Féach ar an rogha",
 
         "gallery.title": "Ár nObair",
         "gallery.subtitle": "Rogha dár gcácaí le déanaí - gach ceann uathúil agus déanta le cúram",
@@ -207,6 +209,8 @@ const translations = {
         "shed.directions": "Get directions",
         "shed.menuTitle": "This week's menu",
         "shed.assortCard": "Our assortment",
+        "shed.viewMenu": "View menu",
+        "shed.viewAssort": "See assortment",
 
         "gallery.title": "Our Work",
         "gallery.subtitle": "A selection of our recent cakes - each one unique and made with care",
@@ -353,6 +357,8 @@ const translations = {
         "shed.directions": "Прокласти маршрут",
         "shed.menuTitle": "Меню цього тижня",
         "shed.assortCard": "Наш асортимент",
+        "shed.viewMenu": "Дивитись меню",
+        "shed.viewAssort": "Дивитись асортимент",
 
         "gallery.title": "Наші роботи",
         "gallery.subtitle": "Добірка наших нещодавніх тортів - кожен унікальний та зроблений з турботою",
@@ -499,6 +505,8 @@ const translations = {
         "shed.directions": "Проложить маршрут",
         "shed.menuTitle": "Меню этой недели",
         "shed.assortCard": "Наш ассортимент",
+        "shed.viewMenu": "Смотреть меню",
+        "shed.viewAssort": "Смотреть ассортимент",
 
         "gallery.title": "Наши работы",
         "gallery.subtitle": "Подборка наших недавних тортов - каждый уникален и сделан с заботой",
