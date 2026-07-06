@@ -63,6 +63,10 @@ const translations = {
         "shed.assortCard": "Ár rogha",
         "shed.viewMenu": "Féach ar an mbiachlár",
         "shed.viewAssort": "Féach ar an rogha",
+        "shed.menuNoteTitle": "Biachlár na Deireadh Seachtaine",
+        "shed.menuNote1": "Déantar ár mbiachlár deireadh seachtaine a nuashonrú gach Céadaoin.",
+        "shed.menuNote2": "Is féidir an rogha atá ar fáil Dé hAoine, Dé Sathairn agus Dé Domhnaigh a fháil anseo ar ár suíomh, chomh maith lenár leathanaigh Instagram agus Facebook.",
+        "shed.menuNote3": "Toisc go ndéantar go leor milseog i gcainníochtaí teoranta, d'fhéadfadh roinnt míreanna díol amach go luath.",
 
         "gallery.title": "Ár nObair",
         "gallery.subtitle": "Rogha dár gcácaí le déanaí - gach ceann uathúil agus déanta le cúram",
@@ -211,6 +215,10 @@ const translations = {
         "shed.assortCard": "Our assortment",
         "shed.viewMenu": "View menu",
         "shed.viewAssort": "See assortment",
+        "shed.menuNoteTitle": "Weekend Menu",
+        "shed.menuNote1": "Our weekend menu is updated every Wednesday.",
+        "shed.menuNote2": "The selection available on Friday, Saturday and Sunday can be found here on our website, as well as on our Instagram and Facebook pages.",
+        "shed.menuNote3": "As many desserts are made in limited quantities, some items may sell out early.",
 
         "gallery.title": "Our Work",
         "gallery.subtitle": "A selection of our recent cakes - each one unique and made with care",
@@ -359,6 +367,10 @@ const translations = {
         "shed.assortCard": "Наш асортимент",
         "shed.viewMenu": "Дивитись меню",
         "shed.viewAssort": "Дивитись асортимент",
+        "shed.menuNoteTitle": "Меню вихідних",
+        "shed.menuNote1": "Наше меню вихідних оновлюється щосереди.",
+        "shed.menuNote2": "Асортимент, доступний у п'ятницю, суботу та неділю, можна побачити тут на сайті, а також у нашому Instagram та Facebook.",
+        "shed.menuNote3": "Оскільки багато десертів готуються в обмеженій кількості, деякі позиції можуть закінчитися раніше.",
 
         "gallery.title": "Наші роботи",
         "gallery.subtitle": "Добірка наших нещодавніх тортів - кожен унікальний та зроблений з турботою",
@@ -507,6 +519,10 @@ const translations = {
         "shed.assortCard": "Наш ассортимент",
         "shed.viewMenu": "Смотреть меню",
         "shed.viewAssort": "Смотреть ассортимент",
+        "shed.menuNoteTitle": "Меню выходных",
+        "shed.menuNote1": "Наше меню выходных обновляется каждую среду.",
+        "shed.menuNote2": "Ассортимент, доступный в пятницу, субботу и воскресенье, можно увидеть здесь на сайте, а также в нашем Instagram и Facebook.",
+        "shed.menuNote3": "Так как многие десерты готовятся в ограниченном количестве, некоторые позиции могут закончиться раньше.",
 
         "gallery.title": "Наши работы",
         "gallery.subtitle": "Подборка наших недавних тортов - каждый уникален и сделан с заботой",

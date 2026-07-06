@@ -1198,12 +1198,31 @@ ul { list-style: none; }
     .cakeshed__map { height: 260px; }
 }
 
+.cakeshed__note {
+    max-width: 640px;
+    margin: 48px auto 0;
+    text-align: center;
+}
+.cakeshed__note h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--brown);
+    margin-bottom: 14px;
+}
+.cakeshed__note p {
+    color: var(--text-light);
+    line-height: 1.7;
+    margin-bottom: 10px;
+    font-size: 0.98rem;
+}
+.cakeshed__note p:last-child { margin-bottom: 0; }
+
 .shed-cards {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 24px;
-    margin: 56px auto 0;
+    margin: 40px auto 0;
     max-width: 720px;
 }
 .shed-card {
