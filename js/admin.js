@@ -730,6 +730,150 @@ function compressImage(file, maxSize, quality, callback) {
     reader.readAsDataURL(file);
 }
 
+// ===== IMAGE CROPPER =====
+// Lets mum trim a photo before it is saved (e.g. crop out the blue wall behind
+// a pastry). Square crop, to match the square Cake-Shed grid. Calls onCrop with
+// a cropped JPEG data-URL, or onCancel if the photo is skipped.
+function ensureCropperStyles() {
+    if (document.getElementById('cropper-styles')) return;
+    var s = document.createElement('style');
+    s.id = 'cropper-styles';
+    s.textContent =
+      '.crop-modal{position:fixed;inset:0;z-index:9999;background:rgba(30,22,14,.72);' +
+        'display:flex;align-items:center;justify-content:center;padding:16px;}' +
+      '.crop-modal__box{background:#fff;border-radius:16px;max-width:96vw;padding:18px;' +
+        'box-shadow:0 20px 60px rgba(0,0,0,.4);display:flex;flex-direction:column;gap:14px;}' +
+      '.crop-modal__head{font:600 14px/1.4 sans-serif;color:#5a4326;text-align:center;max-width:560px;}' +
+      '.crop-stage{position:relative;margin:0 auto;touch-action:none;user-select:none;' +
+        'border-radius:8px;overflow:hidden;background:#eee;}' +
+      '.crop-img{display:block;pointer-events:none;}' +
+      '.crop-sel{position:absolute;box-sizing:border-box;border:2px solid #fff;cursor:move;' +
+        'box-shadow:0 0 0 9999px rgba(0,0,0,.5);}' +
+      '.crop-handle{position:absolute;width:22px;height:22px;background:#C8963E;border:2px solid #fff;' +
+        'border-radius:50%;box-shadow:0 1px 4px rgba(0,0,0,.4);}' +
+      '.crop-handle--tl{left:-11px;top:-11px;cursor:nwse-resize;}' +
+      '.crop-handle--tr{right:-11px;top:-11px;cursor:nesw-resize;}' +
+      '.crop-handle--bl{left:-11px;bottom:-11px;cursor:nesw-resize;}' +
+      '.crop-handle--br{right:-11px;bottom:-11px;cursor:nwse-resize;}' +
+      '.crop-modal__foot{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}' +
+      '.crop-btn{padding:10px 16px;border-radius:9px;font:600 14px sans-serif;cursor:pointer;border:0;}' +
+      '.crop-btn--go{background:#C8963E;color:#fff;}' +
+      '.crop-btn--ghost{background:#fff;color:#7a5c2e;border:1.5px solid #d9c3a3;}';
+    document.head.appendChild(s);
+}
+
+function openCropper(file, onCrop, onCancel) {
+    var reader = new FileReader();
+    reader.onload = function(ev) {
+        var img = new Image();
+        img.onload = function() { buildCropper(img, onCrop, onCancel); };
+        img.onerror = function() { alert('Could not load image: ' + file.name); if (onCancel) onCancel(); };
+        img.src = ev.target.result;
+    };
+    reader.onerror = function() { alert('Could not read file: ' + file.name); if (onCancel) onCancel(); };
+    reader.readAsDataURL(file);
+}
+
+function buildCropper(img, onCrop, onCancel) {
+    ensureCropperStyles();
+    var natW = img.naturalWidth, natH = img.naturalHeight;
+    var maxW = Math.min(window.innerWidth * 0.9, 560);
+    var maxH = window.innerHeight * 0.6;
+    var scale = Math.min(maxW / natW, maxH / natH, 1);
+    var dispW = Math.round(natW * scale), dispH = Math.round(natH * scale);
+
+    var overlay = document.createElement('div');
+    overlay.className = 'crop-modal';
+    overlay.innerHTML =
+      '<div class="crop-modal__box">' +
+        '<div class="crop-modal__head">Trim the photo — drag the box to move it, pull a corner to resize.</div>' +
+        '<div class="crop-stage" style="width:' + dispW + 'px;height:' + dispH + 'px;">' +
+          '<img class="crop-img" src="' + img.src + '" style="width:' + dispW + 'px;height:' + dispH + 'px;" draggable="false">' +
+          '<div class="crop-sel">' +
+            '<span class="crop-handle crop-handle--tl" data-h="tl"></span>' +
+            '<span class="crop-handle crop-handle--tr" data-h="tr"></span>' +
+            '<span class="crop-handle crop-handle--bl" data-h="bl"></span>' +
+            '<span class="crop-handle crop-handle--br" data-h="br"></span>' +
+          '</div>' +
+        '</div>' +
+        '<div class="crop-modal__foot">' +
+          '<button type="button" class="crop-btn crop-btn--ghost" data-act="full">Use full photo</button>' +
+          '<button type="button" class="crop-btn crop-btn--ghost" data-act="cancel">Skip</button>' +
+          '<button type="button" class="crop-btn crop-btn--go" data-act="ok">Crop &amp; add</button>' +
+        '</div>' +
+      '</div>';
+    document.body.appendChild(overlay);
+
+    var stage = overlay.querySelector('.crop-stage');
+    var sel = overlay.querySelector('.crop-sel');
+
+    // Start: full-width square, biased to the lower-centre (where hand-held treats usually sit).
+    var side = Math.min(dispW, dispH);
+    var box = { x: Math.round((dispW - side) / 2), y: Math.round((dispH - side) * 0.6), s: side };
+    if (box.y < 0) box.y = 0;
+    function place() {
+        sel.style.left = box.x + 'px'; sel.style.top = box.y + 'px';
+        sel.style.width = box.s + 'px'; sel.style.height = box.s + 'px';
+    }
+    place();
+
+    var drag = null;
+    function pt(e) { var r = stage.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; }
+    sel.addEventListener('pointerdown', function(e) {
+        if (e.target.classList.contains('crop-handle')) return;
+        var p = pt(e); drag = { mode: 'move', dx: p.x - box.x, dy: p.y - box.y }; e.preventDefault();
+    });
+    Array.prototype.forEach.call(overlay.querySelectorAll('.crop-handle'), function(h) {
+        h.addEventListener('pointerdown', function(e) {
+            var c = h.getAttribute('data-h');
+            var fx = (c === 'tl' || c === 'bl') ? box.x + box.s : box.x;
+            var fy = (c === 'tl' || c === 'tr') ? box.y + box.s : box.y;
+            drag = { mode: 'resize', fx: fx, fy: fy }; e.preventDefault(); e.stopPropagation();
+        });
+    });
+    function onMove(e) {
+        if (!drag) return;
+        var p = pt(e);
+        if (drag.mode === 'move') {
+            box.x = Math.max(0, Math.min(dispW - box.s, p.x - drag.dx));
+            box.y = Math.max(0, Math.min(dispH - box.s, p.y - drag.dy));
+        } else {
+            var dx = p.x - drag.fx, dy = p.y - drag.fy;
+            var sX = dx >= 0 ? 1 : -1, sY = dy >= 0 ? 1 : -1;
+            var s = Math.max(Math.abs(dx), Math.abs(dy));
+            s = Math.min(s, sX > 0 ? dispW - drag.fx : drag.fx, sY > 0 ? dispH - drag.fy : drag.fy);
+            s = Math.max(s, 40);
+            box.s = Math.round(s);
+            box.x = Math.round(sX > 0 ? drag.fx : drag.fx - s);
+            box.y = Math.round(sY > 0 ? drag.fy : drag.fy - s);
+        }
+        place();
+    }
+    function onUp() { drag = null; }
+    document.addEventListener('pointermove', onMove);
+    document.addEventListener('pointerup', onUp);
+    function close() {
+        document.removeEventListener('pointermove', onMove);
+        document.removeEventListener('pointerup', onUp);
+        overlay.remove();
+    }
+    overlay.querySelector('.crop-modal__foot').addEventListener('click', function(e) {
+        var act = e.target.getAttribute('data-act');
+        if (!act) return;
+        if (act === 'cancel') { close(); if (onCancel) onCancel(); return; }
+        if (act === 'full') { close(); onCrop(img.src); return; }
+        var s = natW / dispW;
+        var sx = Math.round(box.x * s), sy = Math.round(box.y * s), ss = Math.round(box.s * s);
+        var out = Math.min(ss, 1200);
+        var canvas = document.createElement('canvas');
+        canvas.width = out; canvas.height = out;
+        canvas.getContext('2d').drawImage(img, sx, sy, ss, ss, 0, 0, out, out);
+        var url;
+        try { url = canvas.toDataURL('image/jpeg', 0.9); } catch (err) { url = img.src; }
+        close(); onCrop(url);
+    });
+}
+
 // ===== LIGHTWEIGHT CATALOGUE =====
 // The public home & gallery pages read a small 'catalog' node (names, prices,
 // categories + a small thumbnail) instead of the full ~12 MB products node.
@@ -1537,9 +1681,11 @@ function renderShedAssortCoverPreview() {
     var inp = document.getElementById('shedAssortCoverInput');
     if (inp) inp.addEventListener('change', function(e) {
         var file = e.target.files[0];
-        if (!file) return;
-        compressImage(file, 800, 0.8, function(dataUrl) { pendingShedAssortCover = dataUrl; setContentField('shedAssortCover', dataUrl); renderShedAssortCoverPreview(); });
         e.target.value = '';
+        if (!file) return;
+        openCropper(file, function(croppedUrl) {
+            makeThumb(croppedUrl, 800, 0.82, function(dataUrl) { pendingShedAssortCover = dataUrl; setContentField('shedAssortCover', dataUrl); renderShedAssortCoverPreview(); });
+        });
     });
 })();
 
@@ -1611,15 +1757,24 @@ function renderShedAssortItems() {
     var inp = document.getElementById('shedAssortAddInput');
     if (inp) inp.addEventListener('change', function(e) {
         var files = Array.prototype.slice.call(e.target.files || []);
-        if (!files.length) return;
-        var remaining = files.length;
-        files.forEach(function(file) {
-            compressImage(file, 800, 0.75, function(dataUrl) {
-                shedAssortItems.push({ photo: dataUrl });
-                if (--remaining <= 0) { setData('shed-assortment', shedAssortItems); renderShedAssortItems(); }
-            });
-        });
         e.target.value = '';
+        if (!files.length) return;
+        // Crop each photo one at a time, then compress & add.
+        var added = false;
+        function next(i) {
+            if (i >= files.length) {
+                if (added) { setData('shed-assortment', shedAssortItems); renderShedAssortItems(); }
+                return;
+            }
+            openCropper(files[i], function(croppedUrl) {
+                makeThumb(croppedUrl, 800, 0.78, function(finalUrl) {
+                    shedAssortItems.push({ photo: finalUrl });
+                    added = true;
+                    next(i + 1);
+                });
+            }, function() { next(i + 1); }); // "Skip" leaves this photo out
+        }
+        next(0);
     });
 })();
 
