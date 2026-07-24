@@ -77,7 +77,7 @@ var A = {
         'cakes.add': 'Add Cake', 'sortByCategory': 'Sort by Category', 'selectToDelete': 'Select to delete', 'manageCategories': 'Manage Categories', 'cakes.sortHint': 'Select cakes, then assign a category', 'doneSorting': 'Done Sorting', 'assignTo': 'Assign to:', 'cakes.emptyTitle': 'No cakes yet', 'cakes.emptySub': 'Add cakes with photo, sizes & prices - they appear on the site for ordering', 'cakes.search': 'Search cakes by name…', 'cakes.searchEmpty': 'No cakes match your search.', 'cakes.allCats': 'All categories',
         'priceOnRequest': 'Price on request',
         'cakeModal.addTitle': 'Add Cake', 'cakeModal.editTitle': 'Edit Cake', 'cake.name': 'Cake Name', 'cake.namePh': 'e.g. Sunset Fields Art Cake', 'category': 'Category', 'newCategory': '+ New category', 'photo': 'Photo', 'photosHint': 'You can add several photos - the first is the main one (★); customers can swipe through the rest.', 'descOptional': 'Description (optional)', 'descPh': 'Short description',
-        'cake.price': 'Cake price (€) - optional', 'cake.priceHint': 'One fixed price for this cake. If set, it is used instead of the per-size prices below.',
+        'cake.price': 'Cake price (€) - optional', 'cake.priceHint': 'One fixed price for this cake. If set, the cake is sold at this price with no size options (the sizes below are ignored).', 'cake.fixedSize': 'Fixed size / weight (optional)', 'cake.fixedSizeHint': 'Only used when a fixed price is set - shown to the customer instead of a size dropdown. Leave empty to show no size at all.',
         'sizesPrices': 'Sizes & prices (optional)', 'sizesHint': 'Leave empty to use the global Sizes & Prices. Add rows only to override them for this cake.', 'addSize': '+ Add size', 'addAllSizes': '+ Add all standard sizes (6"-12")', 'availableFlavours': 'Available flavours', 'chooseFlavours': 'Choose flavours', 'flavoursSuffix': 'selected', 'leadTime': 'Lead time - days notice required', 'saveCake': 'Save Cake',
         'selectFlavours': 'Select flavours', 'flavourPickHint': 'Tap the flavours available for this cake. To add a new flavour, use the Flavours tab.', 'flavoursNoneModal': 'No flavours yet. Add them in the Flavours tab first.',
         'manageCatsHint': 'Add, rename or delete the categories used for your cakes.', 'addCategory': '+ Add Category', 'newCatPrompt': 'New category name:',
@@ -2257,6 +2257,7 @@ function openCakeModal(editId) {
         document.getElementById('cakeEditId').value = editId;
         document.getElementById('cakeName').value = c.name || '';
         document.getElementById('cakePrice').value = c.price || '';
+        document.getElementById('cakeFixedSize').value = c.fixedSize || '';
         document.getElementById('cakeDesc').value = c.desc || '';
         document.getElementById('cakeInsta').value = c.instaUrl || '';
         document.getElementById('cakeFacebook').value = c.fbUrl || '';
@@ -2274,6 +2275,7 @@ function openCakeModal(editId) {
         document.getElementById('cakeEditId').value = '';
         document.getElementById('cakeName').value = '';
         document.getElementById('cakePrice').value = '';
+        document.getElementById('cakeFixedSize').value = '';
         document.getElementById('cakeDesc').value = '';
         document.getElementById('cakeInsta').value = '';
         document.getElementById('cakeFacebook').value = '';
@@ -2338,6 +2340,7 @@ document.getElementById('cakeForm').addEventListener('submit', function(e) {
     var cake = {
         name: document.getElementById('cakeName').value.trim(),
         price: document.getElementById('cakePrice').value.trim(),
+        fixedSize: document.getElementById('cakeFixedSize').value.trim(),
         category: document.getElementById('cakeCategory').value,
         desc: document.getElementById('cakeDesc').value.trim(),
         instaUrl: document.getElementById('cakeInsta').value.trim(),

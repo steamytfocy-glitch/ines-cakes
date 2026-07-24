@@ -237,7 +237,13 @@
                         <div class="modal__field">
                             <label data-i18n="cake.price">Cake price (€) - optional</label>
                             <input type="text" id="cakePrice" placeholder="e.g. 45" style="max-width:160px;">
-                            <span class="content-hint" data-i18n="cake.priceHint">One fixed price for this cake. If set, it is used instead of the per-size prices below.</span>
+                            <span class="content-hint" data-i18n="cake.priceHint">One fixed price for this cake. If set, the cake is sold at this price with no size options (the sizes below are ignored).</span>
+                        </div>
+
+                        <div class="modal__field">
+                            <label data-i18n="cake.fixedSize">Fixed size / weight (optional)</label>
+                            <input type="text" id="cakeFixedSize" placeholder="e.g. 18 cupcakes, 1.5 kg" style="max-width:260px;">
+                            <span class="content-hint" data-i18n="cake.fixedSizeHint">Only used when a fixed price is set - shown to the customer instead of a size dropdown. Leave empty to show no size at all.</span>
                         </div>
 
                         <div class="modal__field">
@@ -642,6 +648,6 @@
 <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
 <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script defer src="js/firebase-init.js?v=3"></script>
-<script defer src="js/admin.js?v=10"></script>
+<script defer src="js/admin.js?v=11"></script>
 </body>
 </html>

@@ -135,8 +135,13 @@ var productIndex = null;
 var selectedAllergies = [];
 var _defaultSizes = [];
 
+// A cake with one fixed price is sold as-is (no size choice).
+function isFixedPrice() { return !!(product && product.price && parseFloat(product.price) > 0); }
+
 // A cake uses its own sizes if it has any, otherwise the global default sizes.
+// A fixed-price cake has no sizes at all (it isn't sold per size).
 function effectiveSizes() {
+    if (isFixedPrice()) return [];
     return (product && product.sizes && product.sizes.length) ? product.sizes : _defaultSizes;
 }
 
@@ -353,6 +358,26 @@ function renderProduct() {
     }
     sizeSel.innerHTML = html;
 
+    // Fixed-price cake: hide the size dropdown; show the fixed size/weight label
+    // if one was set, otherwise hide the whole Size field.
+    var sizeOpt = document.getElementById('pSizeOpt');
+    var fixedEl = document.getElementById('pFixedSize');
+    if (isFixedPrice()) {
+        sizeSel.style.display = 'none';
+        if (product.fixedSize) {
+            fixedEl.textContent = product.fixedSize;
+            fixedEl.style.display = 'block';
+            if (sizeOpt) sizeOpt.style.display = '';
+        } else {
+            if (fixedEl) fixedEl.style.display = 'none';
+            if (sizeOpt) sizeOpt.style.display = 'none';
+        }
+    } else {
+        sizeSel.style.display = '';
+        if (fixedEl) fixedEl.style.display = 'none';
+        if (sizeOpt) sizeOpt.style.display = '';
+    }
+
     populatePDate();
 
     // notice text
@@ -557,7 +582,7 @@ document.getElementById('pAddBtn').addEventListener('click', function() {
         i: productIndex,
         name: product.name,
         photo: product.photo || '',
-        size: s ? s.size : '',
+        size: s ? s.size : (product.fixedSize || ''),
         serves: s ? (s.serves || '') : '',
         price: basePrice ? (basePrice + (selectedFlavourPrice || 0) + addonTotal()) : 0,
         flavour: document.getElementById('pFlavour').value || '',
@@ -577,7 +602,7 @@ document.getElementById('pRefBtn').addEventListener('click', function() {
     var ref = {
         name: product.name || '',
         photo: _photos[_photoIdx] || product.photo || '',
-        size: s ? s.size : '',
+        size: s ? s.size : (product.fixedSize || ''),
         flavour: document.getElementById('pFlavour').value || '',
         date: selectedDate()
     };
