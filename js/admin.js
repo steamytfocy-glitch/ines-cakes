@@ -74,7 +74,7 @@ var A = {
         'confirm.order': 'Delete this order?', 'confirm.cake': 'Delete this cake?', 'confirm.flavour': 'Delete this flavour?', 'confirm.review': 'Delete this review?', 'confirm.cert': 'Delete this certificate?', 'confirm.cat': 'Delete this category? Its photos will move to "Other".',
         'alert.selectCakes': 'Select cakes first.', 'alert.noCakesSort': 'No cakes to sort. Add some first!', 'alert.certFront': 'Please choose a front photo',
         'confirm.delCakesPre': 'Delete ', 'confirm.delCakesPost': ' selected cake(s)?',
-        'cakes.add': 'Add Cake', 'sortByCategory': 'Sort by Category', 'selectToDelete': 'Select to delete', 'manageCategories': 'Manage Categories', 'cakes.sortHint': 'Select cakes, then assign a category', 'doneSorting': 'Done Sorting', 'assignTo': 'Assign to:', 'cakes.emptyTitle': 'No cakes yet', 'cakes.emptySub': 'Add cakes with photo, sizes & prices - they appear on the site for ordering', 'cakes.search': 'Search cakes by name…', 'cakes.searchEmpty': 'No cakes match your search.',
+        'cakes.add': 'Add Cake', 'sortByCategory': 'Sort by Category', 'selectToDelete': 'Select to delete', 'manageCategories': 'Manage Categories', 'cakes.sortHint': 'Select cakes, then assign a category', 'doneSorting': 'Done Sorting', 'assignTo': 'Assign to:', 'cakes.emptyTitle': 'No cakes yet', 'cakes.emptySub': 'Add cakes with photo, sizes & prices - they appear on the site for ordering', 'cakes.search': 'Search cakes by name…', 'cakes.searchEmpty': 'No cakes match your search.', 'cakes.allCats': 'All categories',
         'priceOnRequest': 'Price on request',
         'cakeModal.addTitle': 'Add Cake', 'cakeModal.editTitle': 'Edit Cake', 'cake.name': 'Cake Name', 'cake.namePh': 'e.g. Sunset Fields Art Cake', 'category': 'Category', 'newCategory': '+ New category', 'photo': 'Photo', 'photosHint': 'You can add several photos - the first is the main one (★); customers can swipe through the rest.', 'descOptional': 'Description (optional)', 'descPh': 'Short description',
         'cake.price': 'Cake price (€) - optional', 'cake.priceHint': 'One fixed price for this cake. If set, it is used instead of the per-size prices below.',
@@ -2017,6 +2017,8 @@ function loadCakes() {
     var container = document.getElementById('cakesAdmin');
     if (!container) return;
 
+    populateCakesCatFilter();
+
     if (cakes.length === 0) {
         container.innerHTML = '<div class="empty-state"><svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="#C8963E" stroke-width="1.5"><path d="M3 21h18"/><path d="M5 21v-8a7 7 0 0114 0v8"/><path d="M12 6V3"/></svg><p>' + at('cakes.emptyTitle') + '</p><span>' + at('cakes.emptySub') + '</span></div>';
         return;
@@ -2028,7 +2030,7 @@ function loadCakes() {
         var img = c.photo
             ? '<img src="' + c.photo + '" alt="' + escapeHtml(c.name) + '">'
             : '<div class="cake-admin-card__noimg"></div>';
-        html += '<div class="cake-admin-card" data-idx="' + i + '">' +
+        html += '<div class="cake-admin-card" data-idx="' + i + '" data-cat="' + escapeHtml(c.category || '') + '">' +
             '<div class="cake-admin-card__check">✓</div>' +
             img +
             '<div class="cake-admin-card__body">' +
@@ -2073,27 +2075,46 @@ function loadCakes() {
     applyCakeSearch(); // keep the current search filter after a re-render
 }
 
-// Quick client-side search: hide the cards whose name doesn't match, so every
-// card keeps its real data-idx (edit/delete/select all still line up).
+// Fill the category filter with the current categories, keeping the selection.
+function populateCakesCatFilter() {
+    var sel = document.getElementById('cakesCatFilter');
+    if (!sel) return;
+    var prev = sel.value;
+    var html = '<option value="">' + at('cakes.allCats') + '</option>';
+    for (var i = 0; i < CATEGORIES.length; i++) {
+        html += '<option value="' + escapeHtml(CATEGORIES[i].id) + '">' + escapeHtml(CATEGORIES[i].en) + '</option>';
+    }
+    sel.innerHTML = html;
+    sel.value = prev;
+}
+
+// Quick client-side find: hide the cards that don't match the name search AND
+// the chosen category, so every card keeps its real data-idx (edit/delete/
+// select all still line up).
 function applyCakeSearch() {
     var input = document.getElementById('cakesSearch');
-    if (!input) return;
-    var q = (input.value || '').trim().toLowerCase();
+    var catSel = document.getElementById('cakesCatFilter');
+    var q = (input && input.value || '').trim().toLowerCase();
+    var cat = catSel ? catSel.value : '';
     var cards = document.querySelectorAll('#cakesAdmin .cake-admin-card');
     var anyVisible = false;
     cards.forEach(function(card) {
         var nameEl = card.querySelector('.cake-admin-card__name');
         var name = nameEl ? nameEl.textContent.toLowerCase() : '';
-        var show = !q || name.indexOf(q) > -1;
+        var matchName = !q || name.indexOf(q) > -1;
+        var matchCat = !cat || (card.getAttribute('data-cat') || '') === cat;
+        var show = matchName && matchCat;
         card.style.display = show ? '' : 'none';
         if (show) anyVisible = true;
     });
     var note = document.getElementById('cakesSearchEmpty');
-    if (note) note.style.display = (q && !anyVisible) ? 'block' : 'none';
+    if (note) note.style.display = ((q || cat) && !anyVisible) ? 'block' : 'none';
 }
 (function initCakesSearch() {
     var input = document.getElementById('cakesSearch');
     if (input) input.addEventListener('input', applyCakeSearch);
+    var catSel = document.getElementById('cakesCatFilter');
+    if (catSel) catSel.addEventListener('change', applyCakeSearch);
 })();
 
 // ===== CAKES MULTI-DELETE =====
