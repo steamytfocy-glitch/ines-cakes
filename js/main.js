@@ -135,6 +135,7 @@ const translations = {
         "order.weight": "Meáchan",
         "order.weightChoose": "Roghnaigh meáchan",
         "order.chooseRef": "📷 Roghnaigh cáca mar thagairt",
+        "order.chooseRef2": "Roghnaigh cáca tagartha",
         "order.refTitle": "Cáca tagartha",
         "order.refHint": "Bunóimid do cháca ar an gceann seo - déan cur síos thíos ar na hathruithe atá uait.",
         "order.removeRef": "Bain",
@@ -287,6 +288,7 @@ const translations = {
         "order.weight": "Weight",
         "order.weightChoose": "Choose a weight",
         "order.chooseRef": "📷 Pick a cake as a reference",
+        "order.chooseRef2": "Pick a reference cake",
         "order.refTitle": "Reference cake",
         "order.refHint": "We'll base your cake on this one - describe the changes you'd like below.",
         "order.removeRef": "Remove",
@@ -439,6 +441,7 @@ const translations = {
         "order.weight": "Вага",
         "order.weightChoose": "Оберіть вагу",
         "order.chooseRef": "📷 Обрати торт як референс",
+        "order.chooseRef2": "Оберіть торт-референс",
         "order.refTitle": "Торт-референс",
         "order.refHint": "Зробимо ваш торт на основі цього - опишіть бажані зміни нижче.",
         "order.removeRef": "Прибрати",
@@ -591,6 +594,7 @@ const translations = {
         "order.weight": "Вес",
         "order.weightChoose": "Выберите вес",
         "order.chooseRef": "📷 Выбрать торт как референс",
+        "order.chooseRef2": "Выберите торт-референс",
         "order.refTitle": "Торт-референс",
         "order.refHint": "Сделаем ваш торт на основе этого - опишите желаемые изменения ниже.",
         "order.removeRef": "Убрать",
@@ -886,8 +890,7 @@ function renderFlavourGrid(flavours) {
             var name = this.dataset.flavour;
             var disp = this.querySelector('.flavour-card__name');
             flavourHidden.value = name;
-            flavourSelectText.textContent = disp ? disp.textContent : name;
-            flavourSelectBtn.classList.add('has-value');
+            setFlavourButton(disp ? disp.textContent : name, this.dataset.price);
             selectedFlavourPrice = parseFloat(this.dataset.price) || 0;
             selectedFlavourGF = this.dataset.gf === '1';
             updateGFAvailability();
@@ -897,25 +900,100 @@ function renderFlavourGrid(flavours) {
     });
 }
 
-// Choosing a flavour opens the full Flavours page in selection mode and
-// returns to the order form with the chosen flavour applied. (The old in-page
-// modal is no longer used - kept here only as a harmless no-op.)
+// The flavour picker is an in-page modal so choosing a flavour never wipes the
+// order form. Load the flavours once (fbGetOnce, so repeated opens don't stack
+// live listeners); the rendered grid then just re-shows on subsequent opens.
+var _flavoursLoaded = false;
 function openFlavourModal() {
-    fbGet('flavours', function(flavours) {
+    flavourModal.style.display = 'flex';
+    if (_flavoursLoaded) return;
+    fbGetOnce('flavours', function(flavours) {
         if (!flavours || !flavours.length) flavours = DEFAULT_FLAVOURS;
         renderFlavourGrid(flavours);
+        _flavoursLoaded = true;
     });
-    flavourModal.style.display = 'flex';
 }
 
+// Open the flavour picker IN-PAGE (a modal) instead of navigating to the
+// Flavours page - navigating reloads the page and wipes everything already
+// filled in (date, size, the attached photo, etc.).
 flavourSelectBtn.addEventListener('click', function() {
-    try { localStorage.setItem('ines-flavour-return', '/#order'); } catch (e) {}
-    window.location.href = 'flavours?select=1';
+    openFlavourModal();
 });
+
+// Sets the flavour button's label, adding the surcharge so the chosen
+// flavour's price is visible at a glance.
+function setFlavourButton(displayName, price) {
+    var p = parseFloat(price) || 0;
+    flavourSelectText.textContent = p > 0 ? (displayName + '  ·  + €' + p) : displayName;
+    flavourSelectText.removeAttribute('data-i18n');
+    flavourSelectBtn.classList.add('has-value');
+}
 var _flavourModalClose = document.getElementById('flavourModalClose');
 if (_flavourModalClose) _flavourModalClose.addEventListener('click', function() { flavourModal.style.display = 'none'; });
 var _flavourModalOverlay = document.getElementById('flavourModalOverlay');
 if (_flavourModalOverlay) _flavourModalOverlay.addEventListener('click', function() { flavourModal.style.display = 'none'; });
+
+// ===== REFERENCE-CAKE PICKER (in-page) =====
+// Lets the customer choose one of our cakes as a reference without leaving the
+// order form (navigating away would wipe the date / photo already entered).
+var refPickModal = document.getElementById('refPickModal');
+var refPickGrid = document.getElementById('refPickGrid');
+var _refCatalogLoaded = false;
+function openRefPickModal() {
+    if (!refPickModal) return;
+    refPickModal.style.display = 'flex';
+    if (_refCatalogLoaded) return;
+    if (refPickGrid) refPickGrid.innerHTML = '<p style="grid-column:1/-1;padding:24px;text-align:center;color:#8a7a68;">Loading…</p>';
+    fbGetCatalog(function(list) {
+        _refCatalogLoaded = true;
+        renderRefPickGrid(list || []);
+    });
+}
+function renderRefPickGrid(list) {
+    if (!refPickGrid) return;
+    if (list && !Array.isArray(list)) list = Object.keys(list).map(function(k) { return list[k]; });
+    list = list || [];
+    var html = '';
+    for (var i = 0; i < list.length; i++) {
+        var c = list[i];
+        if (!c || !c.name) continue;
+        var cover = c.thumb || c.photo || '';
+        var nm = c.name;
+        var imgHtml = cover
+            ? '<img loading="lazy" decoding="async" src="' + cover + '" class="flavour-card__img" alt="' + escapeHtml(nm) + '">'
+            : '<div class="flavour-card__placeholder"><svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>';
+        html += '<div class="flavour-card" data-ref-name="' + escapeHtml(nm) + '">' +
+            '<div class="flavour-card__imgwrap">' + imgHtml +
+                '<div class="flavour-card__caption"><div class="flavour-card__name">' + escapeHtml(nm) + '</div></div>' +
+            '</div>' +
+        '</div>';
+    }
+    refPickGrid.innerHTML = html || '<p style="grid-column:1/-1;padding:24px;text-align:center;color:#8a7a68;">No cakes yet.</p>';
+    refPickGrid.querySelectorAll('.flavour-card').forEach(function(card) {
+        card.addEventListener('click', function() {
+            var img = this.querySelector('img');
+            applyRefInPage(this.getAttribute('data-ref-name'), img ? img.getAttribute('src') : '');
+            refPickModal.style.display = 'none';
+        });
+    });
+}
+function applyRefInPage(name, photo) {
+    customRef = { name: name || '', photo: photo || '', size: '', flavour: '', date: '' };
+    var refBox = document.getElementById('orderRef');
+    var pickWrap = document.getElementById('orderRefPickWrap');
+    var img = document.getElementById('orderRefImg');
+    if (img) img.src = customRef.photo || '';
+    var nameEl = document.getElementById('orderRefName');
+    if (nameEl) nameEl.textContent = customRef.name;
+    if (refBox) refBox.style.display = 'flex';
+    if (pickWrap) pickWrap.style.display = 'none';
+    if (typeof recalcTotal === 'function') recalcTotal();
+}
+var _refPickClose = document.getElementById('refPickModalClose');
+if (_refPickClose) _refPickClose.addEventListener('click', function() { refPickModal.style.display = 'none'; });
+var _refPickOverlay = document.getElementById('refPickModalOverlay');
+if (_refPickOverlay) _refPickOverlay.addEventListener('click', function() { refPickModal.style.display = 'none'; });
 
 // Apply a flavour picked on the Flavours page (stored in localStorage) to the
 // custom order form.
@@ -928,9 +1006,7 @@ function applyPickedFlavourHome() {
     try { pick = JSON.parse(raw); } catch (e) { return; }
     if (!pick || !pick.name) return;
     flavourHidden.value = pick.name;
-    flavourSelectText.textContent = pick.display || pick.name;
-    flavourSelectText.removeAttribute('data-i18n');
-    flavourSelectBtn.classList.add('has-value');
+    setFlavourButton(pick.display || pick.name, pick.price);
     selectedFlavourPrice = parseFloat(pick.price) || 0;
     selectedFlavourGF = pick.gf === true || pick.gf === '1' || pick.gf === 1;
     updateGFAvailability();
@@ -1149,10 +1225,8 @@ function initCustomReference() {
     var pickBtn = document.getElementById('orderRefPickBtn');
     if (pickBtn && !pickBtn._wired) {
         pickBtn._wired = true;
-        pickBtn.addEventListener('click', function() {
-            try { localStorage.setItem('ines-ref-pick', '1'); } catch (e) {}
-            window.location.href = 'gallery';
-        });
+        // Open the cake picker IN-PAGE so the rest of the form is kept intact.
+        pickBtn.addEventListener('click', openRefPickModal);
     }
     var removeBtn = document.getElementById('orderRefRemove');
     if (removeBtn && !removeBtn._wired) {

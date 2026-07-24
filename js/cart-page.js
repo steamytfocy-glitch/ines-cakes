@@ -260,17 +260,29 @@ document.getElementById('checkoutForm').addEventListener('submit', function(e) {
 
     function submitOrder(code) {
         order.code = code;
-        // Notify the bakery (full order minus the cart items array).
+        // Notify the bakery (full order minus the cart items array, plus any
+        // reference photos the customer attached so they show in the alert).
         var notifyData = {};
         for (var k in order) { if (k !== 'items') notifyData[k] = order[k]; }
+        notifyData.photos = cart.map(function(it) { return it.photo; }).filter(Boolean);
+        // A real fetch (not sendBeacon) - the photos are far bigger than
+        // sendBeacon's payload cap, which would silently drop them.
+        var notifyDone;
         try {
-            var blob = new Blob([JSON.stringify(notifyData)], { type: 'application/json' });
-            navigator.sendBeacon('/api/notify', blob);
-        } catch (e) {}
+            notifyDone = fetch('/api/notify', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(notifyData)
+            }).catch(function() {});
+        } catch (e) { notifyDone = Promise.resolve(); }
         // Public, non-personal status record (drives order tracking).
         fbSet('order-status/' + code, orderStatusSubset(order));
         // Full order as its own record (admin-only; create-only for the public).
-        fbPush('orders', order, function() { done(code); });
+        fbPush('orders', order, function() {
+            // Wait for the notification to actually send before leaving, so the
+            // request isn't aborted mid-flight (the 6s safety net still applies).
+            (notifyDone || Promise.resolve()).then(function() { done(code); });
+        });
     }
 
     // Pick a code and make sure its public status slot is free (one retry).
@@ -280,8 +292,23 @@ document.getElementById('checkoutForm').addEventListener('submit', function(e) {
         if (existing) { code = genOrderCode([]); order.code = code; }
         submitOrder(code);
     });
-    setTimeout(function() { done(order.code); }, 4000);
+    setTimeout(function() { done(order.code); }, 6000);
 });
+
+// Phone field: allow digits and the usual phone punctuation only (no letters).
+(function() {
+    var phone = document.getElementById('coPhone');
+    if (!phone) return;
+    phone.setAttribute('inputmode', 'tel');
+    phone.addEventListener('input', function() {
+        var cleaned = this.value.replace(/[^\d+\s()\-]/g, '');
+        if (cleaned !== this.value) {
+            var pos = this.selectionStart - (this.value.length - cleaned.length);
+            this.value = cleaned;
+            try { this.setSelectionRange(pos, pos); } catch (e) {}
+        }
+    });
+})();
 
 applyI18n();
 document.querySelectorAll('.lang-btn').forEach(function(b) { b.classList.toggle('active', b.dataset.lang === currentLang); });

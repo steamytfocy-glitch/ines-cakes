@@ -8,6 +8,13 @@ function esc(s) {
     return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
+// Splits a "data:image/jpeg;base64,...." URI into its mime type and base64 body.
+function parseDataUri(uri) {
+    var m = /^data:([^;]+);base64,(.*)$/.exec(String(uri || ''));
+    if (!m) return null;
+    return { mime: m[1], base64: m[2] };
+}
+
 function buildLines(o) {
     var lines = [];
     lines.push('🎂 New Order - I.N.E.S.');
@@ -103,6 +110,8 @@ export default async function handler(req, res) {
     var text = lines.join('\n');
     var result = { telegram: null, email: null, customer: null };
 
+    var photos = Array.isArray(o.photos) ? o.photos.filter(Boolean) : [];
+
     var host = req.headers['x-forwarded-host'] || req.headers.host || '';
     var adminUrl = host ? 'https://' + host + '/admin.html' : '';
     var orderUrl = (host && o.code) ? 'https://' + host + '/order.html?code=' + encodeURIComponent(o.code) : '';
@@ -121,6 +130,21 @@ export default async function handler(req, res) {
                     body: JSON.stringify({ chat_id: chatIds[i], text: text })
                 });
                 tgResults.push(await tgRes.json());
+                // Attached reference photo(s) as real images below the order text.
+                for (var pi = 0; pi < photos.length; pi++) {
+                    var pd = parseDataUri(photos[pi]);
+                    if (!pd) continue;
+                    try {
+                        var form = new FormData();
+                        form.append('chat_id', chatIds[i]);
+                        form.append('caption', '📷 Reference' + (photos.length > 1 ? ' ' + (pi + 1) + '/' + photos.length : '') + (o.code ? ' - ' + o.code : ''));
+                        form.append('photo', new Blob([Buffer.from(pd.base64, 'base64')], { type: pd.mime }), 'reference' + (pi + 1) + '.jpg');
+                        var phRes = await fetch('https://api.telegram.org/bot' + token + '/sendPhoto', { method: 'POST', body: form });
+                        tgResults.push(await phRes.json());
+                    } catch (ep) {
+                        tgResults.push({ photoError: String(ep) });
+                    }
+                }
             }
             result.telegram = tgResults;
         } catch (e) {
@@ -139,16 +163,23 @@ export default async function handler(req, res) {
             .map(function (e) { return { email: e }; });
         if (recipients.length) {
             try {
+                var bakeryBody = {
+                    sender: { email: sender, name: process.env.BREVO_SENDER_NAME || 'I.N.E.S. Bakery' },
+                    to: recipients,
+                    subject: '🎂 New order' + (o.code ? ' ' + o.code : '') + (o.name ? ' - ' + o.name : ''),
+                    htmlContent: buildEmailHtml(o, adminUrl),
+                    textContent: text
+                };
+                // Attach the customer's reference photo(s) to the bakery email.
+                var attachments = photos.map(function (uri, idx) {
+                    var pd = parseDataUri(uri);
+                    return pd ? { content: pd.base64, name: 'reference-' + (idx + 1) + '.jpg' } : null;
+                }).filter(Boolean);
+                if (attachments.length) bakeryBody.attachment = attachments;
                 var brevoRes = await fetch('https://api.brevo.com/v3/smtp/email', {
                     method: 'POST',
                     headers: { 'api-key': key, 'Content-Type': 'application/json', 'accept': 'application/json' },
-                    body: JSON.stringify({
-                        sender: { email: sender, name: process.env.BREVO_SENDER_NAME || 'I.N.E.S. Bakery' },
-                        to: recipients,
-                        subject: '🎂 New order' + (o.code ? ' ' + o.code : '') + (o.name ? ' - ' + o.name : ''),
-                        htmlContent: buildEmailHtml(o, adminUrl),
-                        textContent: text
-                    })
+                    body: JSON.stringify(bakeryBody)
                 });
                 result.email = await brevoRes.json();
             } catch (e) {
