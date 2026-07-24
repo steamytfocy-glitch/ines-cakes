@@ -1872,6 +1872,18 @@ ul { list-style: none; }
     -webkit-overflow-scrolling: touch;
 }
 
+/* Show each photo IN FULL inside the picker modals, like the Flavours page -
+   contain it in a fixed box so tall "layer by layer" images aren't cut to a
+   strip. Applies to both the flavour picker and the reference-cake picker. */
+.flavour-modal .flavour-card__img {
+    height: 300px;
+    object-fit: contain;
+    background: var(--cream);
+}
+@media (max-width: 700px) {
+    .flavour-modal .flavour-card__img { height: 240px; }
+}
+
 .flavour-card {
     border: 2px solid var(--cream-dark);
     border-radius: 12px;
