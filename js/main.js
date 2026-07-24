@@ -962,7 +962,9 @@ if (_flavourModalOverlay) _flavourModalOverlay.addEventListener('click', functio
 // order form (navigating away would wipe the date / photo already entered).
 var refPickModal = document.getElementById('refPickModal');
 var refPickGrid = document.getElementById('refPickGrid');
+var refPickSearch = document.getElementById('refPickSearch');
 var _refCatalogLoaded = false;
+var _refCatalogList = [];
 function openRefPickModal() {
     if (!refPickModal) return;
     refPickModal.style.display = 'flex';
@@ -971,15 +973,24 @@ function openRefPickModal() {
     var _card = refPickModal.querySelector('.flavour-modal__card');
     if (_card) { _card.style.maxWidth = 'min(1100px, 96vw)'; _card.style.maxHeight = '92vh'; _card.style.overflowY = 'auto'; }
     if (refPickGrid) { refPickGrid.style.flex = 'none'; refPickGrid.style.minHeight = '0'; refPickGrid.style.overflow = 'visible'; refPickGrid.style.gap = '16px'; }
-    var _hdr = refPickModal.querySelector('.flavour-modal__header');
-    if (_hdr) { _hdr.style.position = 'sticky'; _hdr.style.top = '0'; _hdr.style.zIndex = '3'; _hdr.style.background = 'var(--white)'; }
     if (_refCatalogLoaded) return;
     if (refPickGrid) refPickGrid.innerHTML = '<p style="grid-column:1/-1;padding:24px;text-align:center;color:#8a7a68;">Loading…</p>';
     fbGetCatalog(function(list) {
         _refCatalogLoaded = true;
-        renderRefPickGrid(list || []);
+        if (list && !Array.isArray(list)) list = Object.keys(list).map(function(k) { return list[k]; });
+        _refCatalogList = list || [];
+        filterRefPick();
     });
 }
+// Filter the reference-cake list by the search box, then re-render.
+function filterRefPick() {
+    var q = (refPickSearch && refPickSearch.value || '').trim().toLowerCase();
+    var filtered = !q ? _refCatalogList : _refCatalogList.filter(function(c) {
+        return c && c.name && c.name.toLowerCase().indexOf(q) > -1;
+    });
+    renderRefPickGrid(filtered);
+}
+if (refPickSearch) refPickSearch.addEventListener('input', filterRefPick);
 function renderRefPickGrid(list) {
     if (!refPickGrid) return;
     if (list && !Array.isArray(list)) list = Object.keys(list).map(function(k) { return list[k]; });
@@ -999,7 +1010,7 @@ function renderRefPickGrid(list) {
             '</div>' +
         '</div>';
     }
-    refPickGrid.innerHTML = html || '<p style="grid-column:1/-1;padding:24px;text-align:center;color:#8a7a68;">No cakes yet.</p>';
+    refPickGrid.innerHTML = html || '<p style="grid-column:1/-1;padding:24px;text-align:center;color:#8a7a68;">No cakes match your search.</p>';
     refPickGrid.querySelectorAll('.flavour-card').forEach(function(card) {
         card.addEventListener('click', function() {
             var img = this.querySelector('img');
