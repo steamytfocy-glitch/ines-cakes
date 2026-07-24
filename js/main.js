@@ -857,7 +857,7 @@ function renderFlavourGrid(flavours) {
         var zoomBtn = '';
         var imgHtml;
         if (f.photo) {
-            imgHtml = '<img loading="lazy" decoding="async" src="' + f.photo + '" class="flavour-card__img" style="width:100%;height:340px;object-fit:contain;display:block;background:#F7EFDF;" alt="' + escapeHtml(f.name) + '">';
+            imgHtml = '<img loading="lazy" decoding="async" src="' + f.photo + '" class="flavour-card__img" style="width:100%;height:auto;display:block;" alt="' + escapeHtml(f.name) + '">';
             zoomBtn = '<button type="button" class="flavour-card__zoom" data-zoom="' + zi + '" aria-label="Zoom">' + ZOOM_SVG + '</button>';
             zi++;
         } else {
@@ -906,8 +906,29 @@ function renderFlavourGrid(flavours) {
 var _flavoursLoaded = false;
 function openFlavourModal() {
     flavourModal.style.display = 'flex';
+    // Render like the full /flavours page: a wide, normal-flow grid where the
+    // WHOLE card scrolls, so the tall "layer by layer" photos show in full
+    // (the old flex-scroll grid squashed them to a strip). Inline styles so a
+    // stale cached stylesheet can't undo it.
     var _card = flavourModal.querySelector('.flavour-modal__card');
-    if (_card) _card.style.maxWidth = 'min(1080px, 96vw)';
+    if (_card) {
+        _card.style.maxWidth = 'min(1100px, 96vw)';
+        _card.style.maxHeight = '92vh';
+        _card.style.overflowY = 'auto';
+    }
+    if (flavourGrid) {
+        flavourGrid.style.flex = 'none';
+        flavourGrid.style.minHeight = '0';
+        flavourGrid.style.overflow = 'visible';
+        flavourGrid.style.gap = '20px';
+    }
+    var _hdr = flavourModal.querySelector('.flavour-modal__header');
+    if (_hdr) {
+        _hdr.style.position = 'sticky';
+        _hdr.style.top = '0';
+        _hdr.style.zIndex = '3';
+        _hdr.style.background = 'var(--white)';
+    }
     if (_flavoursLoaded) return;
     fbGetOnce('flavours', function(flavours) {
         if (!flavours || !flavours.length) flavours = DEFAULT_FLAVOURS;
