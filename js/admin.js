@@ -74,7 +74,7 @@ var A = {
         'confirm.order': 'Delete this order?', 'confirm.cake': 'Delete this cake?', 'confirm.flavour': 'Delete this flavour?', 'confirm.review': 'Delete this review?', 'confirm.cert': 'Delete this certificate?', 'confirm.cat': 'Delete this category? Its photos will move to "Other".',
         'alert.selectCakes': 'Select cakes first.', 'alert.noCakesSort': 'No cakes to sort. Add some first!', 'alert.certFront': 'Please choose a front photo',
         'confirm.delCakesPre': 'Delete ', 'confirm.delCakesPost': ' selected cake(s)?',
-        'cakes.add': 'Add Cake', 'sortByCategory': 'Sort by Category', 'selectToDelete': 'Select to delete', 'manageCategories': 'Manage Categories', 'cakes.sortHint': 'Select cakes, then assign a category', 'doneSorting': 'Done Sorting', 'assignTo': 'Assign to:', 'cakes.emptyTitle': 'No cakes yet', 'cakes.emptySub': 'Add cakes with photo, sizes & prices - they appear on the site for ordering',
+        'cakes.add': 'Add Cake', 'sortByCategory': 'Sort by Category', 'selectToDelete': 'Select to delete', 'manageCategories': 'Manage Categories', 'cakes.sortHint': 'Select cakes, then assign a category', 'doneSorting': 'Done Sorting', 'assignTo': 'Assign to:', 'cakes.emptyTitle': 'No cakes yet', 'cakes.emptySub': 'Add cakes with photo, sizes & prices - they appear on the site for ordering', 'cakes.search': 'Search cakes by name…', 'cakes.searchEmpty': 'No cakes match your search.',
         'priceOnRequest': 'Price on request',
         'cakeModal.addTitle': 'Add Cake', 'cakeModal.editTitle': 'Edit Cake', 'cake.name': 'Cake Name', 'cake.namePh': 'e.g. Sunset Fields Art Cake', 'category': 'Category', 'newCategory': '+ New category', 'photo': 'Photo', 'photosHint': 'You can add several photos - the first is the main one (★); customers can swipe through the rest.', 'descOptional': 'Description (optional)', 'descPh': 'Short description',
         'cake.price': 'Cake price (€) - optional', 'cake.priceHint': 'One fixed price for this cake. If set, it is used instead of the per-size prices below.',
@@ -2069,7 +2069,32 @@ function loadCakes() {
             });
         });
     }
+
+    applyCakeSearch(); // keep the current search filter after a re-render
 }
+
+// Quick client-side search: hide the cards whose name doesn't match, so every
+// card keeps its real data-idx (edit/delete/select all still line up).
+function applyCakeSearch() {
+    var input = document.getElementById('cakesSearch');
+    if (!input) return;
+    var q = (input.value || '').trim().toLowerCase();
+    var cards = document.querySelectorAll('#cakesAdmin .cake-admin-card');
+    var anyVisible = false;
+    cards.forEach(function(card) {
+        var nameEl = card.querySelector('.cake-admin-card__name');
+        var name = nameEl ? nameEl.textContent.toLowerCase() : '';
+        var show = !q || name.indexOf(q) > -1;
+        card.style.display = show ? '' : 'none';
+        if (show) anyVisible = true;
+    });
+    var note = document.getElementById('cakesSearchEmpty');
+    if (note) note.style.display = (q && !anyVisible) ? 'block' : 'none';
+}
+(function initCakesSearch() {
+    var input = document.getElementById('cakesSearch');
+    if (input) input.addEventListener('input', applyCakeSearch);
+})();
 
 // ===== CAKES MULTI-DELETE =====
 var cakeDeleteMode = false;

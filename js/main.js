@@ -966,6 +966,13 @@ var _refCatalogLoaded = false;
 function openRefPickModal() {
     if (!refPickModal) return;
     refPickModal.style.display = 'flex';
+    // Same layout fix as the flavour picker: the whole card scrolls and the
+    // grid is normal-flow, so thumbnails aren't squashed to a strip.
+    var _card = refPickModal.querySelector('.flavour-modal__card');
+    if (_card) { _card.style.maxWidth = 'min(1100px, 96vw)'; _card.style.maxHeight = '92vh'; _card.style.overflowY = 'auto'; }
+    if (refPickGrid) { refPickGrid.style.flex = 'none'; refPickGrid.style.minHeight = '0'; refPickGrid.style.overflow = 'visible'; refPickGrid.style.gap = '16px'; }
+    var _hdr = refPickModal.querySelector('.flavour-modal__header');
+    if (_hdr) { _hdr.style.position = 'sticky'; _hdr.style.top = '0'; _hdr.style.zIndex = '3'; _hdr.style.background = 'var(--white)'; }
     if (_refCatalogLoaded) return;
     if (refPickGrid) refPickGrid.innerHTML = '<p style="grid-column:1/-1;padding:24px;text-align:center;color:#8a7a68;">Loading…</p>';
     fbGetCatalog(function(list) {
@@ -984,7 +991,7 @@ function renderRefPickGrid(list) {
         var cover = c.thumb || c.photo || '';
         var nm = c.name;
         var imgHtml = cover
-            ? '<img loading="lazy" decoding="async" src="' + cover + '" class="flavour-card__img" alt="' + escapeHtml(nm) + '">'
+            ? '<img loading="lazy" decoding="async" src="' + cover + '" class="flavour-card__img" style="width:100%;height:200px;object-fit:cover;display:block;" alt="' + escapeHtml(nm) + '">'
             : '<div class="flavour-card__placeholder"><svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>';
         html += '<div class="flavour-card" data-ref-name="' + escapeHtml(nm) + '">' +
             '<div class="flavour-card__imgwrap">' + imgHtml +
