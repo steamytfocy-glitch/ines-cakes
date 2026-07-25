@@ -96,7 +96,10 @@
                     <div class="product__opt" id="pSizeOpt">
                         <label data-i18n="prod.size">Size</label>
                         <select id="pSize"></select>
-                        <div id="pFixedSize" style="display:none;font-weight:600;padding:6px 0;"></div>
+                        <div id="pFixedSize" style="display:none;align-items:center;gap:9px;padding:11px 16px;border-radius:12px;background:rgba(200,150,62,0.13);border:1px solid rgba(200,150,62,0.4);color:#E8C47A;font-weight:600;line-height:1.35;">
+                            <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" style="flex-shrink:0;"><path d="M12 3l7 4v10l-7 4-7-4V7z"/><path d="M12 3v18M5 7l7 4 7-4"/></svg>
+                            <span id="pFixedSizeText"></span>
+                        </div>
                     </div>
                     <div class="product__opt">
                         <label data-i18n="prod.flavour">Flavour</label>
@@ -168,6 +171,6 @@
 <script defer src="js/lang-switcher.js"></script>
 <script defer src="js/maintenance-guard.js"></script>
 <script defer src="js/cart.js"></script>
-<script defer src="js/product-page.js?v=10"></script>
+<script defer src="js/product-page.js?v=11"></script>
 </body>
 </html>
