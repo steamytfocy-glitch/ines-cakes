@@ -12,7 +12,7 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
     <link rel="apple-touch-icon" href="/favicon-192.png">
-    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="css/admin.css?v=2">
 </head>
 <body>
 
@@ -236,13 +236,13 @@
 
                         <div class="modal__field">
                             <label data-i18n="cake.design">Design price (+€) — added to each size</label>
-                            <input type="text" id="cakeDesign" placeholder="e.g. 15" style="max-width:160px;">
+                            <span class="euro-wrap euro-wrap--inline" style="max-width:160px;"><input type="text" id="cakeDesign" placeholder="15"></span>
                             <span class="content-hint" data-i18n="cake.designHint">The decoration surcharge added to every size's base price. Final size price = base (from Sizes &amp; Prices) + this. E.g. 6″ €60 base + €15 = €75.</span>
                         </div>
 
                         <div class="modal__field">
                             <label data-i18n="cake.price">Fixed price (€) - optional</label>
-                            <input type="text" id="cakePrice" placeholder="e.g. 45" style="max-width:160px;">
+                            <span class="euro-wrap euro-wrap--inline" style="max-width:160px;"><input type="text" id="cakePrice" placeholder="45"></span>
                             <span class="content-hint" data-i18n="cake.priceHint">One flat price for cakes NOT sold by size (e.g. a sphere). If set, there are no size options and the design price is ignored.</span>
                         </div>
 
@@ -662,6 +662,6 @@
 <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
 <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script defer src="js/firebase-init.js?v=3"></script>
-<script defer src="js/admin.js?v=13"></script>
+<script defer src="js/admin.js?v=14"></script>
 </body>
 </html>

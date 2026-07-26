@@ -1887,8 +1887,10 @@ function globalSizes() {
     return (g && g.length) ? g : [];
 }
 function addAllStandardSizes() {
+    // Add the size rows WITHOUT prices, so they follow the global base + this
+    // cake's design price. (Fill a price in a row only to override that size.)
     var src = globalSizes();
-    if (src.length) src.forEach(function(s) { addCakeSizeRow(s.size, s.serves, s.price); });
+    if (src.length) src.forEach(function(s) { addCakeSizeRow(s.size, s.serves, ''); });
     else STANDARD_SIZES.forEach(function(s) { addCakeSizeRow(s.size, s.serves, ''); });
 }
 
@@ -1901,7 +1903,7 @@ function addGlobalSizeRow(size, serves, price) {
     row.innerHTML =
         '<input type="text" class="gs-size" placeholder="' + at('size.sizePh') + '" value="' + escapeHtml(size || '') + '">' +
         '<input type="text" class="gs-serves" placeholder="' + at('size.servesPh') + '" value="' + escapeHtml(serves || '') + '">' +
-        '<input type="text" class="gs-price" placeholder="' + at('size.pricePh') + '" value="' + escapeHtml(price != null ? String(price) : '') + '">' +
+        '<span class="euro-wrap"><input type="text" class="gs-price" placeholder="price" value="' + escapeHtml(price != null ? String(price) : '') + '"></span>' +
         '<button type="button" class="cake-size-row__del" aria-label="Remove">&times;</button>';
     row.querySelector('.cake-size-row__del').addEventListener('click', function() { row.remove(); });
     wrap.appendChild(row);
@@ -2235,7 +2237,7 @@ function addCakeSizeRow(size, serves, price) {
     row.innerHTML =
         '<input type="text" class="cs-size" placeholder="Size (e.g. 6&quot;)" value="' + escapeHtml(size || '') + '">' +
         '<input type="text" class="cs-serves" placeholder="Serves (e.g. 6-8)" value="' + escapeHtml(serves || '') + '">' +
-        '<input type="number" class="cs-price" placeholder="€" min="0" step="0.5" value="' + (price != null ? escapeHtml(String(price)) : '') + '">' +
+        '<span class="euro-wrap"><input type="number" class="cs-price" placeholder="price" min="0" step="0.5" value="' + (price != null ? escapeHtml(String(price)) : '') + '"></span>' +
         '<button type="button" class="cake-size-row__del" aria-label="Remove">&times;</button>';
     row.querySelector('.cake-size-row__del').addEventListener('click', function() { row.remove(); });
     wrap.appendChild(row);

@@ -591,6 +591,16 @@ body {
     margin-bottom: 8px;
     align-items: center;
 }
+/* "€" prefix shown inside price inputs. */
+.euro-wrap { position: relative; display: block; width: 100%; }
+.euro-wrap::before {
+    content: "€";
+    position: absolute; left: 9px; top: 50%; transform: translateY(-50%);
+    color: #b89b7a; font-size: 0.85rem; pointer-events: none;
+}
+.euro-wrap > input { width: 100%; box-sizing: border-box; padding-left: 22px !important; }
+.euro-wrap--inline { display: inline-block; }
+
 .cake-size-row input {
     padding: 8px 10px;
     border: 1px solid var(--cream-dark);
