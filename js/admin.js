@@ -2239,7 +2239,7 @@ function addCakeSizeRow(size, serves, price) {
         '<input type="text" class="cs-serves" placeholder="Serves (e.g. 6-8)" value="' + escapeHtml(serves || '') + '">' +
         '<span class="euro-wrap"><input type="number" class="cs-price" placeholder="price" min="0" step="0.5" value="' + (price != null ? escapeHtml(String(price)) : '') + '"></span>' +
         '<button type="button" class="cake-size-row__del" aria-label="Remove">&times;</button>';
-    row.querySelector('.cake-size-row__del').addEventListener('click', function() { row.remove(); });
+    row.querySelector('.cake-size-row__del').addEventListener('click', function() { row.remove(); renderDesignPreview(); });
     wrap.appendChild(row);
 }
 
@@ -2285,14 +2285,61 @@ function openCakeModal(editId) {
         renderCakePhotos();
         // Leave sizes empty so the cake uses the global Sizes & Prices automatically.
     }
+    renderDesignPreview();
     document.getElementById('cakeModal').style.display = 'flex';
 }
 
 document.getElementById('addCakeBtn').addEventListener('click', function() { openCakeModal(null); });
 document.getElementById('cakeCancel').addEventListener('click', function() { document.getElementById('cakeModal').style.display = 'none'; });
 document.querySelector('#cakeModal .modal__overlay').addEventListener('click', function() { document.getElementById('cakeModal').style.display = 'none'; });
-document.getElementById('addSizeRowBtn').addEventListener('click', function() { addCakeSizeRow('', '', ''); });
-document.getElementById('addAllSizesBtn').addEventListener('click', function() { addAllStandardSizes(); });
+document.getElementById('addSizeRowBtn').addEventListener('click', function() { addCakeSizeRow('', '', ''); renderDesignPreview(); });
+document.getElementById('addAllSizesBtn').addEventListener('click', function() { addAllStandardSizes(); renderDesignPreview(); });
+(function() {
+    var clr = document.getElementById('clearOverridePricesBtn');
+    if (clr) clr.addEventListener('click', function() {
+        document.querySelectorAll('#cakeSizesRows .cs-price').forEach(function(inp) { inp.value = ''; });
+        renderDesignPreview();
+    });
+    ['cakeDesign', 'cakePrice', 'cakeFixedSize'].forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) el.addEventListener('input', renderDesignPreview);
+    });
+    var rows = document.getElementById('cakeSizesRows');
+    if (rows) rows.addEventListener('input', renderDesignPreview);
+})();
+
+// Live preview of the FINAL prices a customer will see for this cake, from the
+// current Design price + global base (respecting any override rows).
+function renderDesignPreview() {
+    var wrap = document.getElementById('cakeDesignPreview');
+    if (!wrap) return;
+    function pill(txt, colour) { return '<span style="display:inline-block;padding:6px 12px;border-radius:8px;background:' + colour + ';color:#fff;font:600 13px sans-serif;">' + txt + '</span>'; }
+    var fixed = (document.getElementById('cakePrice').value || '').trim();
+    if (fixed && parseFloat(fixed) > 0) { wrap.innerHTML = pill('Flat price €' + escapeHtml(fixed) + ' — no size options', '#8a5a2b'); return; }
+    var fixedSize = (document.getElementById('cakeFixedSize').value || '').trim();
+    if (fixedSize) { wrap.innerHTML = pill('Single size: ' + escapeHtml(fixedSize), '#8a5a2b'); return; }
+    var sizes = globalSizes();
+    if (!sizes.length) { wrap.innerHTML = ''; return; }
+    var dp = parseFloat(document.getElementById('cakeDesign').value) || 0;
+    var base = catBaseMap();
+    var overrides = {};
+    document.querySelectorAll('#cakeSizesRows .cake-size-row').forEach(function(r) {
+        var sz = (r.querySelector('.cs-size') || {}).value;
+        var p = (r.querySelector('.cs-price') || {}).value;
+        if (sz && p != null && String(p).trim() !== '') overrides[catInchOf(sz)] = String(p).trim();
+    });
+    var anyOverride = false;
+    var chips = sizes.map(function(s) {
+        var i = catInchOf(s.size);
+        var over = overrides[i] != null;
+        if (over) anyOverride = true;
+        var fin = over ? overrides[i] : ((base[i] != null) ? (base[i] + dp) : '?');
+        return '<span style="display:inline-block;padding:5px 11px;margin:0 5px 5px 0;border-radius:8px;background:' + (over ? '#8a5a2b' : '#2b7a4b') + ';color:#fff;font:600 13px sans-serif;">' + escapeHtml(s.size) + ' — €' + escapeHtml(String(fin)) + (over ? ' *' : '') + '</span>';
+    }).join('');
+    var note = 'Final prices customers see (base + design €' + dp + ') — no need to type them.';
+    if (anyOverride) note += '  * = manual override from the table below. Use "Clear prices → use design" to switch it to base + design.';
+    wrap.innerHTML = '<div>' + chips + '</div><p class="content-hint" style="margin:6px 0 0;">' + note + '</p>';
+}
 
 document.getElementById('cakeFlavourBtn').addEventListener('click', openCakeFlavourModal);
 document.getElementById('cakeFlavourDone').addEventListener('click', function() {

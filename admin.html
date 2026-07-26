@@ -238,6 +238,7 @@
                             <label data-i18n="cake.design">Design price (+€) — added to each size</label>
                             <span class="euro-wrap euro-wrap--inline" style="max-width:160px;"><input type="text" id="cakeDesign" placeholder="15"></span>
                             <span class="content-hint" data-i18n="cake.designHint">The decoration surcharge added to every size's base price. Final size price = base (from Sizes &amp; Prices) + this. E.g. 6″ €60 base + €15 = €75.</span>
+                            <div id="cakeDesignPreview" style="margin-top:8px;"></div>
                         </div>
 
                         <div class="modal__field">
@@ -259,6 +260,7 @@
                             <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;">
                                 <button type="button" class="btn-cancel" id="addSizeRowBtn" data-i18n="addSize">+ Add size</button>
                                 <button type="button" class="btn-cancel" id="addAllSizesBtn" data-i18n="addAllSizes">+ Add all standard sizes (6"-12")</button>
+                                <button type="button" class="btn-cancel" id="clearOverridePricesBtn">Clear prices → use design</button>
                             </div>
                         </div>
 
@@ -662,6 +664,6 @@
 <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
 <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script defer src="js/firebase-init.js?v=3"></script>
-<script defer src="js/admin.js?v=14"></script>
+<script defer src="js/admin.js?v=15"></script>
 </body>
 </html>
