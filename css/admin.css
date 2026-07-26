@@ -1579,6 +1579,26 @@ body {
     align-items: center;
 }
 
+.cat-manage-move {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+.cat-move-btn {
+    width: 26px;
+    height: 17px;
+    padding: 0;
+    border: 1px solid var(--cream-dark);
+    background: var(--white);
+    color: var(--brown);
+    border-radius: 5px;
+    font-size: 10px;
+    line-height: 1;
+    cursor: pointer;
+}
+.cat-move-btn:hover:not(:disabled) { border-color: var(--gold); color: var(--gold-dark); }
+.cat-move-btn:disabled { opacity: 0.3; cursor: default; }
+
 .cat-manage-input {
     flex: 1;
     padding: 9px 14px;

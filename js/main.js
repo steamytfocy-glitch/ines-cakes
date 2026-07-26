@@ -1480,10 +1480,10 @@ function getCatName(cat) {
 }
 
 // Categories shown to customers, sorted alphabetically by their current-language name.
+// Categories show in the order set in the admin (Manage Categories ▲▼),
+// not alphabetically - so the bakery controls the homepage layout.
 function sortedCategories() {
-    return CATEGORIES.slice().sort(function(a, b) {
-        return getCatName(a).localeCompare(getCatName(b));
-    });
+    return CATEGORIES.slice();
 }
 
 // ===== LOAD ADMIN DATA =====

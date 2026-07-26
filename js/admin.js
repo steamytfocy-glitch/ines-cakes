@@ -1020,11 +1020,27 @@ function renderManageCats() {
     for (var i = 0; i < CATEGORIES.length; i++) {
         var c = CATEGORIES[i];
         html += '<div class="cat-manage-row" data-cat-id="' + c.id + '">' +
+            '<div class="cat-manage-move">' +
+                '<button type="button" class="cat-move-btn" data-move="up" data-idx="' + i + '"' + (i === 0 ? ' disabled' : '') + ' aria-label="Move up">▲</button>' +
+                '<button type="button" class="cat-move-btn" data-move="down" data-idx="' + i + '"' + (i === CATEGORIES.length - 1 ? ' disabled' : '') + ' aria-label="Move down">▼</button>' +
+            '</div>' +
             '<input type="text" class="cat-manage-input" value="' + escapeHtml(c.en) + '" data-cat-id="' + c.id + '">' +
             '<button class="btn-delete cat-manage-del" data-cat-id="' + c.id + '">' + at('delete') + '</button>' +
         '</div>';
     }
     list.innerHTML = html;
+
+    // Reorder: swap this category with its neighbour and save (homepage follows this order).
+    list.querySelectorAll('.cat-move-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var idx = parseInt(this.dataset.idx);
+            var j = idx + (this.dataset.move === 'up' ? -1 : 1);
+            var cats = CATEGORIES.slice();
+            if (j < 0 || j >= cats.length) return;
+            var tmp = cats[idx]; cats[idx] = cats[j]; cats[j] = tmp;
+            setData('categories', cats);
+        });
+    });
 
     list.querySelectorAll('.cat-manage-del').forEach(function(btn) {
         btn.addEventListener('click', function() {
