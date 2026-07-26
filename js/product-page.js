@@ -288,30 +288,33 @@ function updateGFAvailability() {
 function updatePrice() {
     var el = document.getElementById('pPrice');
     var br = document.getElementById('pPriceBreak');
+    var qtyEl = document.getElementById('pQty');
+    var qty = Math.max(1, parseInt(qtyEl && qtyEl.value) || 1);
     var fl = (selectedFlavourPrice || 0) + addonTotal();
-    function setBreak(txt) { if (br) { br.textContent = txt || ''; br.style.display = txt ? 'block' : 'none'; } }
-    if (product.price && parseFloat(product.price)) {
-        el.textContent = '€ ' + (parseFloat(product.price) + fl);
-        setBreak('');
-        return;
+    // Show the TOTAL (unit × quantity); note the per-unit split underneath.
+    function show(unit, breakTxt) {
+        el.textContent = '€ ' + (unit * qty);
+        var parts = [];
+        if (breakTxt) parts.push(breakTxt);
+        if (qty > 1) parts.push(qty + ' × €' + unit);
+        if (br) { br.textContent = parts.join('  ·  '); br.style.display = parts.length ? 'block' : 'none'; }
     }
+    if (product.price && parseFloat(product.price)) { show(parseFloat(product.price) + fl, ''); return; }
     var s = currentSize();
     if (s && parseFloat(s.price)) {
-        el.textContent = '€ ' + (parseFloat(s.price) + fl);
-        // Show the "Cake + Design (+ extras)" split when the price is base+design.
-        if (s._base != null && s._design) {
-            setBreak('Cake €' + s._base + ' + Design €' + s._design + (fl ? ' + extras €' + fl : ''));
-        } else setBreak('');
+        var bt = (s._base != null && s._design) ? ('Cake €' + s._base + ' + Design €' + s._design + (fl ? ' + extras €' + fl : '')) : '';
+        show(parseFloat(s.price) + fl, bt);
         return;
     }
-    setBreak('');
+    // No size chosen yet -> show a per-unit "from" range (no quantity multiply).
+    if (br) { br.textContent = ''; br.style.display = 'none'; }
     var nums = effectiveSizes().map(function(x) { return parseFloat(x.price); }).filter(function(n) { return !isNaN(n); });
     if (nums.length) {
         var fromWord = { en: 'from', ga: 'ó', ua: 'від', ru: 'от' }[currentLang] || 'from';
         el.textContent = fromWord + ' €' + (Math.min.apply(null, nums) + fl);
     } else {
         // No prices configured anywhere - don't leave it blank.
-        var PR = { en: 'Price on request', ga: 'Praghas ar iarratas', ua: 'Ціна за домовленістю', ru: 'Цена по договорённости' };
+        var PR = { en: 'Price on request', ga: 'Praghas ar iarratas', ua: 'Ціна за домовленістю', ru: 'Цена по договорённості' };
         el.textContent = PR[currentLang] || PR.en;
     }
 }
@@ -584,6 +587,7 @@ function showToast(msg) {
 }
 
 document.getElementById('pSize').addEventListener('change', updatePrice);
+(function() { var q = document.getElementById('pQty'); if (q) q.addEventListener('input', updatePrice); })();
 (function() {
     var tall = document.getElementById('pTall');
     var gf = document.getElementById('pGF');
