@@ -2285,6 +2285,9 @@ function openCakeModal(editId) {
         renderCakePhotos();
         // Leave sizes empty so the cake uses the global Sizes & Prices automatically.
     }
+    // Only open the advanced-override box if this cake actually overrides prices.
+    var adv = document.getElementById('cakeAdvSizes');
+    if (adv) adv.open = Array.prototype.some.call(document.querySelectorAll('#cakeSizesRows .cs-price'), function(inp) { return inp.value && inp.value.trim() !== ''; });
     renderDesignPreview();
     document.getElementById('cakeModal').style.display = 'flex';
 }

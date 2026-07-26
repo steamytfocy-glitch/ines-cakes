@@ -254,14 +254,19 @@
                         </div>
 
                         <div class="modal__field">
-                            <label data-i18n="sizesPrices">Sizes &amp; prices — advanced override</label>
-                            <p class="content-hint" style="margin:0 0 8px;" data-i18n="sizesHint">Leave this empty for normal cakes — they use the global sizes + the design price above. Only add rows here to override specific sizes/prices for a special cake.</p>
-                            <div id="cakeSizesRows"></div>
-                            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;">
-                                <button type="button" class="btn-cancel" id="addSizeRowBtn" data-i18n="addSize">+ Add size</button>
-                                <button type="button" class="btn-cancel" id="addAllSizesBtn" data-i18n="addAllSizes">+ Add all standard sizes (6"-12")</button>
-                                <button type="button" class="btn-cancel" id="clearOverridePricesBtn">Clear prices → use design</button>
-                            </div>
+                            <details id="cakeAdvSizes">
+                                <summary style="cursor:pointer;font-weight:600;color:var(--brown);">
+                                    <span data-i18n="sizesPrices">Sizes &amp; prices — advanced override</span>
+                                    <span class="content-hint" style="font-weight:400;"> — rarely needed, click to open</span>
+                                </summary>
+                                <p class="content-hint" style="margin:8px 0;" data-i18n="sizesHint">Leave this empty for normal cakes — they use the global sizes + the design price above. Only add rows here to override specific sizes/prices for a special cake.</p>
+                                <div id="cakeSizesRows"></div>
+                                <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;">
+                                    <button type="button" class="btn-cancel" id="addSizeRowBtn" data-i18n="addSize">+ Add size</button>
+                                    <button type="button" class="btn-cancel" id="addAllSizesBtn" data-i18n="addAllSizes">+ Add all standard sizes (6"-12")</button>
+                                    <button type="button" class="btn-cancel" id="clearOverridePricesBtn">Clear prices → use design</button>
+                                </div>
+                            </details>
                         </div>
 
                         <div class="modal__field">
@@ -664,6 +669,6 @@
 <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
 <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script defer src="js/firebase-init.js?v=3"></script>
-<script defer src="js/admin.js?v=15"></script>
+<script defer src="js/admin.js?v=16"></script>
 </body>
 </html>
