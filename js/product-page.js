@@ -135,15 +135,41 @@ var productIndex = null;
 var selectedAllergies = [];
 var _defaultSizes = [];
 
-// A cake with an explicit fixed size/weight is sold as one item (no size choice).
-// (Just having a fixed PRICE doesn't hide sizes - only setting this field does.)
+// Pull the numeric inches out of a size label ("6 inch" / "6" -> 6).
+function inchOf(s) { var m = String(s == null ? '' : s).match(/\d+(\.\d+)?/); return m ? parseFloat(m[0]) : null; }
+// Global base price per size (from the shared Sizes & Prices table).
+function baseByInch() { var m = {}; (_defaultSizes || []).forEach(function(s) { var i = inchOf(s.size); if (i != null) m[i] = parseFloat(s.price) || 0; }); return m; }
+// This cake's design surcharge (added to every size's base price).
+function designSurcharge() { return parseFloat(product && product.designPrice) || 0; }
+// A cake with one fixed price is sold as-is (no size choice).
+function isFixedPriceCake() { return !!(product && product.price && parseFloat(product.price) > 0); }
+// A cake with an explicit fixed size/weight label is sold as one item too.
 function hasFixedSize() { return !!(product && product.fixedSize && String(product.fixedSize).trim()); }
 
-// A cake uses its own sizes if it has any, otherwise the global default sizes.
-// A fixed-size cake has no size options (its size/weight is fixed).
+// Sizes with their FINAL prices. A fixed-price / fixed-size cake has none.
+// - The cake's OWN size rows: an explicit price is an override; an empty price
+//   means base + design.
+// - No own sizes -> use the GLOBAL table as the base, adding design to each.
+// _base/_design are kept for the price breakdown.
 function effectiveSizes() {
-    if (hasFixedSize()) return [];
-    return (product && product.sizes && product.sizes.length) ? product.sizes : _defaultSizes;
+    if (isFixedPriceCake() || hasFixedSize()) return [];
+    var base = baseByInch();
+    var dp = designSurcharge();
+    var own = (product && product.sizes && product.sizes.length) ? product.sizes : null;
+    if (own) {
+        return own.map(function(s) {
+            var raw = (s.price != null && String(s.price).trim() !== '') ? parseFloat(s.price) : null;
+            var i = inchOf(s.size);
+            if (raw != null) return { size: s.size, serves: s.serves, price: String(raw), _base: null, _design: null };
+            if (base[i] != null) return { size: s.size, serves: s.serves, price: String(base[i] + dp), _base: base[i], _design: dp };
+            return { size: s.size, serves: s.serves, price: '', _base: null, _design: null };
+        });
+    }
+    return (_defaultSizes || []).map(function(s) {
+        var i = inchOf(s.size);
+        var b = (base[i] != null) ? base[i] : (parseFloat(s.price) || 0);
+        return { size: s.size, serves: s.serves, price: String(b + dp), _base: b, _design: dp };
+    });
 }
 
 // Sort sizes by their numeric inch value (6, 7, 8 …) so dropdowns are in order.
@@ -261,16 +287,24 @@ function updateGFAvailability() {
 
 function updatePrice() {
     var el = document.getElementById('pPrice');
+    var br = document.getElementById('pPriceBreak');
     var fl = (selectedFlavourPrice || 0) + addonTotal();
+    function setBreak(txt) { if (br) { br.textContent = txt || ''; br.style.display = txt ? 'block' : 'none'; } }
     if (product.price && parseFloat(product.price)) {
         el.textContent = '€ ' + (parseFloat(product.price) + fl);
+        setBreak('');
         return;
     }
     var s = currentSize();
     if (s && parseFloat(s.price)) {
         el.textContent = '€ ' + (parseFloat(s.price) + fl);
+        // Show the "Cake + Design (+ extras)" split when the price is base+design.
+        if (s._base != null && s._design) {
+            setBreak('Cake €' + s._base + ' + Design €' + s._design + (fl ? ' + extras €' + fl : ''));
+        } else setBreak('');
         return;
     }
+    setBreak('');
     var nums = effectiveSizes().map(function(x) { return parseFloat(x.price); }).filter(function(n) { return !isNaN(n); });
     if (nums.length) {
         var fromWord = { en: 'from', ga: 'ó', ua: 'від', ru: 'от' }[currentLang] || 'from';
@@ -359,8 +393,9 @@ function renderProduct() {
     }
     sizeSel.innerHTML = html;
 
-    // Fixed size/weight set: hide the size dropdown and show the weight label
-    // instead. Otherwise show the normal size dropdown.
+    // Fixed size/weight label -> show it instead of the dropdown.
+    // Fixed price with no label -> hide the Size field entirely.
+    // Otherwise -> normal size dropdown (base + design pricing).
     var sizeOpt = document.getElementById('pSizeOpt');
     var fixedEl = document.getElementById('pFixedSize');
     var fixedText = document.getElementById('pFixedSizeText');
@@ -368,11 +403,16 @@ function renderProduct() {
         sizeSel.style.display = 'none';
         if (fixedText) fixedText.textContent = product.fixedSize;
         if (fixedEl) fixedEl.style.display = 'inline-flex';
+        if (sizeOpt) sizeOpt.style.display = '';
+    } else if (isFixedPriceCake()) {
+        sizeSel.style.display = 'none';
+        if (fixedEl) fixedEl.style.display = 'none';
+        if (sizeOpt) sizeOpt.style.display = 'none';
     } else {
         sizeSel.style.display = '';
         if (fixedEl) fixedEl.style.display = 'none';
+        if (sizeOpt) sizeOpt.style.display = '';
     }
-    if (sizeOpt) sizeOpt.style.display = '';
 
     populatePDate();
 

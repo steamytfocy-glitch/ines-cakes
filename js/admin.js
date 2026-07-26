@@ -77,8 +77,8 @@ var A = {
         'cakes.add': 'Add Cake', 'sortByCategory': 'Sort by Category', 'selectToDelete': 'Select to delete', 'manageCategories': 'Manage Categories', 'cakes.sortHint': 'Select cakes, then assign a category', 'doneSorting': 'Done Sorting', 'assignTo': 'Assign to:', 'cakes.emptyTitle': 'No cakes yet', 'cakes.emptySub': 'Add cakes with photo, sizes & prices - they appear on the site for ordering', 'cakes.search': 'Search cakes by name…', 'cakes.searchEmpty': 'No cakes match your search.', 'cakes.allCats': 'All categories',
         'priceOnRequest': 'Price on request',
         'cakeModal.addTitle': 'Add Cake', 'cakeModal.editTitle': 'Edit Cake', 'cake.name': 'Cake Name', 'cake.namePh': 'e.g. Sunset Fields Art Cake', 'category': 'Category', 'newCategory': '+ New category', 'photo': 'Photo', 'photosHint': 'You can add several photos - the first is the main one (★); customers can swipe through the rest.', 'descOptional': 'Description (optional)', 'descPh': 'Short description',
-        'cake.price': 'Cake price (€) - optional', 'cake.priceHint': 'One fixed price for this cake. If set, it is used instead of the per-size prices below.', 'cake.fixedSize': 'Fixed size / weight (optional)', 'cake.fixedSizeHint': 'Fill this to sell the cake as one fixed size - it is shown to the customer instead of the size dropdown. Leave empty to offer size options.',
-        'sizesPrices': 'Sizes & prices (optional)', 'sizesHint': 'Leave empty to use the global Sizes & Prices. Add rows only to override them for this cake.', 'addSize': '+ Add size', 'addAllSizes': '+ Add all standard sizes (6"-12")', 'availableFlavours': 'Available flavours', 'chooseFlavours': 'Choose flavours', 'flavoursSuffix': 'selected', 'leadTime': 'Lead time - days notice required', 'saveCake': 'Save Cake',
+        'cake.design': 'Design price (+€) — added to each size', 'cake.designHint': "The decoration surcharge added to every size's base price. Final size price = base (from Sizes & Prices) + this. E.g. 6″ €60 base + €15 = €75.", 'cake.price': 'Fixed price (€) - optional', 'cake.priceHint': 'One flat price for cakes NOT sold by size (e.g. a sphere). If set, there are no size options and the design price is ignored.', 'cake.fixedSize': 'Fixed size / weight (optional)', 'cake.fixedSizeHint': 'Fill this to sell the cake as one fixed size - it is shown to the customer instead of the size dropdown. Leave empty to offer size options.',
+        'sizesPrices': 'Sizes & prices — advanced override', 'sizesHint': 'Leave this empty for normal cakes — they use the global sizes + the design price above. Only add rows here to override specific sizes/prices for a special cake.', 'addSize': '+ Add size', 'addAllSizes': '+ Add all standard sizes (6"-12")', 'availableFlavours': 'Available flavours', 'chooseFlavours': 'Choose flavours', 'flavoursSuffix': 'selected', 'leadTime': 'Lead time - days notice required', 'saveCake': 'Save Cake',
         'selectFlavours': 'Select flavours', 'flavourPickHint': 'Tap the flavours available for this cake. To add a new flavour, use the Flavours tab.', 'flavoursNoneModal': 'No flavours yet. Add them in the Flavours tab first.',
         'manageCatsHint': 'Add, rename or delete the categories used for your cakes.', 'addCategory': '+ Add Category', 'newCatPrompt': 'New category name:',
         'cert.add': 'Add Certificate', 'cert.modalTitle': 'Add Certificate', 'cert.front': 'Front photo', 'cert.back': 'Back photo (optional)', 'cert.save': 'Save Certificate', 'cert.emptyTitle': 'No certificates yet', 'cert.emptySub': 'Upload your HACCP / hygiene certificates to show on the site',
@@ -191,7 +191,6 @@ function applyAdminI18n() {
     if (typeof loadReviews === 'function') loadReviews();
     if (typeof loadCertificates === 'function') loadCertificates();
     if (typeof renderGlobalSizes === 'function') renderGlobalSizes();
-    if (typeof renderPriceTable === 'function') renderPriceTable();
 }
 
 function initAdminLang() {
@@ -903,6 +902,32 @@ function makeThumb(dataUrl, maxSize, quality, cb) {
     img.src = dataUrl;
 }
 
+function catInchOf(s) { var m = String(s == null ? '' : s).match(/\d+(\.\d+)?/); return m ? parseFloat(m[0]) : null; }
+function catBaseMap() { var m = {}; globalSizes().forEach(function(s) { var i = catInchOf(s.size); if (i != null) m[i] = parseFloat(s.price) || 0; }); return m; }
+
+// Bake FINAL per-size prices into the catalog (base + design, unless a row
+// overrides), so the public gallery/home show correct prices without needing
+// the design logic. Fixed-price cakes carry no sizes (they show their price).
+function effectiveCatalogSizes(c) {
+    if (c.price && parseFloat(c.price) > 0) return [];
+    var base = catBaseMap();
+    var dp = parseFloat(c.designPrice) || 0;
+    var own = (c.sizes && c.sizes.length) ? c.sizes : null;
+    if (own) {
+        return own.map(function(s) {
+            var raw = (s.price != null && String(s.price).trim() !== '') ? parseFloat(s.price) : null;
+            var i = catInchOf(s.size);
+            var fin = (raw != null) ? raw : ((base[i] != null) ? base[i] + dp : '');
+            return { size: s.size, serves: s.serves || '', price: (fin === '' ? '' : String(fin)) };
+        });
+    }
+    return globalSizes().map(function(s) {
+        var i = catInchOf(s.size);
+        var b = (base[i] != null) ? base[i] : (parseFloat(s.price) || 0);
+        return { size: s.size, serves: s.serves || '', price: String(b + dp) };
+    });
+}
+
 function buildCatalog(cakes) {
     return (cakes || []).map(function(c) {
         if (!c) return null;
@@ -910,7 +935,9 @@ function buildCatalog(cakes) {
             name: c.name || '',
             category: c.category || 'other',
             price: c.price || '',
-            sizes: c.sizes || [],
+            designPrice: c.designPrice || '',
+            fixedSize: c.fixedSize || '',
+            sizes: effectiveCatalogSizes(c),
             noticeDays: c.noticeDays != null ? c.noticeDays : 0,
             flavours: c.flavours || [],
             instaUrl: c.instaUrl || '',
@@ -1910,92 +1937,60 @@ function gatherGlobalSizes() {
     });
 })();
 
-// ----- Bulk price table: every cake × every global size -----
-function priceForSize(cake, sizeLabel) {
-    if (!cake || !cake.sizes) return '';
-    for (var i = 0; i < cake.sizes.length; i++) {
-        if (cake.sizes[i] && cake.sizes[i].size === sizeLabel) {
-            return cake.sizes[i].price != null ? String(cake.sizes[i].price) : '';
+// ----- One-time migration to the design-price model -----
+// Cakes whose per-size prices are exactly (global base + a constant) become
+// "design" cakes: their design surcharge is stored and the per-row prices are
+// STRIPPED (so they follow base + design, editable with one number). Size sets,
+// serves and every price are preserved exactly. Cakes that don't fit (variable
+// design, prices below base, sizes not in the global table) keep their explicit
+// per-size prices. Fixed-price cakes are untouched. Safe to run more than once.
+function migrateToDesignPricing(preview) {
+    var cakes = getData('products', null);
+    if (!Array.isArray(cakes)) { alert('Cakes not loaded yet.'); return; }
+    var base = catBaseMap();
+    var globalInches = Object.keys(base).map(Number).sort(function(a, b) { return a - b; }).join(',');
+    var toDesign = 0, kept = 0, fixed = 0, changed = [];
+    var out = cakes.map(function(c) {
+        if (!c) return c;
+        if (c.designPrice && String(c.designPrice).trim()) { toDesign++; return c; } // already migrated
+        if (c.price && String(c.price).trim()) { fixed++; return c; }
+        var rows = (c.sizes || []).filter(function(s) { return s && String(s.price).trim() !== ''; });
+        if (!rows.length) { kept++; return c; }
+        var diffs = [], okBase = true;
+        rows.forEach(function(s) { var i = catInchOf(s.size); if (base[i] == null) { okBase = false; return; } diffs.push(parseFloat(s.price) - base[i]); });
+        var constant = okBase && diffs.length && diffs.every(function(d) { return d === diffs[0]; }) && diffs[0] >= 0;
+        var sameSet = (c.sizes || []).map(function(s) { return catInchOf(s.size); }).sort(function(a, b) { return a - b; }).join(',') === globalInches;
+        if (constant) {
+            toDesign++;
+            changed.push(c.name + '  → design +€' + diffs[0]);
+            if (preview) return c;
+            var copy = {}; for (var k in c) copy[k] = c[k];
+            copy.designPrice = String(diffs[0]);
+            // Keep the size rows (size + serves) but strip the prices so they follow base+design.
+            // If the cake offers exactly the global set, drop rows entirely to use the global sizes.
+            copy.sizes = sameSet ? [] : (c.sizes || []).map(function(s) { return { size: s.size, serves: s.serves || '', price: '' }; });
+            return copy;
         }
-    }
-    return '';
-}
-function renderPriceTable() {
-    var wrap = document.getElementById('priceTableWrap');
-    if (!wrap) return;
-    var sizes = globalSizes();
-    if (!sizes.length) { wrap.innerHTML = '<p class="price-table__msg">' + at('ptable.needSizes') + '</p>'; return; }
-    var cakes = getData('products', null) || [];
-    if (!cakes.length) { wrap.innerHTML = '<p class="price-table__msg">' + at('ptable.empty') + '</p>'; return; }
-
-    var head = '<th class="price-table__cakecol">' + at('ptable.cake') + '</th>';
-    for (var s = 0; s < sizes.length; s++) {
-        head += '<th>' + escapeHtml(sizes[s].size || '') + '</th>';
-    }
-    var rows = '';
-    for (var i = 0; i < cakes.length; i++) {
-        var c = cakes[i] || {};
-        var nameCell = '<td class="price-table__cakecol"><div class="price-table__cakeinner">' +
-            (c.photo ? '<img class="price-table__thumb" src="' + c.photo + '" alt="">' : '') +
-            '<span>' + escapeHtml(c.name || '') + '</span></div></td>';
-        var cells = '';
-        if (c.price) {
-            cells = '<td colspan="' + sizes.length + '" class="price-table__fixed">' + at('ptable.fixed') + escapeHtml(c.price) + '</td>';
-        } else {
-            for (var s2 = 0; s2 < sizes.length; s2++) {
-                cells += '<td><input type="text" inputmode="decimal" class="price-table__input" data-cake="' + i + '" data-size="' + s2 + '" value="' + escapeHtml(priceForSize(c, sizes[s2].size)) + '"></td>';
-            }
-        }
-        rows += '<tr data-row="' + i + '" data-name="' + escapeHtml((c.name || '').toLowerCase()) + '">' + nameCell + cells + '</tr>';
-    }
-    wrap.innerHTML = '<div class="price-table__scroll"><table class="price-table"><thead><tr>' + head + '</tr></thead><tbody>' + rows + '</tbody></table></div>';
-
-    // Enter / arrow-down jumps to the cell below (fast column entry)
-    wrap.querySelectorAll('.price-table__input').forEach(function(inp) {
-        inp.addEventListener('keydown', function(e) {
-            if (e.key !== 'Enter' && e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
-            e.preventDefault();
-            var sz = this.getAttribute('data-size');
-            var col = wrap.querySelectorAll('.price-table__input[data-size="' + sz + '"]');
-            var idx = -1;
-            for (var k = 0; k < col.length; k++) if (col[k] === this) { idx = k; break; }
-            var next = col[idx + (e.key === 'ArrowUp' ? -1 : 1)];
-            if (next) { next.focus(); next.select(); }
-        });
+        kept++;
+        return c;
     });
-}
-function savePriceTable() {
-    var cakes = getData('products', null) || [];
-    var sizes = globalSizes();
-    if (!sizes.length || !cakes.length) return;
-    document.querySelectorAll('#priceTableWrap tbody tr').forEach(function(tr) {
-        var i = parseInt(tr.getAttribute('data-row'));
-        var c = cakes[i];
-        if (!c || c.price) return; // fixed-price cakes are left untouched
-        var newSizes = [];
-        tr.querySelectorAll('.price-table__input').forEach(function(inp) {
-            var p = inp.value.trim();
-            var sIdx = parseInt(inp.getAttribute('data-size'));
-            var gs = sizes[sIdx];
-            if (p && gs) newSizes.push({ size: gs.size, serves: gs.serves, price: p });
-        });
-        if (newSizes.length) c.sizes = newSizes;
-        else delete c.sizes;
-    });
-    saveProducts(cakes);
-    var st = document.getElementById('priceTableStatus');
-    if (st) { st.textContent = at('content.saved'); setTimeout(function() { st.textContent = ''; }, 3000); }
+    if (preview) {
+        alert('Migration preview (nothing saved yet):\n\n' +
+            'Will move to design pricing: ' + toDesign + '\n' +
+            'Kept as-is (special/variable): ' + kept + '\n' +
+            'Fixed-price (untouched): ' + fixed + '\n\n' +
+            'Examples:\n' + changed.slice(0, 20).join('\n'));
+        return;
+    }
+    if (!confirm('Apply pricing migration?\n\n' + toDesign + ' cakes → design pricing\n' + kept + ' kept as-is\n' + fixed + ' fixed (untouched)\n\nPrices do not change. A backup already exists.')) return;
+    saveProducts(out);
+    alert('Done. ' + toDesign + ' cakes moved to design pricing. Prices unchanged.');
 }
 (function() {
-    var save = document.getElementById('savePriceTableBtn');
-    if (save) save.addEventListener('click', savePriceTable);
-    var search = document.getElementById('priceTableSearch');
-    if (search) search.addEventListener('input', function() {
-        var q = this.value.trim().toLowerCase();
-        document.querySelectorAll('#priceTableWrap tbody tr').forEach(function(tr) {
-            tr.style.display = (!q || tr.getAttribute('data-name').indexOf(q) > -1) ? '' : 'none';
-        });
-    });
+    var prev = document.getElementById('migratePreviewBtn');
+    if (prev) prev.addEventListener('click', function() { migrateToDesignPricing(true); });
+    var run = document.getElementById('migrateRunBtn');
+    if (run) run.addEventListener('click', function() { migrateToDesignPricing(false); });
 })();
 
 function priceRange(sizes) {
@@ -2035,7 +2030,7 @@ function loadCakes() {
             img +
             '<div class="cake-admin-card__body">' +
                 '<div class="cake-admin-card__name">' + escapeHtml(c.name) + '</div>' +
-                '<div class="cake-admin-card__meta">' + escapeHtml(catNameById(c.category)) + ' · ' + (c.price ? '€' + escapeHtml(c.price) : priceRange((c.sizes && c.sizes.length) ? c.sizes : globalSizes())) + '</div>' +
+                '<div class="cake-admin-card__meta">' + escapeHtml(catNameById(c.category)) + ' · ' + (c.price ? '€' + escapeHtml(c.price) : priceRange(effectiveCatalogSizes(c))) + '</div>' +
                 '<div class="cake-admin-card__actions">' +
                     '<button class="btn-edit" data-cake-edit="' + i + '">' + at('edit') + '</button>' +
                     '<button class="btn-delete" data-cake-del="' + i + '">' + at('delete') + '</button>' +
@@ -2257,6 +2252,7 @@ function openCakeModal(editId) {
         document.getElementById('cakeEditId').value = editId;
         document.getElementById('cakeName').value = c.name || '';
         document.getElementById('cakePrice').value = c.price || '';
+        document.getElementById('cakeDesign').value = c.designPrice || '';
         document.getElementById('cakeFixedSize').value = c.fixedSize || '';
         document.getElementById('cakeDesc').value = c.desc || '';
         document.getElementById('cakeInsta').value = c.instaUrl || '';
@@ -2275,6 +2271,7 @@ function openCakeModal(editId) {
         document.getElementById('cakeEditId').value = '';
         document.getElementById('cakeName').value = '';
         document.getElementById('cakePrice').value = '';
+        document.getElementById('cakeDesign').value = '';
         document.getElementById('cakeFixedSize').value = '';
         document.getElementById('cakeDesc').value = '';
         document.getElementById('cakeInsta').value = '';
@@ -2340,6 +2337,7 @@ document.getElementById('cakeForm').addEventListener('submit', function(e) {
     var cake = {
         name: document.getElementById('cakeName').value.trim(),
         price: document.getElementById('cakePrice').value.trim(),
+        designPrice: document.getElementById('cakeDesign').value.trim(),
         fixedSize: document.getElementById('cakeFixedSize').value.trim(),
         category: document.getElementById('cakeCategory').value,
         desc: document.getElementById('cakeDesc').value.trim(),
@@ -2467,8 +2465,8 @@ function loadAllData() {
         if (mcm && mcm.style.display === 'flex') renderManageCats();
     });
     listenData('orders', function() { loadOrders(); });
-    listenData('products', function() { cleanupLangFields('products'); loadCakes(); renderPriceTable(); ensureCatalog(); });
-    listenData('default-sizes', function() { renderGlobalSizes(); loadCakes(); renderPriceTable(); });
+    listenData('products', function() { cleanupLangFields('products'); loadCakes(); ensureCatalog(); });
+    listenData('default-sizes', function() { renderGlobalSizes(); loadCakes(); writeCatalog(getData('products', []) || []); });
     listenData('gallery-cat', function() { loadGallery(); });
     listenData('certificates', function() { loadCertificates(); });
     listenData('flavours', function(val) {

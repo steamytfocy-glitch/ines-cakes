@@ -235,9 +235,15 @@
                         </div>
 
                         <div class="modal__field">
-                            <label data-i18n="cake.price">Cake price (€) - optional</label>
+                            <label data-i18n="cake.design">Design price (+€) — added to each size</label>
+                            <input type="text" id="cakeDesign" placeholder="e.g. 15" style="max-width:160px;">
+                            <span class="content-hint" data-i18n="cake.designHint">The decoration surcharge added to every size's base price. Final size price = base (from Sizes &amp; Prices) + this. E.g. 6″ €60 base + €15 = €75.</span>
+                        </div>
+
+                        <div class="modal__field">
+                            <label data-i18n="cake.price">Fixed price (€) - optional</label>
                             <input type="text" id="cakePrice" placeholder="e.g. 45" style="max-width:160px;">
-                            <span class="content-hint" data-i18n="cake.priceHint">One fixed price for this cake. If set, it is used instead of the per-size prices below.</span>
+                            <span class="content-hint" data-i18n="cake.priceHint">One flat price for cakes NOT sold by size (e.g. a sphere). If set, there are no size options and the design price is ignored.</span>
                         </div>
 
                         <div class="modal__field">
@@ -247,8 +253,8 @@
                         </div>
 
                         <div class="modal__field">
-                            <label data-i18n="sizesPrices">Sizes &amp; prices</label>
-                            <p class="content-hint" style="margin:0 0 8px;" data-i18n="sizesHint">Add each size you offer with its price and how many it serves.</p>
+                            <label data-i18n="sizesPrices">Sizes &amp; prices — advanced override</label>
+                            <p class="content-hint" style="margin:0 0 8px;" data-i18n="sizesHint">Leave this empty for normal cakes — they use the global sizes + the design price above. Only add rows here to override specific sizes/prices for a special cake.</p>
                             <div id="cakeSizesRows"></div>
                             <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;">
                                 <button type="button" class="btn-cancel" id="addSizeRowBtn" data-i18n="addSize">+ Add size</button>
@@ -321,12 +327,20 @@
                 </div>
 
                 <div class="content-section">
-                    <h3 class="content-section__title" data-i18n="ptable.title">Price table - all cakes</h3>
-                    <p class="content-hint" style="margin:0 0 12px;" data-i18n="ptable.hint">Type a price for each size, per cake. Leave a cake empty to use the default prices above.</p>
-                    <input type="text" id="priceTableSearch" class="price-table__search" data-i18n-placeholder="ptable.search" placeholder="Search cake…">
-                    <div id="priceTableWrap"></div>
-                    <button class="btn-admin" id="savePriceTableBtn" style="margin-top:14px;" data-i18n="ptable.save">Save all prices</button>
-                    <p class="save-status" id="priceTableStatus"></p>
+                    <h3 class="content-section__title">How cake prices work</h3>
+                    <p class="content-hint" style="margin:0 0 12px;line-height:1.6;">
+                        Each size above is the <b>base price</b>. In a cake's own form you set a
+                        <b>Design price (+€)</b> that's added to every size — final size price = base + design.
+                        For one-off flat-price cakes (like a sphere), use the <b>Fixed price</b> field instead.
+                    </p>
+                    <p class="content-hint" style="margin:0 0 12px;line-height:1.6;">
+                        One-time cleanup: convert existing cakes to the design model. <b>Prices don't change.</b>
+                        Preview first to see what will happen.
+                    </p>
+                    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                        <button type="button" class="btn-cancel" id="migratePreviewBtn">Preview migration</button>
+                        <button type="button" class="btn-admin" id="migrateRunBtn">Run migration</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -648,6 +662,6 @@
 <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
 <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script defer src="js/firebase-init.js?v=3"></script>
-<script defer src="js/admin.js?v=12"></script>
+<script defer src="js/admin.js?v=13"></script>
 </body>
 </html>
