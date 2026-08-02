@@ -1259,21 +1259,33 @@ function recalcTotal() {
     var addons = tall + gf;
     var hasBase = base !== null;
 
-    if (!sizeSelected || (!hasBase && !flavour && !addons)) {
-        valueEl.textContent = sizeSelected ? priceReq : '-';
+    // No size chosen yet -> nothing to estimate.
+    if (!sizeSelected) {
+        valueEl.textContent = '-';
         if (hidden) hidden.value = '';
-        if (box) box.style.display = sizeSelected ? '' : 'none';
+        if (box) box.style.display = 'none';
         if (bdEl) bdEl.textContent = '';
         return;
     }
 
-    var total = (hasBase ? base : 0) + flavour + addons;
+    // A size is chosen but has no fixed base price (e.g. a non-standard custom
+    // diameter). The cake is quoted by the bakery, so show "price on request" -
+    // NEVER an addon-only total like "€15", which would look like the full price.
+    // The chosen add-ons are still recorded on the order for the bakery to see.
+    if (!hasBase) {
+        valueEl.textContent = priceReq;
+        if (hidden) hidden.value = '';
+        if (box) box.style.display = '';
+        if (bdEl) bdEl.textContent = '';
+        return;
+    }
+
+    var total = base + flavour + addons;
     valueEl.textContent = '€' + total;
     if (hidden) hidden.value = '€' + total;
     if (box) box.style.display = '';
     if (bdEl) {
-        var parts = [];
-        if (hasBase) parts.push('€' + base);
+        var parts = ['€' + base];
         if (flavour) parts.push('+ €' + flavour);
         if (tall) parts.push('+ €' + tall);
         if (gf) parts.push('+ €' + gf);
