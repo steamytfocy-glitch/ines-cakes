@@ -9,7 +9,8 @@
         st.id = 'ines-announce-styles';
         st.textContent =
             '.site-announce{position:fixed;top:0;left:0;right:0;z-index:1200;background:#C8963E;color:#3D2E1C;' +
-            'text-align:center;padding:10px 16px;font:600 14px/1.45 "Montserrat",sans-serif;box-shadow:0 2px 8px rgba(61,46,28,.18);}' +
+            'text-align:center;padding:16px 22px;font:700 17px/1.5 "Montserrat",sans-serif;letter-spacing:.2px;box-shadow:0 3px 12px rgba(61,46,28,.22);}' +
+            '@media (max-width:600px){.site-announce{padding:13px 16px;font-size:15px;}}' +
             'body.ines-orders-paused #order,body.ines-orders-paused .hero__buttons .btn--outline,' +
             'body.ines-orders-paused #pAddBtn,body.ines-orders-paused #pRefBtn,' +
             'body.ines-orders-paused #checkoutForm{display:none !important;}';
