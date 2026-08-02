@@ -587,6 +587,26 @@
                 </div>
 
                 <div class="content-section">
+                    <h3>Announcement banner</h3>
+                    <div class="site-toggle-row">
+                        <label class="switch">
+                            <input type="checkbox" id="announceToggle">
+                            <span class="switch__slider"></span>
+                        </label>
+                        <span class="site-status-label" id="announceLabel">Announcement is OFF</span>
+                    </div>
+                    <p class="content-hint" style="margin-top:6px;">Shows a bar at the top of every page while ON (the site stays open) — e.g. a holiday notice.</p>
+                    <div class="content-field" style="margin-top:14px;">
+                        <label>Announcement text</label>
+                        <textarea id="announceText" rows="2" placeholder="e.g. Closed 8–14 August — no orders this week. Back on the 15th!"></textarea>
+                    </div>
+                    <label style="display:inline-flex;align-items:center;gap:8px;margin-top:12px;cursor:pointer;font-size:0.9rem;">
+                        <input type="checkbox" id="announcePause"> Pause ordering while shown (hides the order &amp; checkout buttons)
+                    </label>
+                    <div><button class="btn-admin" id="saveAnnounceBtn" style="margin-top:14px;">Save announcement</button></div>
+                </div>
+
+                <div class="content-section">
                     <h3 data-i18n="content.heroTitle">Home hero photo</h3>
                     <p class="content-hint" style="margin:0 0 10px;" data-i18n="content.heroHint">Shown big on the home page. Square photos look best. Leave empty for the default illustration.</p>
                     <input type="file" id="heroPhotoInput" accept="image/*">
@@ -669,6 +689,6 @@
 <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
 <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script defer src="js/firebase-init.js?v=3"></script>
-<script defer src="js/admin.js?v=17"></script>
+<script defer src="js/admin.js?v=18"></script>
 </body>
 </html>

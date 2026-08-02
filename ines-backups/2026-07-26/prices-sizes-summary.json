@@ -1,0 +1,2044 @@
+[
+  {
+    "name": "Chocolate sphere cake simple",
+    "price": "80",
+    "fixedSize": "",
+    "category": "chocolate-sphere-cakes",
+    "sizes": [
+      {
+        "size": "7",
+        "serves": "",
+        "price": ""
+      }
+    ]
+  },
+  {
+    "name": "Chocolate sphere cake alcohol",
+    "price": "85",
+    "fixedSize": "",
+    "category": "chocolate-sphere-cakes",
+    "sizes": [
+      {
+        "size": "7",
+        "serves": "",
+        "price": ""
+      }
+    ]
+  },
+  {
+    "name": "Football-sphere cake",
+    "price": "85",
+    "fixedSize": "",
+    "category": "chocolate-sphere-cakes",
+    "sizes": [
+      {
+        "size": "7",
+        "serves": "",
+        "price": ""
+      }
+    ]
+  },
+  {
+    "name": "Floral Tenderness",
+    "price": "",
+    "fixedSize": "",
+    "category": "delicate-wafer-design",
+    "sizes": [
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "85"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "95"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "105"
+      },
+      {
+        "size": "10",
+        "serves": "30-35",
+        "price": "115"
+      }
+    ]
+  },
+  {
+    "name": "Floral Tenderness Color",
+    "price": "",
+    "fixedSize": "",
+    "category": "delicate-wafer-design",
+    "sizes": [
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "90"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "100"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "110"
+      },
+      {
+        "size": "10",
+        "serves": "30-35",
+        "price": "120"
+      }
+    ]
+  },
+  {
+    "name": "Butterfly Elegance",
+    "price": "",
+    "fixedSize": "",
+    "category": "delicate-wafer-design",
+    "sizes": [
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "120"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "130"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "140"
+      },
+      {
+        "size": "10",
+        "serves": "30-35",
+        "price": "150"
+      }
+    ]
+  },
+  {
+    "name": "Butterfly/Flower Elegance Color",
+    "price": "",
+    "fixedSize": "",
+    "category": "delicate-wafer-design",
+    "sizes": [
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "115"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "125"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "135"
+      },
+      {
+        "size": "10",
+        "serves": "30-35",
+        "price": "145"
+      }
+    ]
+  },
+  {
+    "name": "Bunny in the Flower Garden",
+    "price": "",
+    "fixedSize": "",
+    "category": "delicate-wafer-design",
+    "sizes": [
+      {
+        "size": "6",
+        "serves": "6-8",
+        "price": "95"
+      },
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "110"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "115"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "125"
+      },
+      {
+        "size": "10",
+        "serves": "30-35",
+        "price": "140"
+      }
+    ]
+  },
+  {
+    "name": "Pink Inspiration",
+    "price": "",
+    "fixedSize": "",
+    "category": "delicate-wafer-design",
+    "sizes": [
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "115"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "125"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "135"
+      },
+      {
+        "size": "6",
+        "serves": "6-8",
+        "price": "105"
+      },
+      {
+        "size": "10",
+        "serves": "30-35",
+        "price": "145"
+      }
+    ]
+  },
+  {
+    "name": "Golden Harmony",
+    "price": "",
+    "fixedSize": "",
+    "category": "delicate-wafer-design",
+    "sizes": [
+      {
+        "size": "6",
+        "serves": "6-8",
+        "price": "95"
+      },
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "105"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "115"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "125"
+      },
+      {
+        "size": "10",
+        "serves": "30-35",
+        "price": "135"
+      }
+    ]
+  },
+  {
+    "name": "Vintage Heart (ribbon)",
+    "price": "",
+    "fixedSize": "",
+    "category": "vintage-elegance",
+    "sizes": [
+      {
+        "size": "6",
+        "serves": "6-8",
+        "price": "85"
+      },
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "95"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "105"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "120"
+      },
+      {
+        "size": "10",
+        "serves": "30-35",
+        "price": "135"
+      }
+    ]
+  },
+  {
+    "name": "Vintage Heart Berry",
+    "price": "",
+    "fixedSize": "",
+    "category": "vintage-elegance",
+    "sizes": [
+      {
+        "size": "6",
+        "serves": "6-8",
+        "price": "85"
+      },
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "95"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "105"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "120"
+      },
+      {
+        "size": "10",
+        "serves": "30-35",
+        "price": "135"
+      }
+    ]
+  },
+  {
+    "name": "Vintage Classic White",
+    "price": "",
+    "fixedSize": "",
+    "category": "vintage-elegance",
+    "sizes": [
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "95"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "105"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "115"
+      },
+      {
+        "size": "10",
+        "serves": "30-35",
+        "price": "125"
+      }
+    ]
+  },
+  {
+    "name": "Vintage Classic Color",
+    "price": "",
+    "fixedSize": "",
+    "category": "vintage-elegance",
+    "sizes": [
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "95"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "105"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "115"
+      },
+      {
+        "size": "10",
+        "serves": "30*35",
+        "price": "125"
+      }
+    ]
+  },
+  {
+    "name": "Pokémon",
+    "price": "",
+    "fixedSize": "",
+    "category": "kids-cakes-favourite-characters",
+    "sizes": [
+      {
+        "size": "6",
+        "serves": "6-8",
+        "price": "85"
+      },
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "95"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "105"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "115"
+      },
+      {
+        "size": "10",
+        "serves": "30*35",
+        "price": "125"
+      }
+    ]
+  },
+  {
+    "name": "Plants vs. Zombies",
+    "price": "",
+    "fixedSize": "",
+    "category": "kids-cakes-favourite-characters",
+    "sizes": [
+      {
+        "size": "6",
+        "serves": "6-8",
+        "price": "85"
+      },
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "95"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "105"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "115"
+      },
+      {
+        "size": "10",
+        "serves": "30-35",
+        "price": "125"
+      }
+    ]
+  },
+  {
+    "name": "Bluey",
+    "price": "",
+    "fixedSize": "",
+    "category": "kids-cakes-favourite-characters",
+    "sizes": [
+      {
+        "size": "6",
+        "serves": "6-8",
+        "price": "80"
+      },
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "90"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "100"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "110"
+      },
+      {
+        "size": "10",
+        "serves": "30-35",
+        "price": "120"
+      }
+    ]
+  },
+  {
+    "name": "Minecraft",
+    "price": "",
+    "fixedSize": "",
+    "category": "kids-cakes-favourite-characters",
+    "sizes": [
+      {
+        "size": "6",
+        "serves": "6-8",
+        "price": "85"
+      },
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "95"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "105"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "115"
+      },
+      {
+        "size": "10",
+        "serves": "30-35",
+        "price": "125"
+      }
+    ]
+  },
+  {
+    "name": "KPop Demon Hunters",
+    "price": "",
+    "fixedSize": "",
+    "category": "kids-cakes-favourite-characters",
+    "sizes": [
+      {
+        "size": "6",
+        "serves": "6-8",
+        "price": "95"
+      },
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "105"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "115"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "125"
+      },
+      {
+        "size": "10",
+        "serves": "30-35",
+        "price": "145"
+      }
+    ]
+  },
+  {
+    "name": "Christening Cake",
+    "price": "",
+    "fixedSize": "",
+    "category": "christening-communion-cakes",
+    "sizes": [
+      {
+        "size": "6",
+        "serves": "6-8",
+        "price": "95"
+      },
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "105"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "120"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "130"
+      },
+      {
+        "size": "10",
+        "serves": "30-35",
+        "price": "145"
+      }
+    ]
+  },
+  {
+    "name": "Communion Cake",
+    "price": "",
+    "fixedSize": "",
+    "category": "christening-communion-cakes",
+    "sizes": [
+      {
+        "size": "6",
+        "serves": "6-8",
+        "price": "70"
+      },
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "80"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "90"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "100"
+      },
+      {
+        "size": "10",
+        "serves": "30-35",
+        "price": "110"
+      }
+    ]
+  },
+  {
+    "name": "Red Rose",
+    "price": "",
+    "fixedSize": "",
+    "category": "fresh-flowers",
+    "sizes": [
+      {
+        "size": "6",
+        "serves": "6-8",
+        "price": "70"
+      },
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "80"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "90"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "100"
+      },
+      {
+        "size": "10",
+        "serves": "30-35",
+        "price": "110"
+      }
+    ]
+  },
+  {
+    "name": "Yellow Rose",
+    "price": "",
+    "fixedSize": "",
+    "category": "fresh-flowers",
+    "sizes": [
+      {
+        "size": "6",
+        "serves": "6-8",
+        "price": "75"
+      },
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "85"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "95"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "105"
+      },
+      {
+        "size": "10",
+        "serves": "30-35",
+        "price": "115"
+      }
+    ]
+  },
+  {
+    "name": "Chrysanthemum Elegance",
+    "price": "",
+    "fixedSize": "",
+    "category": "fresh-flowers",
+    "sizes": [
+      {
+        "size": "6",
+        "serves": "6-8",
+        "price": "75"
+      },
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "95"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "100"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "110"
+      },
+      {
+        "size": "10",
+        "serves": "30-35",
+        "price": "115"
+      }
+    ]
+  },
+  {
+    "name": "Baby’s Breath",
+    "price": "",
+    "fixedSize": "",
+    "category": "fresh-flowers",
+    "sizes": [
+      {
+        "size": "6",
+        "serves": "6-8",
+        "price": "65"
+      },
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "75"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "85"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "95"
+      },
+      {
+        "size": "10",
+        "serves": "30-35",
+        "price": "105"
+      }
+    ]
+  },
+  {
+    "name": "More Than a Thousand Words",
+    "price": "",
+    "fixedSize": "",
+    "category": "fresh-flowers",
+    "sizes": [
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "90"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "100"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "110"
+      },
+      {
+        "size": "10",
+        "serves": "30-35",
+        "price": "120"
+      }
+    ]
+  },
+  {
+    "name": "Sunny Chrysanthemum",
+    "price": "",
+    "fixedSize": "",
+    "category": "fresh-flowers",
+    "sizes": [
+      {
+        "size": "6",
+        "serves": "6-8",
+        "price": "80"
+      },
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "90"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "100"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "110"
+      },
+      {
+        "size": "10",
+        "serves": "30-35",
+        "price": "120"
+      }
+    ]
+  },
+  {
+    "name": "Floral Watercolour",
+    "price": "",
+    "fixedSize": "",
+    "category": "fresh-flowers",
+    "sizes": [
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "80"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "90"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "110"
+      },
+      {
+        "size": "10",
+        "serves": "30-35",
+        "price": "120"
+      }
+    ]
+  },
+  {
+    "name": "The Rocks 🖤",
+    "price": "",
+    "fixedSize": "",
+    "category": "men-s-collection",
+    "sizes": [
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "120"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "130"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "140"
+      },
+      {
+        "size": "10",
+        "serves": "30-35",
+        "price": "150"
+      }
+    ]
+  },
+  {
+    "name": "Black & Gold Elegance 🖤",
+    "price": "",
+    "fixedSize": "",
+    "category": "men-s-collection",
+    "sizes": [
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "100"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "115"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "125"
+      },
+      {
+        "size": "10",
+        "serves": "30-35",
+        "price": "135"
+      }
+    ]
+  },
+  {
+    "name": "White Gold",
+    "price": "",
+    "fixedSize": "",
+    "category": "men-s-collection",
+    "sizes": [
+      {
+        "size": "6",
+        "serves": "6-8",
+        "price": "75"
+      },
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "85"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "95"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "105"
+      },
+      {
+        "size": "10",
+        "serves": "40-45",
+        "price": "115"
+      }
+    ]
+  },
+  {
+    "name": "Golden Geometry",
+    "price": "",
+    "fixedSize": "",
+    "category": "men-s-collection",
+    "sizes": [
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "100"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "110"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "120"
+      },
+      {
+        "size": "10",
+        "serves": "40-45",
+        "price": "130"
+      }
+    ]
+  },
+  {
+    "name": "The Moustache Gentleman 🎩🖤",
+    "price": "",
+    "fixedSize": "",
+    "category": "men-s-collection",
+    "sizes": [
+      {
+        "size": "6",
+        "serves": "6-8",
+        "price": "75"
+      },
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "85"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "95"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "105"
+      },
+      {
+        "size": "10",
+        "serves": "30-35",
+        "price": "115"
+      }
+    ]
+  },
+  {
+    "name": "Black Lambeth",
+    "price": "",
+    "fixedSize": "",
+    "category": "men-s-collection",
+    "sizes": [
+      {
+        "size": "6",
+        "serves": "6-8",
+        "price": "80"
+      },
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "90"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "100"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "110"
+      },
+      {
+        "size": "10",
+        "serves": "30-35",
+        "price": "120"
+      }
+    ]
+  },
+  {
+    "name": "Feminine Charm",
+    "price": "",
+    "fixedSize": "",
+    "category": "men-s-collection",
+    "sizes": [
+      {
+        "size": "10",
+        "serves": "35",
+        "price": "160"
+      }
+    ]
+  },
+  {
+    "name": "Magical Unicorn",
+    "price": "",
+    "fixedSize": "",
+    "category": "kids-cakes-favourite-characters",
+    "sizes": [
+      {
+        "size": "6",
+        "serves": "6-8",
+        "price": "75"
+      },
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "85"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "95"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "105"
+      },
+      {
+        "size": "10",
+        "serves": "30-35",
+        "price": "115"
+      }
+    ]
+  },
+  {
+    "name": "Minnie Mouse Cake",
+    "price": "",
+    "fixedSize": "",
+    "category": "kids-cakes-favourite-characters",
+    "sizes": [
+      {
+        "size": "6",
+        "serves": "6-8",
+        "price": "95"
+      },
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "105"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "115"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "125"
+      },
+      {
+        "size": "10",
+        "serves": "30-35",
+        "price": "140"
+      }
+    ]
+  },
+  {
+    "name": "Pikachu Cake ⚡",
+    "price": "",
+    "fixedSize": "",
+    "category": "kids-cakes-favourite-characters",
+    "sizes": [
+      {
+        "size": "6",
+        "serves": "6-8",
+        "price": "80"
+      },
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "90"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "100"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "110"
+      },
+      {
+        "size": "10",
+        "serves": "30-35",
+        "price": "120"
+      }
+    ]
+  },
+  {
+    "name": "Disney Princess",
+    "price": "",
+    "fixedSize": "",
+    "category": "kids-cakes-favourite-characters",
+    "sizes": [
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "120"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "130"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "140"
+      },
+      {
+        "size": "10",
+        "serves": "30-35",
+        "price": "150"
+      }
+    ]
+  },
+  {
+    "name": "Barbie Cake 💗",
+    "price": "",
+    "fixedSize": "",
+    "category": "kids-cakes-favourite-characters",
+    "sizes": [
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "115"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "125"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "135"
+      },
+      {
+        "size": "10",
+        "serves": "30-35",
+        "price": "145"
+      }
+    ]
+  },
+  {
+    "name": "Gym Cake",
+    "price": "",
+    "fixedSize": "",
+    "category": "men-s-collection",
+    "sizes": [
+      {
+        "size": "6",
+        "serves": "6-8",
+        "price": "80"
+      },
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "90"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "100"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "110"
+      },
+      {
+        "size": "10",
+        "serves": "30-35",
+        "price": "120"
+      }
+    ]
+  },
+  {
+    "name": "Victorian Style Cake",
+    "price": "",
+    "fixedSize": "",
+    "category": "vintage-elegance",
+    "sizes": [
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "120"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "140"
+      },
+      {
+        "size": "10",
+        "serves": "30-35",
+        "price": "150"
+      }
+    ]
+  },
+  {
+    "name": "Oculus Gaming Cake",
+    "price": "",
+    "fixedSize": "",
+    "category": "kids-cakes-favourite-characters",
+    "sizes": [
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "110"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "120"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "130"
+      },
+      {
+        "size": "10",
+        "serves": "30-35",
+        "price": "140"
+      }
+    ]
+  },
+  {
+    "name": "Chocolate Sphere Jack Daniel’s Cake",
+    "price": "85",
+    "fixedSize": "",
+    "category": "chocolate-sphere-cakes",
+    "sizes": [
+      {
+        "size": "7",
+        "serves": "",
+        "price": ""
+      }
+    ]
+  },
+  {
+    "name": "Blueberry Cake",
+    "price": "",
+    "fixedSize": "",
+    "category": "fresh-fruit",
+    "sizes": [
+      {
+        "size": "6",
+        "serves": "6-8",
+        "price": "70"
+      },
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "90"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "100"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "110"
+      },
+      {
+        "size": "10",
+        "serves": "30-35",
+        "price": "120"
+      }
+    ]
+  },
+  {
+    "name": "Raspberry Cake",
+    "price": "",
+    "fixedSize": "",
+    "category": "fresh-fruit",
+    "sizes": [
+      {
+        "size": "6",
+        "serves": "6-8",
+        "price": "70"
+      },
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "80"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "90"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "100"
+      },
+      {
+        "size": "10",
+        "serves": "30-35",
+        "price": "115"
+      }
+    ]
+  },
+  {
+    "name": "Bunny Love Cake",
+    "price": "",
+    "fixedSize": "",
+    "category": "kids-cakes-favourite-characters",
+    "sizes": [
+      {
+        "size": "6",
+        "serves": "6-8",
+        "price": "80"
+      },
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "90"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "100"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "110"
+      },
+      {
+        "size": "10",
+        "serves": "30-35",
+        "price": "120"
+      }
+    ]
+  },
+  {
+    "name": "Teacher’s Book Cake",
+    "price": "",
+    "fixedSize": "",
+    "category": "special-occasion-cakes",
+    "sizes": [
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "110"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "120"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "130"
+      },
+      {
+        "size": "10",
+        "serves": "30-35",
+        "price": "140"
+      }
+    ]
+  },
+  {
+    "name": "Anniversary & Engagement Cakes",
+    "price": "",
+    "fixedSize": "",
+    "category": "special-occasion-cakes",
+    "sizes": [
+      {
+        "size": "6",
+        "serves": "6-8",
+        "price": "80"
+      },
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "90"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "105"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "115"
+      },
+      {
+        "size": "10",
+        "serves": "30-35",
+        "price": "130"
+      }
+    ]
+  },
+  {
+    "name": "Crown Cake",
+    "price": "",
+    "fixedSize": "",
+    "category": "other",
+    "sizes": [
+      {
+        "size": "6",
+        "serves": "6-8",
+        "price": "85"
+      },
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "95"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "105"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "115"
+      },
+      {
+        "size": "10",
+        "serves": "30-35",
+        "price": "130"
+      }
+    ]
+  },
+  {
+    "name": "Christmas Tree Cake",
+    "price": "",
+    "fixedSize": "",
+    "category": "christmas-cake",
+    "sizes": [
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "100"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "110"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "125"
+      },
+      {
+        "size": "10",
+        "serves": "30-35",
+        "price": "130"
+      }
+    ]
+  },
+  {
+    "name": "Peony Mousse Cake",
+    "price": "",
+    "fixedSize": "",
+    "category": "special-occasion-cakes",
+    "sizes": [
+      {
+        "size": "7",
+        "serves": "10-12",
+        "price": "90"
+      }
+    ]
+  },
+  {
+    "name": "Love Is Bento Cake",
+    "price": "",
+    "fixedSize": "",
+    "category": "bento",
+    "sizes": [
+      {
+        "size": "5",
+        "serves": "4",
+        "price": "43"
+      }
+    ]
+  },
+  {
+    "name": "Father’s Day Cake",
+    "price": "",
+    "fixedSize": "",
+    "category": "men-s-collection",
+    "sizes": [
+      {
+        "size": "6",
+        "serves": "6-8",
+        "price": "70"
+      },
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "80"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "90"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "100"
+      },
+      {
+        "size": "10",
+        "serves": "40-45",
+        "price": "110"
+      }
+    ]
+  },
+  {
+    "name": "Love Bento Cake",
+    "price": "",
+    "fixedSize": "",
+    "category": "bento",
+    "sizes": [
+      {
+        "size": "5",
+        "serves": "4-6",
+        "price": "35"
+      }
+    ]
+  },
+  {
+    "name": "Bunny Heart Bento Cake",
+    "price": "",
+    "fixedSize": "",
+    "category": "bento",
+    "sizes": [
+      {
+        "size": "5",
+        "serves": "4-6",
+        "price": "40"
+      }
+    ]
+  },
+  {
+    "name": "Funny Bento Cake",
+    "price": "",
+    "fixedSize": "",
+    "category": "bento",
+    "sizes": [
+      {
+        "size": "6\"(15cm)",
+        "serves": "6-8",
+        "price": "43"
+      }
+    ]
+  },
+  {
+    "name": "New Beginning Cake",
+    "price": "",
+    "fixedSize": "",
+    "category": "special-occasion-cakes",
+    "sizes": [
+      {
+        "size": "6",
+        "serves": "6-8",
+        "price": "75"
+      },
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "85"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "95"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "105"
+      },
+      {
+        "size": "10",
+        "serves": "30-35",
+        "price": "115"
+      }
+    ]
+  },
+  {
+    "name": "Napoleon Cake",
+    "price": "",
+    "fixedSize": "",
+    "category": "other",
+    "sizes": [
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "70"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "80"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "90"
+      }
+    ]
+  },
+  {
+    "name": "Esterházy Cake",
+    "price": "",
+    "fixedSize": "",
+    "category": "other",
+    "sizes": [
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "75"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "85"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "95"
+      }
+    ]
+  },
+  {
+    "name": "Floral Inspiration",
+    "price": "",
+    "fixedSize": "",
+    "category": "fresh-flowers",
+    "sizes": [
+      {
+        "size": "6",
+        "serves": "6-8",
+        "price": "75"
+      },
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "85"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "95"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "105"
+      },
+      {
+        "size": "10",
+        "serves": "30-35",
+        "price": "115"
+      }
+    ]
+  },
+  {
+    "name": "Chocolate Boom",
+    "price": "",
+    "fixedSize": "",
+    "category": "other",
+    "sizes": [
+      {
+        "size": "6",
+        "serves": "6-8",
+        "price": "75"
+      },
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "85"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "95"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "105"
+      },
+      {
+        "size": "10",
+        "serves": "30-35",
+        "price": "115"
+      }
+    ]
+  },
+  {
+    "name": "Celtic Football Cake",
+    "price": "",
+    "fixedSize": "",
+    "category": "men-s-collection",
+    "sizes": [
+      {
+        "size": "6",
+        "serves": "6-8",
+        "price": "80"
+      },
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "90"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "100"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "115"
+      },
+      {
+        "size": "10",
+        "serves": "30-35",
+        "price": "125"
+      }
+    ]
+  },
+  {
+    "name": "Elegant Graduation Cake",
+    "price": "",
+    "fixedSize": "",
+    "category": "special-occasion-cakes",
+    "sizes": [
+      {
+        "size": "6",
+        "serves": "6-8",
+        "price": "75"
+      },
+      {
+        "size": "7",
+        "serves": "10-13",
+        "price": "85"
+      },
+      {
+        "size": "8",
+        "serves": "15-18",
+        "price": "95"
+      },
+      {
+        "size": "9",
+        "serves": "20-25",
+        "price": "105"
+      },
+      {
+        "size": "10",
+        "serves": "30",
+        "price": "115"
+      }
+    ]
+  },
+  {
+    "name": "Sweet 16 Angel Wings Cake",
+    "price": "",
+    "fixedSize": "",
+    "category": "other",
+    "sizes": [
+      {
+        "size": "6",
+        "serves": "6-8",
+        "price": "80"
+      },
+      {
+        "size": "7",
+        "serves": "10-12",
+        "price": "90"
+      },
+      {
+        "size": "8",
+        "serves": "14-16",
+        "price": "100"
+      },
+      {
+        "size": "9",
+        "serves": "20-23",
+        "price": "110"
+      },
+      {
+        "size": "10",
+        "serves": "30",
+        "price": "130"
+      }
+    ]
+  },
+  {
+    "name": "Boss of the Family Cake",
+    "price": "",
+    "fixedSize": "",
+    "category": "men-s-collection",
+    "sizes": [
+      {
+        "size": "6",
+        "serves": "6-8",
+        "price": "95"
+      },
+      {
+        "size": "8",
+        "serves": "10-12",
+        "price": "110"
+      },
+      {
+        "size": "9",
+        "serves": "14-16",
+        "price": "120"
+      },
+      {
+        "size": "10",
+        "serves": "20-25",
+        "price": "135"
+      }
+    ]
+  },
+  {
+    "name": "Ride to a Dream",
+    "price": "60",
+    "fixedSize": "",
+    "category": "other",
+    "sizes": [
+      {
+        "size": "6 inch",
+        "serves": "6-8 serves",
+        "price": "90"
+      },
+      {
+        "size": "7 inch",
+        "serves": "10-12 serves",
+        "price": "100"
+      },
+      {
+        "size": "8 inch",
+        "serves": "15-18 serves",
+        "price": "110"
+      },
+      {
+        "size": "9 inch",
+        "serves": "20-22 serves",
+        "price": "120"
+      },
+      {
+        "size": "10 inch",
+        "serves": "30-35 serves",
+        "price": "130"
+      }
+    ]
+  },
+  {
+    "name": "Milestone Swimmer",
+    "price": "60",
+    "fixedSize": "",
+    "category": "other",
+    "sizes": [
+      {
+        "size": "6 inch",
+        "serves": "6-8 serves",
+        "price": "75"
+      },
+      {
+        "size": "7 inch",
+        "serves": "10-12 serves",
+        "price": "85"
+      },
+      {
+        "size": "8 inch",
+        "serves": "15-18 serves",
+        "price": "95"
+      },
+      {
+        "size": "9 inch",
+        "serves": "20-22 serves",
+        "price": "105"
+      },
+      {
+        "size": "10 inch",
+        "serves": "30-35 serves",
+        "price": "150"
+      }
+    ]
+  },
+  {
+    "name": "Thunderbirds Cake",
+    "price": "60",
+    "fixedSize": "",
+    "category": "other",
+    "sizes": [
+      {
+        "size": "6 inch",
+        "serves": "6-8 serves",
+        "price": "87"
+      },
+      {
+        "size": "7 inch",
+        "serves": "10-12 serves",
+        "price": "97"
+      },
+      {
+        "size": "8 inch",
+        "serves": "15-18 serves",
+        "price": "107"
+      },
+      {
+        "size": "9 inch",
+        "serves": "20-22 serves",
+        "price": "117"
+      },
+      {
+        "size": "10 inch",
+        "serves": "30-35 serves",
+        "price": "127"
+      }
+    ]
+  },
+  {
+    "name": "Simple Buttercream Cake",
+    "price": "60",
+    "fixedSize": "",
+    "category": "other",
+    "sizes": [
+      {
+        "size": "6 inch",
+        "serves": "6-8 serves",
+        "price": "65"
+      },
+      {
+        "size": "7 inch",
+        "serves": "10-12 serves",
+        "price": "75"
+      },
+      {
+        "size": "8 inch",
+        "serves": "15-18 serves",
+        "price": "85"
+      },
+      {
+        "size": "9 inch",
+        "serves": "20-22 serves",
+        "price": "95"
+      },
+      {
+        "size": "10 inch",
+        "serves": "30-35 serves",
+        "price": "105"
+      }
+    ]
+  },
+  {
+    "name": "cupcake fresh berry",
+    "price": "65",
+    "fixedSize": "18 serves",
+    "category": "cupcake",
+    "sizes": []
+  },
+  {
+    "name": "Cute Bento Cake",
+    "price": "56",
+    "fixedSize": "Serves 4–6 people Weight: 750 g",
+    "category": "bento",
+    "sizes": []
+  },
+  {
+    "name": "My special day",
+    "price": "60-135",
+    "fixedSize": "",
+    "category": "kids-cakes-favourite-characters",
+    "sizes": [
+      {
+        "size": "6 inch",
+        "serves": "6-8 serves",
+        "price": "95"
+      },
+      {
+        "size": "7 inch",
+        "serves": "10-12 serves",
+        "price": "105"
+      },
+      {
+        "size": "8 inch",
+        "serves": "15-18 serves",
+        "price": "115"
+      },
+      {
+        "size": "9 inch",
+        "serves": "20-22 serves",
+        "price": "125"
+      },
+      {
+        "size": "10 inch",
+        "serves": "30-35 serves",
+        "price": "135"
+      }
+    ]
+  }
+]

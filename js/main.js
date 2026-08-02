@@ -1326,12 +1326,25 @@ function initCustomReference() {
     else setTimeout(refScrollToForm, 1500);
     setTimeout(refScrollToForm, 6000); // safety net if a read never resolves
 
-    // Prefill flavour
+    // Prefill flavour - and look up its surcharge so the estimate includes it.
     if (customRef.flavour) {
         var fh = document.getElementById('flavour');
         var ft = document.getElementById('flavourSelectText');
         if (fh) fh.value = customRef.flavour;
         if (ft) { ft.textContent = customRef.flavour; ft.removeAttribute('data-i18n'); }
+        fbGetOnce('flavours', function(flavours) {
+            var list = (flavours && flavours.length) ? flavours : DEFAULT_FLAVOURS;
+            for (var fi = 0; fi < list.length; fi++) {
+                if (list[fi] && list[fi].name === customRef.flavour) {
+                    setFlavourButton(customRef.flavour, list[fi].price);
+                    selectedFlavourPrice = parseFloat(list[fi].price) || 0;
+                    selectedFlavourGF = list[fi].glutenFree === true || list[fi].glutenFree === '1';
+                    updateGFAvailability();
+                    recalcTotal();
+                    break;
+                }
+            }
+        });
     }
     // Prefill date ("D MonthName")
     if (customRef.date) {
@@ -1383,12 +1396,11 @@ orderForm.addEventListener('submit', function(e) {
 
     var customNameMap = { en: 'Custom Cake', ua: 'Індивідуальний торт', ru: 'Индивидуальный торт' };
 
-    // Reference orders stay "price on request"; pure custom orders carry the estimate.
-    var est = 0;
-    if (!customRef) {
-        var hv = document.getElementById('orderTotalHidden').value;
-        est = parseFloat(String(hv).replace(/[^0-9.]/g, '')) || 0;
-    }
+    // Carry the estimate (size + flavour + tall + gluten-free) whenever a size
+    // gives us a base price - for reference orders too. Falls back to "on
+    // request" only when no base price is available.
+    var hv = document.getElementById('orderTotalHidden').value;
+    var est = parseFloat(String(hv).replace(/[^0-9.]/g, '')) || 0;
 
     function finish(photoData) {
         addToCart({

@@ -1623,11 +1623,18 @@ document.getElementById('reviewForm').addEventListener('submit', function(e) {
 var siteEnabledToggle = document.getElementById('siteEnabledToggle');
 var siteStatusLabel = document.getElementById('siteStatusLabel');
 var siteMessageInput = document.getElementById('siteMessage');
+var announceToggle = document.getElementById('announceToggle');
+var announceLabel = document.getElementById('announceLabel');
+var announceTextInput = document.getElementById('announceText');
+var announcePauseToggle = document.getElementById('announcePause');
 
 function writeSiteStatus() {
     setData('site-status', {
         enabled: siteEnabledToggle.checked,
-        message: siteMessageInput.value.trim()
+        message: siteMessageInput.value.trim(),
+        announce: announceToggle ? announceToggle.checked : false,
+        announceText: announceTextInput ? announceTextInput.value.trim() : '',
+        announcePause: announcePauseToggle ? announcePauseToggle.checked : false
     });
 }
 
@@ -1656,7 +1663,31 @@ function updateSiteToggle(s) {
     if (document.activeElement !== siteMessageInput) {
         siteMessageInput.value = (s && s.message) || '';
     }
+    if (announceToggle) {
+        var on = !!(s && s.announce);
+        announceToggle.checked = on;
+        if (announceLabel) announceLabel.textContent = on ? 'Announcement is ON' : 'Announcement is OFF';
+        if (announcePauseToggle) announcePauseToggle.checked = !!(s && s.announcePause);
+        if (announceTextInput && document.activeElement !== announceTextInput) {
+            announceTextInput.value = (s && s.announceText) || '';
+        }
+    }
 }
+
+(function () {
+    if (announceToggle) announceToggle.addEventListener('change', function () {
+        if (announceLabel) announceLabel.textContent = this.checked ? 'Announcement is ON' : 'Announcement is OFF';
+        writeSiteStatus();
+    });
+    if (announcePauseToggle) announcePauseToggle.addEventListener('change', writeSiteStatus);
+    var saveBtn = document.getElementById('saveAnnounceBtn');
+    if (saveBtn) saveBtn.addEventListener('click', function () {
+        writeSiteStatus();
+        var b = this, txt = b.textContent;
+        b.textContent = at('saved');
+        setTimeout(function () { b.textContent = txt; }, 2000);
+    });
+})();
 
 // ===== CONTENT =====
 var pendingHeroPhoto = null;
