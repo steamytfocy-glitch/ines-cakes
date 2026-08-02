@@ -1004,7 +1004,7 @@ function renderRefPickGrid(list) {
         var imgHtml = cover
             ? '<img loading="lazy" decoding="async" src="' + cover + '" class="flavour-card__img" style="width:100%;height:200px;object-fit:cover;display:block;" alt="' + escapeHtml(nm) + '">'
             : '<div class="flavour-card__placeholder"><svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>';
-        html += '<div class="flavour-card" data-ref-name="' + escapeHtml(nm) + '">' +
+        html += '<div class="flavour-card" data-ref-idx="' + i + '" data-ref-name="' + escapeHtml(nm) + '">' +
             '<div class="flavour-card__imgwrap">' + imgHtml +
                 '<div class="flavour-card__caption"><div class="flavour-card__name">' + escapeHtml(nm) + '</div></div>' +
             '</div>' +
@@ -1014,13 +1014,21 @@ function renderRefPickGrid(list) {
     refPickGrid.querySelectorAll('.flavour-card').forEach(function(card) {
         card.addEventListener('click', function() {
             var img = this.querySelector('img');
-            applyRefInPage(this.getAttribute('data-ref-name'), img ? img.getAttribute('src') : '');
+            var item = list[parseInt(this.getAttribute('data-ref-idx'))] || {};
+            applyRefInPage(item.name || this.getAttribute('data-ref-name'), img ? img.getAttribute('src') : '', item);
             refPickModal.style.display = 'none';
         });
     });
 }
-function applyRefInPage(name, photo) {
-    customRef = { name: name || '', photo: photo || '', size: '', flavour: '', date: '' };
+function applyRefInPage(name, photo, item) {
+    item = item || {};
+    customRef = {
+        name: name || '', photo: photo || '', size: '', flavour: '', date: '',
+        // Carry this cake's real sizes/prices so the estimate uses them, not the global defaults.
+        sizes: (item.sizes && item.sizes.length) ? item.sizes.map(function(s) { return { size: s.size, serves: s.serves || '', price: s.price }; }) : null,
+        price: (item.price && parseFloat(item.price) > 0) ? String(item.price) : '',
+        fixedSize: item.fixedSize || ''
+    };
     var refBox = document.getElementById('orderRef');
     var pickWrap = document.getElementById('orderRefPickWrap');
     var img = document.getElementById('orderRefImg');
@@ -1029,6 +1037,7 @@ function applyRefInPage(name, photo) {
     if (nameEl) nameEl.textContent = customRef.name;
     if (refBox) refBox.style.display = 'flex';
     if (pickWrap) pickWrap.style.display = 'none';
+    applyRefSizes();
     if (typeof recalcTotal === 'function') recalcTotal();
 }
 var _refPickClose = document.getElementById('refPickModalClose');
@@ -1097,9 +1106,26 @@ function populateCustomSizes(list) {
 }
 function loadCustomSizes() {
     fbGetCached('default-sizes', function(ds) {
-        populateCustomSizes(ds || []);
+        // Keep the referenced cake's own prices if one is selected.
+        if (customRef && ((customRef.sizes && customRef.sizes.length) || (customRef.price && parseFloat(customRef.price) > 0))) {
+            applyRefSizes();
+        } else {
+            populateCustomSizes(ds || []);
+        }
         recalcTotal();
     });
+}
+
+// When a reference cake carries its own sizes/prices, use those in the Size
+// dropdown instead of the global defaults (so a pricier cake isn't quoted at
+// the cheaper default price).
+function applyRefSizes() {
+    if (!customRef) return;
+    if (customRef.sizes && customRef.sizes.length) {
+        populateCustomSizes(customRef.sizes);
+    } else if (customRef.price && parseFloat(customRef.price) > 0) {
+        populateCustomSizes([{ size: customRef.fixedSize || 'As shown', serves: '', price: String(customRef.price) }]);
+    }
 }
 
 // ===== NICE SELECT (custom-styled dropdown replacing the native <select>) =====
@@ -1257,6 +1283,8 @@ function clearCustomRef() {
     if (box) box.style.display = 'none';
     var pick = document.getElementById('orderRefPickWrap');
     if (pick) pick.style.display = '';
+    // Restore the global default sizes now that no specific cake is referenced.
+    if (typeof loadCustomSizes === 'function') loadCustomSizes();
 }
 
 function initCustomReference() {
@@ -1287,6 +1315,9 @@ function initCustomReference() {
     document.getElementById('orderRefName').textContent = customRef.name;
     refBox.style.display = 'flex';
     if (pickWrap) pickWrap.style.display = 'none';
+
+    // Use the referenced cake's own sizes/prices in the Size dropdown.
+    applyRefSizes();
 
     // Keep the reference only for this visit - drop it so a page refresh clears it
     // (it stays in memory for placing the order).
@@ -1359,18 +1390,24 @@ function initCustomReference() {
         if (monthSel && mIdx > -1) monthSel.value = String(mIdx + 1);
         var dh = document.getElementById('date'); if (dh) dh.value = customRef.date;
     }
-    // Prefill size -> custom diameter if numeric
+    // Prefill size: pick the matching option from the reference cake's sizes
+    // (so its real price applies); fall back to a custom diameter otherwise.
     if (customRef.size) {
+        var cs = document.getElementById('cakeSize');
         var num = parseInt(String(customRef.size).replace(/[^0-9]/g, ''));
-        if (!isNaN(num)) {
-            var cs = document.getElementById('cakeSize');
+        var matched = false;
+        for (var gi = 0; gi < _customSizes.length; gi++) {
+            var gnum = parseInt(String(_customSizes[gi].size).replace(/[^0-9]/g, ''));
+            if (!isNaN(num) && gnum === num) { if (cs) cs.value = 'g' + gi; matched = true; break; }
+        }
+        if (!matched && !isNaN(num)) {
             if (cs) cs.value = 'custom';
             var csRow = document.getElementById('customSizeRow');
             if (csRow) csRow.style.display = '';
             var cd = document.getElementById('customDiameter');
             if (cd) cd.value = num;
-            if (cs && cs._enhanced) syncNiceSelect(cs);
         }
+        if (cs && cs._enhanced) syncNiceSelect(cs);
     }
     if (typeof recalcTotal === 'function') recalcTotal();
 }

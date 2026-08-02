@@ -94,7 +94,12 @@ function priceLabel(p) {
 }
 
 function selectAsRef(p) {
-    var ref = { name: p.name || '', photo: p.thumb || p.photo || '', size: '', flavour: '', date: '' };
+    var ref = {
+        name: p.name || '', photo: p.thumb || p.photo || '', size: '', flavour: '', date: '',
+        sizes: (p.sizes && p.sizes.length) ? p.sizes.map(function(s) { return { size: s.size, serves: s.serves || '', price: s.price }; }) : null,
+        price: (p.price && parseFloat(p.price) > 0) ? String(p.price) : '',
+        fixedSize: p.fixedSize || ''
+    };
     try {
         localStorage.setItem('ines-ref-cake', JSON.stringify(ref));
         localStorage.removeItem('ines-ref-pick');

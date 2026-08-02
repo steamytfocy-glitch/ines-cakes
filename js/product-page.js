@@ -644,7 +644,12 @@ document.getElementById('pRefBtn').addEventListener('click', function() {
         photo: _photos[_photoIdx] || product.photo || '',
         size: s ? s.size : (product.fixedSize || ''),
         flavour: document.getElementById('pFlavour').value || '',
-        date: selectedDate()
+        date: selectedDate(),
+        // Carry THIS cake's real sizes/prices so the custom form doesn't fall
+        // back to the cheaper global defaults.
+        sizes: effectiveSizes().map(function(x) { return { size: x.size, serves: x.serves || '', price: x.price }; }),
+        price: (product.price && parseFloat(product.price) > 0) ? String(product.price) : '',
+        fixedSize: product.fixedSize || ''
     };
     try { localStorage.setItem('ines-ref-cake', JSON.stringify(ref)); } catch (e) {}
     window.location.href = '/';
