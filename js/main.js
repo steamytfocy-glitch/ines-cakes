@@ -1225,9 +1225,22 @@ function sizePrice() {
         var gp = gs ? parseFloat(gs.price) : NaN;
         return isNaN(gp) ? null : gp;
     }
-    var inch = getInches();
-    if (inch === null) return null;
-    return Math.round(basePriceMini + Math.max(0, inch - 5) * PRICE_PER_INCH);
+    if (size === 'custom') {
+        var inch = getInches();
+        if (inch === null) return null;
+        // If the typed diameter matches a standard size, use its REAL price from
+        // the Sizes & Prices table. A genuinely non-standard size has no fixed
+        // price - it's quoted by the bakery (recalcTotal shows "price on request").
+        for (var i = 0; i < _customSizes.length; i++) {
+            var gi = parseFloat(String(_customSizes[i].size).replace(/[^0-9.]/g, ''));
+            if (!isNaN(gi) && gi === inch) {
+                var pp = parseFloat(_customSizes[i].price);
+                return isNaN(pp) ? null : pp;
+            }
+        }
+        return null;
+    }
+    return null;
 }
 
 function recalcTotal() {

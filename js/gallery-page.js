@@ -134,7 +134,9 @@ function buildData() {
         all.push({ p: p, index: idx });
         (byCat[c] = byCat[c] || []).push({ p: p, index: idx });
     });
-    var cats = CATEGORIES.slice().sort(function(a, b) { return getCatName(a).localeCompare(getCatName(b)); });
+    // Show categories in the order set in the admin (Manage Categories ▲▼),
+    // same as the homepage - not alphabetically.
+    var cats = CATEGORIES.slice();
     var activeCats = cats.filter(function(c) { return byCat[c.id] && byCat[c.id].length; });
     return { all: all, byCat: byCat, activeCats: activeCats };
 }
