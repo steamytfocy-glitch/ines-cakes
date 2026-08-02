@@ -1183,9 +1183,8 @@ function syncNiceSelect(sel) {
 // ===== PRICE CALCULATOR =====
 var selectedFlavourPrice = 0;
 var selectedFlavourGF = false;
-var basePriceMini = 30;   // price for 5"
-var basePriceMaxi = 35;   // price for 6"
-var PRICE_PER_INCH = 5;   // each extra inch beyond 5"
+var basePriceMini = 30;   // fallback price for the mini (5") size
+var basePriceMaxi = 35;   // fallback price for the maxi (6") size
 var ADDON_TALL = 10;      // tall cake surcharge
 var ADDON_GF = 5;         // gluten-free surcharge
 
@@ -1747,18 +1746,11 @@ function loadAdminContent() {
         if (heroImg && content.heroPhoto) {
             heroImg.innerHTML = '<img class="hero__photo" decoding="async" fetchpriority="high" src="' + content.heroPhoto + '" alt="I.N.E.S. cakes">';
         }
-        if (content.priceMini) {
-            basePriceMini = parseFloat(content.priceMini) || basePriceMini;
-            document.querySelectorAll('[data-i18n="cakes.from30"]').forEach(function(el) {
-                el.textContent = 'from €' + content.priceMini;
-            });
-        }
-        if (content.priceMaxi) {
-            basePriceMaxi = parseFloat(content.priceMaxi) || basePriceMaxi;
-            document.querySelectorAll('[data-i18n="cakes.from35"]').forEach(function(el) {
-                el.textContent = 'from €' + content.priceMaxi;
-            });
-        }
+        // Fallback base prices for the mini/maxi sizes (only used when no
+        // Sizes & Prices table is configured). The old "from €30/€35" cards on
+        // the homepage are gone, so there's nothing to update in the DOM here.
+        if (content.priceMini) basePriceMini = parseFloat(content.priceMini) || basePriceMini;
+        if (content.priceMaxi) basePriceMaxi = parseFloat(content.priceMaxi) || basePriceMaxi;
         var shedMenuCard = document.getElementById('shedMenuCard');
         var shedMenuCover = document.getElementById('shedMenuCover');
         if (shedMenuCard && shedMenuCover) {

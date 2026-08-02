@@ -237,20 +237,29 @@ function render() {
     renderGrid(data);
 }
 
+var _catLoaded = false;
 function init() {
+    var cat = new URLSearchParams(window.location.search).get('cat');
+    if (cat) _filter = cat;
+    // Subscribe to each node ONCE (nesting the reads re-subscribed them every
+    // time categories changed, stacking live listeners). Re-render on updates,
+    // but only once the catalog has loaded so we don't flash an empty state.
     fbGet('categories', function(cats) {
         if (cats && cats.length) CATEGORIES = cats;
-        fbGet('default-sizes', function(ds) { _defaultSizes = (ds && ds.length) ? ds : []; });
-        // Lightweight catalog (names + thumbnails) instead of the full ~12 MB
-        // products node. Full-size photos are loaded on demand (zoom / product page).
-        fbGetCatalog(function(products) {
-            _products = products || [];
-            var cat = new URLSearchParams(window.location.search).get('cat');
-            if (cat) _filter = cat;
-            render();
-            applyI18n();
-            showRefBanner();
-        });
+        if (_catLoaded) render();
+    });
+    fbGet('default-sizes', function(ds) {
+        _defaultSizes = (ds && ds.length) ? ds : [];
+        if (_catLoaded) render();
+    });
+    // Lightweight catalog (names + thumbnails) instead of the full ~12 MB
+    // products node. Full-size photos are loaded on demand (zoom / product page).
+    fbGetCatalog(function(products) {
+        _products = products || [];
+        _catLoaded = true;
+        render();
+        applyI18n();
+        showRefBanner();
     });
 }
 
