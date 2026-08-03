@@ -250,8 +250,22 @@ loginForm.addEventListener('submit', function(e) {
     var pass = document.getElementById('loginPass').value;
     loginError.textContent = '';
     firebase.auth().signInWithEmailAndPassword(email, pass).catch(function(err) {
-        loginError.textContent = at('login.wrong');
-        console.warn('Sign-in failed:', err && err.code);
+        // Show the SPECIFIC reason on screen (with the raw code), so a
+        // non-technical user can read it back without opening the console.
+        var code = (err && err.code) || '';
+        var MSG = {
+            'auth/too-many-requests': 'Too many attempts. Wait ~20 min and try again, or reset the password.',
+            'auth/wrong-password': 'Wrong password.',
+            'auth/invalid-credential': 'Wrong email or password.',
+            'auth/invalid-login-credentials': 'Wrong email or password.',
+            'auth/user-not-found': 'No account with this email.',
+            'auth/invalid-email': 'That is not a valid email address.',
+            'auth/user-disabled': 'This account is disabled.',
+            'auth/operation-not-allowed': 'Email sign-in is turned off in Firebase.',
+            'auth/network-request-failed': 'No connection to the server. Check the internet, an ad-blocker, antivirus or firewall.'
+        };
+        loginError.textContent = (MSG[code] || at('login.wrong')) + (code ? ' (' + code + ')' : '');
+        console.warn('Sign-in failed:', code);
     });
 });
 
