@@ -2463,15 +2463,23 @@ document.getElementById('cakeForm').addEventListener('submit', function(e) {
         noticeDays: parseInt(document.getElementById('cakeNotice').value) || 0
     };
 
-    // Generate the small listing thumbnail from the cover, then save products
-    // and the derived catalog together.
+    // Generate the small listing thumbnail from the cover, then save.
     makeThumb(cake.photo, 400, 0.6, function(thumb) {
         cake.thumb = thumb || null;
         var cakes = getData('products', []) || [];
         var editId = document.getElementById('cakeEditId').value;
-        if (editId !== '') cakes[parseInt(editId)] = cake;
-        else cakes.push(cake);
-        saveProducts(cakes);
+        var index = (editId !== '') ? parseInt(editId) : cakes.length;
+        cakes[index] = cake;
+        _cache['products'] = cakes; // keep the admin's local copy in sync
+
+        // Write ONLY this one cake (products/{index}, ~200 KB), NOT the whole
+        // products array. The array is ~16 MB now, which is at Firebase's
+        // single-write size limit, so a full rewrite silently fails and the
+        // cake doesn't save. The derived catalog is small, so a full rewrite
+        // of it is fine and keeps the public pages in sync.
+        fbSet('products/' + index, cake, function(ok) {
+            if (ok) writeCatalog(cakes);
+        });
         document.getElementById('cakeModal').style.display = 'none';
     });
 });
