@@ -1476,6 +1476,7 @@ function loadFlavours() {
             document.getElementById('flavourDesc').value = f.desc || '';
             document.getElementById('flavourPrice').value = f.price || '';
             document.getElementById('flavourGF').checked = !!f.glutenFree;
+            document.getElementById('flavourNotForCakes').checked = !!f.notForCakes;
             pendingFlavourPhoto = f.photo || null;
             document.getElementById('flavourPhotoPreview').innerHTML = f.photo ? '<img src="' + f.photo + '" style="max-width:120px;border-radius:8px;">' : '';
             document.getElementById('flavourModalTitle').textContent = at('flavour.editTitle');
@@ -1492,6 +1493,7 @@ document.getElementById('addFlavourBtn').addEventListener('click', function() {
     document.getElementById('flavourDesc').value = '';
     document.getElementById('flavourPrice').value = '';
     document.getElementById('flavourGF').checked = false;
+    document.getElementById('flavourNotForCakes').checked = false;
     document.getElementById('flavourPhotoPreview').innerHTML = '';
     pendingFlavourPhoto = null;
     document.getElementById('flavourModalTitle').textContent = at('flavour.addTitle');
@@ -1523,6 +1525,7 @@ document.getElementById('flavourForm').addEventListener('submit', function(e) {
         desc: document.getElementById('flavourDesc').value.trim(),
         price: document.getElementById('flavourPrice').value.trim(),
         glutenFree: document.getElementById('flavourGF').checked,
+        notForCakes: document.getElementById('flavourNotForCakes').checked,
         photo: pendingFlavourPhoto || null
     };
 
@@ -2300,9 +2303,13 @@ function populateCakeCategorySelect(selected) {
 
 var cakeSelectedFlavours = [];
 
-// Every flavour name in the global list - used as the default "all selected".
+// Flavour names offered as cake fillings - i.e. every flavour EXCEPT the ones
+// marked "sold only as a whole cake" (notForCakes). Used as the default
+// "all selected" in the cake form.
 function allFlavourNames() {
-    return (getData('flavours', []) || []).map(function(f) { return f && f.name; }).filter(Boolean);
+    return (getData('flavours', []) || [])
+        .filter(function(f) { return f && f.name && !f.notForCakes; })
+        .map(function(f) { return f.name; });
 }
 
 function renderCakeFlavoursSelected() {

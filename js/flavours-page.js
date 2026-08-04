@@ -103,11 +103,16 @@ function locDesc(o) {
 function loadAllFlavours() {
     fbGetCached('flavours', function(flavours) {
         if (!flavours) flavours = [];
-        // Select mode: keep only the flavours allowed for this cake (fall back
-        // to all if the restriction happens to match nothing).
-        if (SELECT_MODE && _allowedFlavours) {
-            var _f2 = flavours.filter(function(f) { return f && _allowedFlavours.indexOf(f.name) > -1; });
-            if (_f2.length) flavours = _f2;
+        if (SELECT_MODE) {
+            // Never offer "whole cake only" flavours (e.g. Napoleon, Esterházy)
+            // as a filling for another cake.
+            flavours = flavours.filter(function(f) { return f && !f.notForCakes; });
+            // If this cake restricts its flavours, keep only those (fall back to
+            // all if the restriction happens to match nothing).
+            if (_allowedFlavours) {
+                var _f2 = flavours.filter(function(f) { return _allowedFlavours.indexOf(f.name) > -1; });
+                if (_f2.length) flavours = _f2;
+            }
         }
         var grid = document.getElementById('allFlavoursGrid');
         if (flavours.length === 0) {

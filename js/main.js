@@ -932,7 +932,9 @@ function openFlavourModal() {
     if (_flavoursLoaded) return;
     fbGetOnce('flavours', function(flavours) {
         if (!flavours || !flavours.length) flavours = DEFAULT_FLAVOURS;
-        renderFlavourGrid(flavours);
+        // Don't offer "whole cake only" flavours as a filling for a custom cake.
+        var forCakes = flavours.filter(function(f) { return f && !f.notForCakes; });
+        renderFlavourGrid(forCakes.length ? forCakes : flavours);
         _flavoursLoaded = true;
     });
 }
