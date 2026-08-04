@@ -2056,6 +2056,65 @@ function migrateToDesignPricing(preview) {
     if (run) run.addEventListener('click', function() { migrateToDesignPricing(false); });
 })();
 
+// One-time: move the big full-size photos OUT of the products array into
+// product-photos/{id}, leaving products slim (metadata + thumb). This is what
+// lets the whole array be rewritten again (delete / reorder) and makes the
+// admin load far faster. Photos are copied FIRST; products is only slimmed once
+// every copy has succeeded - so a photo is never lost.
+function migratePhotosOut() {
+    var cakes = getData('products', null);
+    if (!Array.isArray(cakes)) { alert('Cakes not loaded yet.'); return; }
+    // Verify the product-photos rule is published (a test write must succeed).
+    fbSet('product-photos/__test', { t: Date.now() }, function(ok) {
+        if (!ok) {
+            alert('Cannot write to product-photos yet.\n\nPublish the database rules first:\nFirebase Console -> Realtime Database -> Rules -> Publish.\nThen run this again.');
+            return;
+        }
+        fbRemove('product-photos/__test');
+        var withPhotos = cakes.filter(function(c) { return c && ((c.photos && c.photos.length) || c.photo); });
+        if (!withPhotos.length) { alert('Nothing to move - photos are already separated.'); return; }
+        if (!confirm('Move photos out of the products array for ' + withPhotos.length + ' cakes?\n\nThis makes the admin load much faster. A backup exists; no prices or photos are lost.')) return;
+
+        var pending = 0, failed = 0, started = false;
+        function finish() {
+            if (failed) { alert(failed + ' photo copies failed - products left unchanged so nothing is lost. Please try again.'); return; }
+            var slim = cakes.map(function(c) {
+                if (!c) return c;
+                var n = Object.assign({}, c);
+                delete n.photo; delete n.photos;
+                return n;
+            });
+            _cache['products'] = slim;
+            saveProducts(slim); // slim array is small, well under the write limit
+            alert('Done. Photos moved out. The admin and product pages now load much faster.');
+        }
+        cakes.forEach(function(c, i) {
+            if (!c) return;
+            if (!c.id) c.id = 'p' + i; // stable id (indices are contiguous at migration time)
+            if (!((c.photos && c.photos.length) || c.photo)) return;
+            pending++;
+            // Direct write (not fbSet) so a mid-batch failure doesn't pop 86 alerts.
+            db.ref('product-photos/' + c.id).set({
+                photo: coverOf(c),
+                photos: (c.photos && c.photos.length) ? c.photos.slice() : (c.photo ? [c.photo] : [])
+            }).then(function() {
+                pending--;
+                if (started && pending === 0) finish();
+            }).catch(function() {
+                failed++;
+                pending--;
+                if (started && pending === 0) finish();
+            });
+        });
+        started = true;
+        if (pending === 0) finish();
+    });
+}
+(function() {
+    var b = document.getElementById('migratePhotosBtn');
+    if (b) b.addEventListener('click', migratePhotosOut);
+})();
+
 function priceRange(sizes) {
     if (!sizes || !sizes.length) return at('priceOnRequest');
     var nums = sizes.map(function(s) { return parseFloat(s.price); }).filter(function(n) { return !isNaN(n); });
@@ -2085,8 +2144,10 @@ function loadCakes() {
     var html = '';
     for (var i = 0; i < cakes.length; i++) {
         var c = cakes[i];
-        var img = c.photo
-            ? '<img src="' + c.photo + '" alt="' + escapeHtml(c.name) + '">'
+        if (!c) continue; // tolerate holes left by a deleted cake
+        var cardCover = c.thumb || c.photo; // thumb keeps the list light (no full photos)
+        var img = cardCover
+            ? '<img src="' + cardCover + '" alt="' + escapeHtml(c.name) + '">'
             : '<div class="cake-admin-card__noimg"></div>';
         html += '<div class="cake-admin-card" data-idx="' + i + '" data-cat="' + escapeHtml(c.category || '') + '">' +
             '<div class="cake-admin-card__check">✓</div>' +
@@ -2124,8 +2185,11 @@ function loadCakes() {
             btn.addEventListener('click', function() {
                 if (!confirm(at('confirm.cake'))) return;
                 var cakes = getData('products', []) || [];
-                cakes.splice(parseInt(this.dataset.cakeDel), 1);
+                var di = parseInt(this.dataset.cakeDel);
+                var delId = cakes[di] && cakes[di].id;
+                cakes.splice(di, 1);
                 saveProducts(cakes);
+                if (delId) fbRemove('product-photos/' + delId); // drop its separate photos too
             });
         });
     }
@@ -2326,6 +2390,16 @@ function openCakeModal(editId) {
         renderCakeFlavoursSelected();
         pendingCakePhotos = (c.photos && c.photos.length) ? c.photos.slice() : (c.photo ? [c.photo] : []);
         renderCakePhotos();
+        // Photos moved out to product-photos/{id}? Load them on demand for editing.
+        if (!pendingCakePhotos.length && c.id) {
+            db.ref('product-photos/' + c.id).once('value').then(function(snap) {
+                var pp = snap.val();
+                if (pp && ((pp.photos && pp.photos.length) || pp.photo)) {
+                    pendingCakePhotos = (pp.photos && pp.photos.length) ? pp.photos.slice() : [pp.photo];
+                    renderCakePhotos();
+                }
+            }).catch(function() {});
+        }
         var sizes = c.sizes || [];
         // Empty = this cake uses the global sizes. Only show rows if it overrides them.
         sizes.forEach(function(s) { addCakeSizeRow(s.size, s.serves, s.price); });
@@ -2447,6 +2521,9 @@ document.getElementById('cakeForm').addEventListener('submit', function(e) {
     });
     var flavours = cakeSelectedFlavours.slice();
 
+    // The (large) full-size photos are stored separately, not inside the cake.
+    var cover = pendingCakePhotos[0] || null;
+    var photosArr = pendingCakePhotos.slice();
     var cake = {
         name: document.getElementById('cakeName').value.trim(),
         price: document.getElementById('cakePrice').value.trim(),
@@ -2456,30 +2533,37 @@ document.getElementById('cakeForm').addEventListener('submit', function(e) {
         desc: document.getElementById('cakeDesc').value.trim(),
         instaUrl: document.getElementById('cakeInsta').value.trim(),
         fbUrl: document.getElementById('cakeFacebook').value.trim(),
-        photo: pendingCakePhotos[0] || null,
-        photos: pendingCakePhotos.slice(),
         sizes: sizes,
         flavours: flavours,
         noticeDays: parseInt(document.getElementById('cakeNotice').value) || 0
     };
 
     // Generate the small listing thumbnail from the cover, then save.
-    makeThumb(cake.photo, 400, 0.6, function(thumb) {
+    makeThumb(cover, 400, 0.6, function(thumb) {
         cake.thumb = thumb || null;
         var cakes = getData('products', []) || [];
         var editId = document.getElementById('cakeEditId').value;
         var index = (editId !== '') ? parseInt(editId) : cakes.length;
-        cakes[index] = cake;
-        _cache['products'] = cakes; // keep the admin's local copy in sync
+        var existing = cakes[index] || {};
+        // Stable id so the photos stay linked even if the cake is reordered.
+        cake.id = existing.id || ('p' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6));
 
-        // Write ONLY this one cake (products/{index}, ~200 KB), NOT the whole
-        // products array. The array is ~16 MB now, which is at Firebase's
-        // single-write size limit, so a full rewrite silently fails and the
-        // cake doesn't save. The derived catalog is small, so a full rewrite
-        // of it is fine and keeps the public pages in sync.
-        fbSet('products/' + index, cake, function(ok) {
-            if (ok) writeCatalog(cakes);
-        });
+        // Store the big photos in product-photos/{id}, keeping the products
+        // array small (metadata + thumb). If that write fails - e.g. the
+        // product-photos rule isn't published yet - keep the photos INLINE so
+        // nothing is ever lost; it self-heals once the rule is live + migrated.
+        function storeCake(okPhotos) {
+            var toStore = okPhotos ? cake : Object.assign({}, cake, { photo: cover, photos: photosArr });
+            cakes[index] = toStore;
+            _cache['products'] = cakes; // keep the admin's local copy in sync
+            // Write ONLY this one cake (products/{index}), never the whole array.
+            fbSet('products/' + index, toStore, function(ok) { if (ok) writeCatalog(cakes); });
+        }
+        // Direct write (not fbSet) so a not-yet-published rule fails silently and
+        // we fall back to inline photos instead of showing a false save error.
+        db.ref('product-photos/' + cake.id).set({ photo: cover, photos: photosArr })
+            .then(function() { storeCake(true); })
+            .catch(function() { storeCake(false); });
         document.getElementById('cakeModal').style.display = 'none';
     });
 });

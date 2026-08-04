@@ -349,6 +349,19 @@
                         <button type="button" class="btn-admin" id="migrateRunBtn">Run migration</button>
                     </div>
                 </div>
+
+                <div class="content-section">
+                    <h3 class="content-section__title">Speed up the admin (move photos out)</h3>
+                    <p class="content-hint" style="margin:0 0 12px;line-height:1.6;">
+                        Cake photos are kept in a separate place so the admin loads fast and the
+                        catalogue never hits Firebase's write limit. <b>First</b> publish the
+                        database rules (Firebase Console → Realtime Database → Rules → Publish),
+                        then run this once. A backup exists; no photos or prices are lost.
+                    </p>
+                    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                        <button type="button" class="btn-admin" id="migratePhotosBtn">Move photos out of products</button>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -689,6 +702,6 @@
 <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
 <script defer src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script defer src="js/firebase-init.js?v=3"></script>
-<script defer src="js/admin.js?v=20"></script>
+<script defer src="js/admin.js?v=21"></script>
 </body>
 </html>

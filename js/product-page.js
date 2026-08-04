@@ -672,7 +672,7 @@ document.querySelectorAll('.lang-btn').forEach(function(b) { b.classList.toggle(
     // the full catalogue is ~12 MB of photos, a single cake is ~200 KB. Fetch
     // it in parallel with the (tiny) default-sizes list and render once both
     // are in. The flavour picker lives on its own page now.
-    var _product = null, gotProduct = false, gotSizes = false;
+    var _product = null, gotProduct = false, gotSizes = false, _photosLoaded = false;
     function tryRender() {
         if (!gotProduct || !gotSizes) return;
         if (!_product) {
@@ -684,6 +684,26 @@ document.querySelectorAll('.lang-btn').forEach(function(b) { b.classList.toggle(
         document.getElementById('productGrid').style.display = '';
         renderProduct();
         applyPickedFlavour();
+        loadExtraPhotos();
+    }
+    // Full-size photos now live in a separate 'product-photos/{id}' node so the
+    // products array stays small. Older cakes still carry photos inline - if so,
+    // renderProduct already showed them and there's nothing to fetch. This read
+    // is one-time and caught, so a not-yet-published rule can never hang the page.
+    function loadExtraPhotos() {
+        if (_photosLoaded || !product) return;
+        if ((product.photos && product.photos.length) || product.photo) return;
+        _photosLoaded = true;
+        var pid = product.id || String(productIndex);
+        try {
+            db.ref('product-photos/' + pid).once('value').then(function(snap) {
+                var pp = snap.val();
+                if (!pp) return;
+                if (pp.photos && pp.photos.length) product.photos = pp.photos;
+                if (pp.photo) product.photo = pp.photo;
+                renderGallery();
+            }).catch(function() {});
+        } catch (e) {}
     }
     fbGetCached('products/' + productIndex, function(p) { _product = p; gotProduct = true; tryRender(); });
     fbGetCached('default-sizes', function(ds) { _defaultSizes = (ds && ds.length) ? sortSizes(ds) : []; gotSizes = true; tryRender(); });
