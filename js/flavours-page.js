@@ -37,6 +37,24 @@ function flavourReturnUrl() {
     try { return localStorage.getItem('ines-flavour-return') || 'product'; } catch (e) { return 'product'; }
 }
 
+// In select mode, restrict the list to the flavours THIS cake can be made in
+// (an empty/absent flavours list on the cake means "all flavours").
+var _allowedFlavours = null; // null = no restriction (show every flavour)
+function selectProductIndex() {
+    var m = /[?&]i=(\d+)/.exec(flavourReturnUrl());
+    return m ? parseInt(m[1]) : null;
+}
+function loadAllowedThenFlavours() {
+    if (!SELECT_MODE) { loadAllFlavours(); return; }
+    var idx = selectProductIndex();
+    if (idx == null) { loadAllFlavours(); return; }
+    fbGetCached('products/' + idx, function(cake) {
+        var fl = cake && cake.flavours;
+        _allowedFlavours = (fl && fl.length) ? fl : null;
+        loadAllFlavours();
+    });
+}
+
 function setLang(lang) {
     currentLang = lang;
     localStorage.setItem('ines-lang', lang);
@@ -85,6 +103,12 @@ function locDesc(o) {
 function loadAllFlavours() {
     fbGetCached('flavours', function(flavours) {
         if (!flavours) flavours = [];
+        // Select mode: keep only the flavours allowed for this cake (fall back
+        // to all if the restriction happens to match nothing).
+        if (SELECT_MODE && _allowedFlavours) {
+            var _f2 = flavours.filter(function(f) { return f && _allowedFlavours.indexOf(f.name) > -1; });
+            if (_f2.length) flavours = _f2;
+        }
         var grid = document.getElementById('allFlavoursGrid');
         if (flavours.length === 0) {
             grid.innerHTML = '<p style="text-align:center;color:#6B5B4E;grid-column:1/-1;padding:40px;">No flavours yet.</p>';
@@ -150,4 +174,4 @@ function loadAllFlavours() {
 }
 
 setLang(currentLang);
-loadAllFlavours();
+loadAllowedThenFlavours();

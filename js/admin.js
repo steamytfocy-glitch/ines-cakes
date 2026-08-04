@@ -2300,6 +2300,11 @@ function populateCakeCategorySelect(selected) {
 
 var cakeSelectedFlavours = [];
 
+// Every flavour name in the global list - used as the default "all selected".
+function allFlavourNames() {
+    return (getData('flavours', []) || []).map(function(f) { return f && f.name; }).filter(Boolean);
+}
+
 function renderCakeFlavoursSelected() {
     var box = document.getElementById('cakeFlavoursSelected');
     var txt = document.getElementById('cakeFlavourText');
@@ -2386,7 +2391,9 @@ function openCakeModal(editId) {
         document.getElementById('cakeFacebook').value = c.fbUrl || '';
         document.getElementById('cakeNotice').value = (c.noticeDays != null ? c.noticeDays : 7);
         populateCakeCategorySelect(c.category);
-        cakeSelectedFlavours = (c.flavours || []).slice();
+        // A cake with no explicit flavours means "all" - show all ticked so the
+        // admin only unticks the exceptions.
+        cakeSelectedFlavours = (c.flavours && c.flavours.length) ? c.flavours.slice() : allFlavourNames();
         renderCakeFlavoursSelected();
         pendingCakePhotos = (c.photos && c.photos.length) ? c.photos.slice() : (c.photo ? [c.photo] : []);
         renderCakePhotos();
@@ -2415,7 +2422,9 @@ function openCakeModal(editId) {
         document.getElementById('cakeFacebook').value = '';
         document.getElementById('cakeNotice').value = 7;
         populateCakeCategorySelect('');
-        cakeSelectedFlavours = [];
+        // Default: every flavour is on. The admin only unticks the ones this
+        // cake can't be made in.
+        cakeSelectedFlavours = allFlavourNames();
         renderCakeFlavoursSelected();
         renderCakePhotos();
         // Leave sizes empty so the cake uses the global Sizes & Prices automatically.
@@ -2519,7 +2528,12 @@ document.getElementById('cakeForm').addEventListener('submit', function(e) {
         var price = row.querySelector('.cs-price').value.trim();
         if (size || price) sizes.push({ size: size, serves: serves, price: price });
     });
-    var flavours = cakeSelectedFlavours.slice();
+    // Default is "all flavours". If everything is still ticked, store [] (means
+    // "all", and auto-includes any flavour added later); otherwise store the subset.
+    var _allNames = allFlavourNames();
+    var _sel = cakeSelectedFlavours.slice();
+    var flavours = (_allNames.length && _sel.length >= _allNames.length &&
+        _allNames.every(function(n) { return _sel.indexOf(n) > -1; })) ? [] : _sel;
 
     // The (large) full-size photos are stored separately, not inside the cake.
     var cover = pendingCakePhotos[0] || null;
