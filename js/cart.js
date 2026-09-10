@@ -3,14 +3,22 @@ function getCart() {
     try { return JSON.parse(localStorage.getItem('ines-cart')) || []; }
     catch (e) { return []; }
 }
+// Returns true/false so callers can tell the customer if the save failed
+// (e.g. localStorage full of photos) instead of silently doing nothing.
 function setCart(cart) {
-    localStorage.setItem('ines-cart', JSON.stringify(cart));
+    try {
+        localStorage.setItem('ines-cart', JSON.stringify(cart));
+    } catch (e) {
+        console.error('Cart save failed:', e);
+        return false;
+    }
     updateCartBadge();
+    return true;
 }
 function addToCart(item) {
     var cart = getCart();
     cart.push(item);
-    setCart(cart);
+    return setCart(cart);
 }
 function cartCount() {
     return getCart().reduce(function (n, it) { return n + (it.qty || 1); }, 0);

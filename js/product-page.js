@@ -618,10 +618,13 @@ document.getElementById('pAddBtn').addEventListener('click', function() {
     var tallOn = !!(tall && tall.checked);
     var gfOn = !!(gf && gf.checked && !gf.disabled);
 
-    addToCart({
+    // Use the small thumbnail for the cart, not the full-size photo - the cart
+    // is a growing array in localStorage (limited to a few MB), and full-size
+    // photos on several items can exceed that quota and silently fail to save.
+    var ok = addToCart({
         i: productIndex,
         name: product.name,
-        photo: product.photo || '',
+        photo: product.thumb || product.photo || '',
         size: s ? s.size : (product.fixedSize || ''),
         serves: s ? (s.serves || '') : '',
         price: basePrice ? (basePrice + (selectedFlavourPrice || 0) + addonTotal()) : 0,
@@ -633,6 +636,11 @@ document.getElementById('pAddBtn').addEventListener('click', function() {
         message: document.getElementById('pMessage').value.trim(),
         allergies: collectAllergies()
     });
+    if (!ok) {
+        var CARTFULL = { en: 'Your cart storage is full. Please open your cart and remove some items, or place your order.', ga: 'Tá stóráil do chiseáin lán. Oscail do chiseán agus bain roinnt earraí, nó cuir d\'ordú.', ua: 'Сховище кошика заповнено. Відкрийте кошик і приберіть деякі товари, або оформіть замовлення.', ru: 'Хранилище корзины заполнено. Откройте корзину и удалите часть товаров, либо оформите заказ.' };
+        showToast(CARTFULL[currentLang] || CARTFULL.en);
+        return;
+    }
     showToast(t('prod.added'));
 });
 

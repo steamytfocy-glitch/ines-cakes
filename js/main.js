@@ -1466,7 +1466,7 @@ orderForm.addEventListener('submit', function(e) {
     var est = parseFloat(String(hv).replace(/[^0-9.]/g, '')) || 0;
 
     function finish(photoData) {
-        addToCart({
+        var ok = addToCart({
             custom: true,
             name: customNameMap[currentLang] || 'Custom Cake',
             photo: photoData || (customRef && customRef.photo) || '',
@@ -1481,6 +1481,11 @@ orderForm.addEventListener('submit', function(e) {
             qty: 1,
             price: est
         });
+        if (!ok) {
+            var CARTFULL = { en: 'Your cart storage is full. Please open your cart and remove some items, or place your order.', ga: 'Tá stóráil do chiseáin lán. Oscail do chiseán agus bain roinnt earraí, nó cuir d\'ordú.', ua: 'Сховище кошика заповнено. Відкрийте кошик і приберіть деякі товари, або оформіть замовлення.', ru: 'Хранилище корзины заполнено. Откройте корзину и удалите часть товаров, либо оформите заказ.' };
+            alert(CARTFULL[currentLang] || CARTFULL.en);
+            return;
+        }
         clearCustomRef();
         window.location.href = 'cart';
     }
