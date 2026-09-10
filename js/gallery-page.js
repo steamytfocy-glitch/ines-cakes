@@ -100,16 +100,18 @@ function selectAsRef(p) {
         price: (p.price && parseFloat(p.price) > 0) ? String(p.price) : '',
         fixedSize: p.fixedSize || ''
     };
-    try {
-        localStorage.setItem('ines-ref-cake', JSON.stringify(ref));
-        localStorage.removeItem('ines-ref-pick');
-    } catch (e) {
-        // Storage full - stay put and say so, instead of silently navigating
-        // home with no reference actually attached.
+    var json = JSON.stringify(ref);
+    var ok = (typeof safeSetItem === 'function') ? safeSetItem('ines-ref-cake', json) : (function() {
+        try { localStorage.setItem('ines-ref-cake', json); return true; } catch (e) { return false; }
+    })();
+    if (!ok) {
+        // Storage still full even after auto-clearing caches - stay put and
+        // say so, instead of silently navigating home with nothing attached.
         var STORFULL = { en: 'Your browser storage is full. Please clear your cart, then try again.', ga: 'Tá stóráil do bhrabhsálaí lán. Glan do chiseán agus bain triail eile as.', ua: 'Сховище браузера заповнено. Очистіть кошик і спробуйте ще раз.', ru: 'Хранилище браузера заполнено. Очистите корзину и попробуйте снова.' };
         alert(STORFULL[currentLang] || STORFULL.en);
         return;
     }
+    try { localStorage.removeItem('ines-ref-pick'); } catch (e) {}
     window.location.href = '/';
 }
 

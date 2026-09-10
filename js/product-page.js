@@ -661,11 +661,14 @@ document.getElementById('pRefBtn').addEventListener('click', function() {
         price: (product.price && parseFloat(product.price) > 0) ? String(product.price) : '',
         fixedSize: product.fixedSize || ''
     };
-    try {
-        localStorage.setItem('ines-ref-cake', JSON.stringify(ref));
-    } catch (e) {
-        // Storage full - stay on this page and say so, instead of silently
-        // navigating home with no reference actually attached.
+    var json = JSON.stringify(ref);
+    var ok = (typeof safeSetItem === 'function') ? safeSetItem('ines-ref-cake', json) : (function() {
+        try { localStorage.setItem('ines-ref-cake', json); return true; } catch (e) { return false; }
+    })();
+    if (!ok) {
+        // Storage still full even after auto-clearing caches - stay on this
+        // page and say so, instead of silently navigating home with no
+        // reference actually attached.
         var STORFULL = { en: 'Your browser storage is full. Please clear your cart, then try again.', ga: 'Tá stóráil do bhrabhsálaí lán. Glan do chiseán agus bain triail eile as.', ua: 'Сховище браузера заповнено. Очистіть кошик і спробуйте ще раз.', ru: 'Хранилище браузера заполнено. Очистите корзину и попробуйте снова.' };
         alert(STORFULL[currentLang] || STORFULL.en);
         return;

@@ -4,14 +4,14 @@ function getCart() {
     catch (e) { return []; }
 }
 // Returns true/false so callers can tell the customer if the save failed
-// (e.g. localStorage full of photos) instead of silently doing nothing.
+// (storage still full even after safeSetItem's auto-cleanup) instead of
+// silently doing nothing.
 function setCart(cart) {
-    try {
-        localStorage.setItem('ines-cart', JSON.stringify(cart));
-    } catch (e) {
-        console.error('Cart save failed:', e);
-        return false;
-    }
+    var json = JSON.stringify(cart);
+    var ok = (typeof safeSetItem === 'function') ? safeSetItem('ines-cart', json) : (function() {
+        try { localStorage.setItem('ines-cart', json); return true; } catch (e) { return false; }
+    })();
+    if (!ok) { console.error('Cart save failed: localStorage full'); return false; }
     updateCartBadge();
     return true;
 }

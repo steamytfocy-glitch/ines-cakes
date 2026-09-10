@@ -43,6 +43,35 @@ function fbGetOnce(path, callback) {
     });
 }
 
+// Robust localStorage write, used everywhere something meaningful (a cart, a
+// reference cake) is saved. localStorage has a small quota (a few MB) shared
+// by everything the site stores, including its own read caches below
+// ('ines-cache-*', which can add up to several MB). If a write hits the
+// quota, first free space by evicting those caches - they're disposable and
+// just rebuild from Firebase on the next read, so nothing is lost - then
+// retry once. Returns true/false so a genuine failure (storage still full
+// after that) can be reported instead of silently doing nothing.
+function safeSetItem(key, value) {
+    try {
+        localStorage.setItem(key, value);
+        return true;
+    } catch (e) {
+        try {
+            var toRemove = [];
+            for (var i = 0; i < localStorage.length; i++) {
+                var k = localStorage.key(i);
+                if (k && k.indexOf('ines-cache-') === 0) toRemove.push(k);
+            }
+            toRemove.forEach(function(k) { localStorage.removeItem(k); });
+            localStorage.setItem(key, value);
+            return true;
+        } catch (e2) {
+            console.error('localStorage write failed even after clearing caches:', e2);
+            return false;
+        }
+    }
+}
+
 // Instant render: serve the last value from localStorage immediately (so the
 // page paints with no network wait), then refresh from Firebase. The callback
 // must be safe to run more than once (idempotent re-render).
