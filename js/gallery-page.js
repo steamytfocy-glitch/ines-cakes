@@ -103,7 +103,13 @@ function selectAsRef(p) {
     try {
         localStorage.setItem('ines-ref-cake', JSON.stringify(ref));
         localStorage.removeItem('ines-ref-pick');
-    } catch (e) {}
+    } catch (e) {
+        // Storage full - stay put and say so, instead of silently navigating
+        // home with no reference actually attached.
+        var STORFULL = { en: 'Your browser storage is full. Please clear your cart, then try again.', ga: 'Tá stóráil do bhrabhsálaí lán. Glan do chiseán agus bain triail eile as.', ua: 'Сховище браузера заповнено. Очистіть кошик і спробуйте ще раз.', ru: 'Хранилище браузера заполнено. Очистите корзину и попробуйте снова.' };
+        alert(STORFULL[currentLang] || STORFULL.en);
+        return;
+    }
     window.location.href = '/';
 }
 
